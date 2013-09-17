@@ -1,0 +1,3 @@
+[submodule "docs"]
+	path = docs
+	url = https://github.com/Transfluent/Transfluent-Unity.wiki.git

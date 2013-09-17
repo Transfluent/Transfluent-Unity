@@ -7,7 +7,8 @@ public class TransfluentData : ScriptableObject
 {
     public int m_sourceLanguageId;
     public List<TransfluentLanguage> m_languages;
-    public List<TransfluentTextGroup> m_textGroups;
+    //public List<TransfluentTextGroup> m_textGroups;
+    public TransfluentTextGroup m_textGroup;
     public List<TransfluentTranslationEntry> m_translations;
 }
 
@@ -77,6 +78,22 @@ public class TransfluentText
             newText.m_texts.Add(new TransfluentTextItem(item.m_languageCode, item.m_text));
 
         return newText;
+    }
+
+    public bool TryGetText(string languageCode, out TransfluentTextItem text)
+    {
+        text = null;
+
+        foreach (TransfluentTextItem item in m_texts)
+        {
+            if (item.m_languageCode == languageCode)
+            {
+                text = item;
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 

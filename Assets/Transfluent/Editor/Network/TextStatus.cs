@@ -30,7 +30,11 @@ namespace transfluent
 			if(!string.IsNullOrEmpty(group_id)) postParams.Add("group_id",group_id);
 
 			ReturnStatus status = service.request(RestUrl.getURL(RestUrl.RestAction.TEXTSTATUS) + service.encodeGETParams(postParams));
-			
+			if (status.status != ServiceStatus.SUCCESS)
+			{
+				wasTranslated = false;
+				return;
+			}
 
 			string responseText = status.text;
 			var reader = new ResponseReader<TextStatusResult>

@@ -17,6 +17,7 @@ namespace Assets.Editor.Tests
 		//public RequestAllLanguages languageContainer;
 		public TransfluentLanguage2 englishLanguage;
 		public TransfluentLanguage2 backwardsLanguage;
+		private LanguageList languageCache;
 		public const string textToSetTestTokenTo = "this is test text";
 
 		[TestFixtureSetUp]
@@ -58,6 +59,7 @@ namespace Assets.Editor.Tests
 
 			englishLanguage = list.getLangaugeByCode("en-us");
 			backwardsLanguage = list.getLangaugeByCode(TransfluentLanguage2.BACKWARDS_LANGUAGE_NAME);
+			languageCache = list;
 			Assert.AreNotEqual(englishLanguage.code, 0);
 			Assert.NotNull(backwardsLanguage);
 		}
@@ -195,6 +197,51 @@ namespace Assets.Editor.Tests
 			backwardsTranslationOfExistingKey.Execute();
 			Assert.IsTrue(backwardsTranslationOfExistingKey.wasTranslated);
 		}
+		[Test]
+		public void testStatusOfNonExistantKey()
+		{
+			var englishTranslationOfEnglishKey = new TextStatus()
+			{
+				authToken = accessToken,
+				text_id = TRANSLATION_KEY + " THIS IS INVALID"+Random.value,
+				language_id = englishLanguage.id
+			};
+			englishTranslationOfEnglishKey.Execute();
 
+			Assert.False(englishTranslationOfEnglishKey.wasTranslated);
+
+			var backwardsTranslationOfExistingKey = new TextStatus()
+			{
+				authToken = accessToken,
+				text_id = TRANSLATION_KEY + " THIS IS INVALID" + Random.value,
+				language_id = backwardsLanguage.id
+			};
+			backwardsTranslationOfExistingKey.Execute();
+			Assert.False(backwardsTranslationOfExistingKey.wasTranslated);
+		}
+		[Test]
+		public void testStatusOfNotOrderedTranslations()
+		{
+			int nonExistantTranslationKey = -1;
+			foreach (TransfluentLanguage2 lang in languageCache.languages)
+			{
+				if (lang.id != englishLanguage.id && lang.id != backwardsLanguage.id)
+				{
+					nonExistantTranslationKey = lang.id;
+					break;
+				}
+			}
+			
+			var englishTranslationOfEnglishKey = new TextStatus()
+			{
+				authToken = accessToken,
+				text_id = TRANSLATION_KEY,
+				language_id = nonExistantTranslationKey
+			};
+			englishTranslationOfEnglishKey.Execute();
+
+			Assert.False(englishTranslationOfEnglishKey.wasTranslated);
+
+		}
 	}
 }

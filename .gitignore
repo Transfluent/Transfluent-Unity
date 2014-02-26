@@ -51,3 +51,5 @@ TestResult*.xml
 Assets/UnityVS
 Assets/UnityVS.meta
 UnitVS.Transfluent-Unity
+UnitTestResults.xml
+

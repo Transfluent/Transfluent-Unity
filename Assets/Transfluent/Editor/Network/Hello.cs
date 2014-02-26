@@ -8,7 +8,6 @@ namespace transfluent
 {
 	public class Hello
 	{
-		//return
 		public string helloWorldText;
 		public string name { get; set; }
 

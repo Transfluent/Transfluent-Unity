@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using transfluent;
 
 namespace transfluent
 {
@@ -14,16 +10,25 @@ namespace transfluent
 		[DefaultValue(100)]
 		public int limit { get; set; }
 
-		public int? groupid { get; set; }
+		public string group_id { get; set; }
 		public string authToken { get; set; }
 
 		public void Execute()
 		{
 			IWebService service = new SyncronousEditorWebRequest();
-			ReturnStatus status = service.request(RestUrl.getURL(RestUrl.RestAction.TEXTSORDERS));
+
+			var getParams = new Dictionary<string, string>
+			{
+				{"token", authToken}
+			};
+			if (!string.IsNullOrEmpty(group_id))
+			{
+				getParams.Add("groupid", group_id);
+			}
+			string url = RestUrl.getURL(RestUrl.RestAction.TEXTSORDERS) + service.encodeGETParams(getParams);
+			ReturnStatus status = service.request(url);
 
 			string responseText = status.text;
-
 
 			var reader = new ResponseReader<List<TransfluentTranslation>>
 			{

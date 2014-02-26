@@ -140,7 +140,6 @@ namespace transfluent
 					{
 						status.status = ServiceStatus.TRANSPORT_ERROR;
 					}
-					
 				}
 				else
 				{
@@ -150,7 +149,6 @@ namespace transfluent
 			}
 			www.Dispose();
 			return status;
-			//Debug.Log("time elapsed running test:" + sw.Elapsed);
 		}
 	}
 

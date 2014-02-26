@@ -35,14 +35,6 @@ public class TestEntryPoints
 		}
 	}
 
-	[MenuItem("asink/dothing")]
-	public static void DOTHING()
-	{
-		var entry = new TestEntryPoints();
-		for(int i=0;i<10;i++)
-			entry.OneTimeSetup();
-	}
-
 	private string HELLO_WORLD_TEXT_KEY = "HELLO_WORLD_TEXT_KEY";
 	[Test]
 	public void testBackwardsLanguage()
@@ -130,4 +122,6 @@ public class TestEntryPoints
 		Assert.IsNotNull(list);
 		Assert.IsTrue(list.languages.Count > 0);
 	}
+
+	
 }

@@ -12,6 +12,7 @@ namespace transfluent
 
 		public string group_id { get; set; }
 		public string authToken { get; set; }
+		public int offset { get; set; }
 
 		public void Execute()
 		{
@@ -24,6 +25,14 @@ namespace transfluent
 			if (!string.IsNullOrEmpty(group_id))
 			{
 				getParams.Add("groupid", group_id);
+			}
+			if (limit > 0)
+			{
+				getParams.Add("limit",limit.ToString());
+			}
+			if (offset > 0)
+			{
+				getParams.Add("offset",offset.ToString());
 			}
 			string url = RestUrl.getURL(RestUrl.RestAction.TEXTSORDERS) + service.encodeGETParams(getParams);
 			ReturnStatus status = service.request(url);

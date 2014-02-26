@@ -158,5 +158,20 @@ namespace Assets.Editor.Tests
 			Debug.Log("Full result from test translation:" + JsonWriter.Serialize(translateRequest.fullResult));
 			Assert.IsTrue(translateRequest.fullResult.word_count > 0);
 		}
+		[Test]
+		public void testListAllKeys()
+		{
+			var getAllKeys = new GetAllExistingTranslationKeys()
+			{
+				authToken = accessToken
+			};
+			getAllKeys.Execute();
+			List<TransfluentTranslation> translations = getAllKeys.translations;
+			Assert.IsNotNull(getAllKeys.translations);
+			Assert.Greater(getAllKeys.translations.Count,0);
+			bool hastargetKey = false;
+			translations.ForEach((TransfluentTranslation trans)=> { if (trans.key == TRANSLATION_KEY) hastargetKey = true; });
+			Assert.IsTrue(hastargetKey);
+		} 
 	}
 }

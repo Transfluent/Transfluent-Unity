@@ -141,7 +141,6 @@ namespace transfluent
 						status.status = ServiceStatus.TRANSPORT_ERROR;
 					}
 					
-					status.text = Encoding.UTF8.GetString(www.bytes);
 				}
 				else
 				{

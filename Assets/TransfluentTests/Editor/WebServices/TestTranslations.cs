@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
 using transfluent;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Editor.Tests
 {
 	[TestFixture]
-	class TestTranslations
+	internal class TestTranslations
 	{
 		public string accessToken;
 		//public RequestAllLanguages languageContainer;
@@ -27,7 +28,7 @@ namespace Assets.Editor.Tests
 		//[Test]
 		public void OneTimeSetup()
 		{
-			var credentials = new TestLoginFlow.FileBasedCredentialProvider();
+			var credentials = new FileBasedCredentialProvider();
 			Assert.False(string.IsNullOrEmpty(credentials.username));
 			Assert.False(string.IsNullOrEmpty(credentials.password));
 			var login = new Login
@@ -38,7 +39,7 @@ namespace Assets.Editor.Tests
 			login.Execute();
 
 			accessToken = login.token;
-			if(string.IsNullOrEmpty(accessToken))
+			if (string.IsNullOrEmpty(accessToken))
 			{
 				throw new Exception("was not able to log in!");
 			}
@@ -51,7 +52,7 @@ namespace Assets.Editor.Tests
 			var language = new RequestAllLanguages();
 			language.Execute();
 
-			LanguageList list =  language.languagesRetrieved;
+			LanguageList list = language.languagesRetrieved;
 			Assert.NotNull(list);
 			Assert.IsTrue(list.languages.Count > 0);
 
@@ -64,8 +65,8 @@ namespace Assets.Editor.Tests
 		public void SaveRetrieveKey(string keyToSaveAndThenGet)
 		{
 			//post text key
-			string textToSave = textToSetTestTokenTo + UnityEngine.Random.value;
-			SaveTextKey saveOp = new SaveTextKey()
+			string textToSave = textToSetTestTokenTo + Random.value;
+			var saveOp = new SaveTextKey
 			{
 				authToken = accessToken,
 				language = englishLanguage.id,
@@ -74,7 +75,7 @@ namespace Assets.Editor.Tests
 			};
 			saveOp.Execute();
 
-			GetTextKey testForExistance = new GetTextKey()
+			var testForExistance = new GetTextKey
 			{
 				authToken = accessToken,
 				language = englishLanguage.id,
@@ -88,32 +89,37 @@ namespace Assets.Editor.Tests
 			saveOp.text = textToSetTestTokenTo;
 			saveOp.Execute();
 
-			testForExistance.Execute();  //get it again
+			testForExistance.Execute(); //get it again
 			Assert.AreEqual(textToSetTestTokenTo, testForExistance.keyValue);
 		}
-		
+
 		public const string TRANSLATION_KEY = "UNITY_TEST_TRANSLATION_KEY";
-		[Test]
-		public void testTranslation()
+
+		private string reverseString(string str)
 		{
-			var translateRequest = new OrderTranslation()
+			string[] words = str.Split(new[] {" "}, StringSplitOptions.None);
+			var sb = new StringBuilder();
+			for (int i = words.Length - 1; i >= 0; i--)
 			{
-				source_language = englishLanguage.id,
-				target_languages = new []{backwardsLanguage.id},
-				texts = new []{TRANSLATION_KEY},
-				authToken = accessToken,
-			};
-			translateRequest.Execute();
+				string word = words[i];
 
-			UnityEngine.Debug.Log("Full result from test translation:" + JsonWriter.Serialize(translateRequest.fullResult));
-			Assert.IsTrue(translateRequest.fullResult.word_count > 0);
+				char[] charArray = word.ToCharArray();
+				IEnumerable<char> walker = charArray.Reverse();
+				foreach (char t in walker)
+				{
+					sb.Append(t);
+				}
+				if (i != 0)
+					sb.Append(" ");
+			}
+
+			return sb.ToString();
 		}
-
 
 		[Test]
 		public void getBackwardsLanguage()
 		{
-			var englishKeyGetter = new GetTextKey()
+			var englishKeyGetter = new GetTextKey
 			{
 				authToken = accessToken,
 				language = englishLanguage.id,
@@ -122,7 +128,7 @@ namespace Assets.Editor.Tests
 			englishKeyGetter.Execute();
 			string stringToReverse = englishKeyGetter.keyValue;
 			Assert.AreEqual(stringToReverse, textToSetTestTokenTo);
-			var getText = new GetTextKey()
+			var getText = new GetTextKey
 			{
 				authToken = accessToken,
 				language = backwardsLanguage.id,
@@ -133,29 +139,24 @@ namespace Assets.Editor.Tests
 			Assert.AreNotEqual(stringToReverse, reversedString);
 
 			string manuallyReversedString = reverseString(stringToReverse);
-			UnityEngine.Debug.Log(string.Format(" manully reversed:{0} reversed from call{1}",manuallyReversedString,reversedString));
-			Assert.AreEqual(manuallyReversedString,reversedString);
+			Debug.Log(string.Format(" manully reversed:{0} reversed from call{1}", manuallyReversedString, reversedString));
+			Assert.AreEqual(manuallyReversedString, reversedString);
 		}
 
-		string reverseString(string str)
+		[Test]
+		public void testTranslation()
 		{
-			string[] words = str.Split(new string[]{" "},StringSplitOptions.None);
-			StringBuilder sb = new StringBuilder();
-			for(int i=words.Length-1;i>=0;i--)
+			var translateRequest = new OrderTranslation
 			{
-				string word = words[i];
-				
-				char[] charArray = word.ToCharArray();
-				IEnumerable<char> walker = charArray.Reverse();
-				foreach(char t in walker)
-				{
-					sb.Append(t);
-				}
-				if(i != 0)
-					sb.Append(" ");
-			}
+				source_language = englishLanguage.id,
+				target_languages = new[] {backwardsLanguage.id},
+				texts = new[] {TRANSLATION_KEY},
+				authToken = accessToken,
+			};
+			translateRequest.Execute();
 
-			return sb.ToString();
+			Debug.Log("Full result from test translation:" + JsonWriter.Serialize(translateRequest.fullResult));
+			Assert.IsTrue(translateRequest.fullResult.word_count > 0);
 		}
 	}
 }

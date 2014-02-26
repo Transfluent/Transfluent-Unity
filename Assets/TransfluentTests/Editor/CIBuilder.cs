@@ -46,7 +46,7 @@ public class CIBuilder : ScriptableObject
 		public readonly string projectPath = Path.GetFullPath(Application.dataPath + Path.DirectorySeparatorChar + "..");
 
 		public int autoBuildNumber = 0;//build number passed from build machine, not marketing version -- 0.2, etc
-		public string marketingBuildNumber = "0.1";//major, minor, patchlevel
+		public string marketingBuildNumber = "0.3";//major, minor, patchlevel
 
 		public string pathToPackage = "Assets/Transfluent";
 		//run tests, export package
@@ -61,7 +61,9 @@ public class CIBuilder : ScriptableObject
 			string targetBuildPath = projectPath + Path.DirectorySeparatorChar + buildDirectoryPath;
 			if (!Directory.Exists(targetBuildPath))
 				Directory.CreateDirectory(targetBuildPath);
-			AssetDatabase.ExportPackage(pathToPackage,targetBuildPath+Path.DirectorySeparatorChar+appName+autoBuildNumber+".unitypackage",ExportPackageOptions.Recurse);
+			string fileLocation = string.Format("{0}-{1}.unitypackage", targetBuildPath + Path.DirectorySeparatorChar + appName,
+				autoBuildNumber);
+			AssetDatabase.ExportPackage(pathToPackage, fileLocation, ExportPackageOptions.Recurse);
 			
 		}
 	}

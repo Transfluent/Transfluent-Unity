@@ -78,7 +78,7 @@ public class TestLoginFlow
 	}
 
 	[Test]
-	[MaxTime(2000)]
+	[MaxTime(10000)]
 	public void wrongPasswordLogin()
 	{
 		ReturnStatus status = service.request(url, new Dictionary<string, string>()
@@ -91,7 +91,7 @@ public class TestLoginFlow
 	}
 
 	[Test]
-	[MaxTime(2000)]
+	[MaxTime(10000)]
 	public void correctLoginTest()
 	{
 		ReturnStatus status = service.request(url, new Dictionary<string, string>()

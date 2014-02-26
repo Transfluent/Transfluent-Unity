@@ -22,7 +22,7 @@ public class TestLoginFlow
 
 	public class TestCredentialProvider : ICredentialProvider
 	{
-		private readonly string LocationOfTestCredentials = "Assets/Editor/Tests/Data/loginPassword.txt";
+		private readonly string LocationOfTestCredentials = "Assets/TransfluentTests/Editor/Data/loginPassword.txt";
 		public string username { get; protected set; }
 		public string password { get; protected set; }
 

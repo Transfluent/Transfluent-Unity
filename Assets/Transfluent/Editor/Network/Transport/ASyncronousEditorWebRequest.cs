@@ -8,7 +8,6 @@ using UnityEditor;
 
 namespace transfluent
 {
-
 	public class AsyncTester
 	{
 		[MenuItem("asink/testme")]

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace transfluent
 {
@@ -13,10 +11,16 @@ namespace transfluent
 		public string apiToken { get; private set; }
 		public LanguageList knownLanguages { get; private set; }
 
-		bool isInitialized()
+		public bool checkCredentialsOrGetThem()
+		{
+			return Init();
+		}
+
+		private bool isInitialized()
 		{
 			return string.IsNullOrEmpty(apiToken) && knownLanguages != null;
 		}
+
 		public bool Init()
 		{
 			if (isInitialized()) return true;
@@ -24,31 +28,25 @@ namespace transfluent
 			{
 				var langRequest = new RequestAllLanguages();
 				langRequest.Execute();
-				if(langRequest.languagesRetrieved == null)
+				if (langRequest.languagesRetrieved == null)
 				{
 					return false;
 				}
 				knownLanguages = langRequest.languagesRetrieved;
-				var login = new Login { username = credentials.username, password = credentials.password };
+				var login = new Login {username = credentials.username, password = credentials.password};
 				login.Execute();
 
 				apiToken = login.token;
-				if(string.IsNullOrEmpty(apiToken))
+				if (string.IsNullOrEmpty(apiToken))
 					return false;
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
-				UnityEngine.Debug.LogError("Error initializing auth for transfluent:" + e.Message + " stack:" + e.StackTrace);
+				Debug.LogError("Error initializing auth for transfluent:" + e.Message + " stack:" + e.StackTrace);
 				return false;
 			}
 			return true;
 		}
-
-		public bool checkCredentialsOrGetThem()
-		{
-			return Init();
-		}
-		
 	}
 
 	public interface IAuthStateProvider
@@ -60,21 +58,23 @@ namespace transfluent
 
 	public class ApiStateManager
 	{
-		IAuthStateProvider auth = new AuthState();
+		private readonly IAuthStateProvider auth = new AuthState();
 
 		public ApiStateManager()
 		{
 			auth.checkCredentialsOrGetThem();
 		}
-		public bool SetText(string key, string value,TransfluentLanguage2 sourceLanguage)
+
+		public bool SetText(string key, string value, TransfluentLanguage2 sourceLanguage)
 		{
 			return SetText(key, value, sourceLanguage, null);
 		}
-		public bool SetText(string key, string value, TransfluentLanguage2 sourceLanguage,string groupID)
-		{
-			if(auth.checkCredentialsOrGetThem()) return false;//error initializing
 
-			var saver = new SaveTextKey()
+		public bool SetText(string key, string value, TransfluentLanguage2 sourceLanguage, string groupID)
+		{
+			if (auth.checkCredentialsOrGetThem()) return false; //error initializing
+
+			var saver = new SaveTextKey
 			{
 				authToken = auth.apiToken,
 				language = sourceLanguage.id,
@@ -88,11 +88,12 @@ namespace transfluent
 			saver.Execute();
 			return saver.savedSuccessfully;
 		}
+
 		public bool GetText(string key, string value, TransfluentLanguage2 desiredLanguage)
 		{
-			if(auth.checkCredentialsOrGetThem()) return false;//error initializing
+			if (auth.checkCredentialsOrGetThem()) return false; //error initializing
 
-			var saver = new SaveTextKey()
+			var saver = new SaveTextKey
 			{
 				authToken = auth.apiToken,
 				language = desiredLanguage.id,
@@ -103,12 +104,14 @@ namespace transfluent
 			return saver.savedSuccessfully;
 		}
 
-		public bool OrderTranslation(List<string> textIdsToTranslate, TransfluentLanguage2 sourceLanguage,List<TransfluentLanguage2> destinationLanguages,
-			int max_words=1000,OrderTranslation.TranslationQuality level=transfluent.OrderTranslation.TranslationQuality.PROFESSIONAL_TRANSLATOR)
+		public bool OrderTranslation(List<string> textIdsToTranslate, TransfluentLanguage2 sourceLanguage,
+			List<TransfluentLanguage2> destinationLanguages,
+			int max_words = 1000,
+			OrderTranslation.TranslationQuality level = transfluent.OrderTranslation.TranslationQuality.PROFESSIONAL_TRANSLATOR)
 		{
-			if(auth.checkCredentialsOrGetThem()) return false;//error initializing
+			if (auth.checkCredentialsOrGetThem()) return false; //error initializing
 
-			var order = new OrderTranslation()
+			var order = new OrderTranslation
 			{
 				source_language = sourceLanguage.id,
 				authToken = auth.apiToken,

@@ -44,6 +44,9 @@ namespace transfluent
 				case RestAction.TEXTSTRANSLATE:
 					url += "texts/translate/";
 					break;
+				case RestAction.TEXTSTATUS:
+					url += "text/status/";
+					break;
 				default:
 					url += action.ToString().ToLower();
 					break;

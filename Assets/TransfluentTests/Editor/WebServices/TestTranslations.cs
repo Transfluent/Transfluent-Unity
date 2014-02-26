@@ -159,7 +159,7 @@ namespace Assets.Editor.Tests
 			Assert.IsTrue(translateRequest.fullResult.word_count > 0);
 		}
 		[Test]
-		public void testListAllKeys()
+		public void testListAllTranslations()
 		{
 			var getAllKeys = new GetAllExistingTranslationKeys()
 			{
@@ -172,6 +172,29 @@ namespace Assets.Editor.Tests
 			bool hastargetKey = false;
 			translations.ForEach((TransfluentTranslation trans)=> { if (trans.key == TRANSLATION_KEY) hastargetKey = true; });
 			Assert.IsTrue(hastargetKey);
-		} 
+		}
+		[Test]
+		public void testStatusOfAlreadyInsertedKey()
+		{
+			var englishTranslationOfEnglishKey = new TextStatus()
+			{
+				authToken = accessToken,
+				text_id = TRANSLATION_KEY,
+				language_id = englishLanguage.id
+			};
+			englishTranslationOfEnglishKey.Execute();
+
+			Assert.True(englishTranslationOfEnglishKey.wasTranslated);
+
+			var backwardsTranslationOfExistingKey = new TextStatus()
+			{
+				authToken = accessToken,
+				text_id = TRANSLATION_KEY,
+				language_id = backwardsLanguage.id
+			};
+			backwardsTranslationOfExistingKey.Execute();
+			Assert.IsTrue(backwardsTranslationOfExistingKey.wasTranslated);
+		}
+
 	}
 }

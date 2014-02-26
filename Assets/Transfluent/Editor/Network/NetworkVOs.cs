@@ -54,6 +54,12 @@ namespace transfluent
 	}
 
 	[Serializable]
+	public class TextStatusResult
+	{
+		public bool is_translated;
+	}
+
+	[Serializable]
 	public class Error
 	{
 		public Error() { }

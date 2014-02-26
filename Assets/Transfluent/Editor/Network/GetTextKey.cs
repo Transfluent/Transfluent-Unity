@@ -25,8 +25,8 @@ namespace transfluent
 			{
 				webserviceParams.Add("group_id", group_id);
 			}
-			string url = RestUrl.getURL(RestUrl.RestAction.TEXT);
-			ReturnStatus status = service.request(url + service.encodeGETParams(webserviceParams));
+			string url = RestUrl.getURL(RestUrl.RestAction.TEXT) + service.encodeGETParams(webserviceParams);
+			ReturnStatus status = service.request(url);
 			// + service.encodeGETParams(webserviceParams)
 			string responseText = status.text;
 

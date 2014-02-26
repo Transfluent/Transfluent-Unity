@@ -48,3 +48,6 @@ TestResult*.xml
 !*.dll
 *.mdb
 *.mdb.meta
+Assets/UnityVS
+Assets/UnityVS.meta
+UnitVS.Transfluent-Unity

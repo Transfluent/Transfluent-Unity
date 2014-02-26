@@ -89,7 +89,7 @@ namespace transfluent
 			sb.Append("?");
 			foreach(KeyValuePair<string, string> kvp in getParams)
 			{
-				sb.Append(kvp.Key + "=" + kvp.Value + "&");
+				sb.Append(WWW.EscapeURL(kvp.Key) + "=" + WWW.EscapeURL(kvp.Value) + "&");
 			}
 			return sb.ToString();
 		}

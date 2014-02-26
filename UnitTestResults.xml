@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="Unity Tests" total="13" errors="1" failures="2" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-02-26" time="11:15:44">
+  <environment nunit-version="2.6.2-Unity" clr-version="2.0.50727.1433" os-version="Unix 13.0.2.0" platform="Unix" cwd="/Users/alexsink/client/transfluent/Transfluent-Unity" machine-name="Alexs-MacBook-Pro.local" user="alexsink" user-domain="Alexs-MacBook-Pro.local" />
+  <culture-info current-culture="" current-uiculture="" />
+  <test-suite name="Unit Tests" type="Assembly" executed="True" result="Failure" success="False" time="11.594">
+    <results>
+      <test-case name="Assets.Editor.Tests.TestTranslations.getBackwardsLanguage" executed="True" result="Success" success="True" time="0.671">
+      </test-case>
+      <test-case name="Assets.Editor.Tests.TestTranslations.testTranslation" executed="True" result="Error" success="False" time="0.014">
+        <failure>
+          <message>
+<![CDATA[System.Exception : DEFAULT VALUE NOT WORKING]]>
+          </message>
+          <stack-trace>
+<![CDATA[at transfluent.OrderTranslation.Execute () [0x00053] in /Users/alexsink/client/transfluent/Transfluent-Unity/Assets/Transfluent/Editor/Network/OrderTranslation.cs:47
+at Assets.Editor.Tests.TestTranslations.testTranslation () [0x00053] in /Users/alexsink/client/transfluent/Transfluent-Unity/Assets/TransfluentTests/Editor/WebServices/TestTranslations.cs:106
+]]>
+          </stack-trace>
+        </failure>
+      </test-case>
+      <test-case name="TestEditorWebService.testWWWCallWithStep" executed="True" result="Success" success="True" time="3.220">
+      </test-case>
+      <test-case name="TestEditorWebService.testWWWCallWithThreadSleep" executed="True" result="Success" success="True" time="0.817">
+      </test-case>
+      <test-case name="TestEntryPoints.getKeyThatDoesNotExist" executed="True" result="Success" success="True" time="1.456">
+      </test-case>
+      <test-case name="TestEntryPoints.testBackwardsLanguage" executed="True" result="Success" success="True" time="1.756">
+      </test-case>
+      <test-case name="TestEntryPoints.testGetAllLanugages" executed="True" result="Success" success="True" time="0.990">
+      </test-case>
+      <test-case name="TestEntryPoints.testHello" executed="True" result="Success" success="True" time="0.359">
+      </test-case>
+      <test-case name="TestEntryPoints.testLanguages" executed="True" result="Success" success="True" time="0.973">
+      </test-case>
+      <test-case name="TestLoginFlow.correctLoginTest" executed="True" result="Success" success="True" time="0.378">
+      </test-case>
+      <test-case name="TestLoginFlow.loadTestCredentials" executed="True" result="Success" success="True" time="0.000">
+      </test-case>
+      <test-case name="TestLoginFlow.noPostLogin" executed="True" result="Failure" success="False" time="0.437">
+        <failure>
+          <message>
+<![CDATA[  Expected: True
+  But was:  False
+]]>
+          </message>
+          <stack-trace>
+<![CDATA[at TestLoginFlow.noPostLogin () [0x00012] in /Users/alexsink/client/transfluent/Transfluent-Unity/Assets/TransfluentTests/Editor/WebServices/TestLoginFlow.cs:70
+]]>
+          </stack-trace>
+        </failure>
+      </test-case>
+      <test-case name="TestLoginFlow.wrongPasswordLogin" executed="True" result="Failure" success="False" time="0.523">
+        <failure>
+          <message>
+<![CDATA[  Expected: True
+  But was:  False
+]]>
+          </message>
+          <stack-trace>
+<![CDATA[at TestLoginFlow.wrongPasswordLogin () [0x0003f] in /Users/alexsink/client/transfluent/Transfluent-Unity/Assets/TransfluentTests/Editor/WebServices/TestLoginFlow.cs:83
+]]>
+          </stack-trace>
+        </failure>
+      </test-case>
+    </results>
+  </test-suite>
+</test-results>

@@ -101,10 +101,10 @@ namespace transfluent
 
 			var sw = new Stopwatch();
 			sw.Start();
-			while(www.isDone == false && www.error == null && sw.Elapsed.Seconds < 10f)
+			while(www.isDone == false && www.error == null && sw.Elapsed.TotalSeconds < 10f)
 			{
-				EditorApplication.Step();
-				//Thread.Sleep(100);
+				//EditorApplication.Step();
+				Thread.Sleep(100);
 			}
 			
 			sw.Stop();
@@ -178,7 +178,7 @@ namespace transfluent
 
 		public override string ToString()
 		{
-			return "RETURN STATUS:"+ JsonWriter.Serialize(this);
+			return "RETURN STATUS:" + JsonWriter.Serialize(this) + " time in seconds taken:" + requestTimeTaken.TotalSeconds;
 		}
 	}
 }

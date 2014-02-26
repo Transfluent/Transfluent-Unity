@@ -9,11 +9,10 @@ namespace transfluent
 {
 	public class OrderTranslation
 	{
-		[DefaultValue(2)]
 		public enum TranslationQuality
 		{
-			PROFESSIONAL_TRANSLATOR = 2,
 			PAIR_OF_TRANSLATORS=3,
+			PROFESSIONAL_TRANSLATOR = 2,
 			NATIVE_SPEAKER=1,
 		}
 		//group_id, source_language, target_languages, texts, comment, callback_url, max_words [=1000], level [=2], token

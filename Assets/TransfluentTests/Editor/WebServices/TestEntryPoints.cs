@@ -18,7 +18,7 @@ public class TestEntryPoints
 	//[Test]
 	public void OneTimeSetup()
 	{
-		var credentials = new TestLoginFlow.TestCredentialProvider();
+		var credentials = new TestLoginFlow.FileBasedCredentialProvider();
 		Assert.False(string.IsNullOrEmpty(credentials.username));
 		Assert.False(string.IsNullOrEmpty(credentials.password));
 		var login = new Login

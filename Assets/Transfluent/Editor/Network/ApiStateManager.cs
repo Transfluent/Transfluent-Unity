@@ -9,7 +9,7 @@ namespace transfluent
 	public class AuthState : IAuthStateProvider
 	{
 		//public string currentLanguageCode;
-		private readonly TestLoginFlow.ICredentialProvider credentials = new TestLoginFlow.TestCredentialProvider();
+		private readonly TestLoginFlow.ICredentialProvider credentials = new TestLoginFlow.FileBasedCredentialProvider();
 		public string apiToken { get; private set; }
 		public LanguageList knownLanguages { get; private set; }
 

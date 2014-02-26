@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.Remoting;
-using System.Threading;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
 using transfluent;
@@ -20,13 +15,13 @@ public class TestLoginFlow
 		string password { get; }
 	}
 
-	public class TestCredentialProvider : ICredentialProvider
+	public class FileBasedCredentialProvider : ICredentialProvider
 	{
 		private readonly string LocationOfTestCredentials = "Assets/TransfluentTests/Editor/Data/loginPassword.txt";
 		public string username { get; protected set; }
 		public string password { get; protected set; }
 
-		public TestCredentialProvider()
+		public FileBasedCredentialProvider()
 		{
 			TextAsset textAsset = AssetDatabase.LoadAssetAtPath(LocationOfTestCredentials, typeof(TextAsset)) as TextAsset;
 			string[] lines = textAsset.text.Split(new[] { '\r', '\n' });
@@ -34,12 +29,24 @@ public class TestLoginFlow
 			password = lines[1];
 		}
 	}
-	
+	public class EditorKeyCredentialProvicer : ICredentialProvider
+	{
+		public const string USERNAME_EDITOR_KEY = "TRANSFLUENT_USERNAME_KEY";
+		public const string PASSWORD_EDITOR_KEY = "PASSWORD_EDITOR_KEY";
+		public string username { get; protected set; }
+		public string password { get; protected set; }
+
+		public EditorKeyCredentialProvicer()
+		{
+			username = EditorPrefs.GetString(USERNAME_EDITOR_KEY);
+			password = EditorPrefs.GetString(PASSWORD_EDITOR_KEY);
+		}
+	}
 	public static string baseServiceUrl = "https://transfluent.com/v2/";
 	public static string requestedService = "authenticate";
 	public string url = baseServiceUrl + requestedService;
 	private IWebService service;
-	public TestCredentialProvider Provider;
+	public FileBasedCredentialProvider Provider;
 
 	[TestFixtureSetUp]
 	public void getTestCredentials()
@@ -50,7 +57,7 @@ public class TestLoginFlow
 	[Test]
 	public void loadTestCredentials()
 	{
-		Provider = new TestCredentialProvider();
+		Provider = new FileBasedCredentialProvider();
 		Assert.IsFalse(string.IsNullOrEmpty(Provider.username));
 		Assert.IsFalse(string.IsNullOrEmpty(Provider.password));
 	}

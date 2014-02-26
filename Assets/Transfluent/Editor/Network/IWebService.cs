@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using Pathfinding.Serialization.JsonFx;
-using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 

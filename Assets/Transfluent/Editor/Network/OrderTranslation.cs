@@ -9,10 +9,11 @@ namespace transfluent
 {
 	public class OrderTranslation
 	{
+		[DefaultValue(2)]
 		public enum TranslationQuality
 		{
+			PROFESSIONAL_TRANSLATOR = 2,
 			PAIR_OF_TRANSLATORS=3,
-			PROFESSIONAL_TRANSLATOR=2,
 			NATIVE_SPEAKER=1,
 		}
 		//group_id, source_language, target_languages, texts, comment, callback_url, max_words [=1000], level [=2], token
@@ -28,7 +29,6 @@ namespace transfluent
 		//optional
 		public int max_words { get; set; }
 
-		[DefaultValue(TranslationQuality.PROFESSIONAL_TRANSLATOR)]
 		public TranslationQuality level { get; set; }
 
 		public void Execute()
@@ -42,10 +42,6 @@ namespace transfluent
 					id = toTranslate
 				});
 			}
-			if (level != TranslationQuality.PROFESSIONAL_TRANSLATOR)
-			{
-				throw new Exception("DEFAULT VALUE NOT WORKING");
-			}
 
 			var webserviceParams = new Dictionary<string, string>
 			{
@@ -53,8 +49,11 @@ namespace transfluent
 				{"target_languages", JsonWriter.Serialize(target_languages)},
 				{"texts", JsonWriter.Serialize(containerOfTextIDsToUse)},
 				{"token", authToken},
-				{"level",((int)level).ToString()}
 			};
+			if (level != 0)
+			{
+				webserviceParams.Add("level",((int)level).ToString());
+			}
 			if(group_id != null)
 			{
 				webserviceParams.Add("group_id", group_id);

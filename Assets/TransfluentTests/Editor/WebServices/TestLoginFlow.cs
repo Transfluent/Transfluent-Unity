@@ -70,7 +70,7 @@ public class TestLoginFlow
 	}
 
 	[Test]
-	[MaxTime(2000)]
+	[MaxTime(10000)]
 	public void noPostLogin()
 	{
 		ReturnStatus status = service.request(url); //no password params!

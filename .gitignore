@@ -1,1 +1,50 @@
-.idea
+.idea #existed already
+# ---------------[ Unity generated ]------------------ #
+Temp/
+Obj/
+UnityGenerated/
+Library/
+ 
+# ----[ Visual Studio / MonoDevelop generated ]------- #
+ 
+ExportedObj/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+
+*.svd.meta
+*.userprefs.meta
+*.csproj.meta
+*.pidb.meta
+*.suo.meta
+*.sln.meta
+*.user.meta
+*.unityproj.meta
+*.booproj.meta
+ 
+# -------------[ OS generated ]------------------------ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+Thumbs.db.meta
+Assets/External/*.meta
+TestResult.xml
+
+#--me
+build
+
+TestResult*.xml
+!*.dll
+*.mdb
+*.mdb.meta

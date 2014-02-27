@@ -32,15 +32,23 @@ public class TestEditorWindowMediator
 
 	public bool authIsDone()
 	{
-		return !string.IsNullOrEmpty(getCurrentAuthToken()) &&
+		string authToken = "";
+		authToken = getCurrentAuthToken();
+
+		return !string.IsNullOrEmpty(authToken) &&
 		       allLanguagesSupported != null;
 	}
 
 	private string getCurrentAuthToken()
 	{
-		return context.manualGetMapping<string>(NamedInjections.API_TOKEN);
+		string retVal = null;
+		try
+		{
+			retVal = context.manualGetMapping<string>(NamedInjections.API_TOKEN);
+		}catch(KeyNotFoundException e){}
+		return retVal;
 	}
-
+	
 	public bool doAuth(string username, string password)
 	{
 		if (string.IsNullOrEmpty(getCurrentAuthToken()))
@@ -97,7 +105,7 @@ public class TestEditorWindowMediator
 
 	public void invalidateAuth()
 	{
-		context.addMapping<string>(NamedInjections.API_TOKEN);
+		context.removeNamedMapping<string>(NamedInjections.API_TOKEN);
 		allLanguagesSupported = null;
 		context.manualGetMapping<ICredentialProvider>().save(null, null);
 	}
@@ -138,6 +146,4 @@ public class TestEditorWindowMediator
 			throw new Exception("DO ERROR HANDLING HERE" + saveText.webServiceStatus);
 		}
 	}
-
-
 }

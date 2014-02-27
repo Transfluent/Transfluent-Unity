@@ -58,6 +58,18 @@ namespace transfluent
 			namedInjectionMap[name].Add(valueToPutIn.GetType(), valueToPutIn);
 		}
 
+		public void removeNamedMapping<T>(NamedInjections namedInjection)
+		{
+			string name = namedInjection.ToString();
+			
+			if(!namedInjectionMap.ContainsKey(name))
+				namedInjectionMap.Add(name, new Dictionary<Type, object>());
+			if (namedInjectionMap[name].ContainsKey(typeof (T)))
+			{
+				namedInjectionMap[name].Remove(typeof (T));
+			}
+		}
+
 		public void addNamedMapping<T>(NamedInjections name, object valueToPutIn)
 		{
 			addNamedMapping<T>(name.ToString(), valueToPutIn);

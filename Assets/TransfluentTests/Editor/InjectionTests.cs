@@ -6,6 +6,33 @@ using transfluent;
 [TestFixture]
 public class InjectionTests 
 {
+
+	public interface ITestInjectionTarget
+	{
+		 string testString { get; set; }
+		 string specialString { get; set; }
+	}
+
+	public class ClassWithATestInterfaceToBeInjected
+	{
+		[Inject]
+		public IStringProvider testStringProvider { get; set; }
+	}
+
+	public interface IStringProvider
+	{
+		string myString { get; set; }
+	}
+
+	public class StringProviderConcrete1 : IStringProvider
+	{
+		public string myString { get; set; }
+	}
+	public class StringProviderConcrete2 : IStringProvider
+	{
+		public string myString { get; set; }
+	}
+
 	public class TestInjectionTarget
 	{
 		[Inject]
@@ -60,5 +87,18 @@ public class InjectionTests
 		Assert.AreSame(target.specialString, namedKey);
 		Assert.AreNotEqual(standardKey,namedKey);
 		Assert.AreNotEqual(target.testString, target.specialString);
+	}
+
+	[Test]
+	public void TestInterfaceSettingToMap()
+	{
+		InjectionContext context = new InjectionContext();
+		context.addMapping<IStringProvider>(new StringProviderConcrete1());
+		var target = new ClassWithATestInterfaceToBeInjected();
+
+		context.setMappings(target);
+
+		Assert.IsTrue(target.testStringProvider is StringProviderConcrete1);
+		Assert.IsFalse(target.testStringProvider is StringProviderConcrete2);
 	}
 }

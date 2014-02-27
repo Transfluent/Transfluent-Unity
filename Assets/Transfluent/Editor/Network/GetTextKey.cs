@@ -13,7 +13,7 @@ namespace transfluent
 
 		public new void Execute()
 		{
-			IWebService service = new DebugSyncronousEditorWebRequest();
+			IWebService service = new SyncronousEditorWebRequest();
 			var webserviceParams = new Dictionary<string, string>
 			{
 				{"text_id", text_id},

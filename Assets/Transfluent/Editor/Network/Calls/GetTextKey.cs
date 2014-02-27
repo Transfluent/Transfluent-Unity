@@ -5,7 +5,6 @@ namespace transfluent
 {
 	public class GetTextKey
 	{
-		public string keyValue { get; set; }
 		public string text_id { get; set; }
 		public string group_id { get; set; }
 		public int languageID { get; set; }

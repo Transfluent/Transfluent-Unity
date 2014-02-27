@@ -42,7 +42,7 @@ public class InjectionTests
 		[Inject]
 		public string testString { get; set; }
 
-		[Inject("Special")]
+		[Inject(NamedInjections.INTERNAL_TESTING_SPECIAL_KEY)]
 		public string specialString { get; set; }
 	}
 

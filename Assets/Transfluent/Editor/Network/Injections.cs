@@ -8,6 +8,7 @@ namespace transfluent
 	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
 	public class Inject : Attribute
 	{
+		public bool isNamed { get; private set; }
 		public NamedInjections name;
 
 		public Inject()
@@ -16,6 +17,7 @@ namespace transfluent
 
 		public Inject(NamedInjections injectionName)
 		{
+			isNamed = true;
 			name = injectionName;
 		}
 	}
@@ -49,20 +51,26 @@ namespace transfluent
 			addMapping(typeof (T), valueToPutIn);
 		}
 
-		void addNamedMapping<T>(string name, object valueToPutIn)
+		private void addNamedMapping<T>(string name, object valueToPutIn)
 		{
 			if (!namedInjectionMap.ContainsKey(name))
 				namedInjectionMap.Add(name, new Dictionary<Type, object>());
 			namedInjectionMap[name].Add(valueToPutIn.GetType(), valueToPutIn);
 		}
+
 		public void addNamedMapping<T>(NamedInjections name, object valueToPutIn)
 		{
-			addNamedMapping<T>(name.ToString(),valueToPutIn);
+			addNamedMapping<T>(name.ToString(), valueToPutIn);
+		}
+
+		public T manualGetMapping<T>() where T : class
+		{
+			return injectionMap[typeof (T)] as T;
 		}
 
 		public T manualGetMapping<T>(NamedInjections name) where T : class
 		{
-			return namedInjectionMap[name.ToString()] as T;
+			return namedInjectionMap[name.ToString()][typeof (T)] as T;
 		}
 
 		public void setMappings(object toInject)
@@ -86,8 +94,8 @@ namespace transfluent
 					try
 					{
 						Dictionary<Type, object> injectionMapToUse = injectionMap;
-						if (!string.IsNullOrEmpty(injectionAttribute.name))
-							injectionMapToUse = namedInjectionMap[injectionAttribute.name];
+						if (injectionAttribute.isNamed)
+							injectionMapToUse = namedInjectionMap[injectionAttribute.name.ToString()];
 
 
 						object valueToInject = injectionMapToUse[typeToInject];
@@ -96,7 +104,8 @@ namespace transfluent
 					catch (KeyNotFoundException k)
 					{
 						throw new UnboundInjectionException("Injeciton not set for type:" + typeToInject.Name +
-															" when trying to set on a sub objectnamed:" + injectionAttribute.name + " core exception:"+k.ToString());
+						                                    " when trying to set on a sub objectnamed:" + injectionAttribute.name +
+						                                    " core exception:" + k);
 					}
 				}
 			}

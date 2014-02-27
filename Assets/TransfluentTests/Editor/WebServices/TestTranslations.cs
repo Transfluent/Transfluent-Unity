@@ -14,7 +14,6 @@ namespace Assets.Editor.Tests
 	internal class TestTranslations
 	{
 		public string accessToken;
-		//public RequestAllLanguages languageContainer;
 		public TransfluentLanguage2 englishLanguage;
 		public TransfluentLanguage2 backwardsLanguage;
 		private LanguageList languageCache;
@@ -36,6 +35,7 @@ namespace Assets.Editor.Tests
 			{
 				username = credentials.username,
 				password = credentials.password,
+				service = new SyncronousEditorWebRequest()
 			};
 			login.Execute();
 
@@ -50,7 +50,7 @@ namespace Assets.Editor.Tests
 
 		public void getLanguages()
 		{
-			var language = new RequestAllLanguages();
+			var language = new RequestAllLanguages {service = new SyncronousEditorWebRequest()};
 			language.Execute();
 
 			LanguageList list = language.languagesRetrieved;
@@ -73,15 +73,17 @@ namespace Assets.Editor.Tests
 				authToken = accessToken,
 				language = englishLanguage.id,
 				text = textToSave,
-				text_id = keyToSaveAndThenGet
+				text_id = keyToSaveAndThenGet,
+				service = new SyncronousEditorWebRequest()
 			};
 			saveOp.Execute();
 
 			var testForExistance = new GetTextKey
 			{
 				authToken = accessToken,
-				language = englishLanguage.id,
-				text_id = keyToSaveAndThenGet
+				languageID = englishLanguage.id,
+				text_id = keyToSaveAndThenGet,
+				service = new SyncronousEditorWebRequest()
 			};
 			testForExistance.Execute();
 			Assert.IsFalse(string.IsNullOrEmpty(testForExistance.keyValue));
@@ -124,8 +126,9 @@ namespace Assets.Editor.Tests
 			var englishKeyGetter = new GetTextKey
 			{
 				authToken = accessToken,
-				language = englishLanguage.id,
+				languageID = englishLanguage.id,
 				text_id = TRANSLATION_KEY,
+				service = new SyncronousEditorWebRequest()
 			};
 			englishKeyGetter.Execute();
 			string stringToReverse = englishKeyGetter.keyValue;
@@ -133,8 +136,9 @@ namespace Assets.Editor.Tests
 			var getText = new GetTextKey
 			{
 				authToken = accessToken,
-				language = backwardsLanguage.id,
+				languageID = backwardsLanguage.id,
 				text_id = TRANSLATION_KEY,
+				service = new SyncronousEditorWebRequest()
 			};
 			getText.Execute();
 			string reversedString = getText.keyValue;
@@ -144,81 +148,76 @@ namespace Assets.Editor.Tests
 			Debug.Log(string.Format(" manully reversed:{0} reversed from call{1}", manuallyReversedString, reversedString));
 			Assert.AreEqual(manuallyReversedString, reversedString);
 		}
+		
 
-		[Test]
-		public void testTranslation()
-		{
-			var translateRequest = new OrderTranslation
-			{
-				source_language = englishLanguage.id,
-				target_languages = new[] {backwardsLanguage.id},
-				texts = new[] {TRANSLATION_KEY},
-				authToken = accessToken,
-			};
-			translateRequest.Execute();
-
-			Debug.Log("Full result from test translation:" + JsonWriter.Serialize(translateRequest.fullResult));
-			Assert.IsTrue(translateRequest.fullResult.word_count > 0);
-		}
+		//TODO: verify this fails because the backwards language is not an "Ordered" translation
 		[Test]
 		public void testListAllTranslations()
 		{
-			var getAllKeys = new GetAllExistingTranslationKeys()
+			var getAllKeys = new GetAllExistingTranslationKeys
 			{
-				authToken = accessToken
+				authToken = accessToken,
+				service = new SyncronousEditorWebRequest()
 			};
 			getAllKeys.Execute();
 			List<TransfluentTranslation> translations = getAllKeys.translations;
 			Assert.IsNotNull(getAllKeys.translations);
-			Assert.Greater(getAllKeys.translations.Count,0);
+			Assert.Greater(getAllKeys.translations.Count, 0);  /// I don't know why this is 0
 			bool hastargetKey = false;
-			translations.ForEach((TransfluentTranslation trans)=> { if (trans.key == TRANSLATION_KEY) hastargetKey = true; });
+			translations.ForEach((TransfluentTranslation trans) => { if (trans.key == TRANSLATION_KEY) hastargetKey = true; });
 			Assert.IsTrue(hastargetKey);
 		}
+
 		[Test]
 		public void testStatusOfAlreadyInsertedKey()
 		{
-			var englishTranslationOfEnglishKey = new TextStatus()
+			var englishTranslationOfEnglishKey = new TextStatus
 			{
 				authToken = accessToken,
 				text_id = TRANSLATION_KEY,
-				language_id = englishLanguage.id
+				language_id = englishLanguage.id,
+				service = new SyncronousEditorWebRequest()
 			};
 			englishTranslationOfEnglishKey.Execute();
 
 			Assert.True(englishTranslationOfEnglishKey.wasTranslated);
 
-			var backwardsTranslationOfExistingKey = new TextStatus()
+			var backwardsTranslationOfExistingKey = new TextStatus
 			{
 				authToken = accessToken,
 				text_id = TRANSLATION_KEY,
-				language_id = backwardsLanguage.id
+				language_id = backwardsLanguage.id,
+				service = new SyncronousEditorWebRequest()
 			};
 			backwardsTranslationOfExistingKey.Execute();
 			Assert.IsTrue(backwardsTranslationOfExistingKey.wasTranslated);
 		}
+
 		[Test]
 		public void testStatusOfNonExistantKey()
 		{
-			var englishTranslationOfEnglishKey = new TextStatus()
+			var englishTranslationOfEnglishKey = new TextStatus
 			{
 				authToken = accessToken,
-				text_id = TRANSLATION_KEY + " THIS IS INVALID"+Random.value,
-				language_id = englishLanguage.id
+				text_id = TRANSLATION_KEY + " THIS IS INVALID" + Random.value,
+				language_id = englishLanguage.id,
+				service = new SyncronousEditorWebRequest()
 			};
 			englishTranslationOfEnglishKey.Execute();
 
 			Assert.False(englishTranslationOfEnglishKey.wasTranslated);
 
-			var backwardsTranslationOfExistingKey = new TextStatus()
+			var backwardsTranslationOfExistingKey = new TextStatus
 			{
 				authToken = accessToken,
 				text_id = TRANSLATION_KEY + " THIS IS INVALID" + Random.value,
-				language_id = backwardsLanguage.id
+				language_id = backwardsLanguage.id,
+				service = new SyncronousEditorWebRequest()
 			};
 			backwardsTranslationOfExistingKey.Execute();
 			Assert.False(backwardsTranslationOfExistingKey.wasTranslated);
 		}
+
 		[Test]
 		public void testStatusOfNotOrderedTranslations()
 		{
@@ -231,17 +230,34 @@ namespace Assets.Editor.Tests
 					break;
 				}
 			}
-			
-			var englishTranslationOfEnglishKey = new TextStatus()
+
+			var englishTranslationOfEnglishKey = new TextStatus
 			{
 				authToken = accessToken,
 				text_id = TRANSLATION_KEY,
-				language_id = nonExistantTranslationKey
+				language_id = nonExistantTranslationKey,
+				service = new SyncronousEditorWebRequest()
 			};
 			englishTranslationOfEnglishKey.Execute();
 
 			Assert.False(englishTranslationOfEnglishKey.wasTranslated);
+		}
 
+		[Test]
+		public void testTranslation()
+		{
+			var translateRequest = new OrderTranslation
+			{
+				source_language = englishLanguage.id,
+				target_languages = new[] {backwardsLanguage.id},
+				texts = new[] {TRANSLATION_KEY},
+				authToken = accessToken,
+				service = new SyncronousEditorWebRequest()
+			};
+			translateRequest.Execute();
+
+			Debug.Log("Full result from test translation:" + JsonWriter.Serialize(translateRequest.fullResult));
+			Assert.IsTrue(translateRequest.fullResult.word_count > 0);
 		}
 	}
 }

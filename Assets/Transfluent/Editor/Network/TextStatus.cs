@@ -11,9 +11,11 @@ namespace transfluent
 
 		public string authToken { get; set; }
 
+		[Inject]
+		public IWebService service { get; set; }
+
 		public void Execute()
 		{
-			IWebService service = new SyncronousEditorWebRequest();
 			var postParams = new Dictionary<string, string>
 			{
 				{"token", authToken},

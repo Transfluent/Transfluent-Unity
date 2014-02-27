@@ -11,9 +11,12 @@ namespace transfluent
 		public string helloWorldText;
 		public string name { get; set; }
 
+		[Inject]
+		public IWebService service { get; set; }
+
 		public void Execute()
 		{
-			IWebService service = new SyncronousEditorWebRequest();
+			
 			ReturnStatus status = service.request(RestUrl.getURL(RestUrl.RestAction.HELLO), new Dictionary<string, string>
 			{
 				{"name", name},

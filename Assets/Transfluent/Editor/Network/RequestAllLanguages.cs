@@ -27,9 +27,10 @@ namespace transfluent
 	{
 		public LanguageList languagesRetrieved;
 
+		[Inject]
+		public IWebService service { get; set; }
 		public void Execute()
 		{
-			IWebService service = new SyncronousEditorWebRequest();
 			ReturnStatus status = service.request(RestUrl.getURL(RestUrl.RestAction.LANGUAGES));
 
 			string responseText = status.text;

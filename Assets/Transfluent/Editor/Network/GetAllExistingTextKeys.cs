@@ -14,10 +14,11 @@ namespace transfluent
 		public string authToken { get; set; }
 		public int offset { get; set; }
 
+		[Inject]
+		public IWebService service { get; set; }
+
 		public void Execute()
 		{
-			IWebService service = new SyncronousEditorWebRequest();
-
 			var getParams = new Dictionary<string, string>
 			{
 				{"token", authToken}

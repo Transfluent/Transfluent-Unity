@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace transfluent
+﻿namespace transfluent
 {
 	public class RestUrl
 	{
@@ -12,7 +7,7 @@ namespace transfluent
 			AUTHENTICATE,
 			HELLO,
 			REGISTER,
-			LANGUAGES,
+			LANGUAGES,	
 			TEXT,
 			TEXTS,
 			TEXTSTATUS,
@@ -36,7 +31,7 @@ namespace transfluent
 		public static string getURL(RestAction action)
 		{
 			string url = baseServiceUrl;
-			switch(action)
+			switch (action)
 			{
 				case RestAction.TEXTSORDERS:
 					url += "texts/orders/";

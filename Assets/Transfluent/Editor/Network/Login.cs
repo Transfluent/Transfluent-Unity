@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using transfluent;
+﻿using System.Collections.Generic;
 
 namespace transfluent
 {
@@ -12,9 +8,11 @@ namespace transfluent
 		public string username { get; set; }
 		public string password { get; set; }
 
+		[Inject]
+		public IWebService service { get; set; }
+
 		public void Execute()
 		{
-			IWebService service = new SyncronousEditorWebRequest();
 			ReturnStatus status = service.request(RestUrl.getURL(RestUrl.RestAction.AUTHENTICATE), new Dictionary<string, string>
 			{
 				{"email", username},

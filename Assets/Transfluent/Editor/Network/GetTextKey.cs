@@ -1,27 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using transfluent;
 
 namespace transfluent
 {
-	//TODO: make savetext a child of gettext
-	public class GetTextKey : SaveTextKey
+	public class GetTextKey
 	{
 		public string keyValue { get; set; }
+		public string text_id { get; set; }
+		public string group_id { get; set; }
+		public int languageID { get; set; }
 
-		public new void Execute()
+		public string authToken { get; set; }
+
+		[Inject]
+		public IWebService service { get; set; }
+
+		public void Execute()
 		{
-			IWebService service = new SyncronousEditorWebRequest();
 			var webserviceParams = new Dictionary<string, string>
 			{
 				{"text_id", text_id},
-				{"language", language.ToString()},
+				{"language", languageID.ToString()},
 				{"token", authToken}
 			};
 
-			if(group_id != null)
+			if (group_id != null)
 			{
 				webserviceParams.Add("group_id", group_id);
 			}
@@ -30,7 +33,7 @@ namespace transfluent
 			// + service.encodeGETParams(webserviceParams)
 			string responseText = status.text;
 
-			if(status.status != ServiceStatus.SUCCESS)
+			if (status.status != ServiceStatus.SUCCESS)
 				throw new Exception("Unsuccessful request " + status.rawErrorCode + " response" + responseText + " url:" + url);
 
 			var reader = new ResponseReader<string>

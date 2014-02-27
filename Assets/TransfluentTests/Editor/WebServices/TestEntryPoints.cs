@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using NUnit.Framework;
 using transfluent;
-using UnityEditor;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 [TestFixture]
 public class TestEntryPoints
@@ -25,6 +25,7 @@ public class TestEntryPoints
 		{
 			username = credentials.username,
 			password = credentials.password,
+			service = new SyncronousEditorWebRequest()
 		};
 		login.Execute();
 
@@ -36,39 +37,59 @@ public class TestEntryPoints
 	}
 
 	private string HELLO_WORLD_TEXT_KEY = "HELLO_WORLD_TEXT_KEY";
+
+	[Test]
+	public void getKeyThatDoesNotExist()
+	{
+		var language = new RequestAllLanguages(){service = new SyncronousEditorWebRequest()};
+		language.Execute();
+		TransfluentLanguage2 englishLanguage = language.languagesRetrieved.getLangaugeByCode("en-us");
+
+		var testForExistance = new GetTextKey
+		{
+			authToken = accessToken,
+			languageID = englishLanguage.id,
+			text_id = "THIS_DOES_NOT_EXIST" + Random.value,
+			service = new SyncronousEditorWebRequest()
+		};
+		Assert.Throws(typeof (Exception), testForExistance.Execute);
+	}
+
 	[Test]
 	public void testBackwardsLanguage()
 	{
-		var language = new RequestAllLanguages();
+		var language = new RequestAllLanguages(){service = new SyncronousEditorWebRequest()};
 		language.Execute();
 
 		LanguageList list = language.languagesRetrieved;
 		Assert.NotNull(list);
 		Assert.IsTrue(list.languages.Count > 0);
 
-		var englishLanguage = list.getLangaugeByCode("en-us");
-		var lang = list.getLangaugeByCode(TransfluentLanguage2.BACKWARDS_LANGUAGE_NAME);
-		Assert.AreNotEqual(englishLanguage.code,0);
+		TransfluentLanguage2 englishLanguage = list.getLangaugeByCode("en-us");
+		TransfluentLanguage2 lang = list.getLangaugeByCode(TransfluentLanguage2.BACKWARDS_LANGUAGE_NAME);
+		Assert.AreNotEqual(englishLanguage.code, 0);
 		Assert.NotNull(lang);
 
 		//post text key
-		string textToSave = "this is sample text" + UnityEngine.Random.value;
-		SaveTextKey saveOp = new SaveTextKey()
+		string textToSave = "this is sample text" + Random.value;
+		var saveOp = new SaveTextKey
 		{
 			authToken = accessToken,
 			language = englishLanguage.id,
 			text = textToSave,
-			text_id = HELLO_WORLD_TEXT_KEY
+			text_id = HELLO_WORLD_TEXT_KEY,
+			service = new SyncronousEditorWebRequest()
 		};
 		saveOp.Execute();
 
-		UnityEngine.Debug.Log("Saved successfullly:" + saveOp.savedSuccessfully);
+		Debug.Log("Saved successfullly:" + saveOp.savedSuccessfully);
 
-		GetTextKey testForExistance = new GetTextKey()
+		var testForExistance = new GetTextKey
 		{
 			authToken = accessToken,
-			language = englishLanguage.id,
-			text_id = HELLO_WORLD_TEXT_KEY
+			languageID = englishLanguage.id,
+			text_id = HELLO_WORLD_TEXT_KEY,
+			service = new SyncronousEditorWebRequest()
 		};
 		testForExistance.Execute();
 		Assert.IsFalse(string.IsNullOrEmpty(testForExistance.keyValue));
@@ -76,25 +97,9 @@ public class TestEntryPoints
 	}
 
 	[Test]
-	public void getKeyThatDoesNotExist()
-	{
-		var language = new RequestAllLanguages();
-		language.Execute();
-		var englishLanguage = language.languagesRetrieved.getLangaugeByCode("en-us");
-
-		GetTextKey testForExistance = new GetTextKey()
-		{
-			authToken = accessToken,
-			language = englishLanguage.id,
-			text_id = "THIS_DOES_NOT_EXIST" + UnityEngine.Random.value
-		};
-		Assert.Throws(typeof(Exception), testForExistance.Execute);
-	}
-
-	[Test]
 	public void testGetAllLanugages()
 	{
-		var language = new RequestAllLanguages();
+		var language = new RequestAllLanguages() { service = new SyncronousEditorWebRequest() };
 		language.Execute();
 	}
 
@@ -103,7 +108,8 @@ public class TestEntryPoints
 	{
 		var hello = new Hello
 		{
-			name = "world"
+			name = "world",
+			service = new SyncronousEditorWebRequest()
 		};
 		hello.Execute();
 
@@ -114,14 +120,12 @@ public class TestEntryPoints
 	[Test]
 	public void testLanguages()
 	{
-		var language = new RequestAllLanguages();
+		var language = new RequestAllLanguages() { service = new SyncronousEditorWebRequest() };
 		language.Execute();
 
 		Assert.IsNotNull(language.languagesRetrieved);
-		var list = language.languagesRetrieved;
+		LanguageList list = language.languagesRetrieved;
 		Assert.IsNotNull(list);
 		Assert.IsTrue(list.languages.Count > 0);
 	}
-
-	
 }

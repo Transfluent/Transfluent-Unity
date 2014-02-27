@@ -4,6 +4,7 @@ using System.Reflection;
 
 namespace transfluent
 {
+	//The most simplistic IOC style mapping that I can think of.  Requires you to call context.setMappings on objects before using them, and currently does not support setting injection on sub objects, an item I will likely fix ASAP
 	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
 	public class Inject : Attribute
 	{
@@ -79,13 +80,14 @@ namespace transfluent
 						if (!string.IsNullOrEmpty(injectionAttribute.name))
 							injectionMapToUse = namedInjectionMap[injectionAttribute.name];
 
+
 						object valueToInject = injectionMapToUse[typeToInject];
 						propertyInfo.SetValue(toInject, valueToInject, null);
 					}
 					catch (KeyNotFoundException k)
 					{
 						throw new UnboundInjectionException("Injeciton not set for type:" + typeToInject.Name +
-						                                    " when trying to set on a sub object");
+															" when trying to set on a sub objectnamed:" + injectionAttribute.name + " core exception:"+k.ToString());
 					}
 				}
 			}

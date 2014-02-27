@@ -30,9 +30,11 @@ namespace transfluent
 
 		public TranslationQuality level { get; set; }
 
+		[Inject]
+		public IWebService service { get; set; }
+
 		public void Execute()
 		{
-			IWebService service = new DebugSyncronousEditorWebRequest(); // SyncronousEditorWebRequest
 			var containerOfTextIDsToUse = new List<TextIDToTranslateContainer>();
 			foreach(string toTranslate in texts)
 			{

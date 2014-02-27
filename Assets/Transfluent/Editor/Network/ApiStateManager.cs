@@ -26,14 +26,14 @@ namespace transfluent
 			if (isInitialized()) return true;
 			try
 			{
-				var langRequest = new RequestAllLanguages();
+				var langRequest = new RequestAllLanguages(){service = new SyncronousEditorWebRequest()};
 				langRequest.Execute();
 				if (langRequest.languagesRetrieved == null)
 				{
 					return false;
 				}
 				knownLanguages = langRequest.languagesRetrieved;
-				var login = new Login {username = credentials.username, password = credentials.password};
+				var login = new Login {username = credentials.username, password = credentials.password, service = new SyncronousEditorWebRequest()};
 				login.Execute();
 
 				apiToken = login.token;
@@ -65,59 +65,55 @@ namespace transfluent
 			auth.checkCredentialsOrGetThem();
 		}
 
-		public bool SetText(string key, string value, TransfluentLanguage2 sourceLanguage)
+		private string getApiToken()
 		{
-			return SetText(key, value, sourceLanguage, null);
+			bool haveCredentials = auth.checkCredentialsOrGetThem();
+			if (!haveCredentials) return null;
+			return auth.apiToken;
 		}
 
-		public bool SetText(string key, string value, TransfluentLanguage2 sourceLanguage, string groupID)
+		private LanguageList getLanguageList()
 		{
-			if (auth.checkCredentialsOrGetThem()) return false; //error initializing
-
-			var saver = new SaveTextKey
-			{
-				authToken = auth.apiToken,
-				language = sourceLanguage.id,
-				text_id = key,
-				text = value,
-			};
-			if (groupID != null)
-			{
-				saver.group_id = groupID;
-			}
-			saver.Execute();
-			return saver.savedSuccessfully;
+			bool haveCredentials = auth.checkCredentialsOrGetThem();
+			if (!haveCredentials) return null; //throw an exception?
+			return auth.knownLanguages;
 		}
 
-		public bool GetText(string key, string value, TransfluentLanguage2 desiredLanguage)
+		public bool SetAuth(IAuthenticatedCall callObject)
 		{
-			if (auth.checkCredentialsOrGetThem()) return false; //error initializing
-
-			var saver = new SaveTextKey
-			{
-				authToken = auth.apiToken,
-				language = desiredLanguage.id,
-				text_id = key,
-				text = value,
-			};
-			saver.Execute();
-			return saver.savedSuccessfully;
+			callObject.authToken = getApiToken();
+			return !string.IsNullOrEmpty(callObject.authToken);
 		}
 
-		public bool OrderTranslation(List<string> textIdsToTranslate, TransfluentLanguage2 sourceLanguage,
-			List<TransfluentLanguage2> destinationLanguages,
-			int max_words = 1000,
-			OrderTranslation.TranslationQuality level = transfluent.OrderTranslation.TranslationQuality.PROFESSIONAL_TRANSLATOR)
+		public List<int> languageIDsFromLanguageCodes(List<string> languageCodes)
 		{
-			if (auth.checkCredentialsOrGetThem()) return false; //error initializing
-
-			var order = new OrderTranslation
-			{
-				source_language = sourceLanguage.id,
-				authToken = auth.apiToken,
-			};
-			order.Execute();
-			return true;
+			LanguageList list = getLanguageList();
+			if (list == null)
+				throw new Exception("Tried to use language list with null list"); //TODO: handle state better than this
+			var languageIds = new List<int>();
+			languageCodes.ForEach((string Code) => { languageIds.Add(list.getLangaugeByCode(Code).id); });
+			return languageIds;
 		}
+
+		public List<TransfluentLanguage2> languagesFromIds(List<int> languageIDs)
+		{
+			LanguageList list = getLanguageList();
+			if (list == null)
+				throw new Exception("Tried to use language list with null list"); //TODO: handle state better than this
+			var languages = new List<TransfluentLanguage2>();
+			languageIDs.ForEach((int id) => { languages.Add(list.getLangaugeByID(id)); });
+			return languages;
+		}
+	}
+
+
+	public interface IServiceCall
+	{
+		void Execute();
+	}
+
+	public interface IAuthenticatedCall
+	{
+		string authToken { get; set; }
 	}
 }

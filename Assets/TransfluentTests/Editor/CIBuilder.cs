@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 using UnityTest;
 
 public class CIBuilder : ScriptableObject
@@ -13,9 +13,9 @@ public class CIBuilder : ScriptableObject
 		try
 		{
 			string[] args = Environment.GetCommandLineArgs();
-			foreach(string arg in args)
+			foreach (string arg in args)
 			{
-				if(arg.Contains(buildFlag))
+				if (arg.Contains(buildFlag))
 				{
 					string buildNumber = arg.Replace(buildFlag, "");
 
@@ -24,13 +24,14 @@ public class CIBuilder : ScriptableObject
 				}
 			}
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
-			Debug.LogError("Error setting bundle number;"+ e);
+			Debug.LogError("Error setting bundle number;" + e);
 			throw;
 		}
 		return 0; //not from command line
 	}
+
 	[MenuItem("Window/build")]
 	public static void manualBuild()
 	{
@@ -39,14 +40,15 @@ public class CIBuilder : ScriptableObject
 		build.RunTests();
 		build.Build();
 	}
+
 	public class BuilderInstance
 	{
-		public string appName = "TransfluentEditor";
-		public string buildDirectoryPath = "build";
 		public readonly string projectPath = Path.GetFullPath(Application.dataPath + Path.DirectorySeparatorChar + "..");
+		public string appName = "TransfluentEditor";
 
-		public int autoBuildNumber = 0;//build number passed from build machine, not marketing version -- 0.2, etc
-		public string marketingBuildNumber = "0.3";//major, minor, patchlevel
+		public int autoBuildNumber = 0; //build number passed from build machine, not marketing version -- 0.2, etc
+		public string buildDirectoryPath = "build";
+		public string marketingBuildNumber = "0.3"; //major, minor, patchlevel
 
 		public string pathToPackage = "Assets/Transfluent";
 		//run tests, export package
@@ -56,6 +58,7 @@ public class CIBuilder : ScriptableObject
 		{
 			UnitTestView.RunAllTestsBatch();
 		}
+
 		public void Build()
 		{
 			string targetBuildPath = projectPath + Path.DirectorySeparatorChar + buildDirectoryPath;
@@ -64,7 +67,6 @@ public class CIBuilder : ScriptableObject
 			string fileLocation = string.Format("{0}-{1}.unitypackage", targetBuildPath + Path.DirectorySeparatorChar + appName,
 				autoBuildNumber);
 			AssetDatabase.ExportPackage(pathToPackage, fileLocation, ExportPackageOptions.Recurse);
-			
 		}
 	}
 }

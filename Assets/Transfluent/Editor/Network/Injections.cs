@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using UnityEngine;
-using UnityEditor;
 
 namespace transfluent
 {
@@ -13,7 +11,6 @@ namespace transfluent
 
 		public Inject()
 		{
-
 		}
 
 		public Inject(string injectionName)
@@ -24,15 +21,22 @@ namespace transfluent
 
 	public class UnboundInjectionException : Exception
 	{
-		public UnboundInjectionException() : base(){}
-		public UnboundInjectionException(string message) : base(message) { }
+		public UnboundInjectionException()
+		{
+		}
+
+		public UnboundInjectionException(string message) : base(message)
+		{
+		}
 	}
 
 	//right now only singleton mapping :(
 	public class InjectionContext
 	{
-		private Dictionary<Type, object> injectionMap = new Dictionary<Type, object>();
-		private Dictionary<string,Dictionary<Type,object>> namedInjectionMap = new Dictionary<string, Dictionary<Type, object>>(); 
+		private readonly Dictionary<Type, object> injectionMap = new Dictionary<Type, object>();
+
+		private readonly Dictionary<string, Dictionary<Type, object>> namedInjectionMap =
+			new Dictionary<string, Dictionary<Type, object>>();
 
 		public void addMapping(Type typeToHandle, object valueToPutIn)
 		{
@@ -41,35 +45,37 @@ namespace transfluent
 
 		public void addMapping<T>(object valueToPutIn)
 		{
-			addMapping(typeof(T),valueToPutIn);
+			addMapping(typeof (T), valueToPutIn);
 		}
 
 		public void addNamedMapping<T>(string name, object valueToPutIn)
 		{
-			if(!namedInjectionMap.ContainsKey(name))
-				namedInjectionMap.Add(name,new Dictionary<Type, object>());
-			namedInjectionMap[name].Add(valueToPutIn.GetType(),valueToPutIn);
+			if (!namedInjectionMap.ContainsKey(name))
+				namedInjectionMap.Add(name, new Dictionary<Type, object>());
+			namedInjectionMap[name].Add(valueToPutIn.GetType(), valueToPutIn);
 		}
 
 		public void setMappings(object toInject)
 		{
 			setMappings(toInject, toInject.GetType());
 		}
+
 		public void setMappings(object toInject, Type type)
 		{
-			MemberInfo[] members = type.FindMembers(MemberTypes.Property, BindingFlags.Instance | BindingFlags.FlattenHierarchy | BindingFlags.SetProperty | BindingFlags.Public, null, null);
+			MemberInfo[] members = type.FindMembers(MemberTypes.Property,
+				BindingFlags.Instance | BindingFlags.FlattenHierarchy | BindingFlags.SetProperty | BindingFlags.Public, null, null);
 
-			foreach(MemberInfo member in members)
+			foreach (MemberInfo member in members)
 			{
-				object[] injections = member.GetCustomAttributes(typeof(Inject), true);
-				if(injections.Length > 0)
+				object[] injections = member.GetCustomAttributes(typeof (Inject), true);
+				if (injections.Length > 0)
 				{
 					var propertyInfo = member as PropertyInfo;
 					var injectionAttribute = injections[0] as Inject; //TOOD: handle named stuff?
 					Type typeToInject = propertyInfo.PropertyType;
 					try
 					{
-						var injectionMapToUse = injectionMap;
+						Dictionary<Type, object> injectionMapToUse = injectionMap;
 						if (!string.IsNullOrEmpty(injectionAttribute.name))
 							injectionMapToUse = namedInjectionMap[injectionAttribute.name];
 
@@ -78,12 +84,11 @@ namespace transfluent
 					}
 					catch (KeyNotFoundException k)
 					{
-						throw new UnboundInjectionException("Injeciton not set for type:" + typeToInject.Name + " when trying to set on a sub object");
+						throw new UnboundInjectionException("Injeciton not set for type:" + typeToInject.Name +
+						                                    " when trying to set on a sub object");
 					}
-					
 				}
 			}
 		}
 	}
-
 }

@@ -75,8 +75,8 @@ namespace transfluent
 
 			var compileOptions = new Dictionary<string, string>() {{"CompilerVersion", "v3.0"}};
 			var cSharpCodeProvider = new CSharpCodeProvider(compileOptions);
-			
-			var compilerResults = cSharpCodeProvider.CompileAssemblyFromSource(options, allSourceCSFiles.ToArray());
+
+			var compilerResults = cSharpCodeProvider.CompileAssemblyFromFile(options, allSourceCSFiles.ToArray());
 			
 			if (compilerResults.Errors.HasErrors)
 			{
@@ -100,9 +100,7 @@ namespace transfluent
 
 		public void getAllSourceFilesInDir(string directory, List<string> listToAddTo )
 		{
-			var listOfFileNames = new List<string>();
-			getAllFilesWithPatternInDir(directory, listOfFileNames, "*.cs");
-			listOfFileNames.ForEach((string filename) => listToAddTo.Add(File.ReadAllText(filename)));
+			getAllFilesWithPatternInDir(directory, listToAddTo, "*.cs");
 		}
 		public void getDllsInDir(string directory, List<string> listToAddTo)
 		{

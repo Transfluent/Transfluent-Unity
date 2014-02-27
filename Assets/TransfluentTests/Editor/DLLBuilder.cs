@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Pathfinding.Serialization.JsonFx;
 using UnityEditor;
 using UnityEngine;
@@ -47,43 +48,48 @@ namespace transfluent
 
 		public List<string> linkedAssemblies { get; set; }
 
-		public void Build()
+		CompilerParameters compileParams(string dllName, List<string> pathsOfLinkedDLLs )
 		{
 			CompilerParameters options = new CompilerParameters();
-			options.OutputAssembly = string.Format("{0}{1}{2}.dll", targetPath, Path.DirectorySeparatorChar+"",targetName);
-			options.CompilerOptions = "/optimize";
+			options.OutputAssembly = dllName;
+			//options.CompilerOptions = "/optimize";
+			options.CompilerOptions = "";
 
-			//ReferencedAssemblies
+			options.ReferencedAssemblies.AddRange(pathsOfLinkedDLLs.ToArray());
+
+			return options;
+		}
+
+		public void Build()
+		{
+			//meta setup, get files, linked assemblies, etc
 			List<string> allSourceCSFiles = new List<string>();
 			getAllSourceFilesInDir(sourcePath, allSourceCSFiles);
 
-			var allDlls = new List<string>(linkedAssemblies);
-			getDllsInDir(sourcePath, allDlls);
-			allDlls.ForEach((string dllPath)=> { options.ReferencedAssemblies.Add(dllPath); });
+			var pathsOfLinkedDLLs = new List<string>(linkedAssemblies);
+			getDllsInDir(sourcePath, pathsOfLinkedDLLs);
+			string dllPath = string.Format("{0}{1}{2}.dll", targetPath, Path.DirectorySeparatorChar + "", targetName);
+
+			//actual interface with the compiler
+			var options = compileParams(dllPath, pathsOfLinkedDLLs);
 
 			var compileOptions = new Dictionary<string, string>() {{"CompilerVersion", "v3.0"}};
 			var cSharpCodeProvider = new CSharpCodeProvider(compileOptions);
-			Debug.Log("ALL library dll FILES:" + JsonWriter.Serialize(allDlls));
-			Debug.Log("ALL SOURCE FILES:" + JsonWriter.Serialize(allSourceCSFiles));
-
-			Debug.Log("OUTPUT PATH:" + options.OutputAssembly);
-			allSourceCSFiles.ForEach((string path) =>
-			{
-				if(!File.Exists(path))
-					Debug.LogError("BOGUS FILE PATH:"+ path);
-			});
-			allDlls.ForEach((string path) =>
-			{
-				if(!File.Exists(path))
-					Debug.LogError("BOGUS FILE DLL PATH:" + path);
-			});
+			
 			var compilerResults = cSharpCodeProvider.CompileAssemblyFromSource(options, allSourceCSFiles.ToArray());
+			
 			if (compilerResults.Errors.HasErrors)
 			{
 				foreach (CompilerError error in compilerResults.Errors)
 				{
 					if (!error.IsWarning)
+					{
 						Debug.LogError("Error compiling dll:" + error);
+						if (error.ToString().Contains("SystemException: Error running gmcs: Cannot find the specified file"))
+						{
+							throw new Exception("YOU MUST INSTALL MONO RUNTIME TO BUILD THE DLL: www.go-mono.com/mono-downloads/download.html");	
+						}						
+					}
 				}
 			}
 			else
@@ -94,7 +100,9 @@ namespace transfluent
 
 		public void getAllSourceFilesInDir(string directory, List<string> listToAddTo )
 		{
-			getAllFilesWithPatternInDir(directory, listToAddTo, "*.cs");
+			var listOfFileNames = new List<string>();
+			getAllFilesWithPatternInDir(directory, listOfFileNames, "*.cs");
+			listOfFileNames.ForEach((string filename) => listToAddTo.Add(File.ReadAllText(filename)));
 		}
 		public void getDllsInDir(string directory, List<string> listToAddTo)
 		{

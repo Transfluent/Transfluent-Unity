@@ -23,17 +23,20 @@ namespace transfluent
 			return languages.Find((TransfluentLanguage2 lang) => { return lang.name == name; });
 		}
 	}
-	public class RequestAllLanguages
+	public class RequestAllLanguages : ITransfluentCall
 	{
 		public LanguageList languagesRetrieved;
 
 		[Inject]
 		public IWebService service { get; set; }
+
+		public WebServiceReturnStatus webServiceStatus { get; private set; }
+
 		public void Execute()
 		{
-			ReturnStatus status = service.request(RestUrl.getURL(RestUrl.RestAction.LANGUAGES));
+			webServiceStatus = service.request(RestUrl.getURL(RestUrl.RestAction.LANGUAGES));
 
-			string responseText = status.text;
+			string responseText = webServiceStatus.text;
 
 
 			var reader = new ResponseReader<List<Dictionary<string, TransfluentLanguage2>>>

@@ -8,7 +8,8 @@ namespace transfluent
 	{
 		string username { get; }
 		string password { get; }
-		void save();
+		void save(string newUsername,string newPassword);
+		void clear();
 	}
 
 	public class FileBasedCredentialProvider : ICredentialProvider
@@ -16,7 +17,12 @@ namespace transfluent
 		private readonly string LocationOfTestCredentials = "Assets/TransfluentTests/Editor/Data/loginPassword.txt";
 		public string username { get; protected set; }
 		public string password { get; protected set; }
-		public void save()
+		public void save(string newUsername, string newPassword)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void clear()
 		{
 			throw new NotImplementedException();
 		}
@@ -36,10 +42,17 @@ namespace transfluent
 		public string username { get; protected set; }
 		public string password { get; protected set; }
 
-		public void save()
+		public void save(string newUsername, string newPassword)
 		{
-			EditorPrefs.SetString(USERNAME_EDITOR_KEY,username);
-			EditorPrefs.SetString(PASSWORD_EDITOR_KEY, password);
+			EditorPrefs.SetString(USERNAME_EDITOR_KEY, newUsername);
+			EditorPrefs.SetString(PASSWORD_EDITOR_KEY, newPassword);
+		}
+
+		public void clear()
+		{
+			username = password = null;
+			EditorPrefs.SetString(USERNAME_EDITOR_KEY, "");
+			EditorPrefs.SetString(PASSWORD_EDITOR_KEY, "");
 		}
 
 		public EditorKeyCredentialProvider()
@@ -56,7 +69,12 @@ namespace transfluent
 		public string username { get; protected set; }
 		public string password { get; protected set; }
 
-		public void save()
+		public void save(string newUsername, string newPassword)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void clear()
 		{
 			throw new NotImplementedException();
 		}

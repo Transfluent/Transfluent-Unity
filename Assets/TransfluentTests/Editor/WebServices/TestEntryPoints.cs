@@ -92,8 +92,8 @@ public class TestEntryPoints
 			service = new SyncronousEditorWebRequest()
 		};
 		testForExistance.Execute();
-		Assert.IsFalse(string.IsNullOrEmpty(testForExistance.keyValue));
-		Assert.AreEqual(textToSave, testForExistance.keyValue);
+		Assert.IsFalse(string.IsNullOrEmpty(testForExistance.resultOfCall));
+		Assert.AreEqual(textToSave, testForExistance.resultOfCall);
 	}
 
 	[Test]

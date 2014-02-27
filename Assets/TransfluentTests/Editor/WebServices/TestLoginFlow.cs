@@ -29,7 +29,7 @@ public class TestLoginFlow
 	[MaxTime(10000)]
 	public void correctLoginTest()
 	{
-		ReturnStatus status = service.request(url, new Dictionary<string, string>
+		WebServiceReturnStatus status = service.request(url, new Dictionary<string, string>
 		{
 			{"email", Provider.username},
 			{"password", Provider.password}
@@ -62,7 +62,7 @@ public class TestLoginFlow
 	[MaxTime(10000)]
 	public void noPostLogin()
 	{
-		ReturnStatus status = service.request(url); //no password params!
+		WebServiceReturnStatus status = service.request(url); //no password params!
 		Assert.IsTrue(status.status == ServiceStatus.APPLICATION_ERROR);
 	}
 
@@ -70,7 +70,7 @@ public class TestLoginFlow
 	[MaxTime(10000)]
 	public void wrongPasswordLogin()
 	{
-		ReturnStatus status = service.request(url, new Dictionary<string, string>
+		WebServiceReturnStatus status = service.request(url, new Dictionary<string, string>
 		{
 			{"email", Provider.username},
 			{"password", "thisPasswordIsWrong"}

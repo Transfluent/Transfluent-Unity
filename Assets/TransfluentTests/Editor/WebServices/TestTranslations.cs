@@ -86,15 +86,15 @@ namespace Assets.Editor.Tests
 				service = new SyncronousEditorWebRequest()
 			};
 			testForExistance.Execute();
-			Assert.IsFalse(string.IsNullOrEmpty(testForExistance.keyValue));
-			Assert.AreEqual(textToSave, testForExistance.keyValue);
+			Assert.IsFalse(string.IsNullOrEmpty(testForExistance.resultOfCall));
+			Assert.AreEqual(textToSave, testForExistance.resultOfCall);
 
 			//save it back to what we expect it to be
 			saveOp.text = textToSetTestTokenTo;
 			saveOp.Execute();
 
 			testForExistance.Execute(); //get it again
-			Assert.AreEqual(textToSetTestTokenTo, testForExistance.keyValue);
+			Assert.AreEqual(textToSetTestTokenTo, testForExistance.resultOfCall);
 		}
 
 		public const string TRANSLATION_KEY = "UNITY_TEST_TRANSLATION_KEY";
@@ -131,7 +131,7 @@ namespace Assets.Editor.Tests
 				service = new SyncronousEditorWebRequest()
 			};
 			englishKeyGetter.Execute();
-			string stringToReverse = englishKeyGetter.keyValue;
+			string stringToReverse = englishKeyGetter.resultOfCall;
 			Assert.AreEqual(stringToReverse, textToSetTestTokenTo);
 			var getText = new GetTextKey
 			{
@@ -141,7 +141,7 @@ namespace Assets.Editor.Tests
 				service = new SyncronousEditorWebRequest()
 			};
 			getText.Execute();
-			string reversedString = getText.keyValue;
+			string reversedString = getText.resultOfCall;
 			Assert.AreNotEqual(stringToReverse, reversedString);
 
 			string manuallyReversedString = reverseString(stringToReverse);

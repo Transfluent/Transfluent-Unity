@@ -9,7 +9,11 @@ namespace transfluent
 	public class Hello
 	{
 		public string helloWorldText;
+
 		public string name { get; set; }
+
+		[Inject(NamedInjections.API_TOKEN)]
+		public string authToken { get; set; }
 
 		[Inject]
 		public IWebService service { get; set; }
@@ -17,7 +21,7 @@ namespace transfluent
 		public void Execute()
 		{
 			
-			ReturnStatus status = service.request(RestUrl.getURL(RestUrl.RestAction.HELLO), new Dictionary<string, string>
+			WebServiceReturnStatus status = service.request(RestUrl.getURL(RestUrl.RestAction.HELLO), new Dictionary<string, string>
 			{
 				{"name", name},
 			});

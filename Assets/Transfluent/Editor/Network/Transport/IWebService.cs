@@ -11,8 +11,8 @@ namespace transfluent
 {
 	public interface IWebService
 	{
-		ReturnStatus request(string url);
-		ReturnStatus request(string url, Dictionary<string, string> postParams);
+		WebServiceReturnStatus request(string url);
+		WebServiceReturnStatus request(string url, Dictionary<string, string> postParams);
 		string encodeGETParams(Dictionary<string, string> getParams);
 	}
 	public class DebugSyncronousEditorWebRequest : IWebService
@@ -25,7 +25,7 @@ namespace transfluent
 			Debug.Log("CREATING SYNC REQUESTs");
 		}
 
-		public ReturnStatus request(string url)
+		public WebServiceReturnStatus request(string url)
 		{
 			if(debug) Debug.Log("calling url:" + url + "(GET) ");
 			var result = realRequest.request(url);
@@ -33,7 +33,7 @@ namespace transfluent
 			return result;
 		}
 
-		public ReturnStatus request(string url, Dictionary<string, string> postParams)
+		public WebServiceReturnStatus request(string url, Dictionary<string, string> postParams)
 		{
 			if (postParams != null)
 			{
@@ -58,13 +58,13 @@ namespace transfluent
 	public class SyncronousEditorWebRequest : IWebService
 	{
 		
-		public ReturnStatus request(string url)
+		public WebServiceReturnStatus request(string url)
 		{
 			
 			return doWWWCall(new WWW(url));
 		}
 
-		public ReturnStatus request(string url, Dictionary<string, string> postParams)
+		public WebServiceReturnStatus request(string url, Dictionary<string, string> postParams)
 		{
 			WWWForm form = new WWWForm();
 			if (postParams != null)
@@ -94,9 +94,9 @@ namespace transfluent
 			return sb.ToString();
 		}
 
-		private ReturnStatus doWWWCall(WWW www)
+		private WebServiceReturnStatus doWWWCall(WWW www)
 		{
-			ReturnStatus status = new ReturnStatus();
+			WebServiceReturnStatus status = new WebServiceReturnStatus();
 
 			var sw = new Stopwatch();
 			sw.Start();
@@ -163,7 +163,7 @@ namespace transfluent
 		TIMEOUT,
 	}
 
-	public struct ReturnStatus
+	public struct WebServiceReturnStatus
 	{
 		public TimeSpan requestTimeTaken;
 		public ServiceStatus status;

@@ -9,10 +9,14 @@ namespace transfluent
 		public string group_id { get; set; }
 		public int languageID { get; set; }
 
+
+		[Inject(NamedInjections.API_TOKEN)]
 		public string authToken { get; set; }
 
 		[Inject]
 		public IWebService service { get; set; }
+
+		public string resultOfCall;
 
 		public void Execute()
 		{
@@ -28,7 +32,7 @@ namespace transfluent
 				webserviceParams.Add("group_id", group_id);
 			}
 			string url = RestUrl.getURL(RestUrl.RestAction.TEXT) + service.encodeGETParams(webserviceParams);
-			ReturnStatus status = service.request(url);
+			WebServiceReturnStatus status = service.request(url);
 			// + service.encodeGETParams(webserviceParams)
 			string responseText = status.text;
 
@@ -41,7 +45,7 @@ namespace transfluent
 			};
 			reader.deserialize();
 
-			keyValue = reader.response;
+			resultOfCall = reader.response;
 		}
 	}
 }

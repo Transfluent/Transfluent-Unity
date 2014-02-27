@@ -2,7 +2,7 @@
 
 namespace transfluent
 {
-	public class Login
+	public class Login : ITransfluentCall
 	{
 		public string token;
 		public string username { get; set; }
@@ -11,15 +11,17 @@ namespace transfluent
 		[Inject]
 		public IWebService service { get; set; }
 
+		public WebServiceReturnStatus webServiceStatus { get; private set; }
+
 		public void Execute()
 		{
-			ReturnStatus status = service.request(RestUrl.getURL(RestUrl.RestAction.AUTHENTICATE), new Dictionary<string, string>
+			webServiceStatus = service.request(RestUrl.getURL(RestUrl.RestAction.AUTHENTICATE), new Dictionary<string, string>
 			{
 				{"email", username},
 				{"password", password}
 			});
 
-			string responseText = status.text;
+			string responseText = webServiceStatus.text;
 			var reader = new ResponseReader<AuthenticationResponse>
 			{
 				text = responseText

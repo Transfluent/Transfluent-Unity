@@ -2,17 +2,20 @@
 
 namespace transfluent
 {
-	public class TextStatus
+	public class TextStatus : ITransfluentCall
 	{
 		public bool wasTranslated;
 		public string text_id { get; set; }
 		public string group_id { get; set; }
 		public int language_id { get; set; }
 
+		[Inject(NamedInjections.API_TOKEN)]
 		public string authToken { get; set; }
 
 		[Inject]
 		public IWebService service { get; set; }
+
+		public WebServiceReturnStatus webServiceStatus { get; private set; }
 
 		public void Execute()
 		{
@@ -24,15 +27,15 @@ namespace transfluent
 			};
 			if (!string.IsNullOrEmpty(group_id)) postParams.Add("group_id", group_id);
 
-			ReturnStatus status =
+			webServiceStatus =
 				service.request(RestUrl.getURL(RestUrl.RestAction.TEXTSTATUS) + service.encodeGETParams(postParams));
-			if (status.status != ServiceStatus.SUCCESS)
+			if (webServiceStatus.status != ServiceStatus.SUCCESS)
 			{
 				wasTranslated = false;
 				return;
 			}
 
-			string responseText = status.text;
+			string responseText = webServiceStatus.text;
 			var reader = new ResponseReader<TextStatusResult>
 			{
 				text = responseText
@@ -41,5 +44,7 @@ namespace transfluent
 
 			wasTranslated = reader.response.is_translated;
 		}
+
+		
 	}
 }

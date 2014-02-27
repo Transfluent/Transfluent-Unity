@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace transfluent
 {
-	public class GetAllExistingTranslationKeys
+	public class GetAllExistingTranslationKeys : ITransfluentCall
 	{
 		public List<TransfluentTranslation> translations;
 
@@ -11,11 +11,16 @@ namespace transfluent
 		public int limit { get; set; }
 
 		public string group_id { get; set; }
-		public string authToken { get; set; }
 		public int offset { get; set; }
+
+
+		[Inject(NamedInjections.API_TOKEN)]
+		public string authToken { get; set; }
 
 		[Inject]
 		public IWebService service { get; set; }
+
+		public WebServiceReturnStatus webServiceStatus { get; private set; }
 
 		public void Execute()
 		{
@@ -36,9 +41,9 @@ namespace transfluent
 				getParams.Add("offset",offset.ToString());
 			}
 			string url = RestUrl.getURL(RestUrl.RestAction.TEXTSORDERS) + service.encodeGETParams(getParams);
-			ReturnStatus status = service.request(url);
+			webServiceStatus = service.request(url);
 
-			string responseText = status.text;
+			string responseText = webServiceStatus.text;
 
 			var reader = new ResponseReader<List<TransfluentTranslation>>
 			{
@@ -47,5 +52,6 @@ namespace transfluent
 			reader.deserialize();
 			translations = reader.response;
 		}
+
 	}
 }

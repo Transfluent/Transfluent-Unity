@@ -8,6 +8,7 @@ namespace transfluent
 	{
 		string username { get; }
 		string password { get; }
+		void save();
 	}
 
 	public class FileBasedCredentialProvider : ICredentialProvider
@@ -15,6 +16,10 @@ namespace transfluent
 		private readonly string LocationOfTestCredentials = "Assets/TransfluentTests/Editor/Data/loginPassword.txt";
 		public string username { get; protected set; }
 		public string password { get; protected set; }
+		public void save()
+		{
+			throw new NotImplementedException();
+		}
 
 		public FileBasedCredentialProvider()
 		{
@@ -31,6 +36,12 @@ namespace transfluent
 		public string username { get; protected set; }
 		public string password { get; protected set; }
 
+		public void save()
+		{
+			EditorPrefs.SetString(USERNAME_EDITOR_KEY,username);
+			EditorPrefs.SetString(PASSWORD_EDITOR_KEY, password);
+		}
+
 		public EditorKeyCredentialProvider()
 		{
 			username = EditorPrefs.GetString(USERNAME_EDITOR_KEY);
@@ -44,6 +55,11 @@ namespace transfluent
 		public const string PASSWORD_COMMAND_LINE_ARGUMENT = "-PASSWORD_COMMAND_LINE_ARGUMENT";
 		public string username { get; protected set; }
 		public string password { get; protected set; }
+
+		public void save()
+		{
+			throw new NotImplementedException();
+		}
 
 		public CommandLineCredentialProvider()
 		{

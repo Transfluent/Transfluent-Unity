@@ -97,7 +97,7 @@ public class InjectionTests
 		string standardKey = "HELLO WORLD";
 		string namedKey = "SPECIAL STRING";
 		context.addMapping<string>(standardKey);
-		context.addNamedMapping<string>("Special", namedKey);
+		context.addNamedMapping<string>(NamedInjections.INTERNAL_TESTING_SPECIAL_KEY, namedKey);
 		var target = new TestInjectionTarget();
 		Assert.IsNullOrEmpty(target.testString);
 		context.setMappings(target);

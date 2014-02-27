@@ -8,13 +8,13 @@ namespace transfluent
 	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
 	public class Inject : Attribute
 	{
-		public string name;
+		public NamedInjections name;
 
 		public Inject()
 		{
 		}
 
-		public Inject(string injectionName)
+		public Inject(NamedInjections injectionName)
 		{
 			name = injectionName;
 		}
@@ -39,7 +39,7 @@ namespace transfluent
 		private readonly Dictionary<string, Dictionary<Type, object>> namedInjectionMap =
 			new Dictionary<string, Dictionary<Type, object>>();
 
-		public void addMapping(Type typeToHandle, object valueToPutIn)
+		private void addMapping(Type typeToHandle, object valueToPutIn)
 		{
 			injectionMap.Add(typeToHandle, valueToPutIn);
 		}
@@ -49,11 +49,20 @@ namespace transfluent
 			addMapping(typeof (T), valueToPutIn);
 		}
 
-		public void addNamedMapping<T>(string name, object valueToPutIn)
+		void addNamedMapping<T>(string name, object valueToPutIn)
 		{
 			if (!namedInjectionMap.ContainsKey(name))
 				namedInjectionMap.Add(name, new Dictionary<Type, object>());
 			namedInjectionMap[name].Add(valueToPutIn.GetType(), valueToPutIn);
+		}
+		public void addNamedMapping<T>(NamedInjections name, object valueToPutIn)
+		{
+			addNamedMapping<T>(name.ToString(),valueToPutIn);
+		}
+
+		public T manualGetMapping<T>(NamedInjections name) where T : class
+		{
+			return namedInjectionMap[name.ToString()] as T;
 		}
 
 		public void setMappings(object toInject)

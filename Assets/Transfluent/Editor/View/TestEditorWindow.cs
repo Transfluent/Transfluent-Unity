@@ -52,7 +52,7 @@ namespace transfluent.editor
 			void Refresh()
 			{
 				double timeInSecondsSinceUnityStartedUp = EditorApplication.timeSinceStartup;
-				if(secondsSinceLastGotAllTexts == timeInSecondsSinceUnityStartedUp)
+				if((timeInSecondsSinceUnityStartedUp - secondsSinceLastGotAllTexts) < 1)
 				{
 					//spamming it.. ignoringr
 					return;

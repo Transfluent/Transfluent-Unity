@@ -96,6 +96,21 @@ namespace transfluent.tests
 
 		public const string TRANSLATION_KEY = "UNITY_TEST_TRANSLATION_KEY";
 
+		[Test]
+		public void testAlreadyInsertedException()
+		{
+			string textToSave = textToSetTestTokenTo + Random.value;
+			var saveOp = new SaveTextKey
+			{
+				authToken = accessToken,
+				language = englishLanguage.id,
+				text = textToSave,
+				text_id = TRANSLATION_KEY,
+				service = new SyncronousEditorWebRequest()
+			};
+			saveOp.Execute();
+			saveOp.Execute(); //error 500, this looks like a temporary server error...
+		}
 
 		[Test]
 		public void getBackwardsLanguage()

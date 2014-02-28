@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace transfluent
 {
-	public class SaveTextKey : ITransfluentCall 
+	public class SaveTextKey : ITransfluentCall
 	{
 		//URL: https://transfluent.com/v2/text/ ( HTTPS only)
 		//Parameters: text_id, group_id, language, text, invalidate_translations [=1], is_draft, token
@@ -40,28 +40,17 @@ namespace transfluent
 
 			string responseText = webServiceStatus.text;
 
-			if(webServiceStatus.status != ServiceStatus.SUCCESS)
-				throw new Exception("Unsuccessful request " + webServiceStatus.rawErrorCode + " response" + responseText + " url:" + url);
+			if (webServiceStatus.status != ServiceStatus.SUCCESS)
+				throw new Exception("Unsuccessful request " + webServiceStatus.rawErrorCode + " response" + responseText + " url:" +
+				                    url);
 
 			var reader = new ResponseReader<bool>
 			{
 				text = responseText
 			};
 			savedSuccessfully = false;
-			try
-			{
-				reader.deserialize();
-				savedSuccessfully = reader.response;
-			}
-			catch (Exception e)
-			{
-				if (e is ResponseReader<bool>.ApplicatonLevelException)
-				{
-					e.Message.Contains("EBackendTextAlreadyUpToDate"); //this is not an error, it is ok
-					savedSuccessfully = true;
-				}
-			}
+			reader.deserialize();
+			savedSuccessfully = reader.response;
 		}
-
 	}
 }

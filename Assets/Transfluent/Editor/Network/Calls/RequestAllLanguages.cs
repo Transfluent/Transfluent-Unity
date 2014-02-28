@@ -4,21 +4,21 @@ namespace transfluent
 {
 	public class LanguageList
 	{
-		public List<TransfluentLanguage2> languages { get; set; }
+		public List<TransfluentLanguage> languages { get; set; }
 
-		public TransfluentLanguage2 getLangaugeByID(int id)
+		public TransfluentLanguage getLangaugeByID(int id)
 		{
-			return languages.Find((TransfluentLanguage2 lang) => { return lang.id == id; });
+			return languages.Find((TransfluentLanguage lang) => { return lang.id == id; });
 		}
 
-		public TransfluentLanguage2 getLangaugeByCode(string code)
+		public TransfluentLanguage getLangaugeByCode(string code)
 		{
-			return languages.Find((TransfluentLanguage2 lang) => { return lang.code == code; });
+			return languages.Find((TransfluentLanguage lang) => { return lang.code == code; });
 		}
 
-		public TransfluentLanguage2 getLangaugeByName(string name)
+		public TransfluentLanguage getLangaugeByName(string name)
 		{
-			return languages.Find((TransfluentLanguage2 lang) => { return lang.name == name; });
+			return languages.Find((TransfluentLanguage lang) => { return lang.name == name; });
 		}
 	}
 
@@ -38,13 +38,13 @@ namespace transfluent
 			string responseText = webServiceStatus.text;
 
 
-			var reader = new ResponseReader<List<Dictionary<string, TransfluentLanguage2>>>
+			var reader = new ResponseReader<List<Dictionary<string, TransfluentLanguage>>>
 			{
 				text = responseText
 			};
 			reader.deserialize();
 
-			var languages = new List<TransfluentLanguage2>();
+			var languages = new List<TransfluentLanguage>();
 			foreach (var listitem in reader.response)
 			{
 				foreach (var kvp in listitem)

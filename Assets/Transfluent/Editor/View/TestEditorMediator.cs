@@ -12,7 +12,7 @@ namespace transfluent.editor
 		private const string DEFAULT_LANGUAGE_CODE = "en-us";  //is this needed?
 		private readonly InjectionContext context;
 		private LanguageList allLanguagesSupported;
-		private TransfluentLanguage2 currentLanguage;  //put this in a view state?
+		private TransfluentLanguage currentLanguage;  //put this in a view state?
 
 		public TestEditorWindowMediator()
 		{
@@ -94,7 +94,7 @@ namespace transfluent.editor
 				throw new Exception("Cannot login");
 			}
 			var languageCodes = new List<string>();
-			allLanguagesSupported.languages.ForEach((TransfluentLanguage2 lang) => { languageCodes.Add(lang.code); });
+			allLanguagesSupported.languages.ForEach((TransfluentLanguage lang) => { languageCodes.Add(lang.code); });
 			return languageCodes;
 		}
 

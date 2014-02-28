@@ -11,8 +11,8 @@ namespace transfluent.tests
 	internal class TestTranslations
 	{
 		public string accessToken;
-		public TransfluentLanguage2 englishLanguage;
-		public TransfluentLanguage2 backwardsLanguage;
+		public TransfluentLanguage englishLanguage;
+		public TransfluentLanguage backwardsLanguage;
 		private LanguageList languageCache;
 		public const string textToSetTestTokenTo = "this is test text";
 
@@ -55,7 +55,7 @@ namespace transfluent.tests
 			Assert.IsTrue(list.languages.Count > 0);
 
 			englishLanguage = list.getLangaugeByCode("en-us");
-			backwardsLanguage = list.getLangaugeByCode(TransfluentLanguage2.BACKWARDS_LANGUAGE_NAME);
+			backwardsLanguage = list.getLangaugeByCode(TransfluentLanguage.BACKWARDS_LANGUAGE_NAME);
 			languageCache = list;
 			Assert.AreNotEqual(englishLanguage.code, 0);
 			Assert.NotNull(backwardsLanguage);
@@ -147,7 +147,7 @@ namespace transfluent.tests
 			var getAllKeys = new GetAllExistingTranslationKeys
 			{
 				authToken = accessToken,
-				service = new SyncronousEditorWebRequest(),
+				service = new DebugSyncronousEditorWebRequest(),
 				language = englishLanguage.id
 			};
 			getAllKeys.Execute();
@@ -164,8 +164,22 @@ namespace transfluent.tests
 
 			Assert.Greater(getAllKeys.translations.Count, 0); /// I don't know why this is 0
 			bool hastargetKey = false;
-			translations.ForEach((TransfluentTranslation trans) => { if (trans.key == TRANSLATION_KEY) hastargetKey = true; });
+			translations.ForEach((TransfluentTranslation trans) => { if (trans.text_id == TRANSLATION_KEY) hastargetKey = true; });
 			Assert.IsTrue(hastargetKey);
+		}
+
+		[Test]
+		public void testListAllOrders()
+		{
+			var getAllKeys = new GetAllOrders
+			{
+				authToken = accessToken,
+				service = new SyncronousEditorWebRequest(),
+			};
+			getAllKeys.Execute();
+			List<TransfluentOrder> orders = getAllKeys.orders;
+			Assert.IsNotNull(orders);
+			//Assert.Greater(orders.Count, 0); //TODO: test making an actual order
 		}
 
 		[Test]
@@ -222,7 +236,7 @@ namespace transfluent.tests
 		public void testStatusOfNotOrderedTranslations()
 		{
 			int nonExistantTranslationKey = -1;
-			foreach (TransfluentLanguage2 lang in languageCache.languages)
+			foreach (TransfluentLanguage lang in languageCache.languages)
 			{
 				if (lang.id != englishLanguage.id && lang.id != backwardsLanguage.id)
 				{

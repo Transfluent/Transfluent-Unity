@@ -3,7 +3,7 @@
 namespace transfluent
 {
 	[Serializable]
-	public class TransfluentLanguage2
+	public class TransfluentLanguage
 	{
 		public const string BACKWARDS_LANGUAGE_NAME = "xx-xx";
 
@@ -11,7 +11,7 @@ namespace transfluent
 		public string code;
 		public int id;
 
-		public TransfluentLanguage2() { }
+		public TransfluentLanguage() { }
 
 		public override string ToString()
 		{
@@ -31,8 +31,9 @@ namespace transfluent
 		public string failed_keys;
 	}
 	[Serializable]
-	public class TransfluentTranslation
+	public class TransfluentOrder 
 	{
+		[Serializable]
 		public class Text
 		{
 			public string source { get; set; }
@@ -49,6 +50,15 @@ namespace transfluent
 		public string key_id { get; set; }
 		public Text text { get; set; }
 
+	}
+
+	[Serializable]
+	public class TransfluentTranslation
+	{
+		public string text_id { get; set; }
+		public string group_id { get; set; }
+		public TransfluentLanguage language { get; set; }
+		public string text { get; set; }
 	}
 
 	[Serializable]
@@ -119,8 +129,8 @@ namespace transfluent
 	[Serializable]
 	public class TranslateRequest
 	{
-		public TransfluentLanguage2[] TargetLanguage2s { get; set; }
-		public TransfluentLanguage2 sourceLangauge { get; set; }
+		public TransfluentLanguage[] TargetLanguageS { get; set; }
+		public TransfluentLanguage sourceLangauge { get; set; }
 		public string text_identifier { get; set; }
 
 		public string authToken { get; set; }

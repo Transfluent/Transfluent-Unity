@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Net.Mime;
-using UnityEditor;
 
 namespace transfluent
 {
 	public class GetAllOrders : ITransfluentCall
 	{
-		public List<TransfluentTranslation> translations;
+		public List<TransfluentOrder> orders;
 
 		[DefaultValue(100)]
 		public int limit { get; set; }
@@ -48,12 +46,12 @@ namespace transfluent
 
 			string responseText = webServiceStatus.text;
 
-			var reader = new ResponseReader<List<TransfluentTranslation>>
+			var reader = new ResponseReader<List<TransfluentOrder>>
 			{
 				text = responseText
 			};
 			reader.deserialize();
-			translations = reader.response;
+			orders = reader.response;
 		}
 
 	}

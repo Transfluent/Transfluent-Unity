@@ -44,7 +44,7 @@ namespace transfluent.tests
 		{
 			var language = new RequestAllLanguages { service = new SyncronousEditorWebRequest() };
 			language.Execute();
-			TransfluentLanguage2 englishLanguage = language.languagesRetrieved.getLangaugeByCode("en-us");
+			TransfluentLanguage englishLanguage = language.languagesRetrieved.getLangaugeByCode("en-us");
 
 			var testForExistance = new GetTextKey
 			{
@@ -66,8 +66,8 @@ namespace transfluent.tests
 			Assert.NotNull(list);
 			Assert.IsTrue(list.languages.Count > 0);
 
-			TransfluentLanguage2 englishLanguage = list.getLangaugeByCode("en-us");
-			TransfluentLanguage2 lang = list.getLangaugeByCode(TransfluentLanguage2.BACKWARDS_LANGUAGE_NAME);
+			TransfluentLanguage englishLanguage = list.getLangaugeByCode("en-us");
+			TransfluentLanguage lang = list.getLangaugeByCode(TransfluentLanguage.BACKWARDS_LANGUAGE_NAME);
 			Assert.AreNotEqual(englishLanguage.code, 0);
 			Assert.NotNull(lang);
 

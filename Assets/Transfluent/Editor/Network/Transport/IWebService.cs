@@ -17,8 +17,8 @@ namespace transfluent
 	}
 	public class DebugSyncronousEditorWebRequest : IWebService
 	{
-		private const bool debug = true;
-		private IWebService realRequest = new SyncronousEditorWebRequest();
+		public bool debug = true;
+		private readonly IWebService realRequest = new SyncronousEditorWebRequest();
 
 		public DebugSyncronousEditorWebRequest()
 		{
@@ -66,7 +66,7 @@ namespace transfluent
 
 		public WebServiceReturnStatus request(string url, Dictionary<string, string> postParams)
 		{
-			WWWForm form = new WWWForm();
+			var form = new WWWForm();
 			if (postParams != null)
 			{
 				foreach (KeyValuePair<string, string> param in postParams)
@@ -85,7 +85,7 @@ namespace transfluent
 
 		public string encodeGETParams(Dictionary<string, string> getParams)
 		{
-			StringBuilder sb = new StringBuilder();
+			var sb = new StringBuilder();
 			sb.Append("?");
 			foreach(KeyValuePair<string, string> kvp in getParams)
 			{
@@ -96,7 +96,7 @@ namespace transfluent
 
 		private WebServiceReturnStatus doWWWCall(WWW www)
 		{
-			WebServiceReturnStatus status = new WebServiceReturnStatus();
+			var status = new WebServiceReturnStatus();
 
 			var sw = new Stopwatch();
 			sw.Start();

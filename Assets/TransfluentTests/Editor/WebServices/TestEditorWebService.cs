@@ -10,28 +10,13 @@ namespace transfluent.tests
 	[TestFixture]
 	public class TestEditorWebService
 	{
-		private void manualWWWCall(WWW www)
-		{
-			var sw = new Stopwatch();
-			sw.Start();
-			while(www.isDone == false && www.error == null && sw.Elapsed.Seconds < 1f)
-			{
-				//EditorApplication.Step();
-				Thread.Sleep(100);
-			}
-			Debug.Log("time elapsed running test:" + sw.Elapsed);
-			Assert.IsTrue(www.isDone || www.error != null);
-		}
-
-
 		[Test]
 		public void testWWWCallWithStep()
 		{
 			var sw = new Stopwatch();
 			sw.Start();
-			var testWww = new WWW("https://transfluent.com/v2/");
-			int maxTicks = 100;
-			while(testWww.isDone == false && maxTicks-- > 0)
+			var testWww = new WWW("https://transfluent.com/v2/hello/world");
+			while(testWww.isDone == false && sw.Elapsed.Seconds < 5f)
 			{
 				EditorApplication.Step();
 				Thread.Sleep(100);
@@ -45,13 +30,33 @@ namespace transfluent.tests
 		{
 			var sw = new Stopwatch();
 			sw.Start();
-			var testWww = new WWW("https://transfluent.com/v2/");
-			while(testWww.isDone == false && sw.Elapsed.Seconds < 1f)
+			var testWww = new WWW("https://transfluent.com/v2/hello/world");
+			while(testWww.isDone == false && sw.Elapsed.Seconds < 5f)
 			{
 				Thread.Sleep(100);
 			}
 			Debug.Log("time elapsed running test:" + sw.Elapsed);
 			Assert.IsTrue(testWww.isDone);
+		}
+
+		[Test]
+		public void testSyncronousWebService()
+		{
+			IWebService service = new SyncronousEditorWebRequest();
+			var result = service.request("https://transfluent.com/v2/hello/world");
+			Assert.AreEqual(result.rawErrorCode, 0);
+			Assert.NotNull(result.text);
+			Assert.Greater(result.text.Length,0);
+		}
+
+		[Test]
+		public void testDebugSyncronousWebService()
+		{
+			IWebService service = new DebugSyncronousEditorWebRequest();
+			var result = service.request("https://transfluent.com/v2/hello/world");
+			Assert.AreEqual(result.rawErrorCode, 0);
+			Assert.NotNull(result.text);
+			Assert.Greater(result.text.Length, 0);
 		}
 	}
 

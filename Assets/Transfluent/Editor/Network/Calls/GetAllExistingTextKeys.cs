@@ -46,7 +46,6 @@ namespace transfluent
 				getParams.Add("offset",offset.ToString());
 			}
 			string url = RestUrl.getURL(RestUrl.RestAction.TEXTS) + service.encodeGETParams(getParams);
-			UnityEngine.Application.OpenURL(url);
 			webServiceStatus = service.request(url);
 
 			string responseText = webServiceStatus.text;

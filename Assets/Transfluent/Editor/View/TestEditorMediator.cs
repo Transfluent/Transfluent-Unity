@@ -103,11 +103,12 @@ public class TestEditorWindowMediator
 		currentLanguage = allLanguagesSupported.getLangaugeByCode(languageCode);
 	}
 
-	public void invalidateAuth()
+	public void invalidateAuth(bool wipeDatastore=false)
 	{
 		context.removeNamedMapping<string>(NamedInjections.API_TOKEN);
 		allLanguagesSupported = null;
-		context.manualGetMapping<ICredentialProvider>().save(null, null);
+		if(wipeDatastore)
+			context.manualGetMapping<ICredentialProvider>().save(null, null);
 	}
 
 	public string GetText(string textKey, string groupKey = null)

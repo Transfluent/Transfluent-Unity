@@ -30,6 +30,7 @@ public class TestEditorWindow : EditorWindow
 		if (GUILayout.Button("reset auth"))
 		{
 			_mediator.invalidateAuth();
+			loginScreen.GetCredentialsFromDataStore();
 		}
 		EditorGUILayout.EndHorizontal();
 	}
@@ -43,6 +44,11 @@ public class TestEditorWindow : EditorWindow
 		public LoginGUI(TestEditorWindowMediator mediator)
 		{
 			_mediator = mediator;
+			GetCredentialsFromDataStore();
+		}
+
+		public void GetCredentialsFromDataStore()
+		{
 			var usernamePassword = _mediator.getUserNamePassword();
 			currentUsername = usernamePassword.Key;
 			currentPassword = usernamePassword.Value;
@@ -61,7 +67,10 @@ public class TestEditorWindow : EditorWindow
 			}
 			if (GUILayout.Button("authenticate"))
 			{
-				_mediator.doAuth(currentUsername, currentPassword);
+				if (_mediator.doAuth(currentUsername, currentPassword))
+				{
+					_mediator.setUsernamePassword(currentUsername, currentPassword);
+				}
 			}
 			EditorGUILayout.EndHorizontal();
 		}

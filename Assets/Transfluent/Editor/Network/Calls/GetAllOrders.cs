@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net.Mime;
+using UnityEditor;
 
 namespace transfluent
 {
-	public class GetAllExistingTranslationKeys : ITransfluentCall
+	public class GetAllOrders : ITransfluentCall
 	{
 		public List<TransfluentTranslation> translations;
 
@@ -13,7 +14,6 @@ namespace transfluent
 
 		public string group_id { get; set; }
 		public int offset { get; set; }
-		public int language { get; set; }
 
 
 		[Inject(NamedInjections.API_TOKEN)]
@@ -26,11 +26,8 @@ namespace transfluent
 
 		public void Execute()
 		{
-			if (language <= 0) throw new Exception("INVALID Language in getAllExistingKeys");
-
 			var getParams = new Dictionary<string, string>
 			{
-				{"language",language.ToString()},
 				{"token", authToken}
 			};
 			if (!string.IsNullOrEmpty(group_id))
@@ -45,7 +42,7 @@ namespace transfluent
 			{
 				getParams.Add("offset",offset.ToString());
 			}
-			string url = RestUrl.getURL(RestUrl.RestAction.TEXTS) + service.encodeGETParams(getParams);
+			string url = RestUrl.getURL(RestUrl.RestAction.TEXTSORDERS) + service.encodeGETParams(getParams);
 			UnityEngine.Application.OpenURL(url);
 			webServiceStatus = service.request(url);
 

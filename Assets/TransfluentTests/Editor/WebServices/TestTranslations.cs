@@ -154,14 +154,24 @@ namespace Assets.Editor.Tests
 		[Test]
 		public void testListAllTranslations()
 		{
-			var getAllKeys = new GetAllExistingTranslationKeys
+			var getAllKeys = new GetAllExistingTranslationKeys()
 			{
 				authToken = accessToken,
-				service = new SyncronousEditorWebRequest()
+				service = new SyncronousEditorWebRequest(),
+				language = englishLanguage.id
 			};
 			getAllKeys.Execute();
 			List<TransfluentTranslation> translations = getAllKeys.translations;
 			Assert.IsNotNull(getAllKeys.translations);
+			Assert.Greater(translations.Count, 0);
+
+			getAllKeys.language = backwardsLanguage.id;
+			getAllKeys.Execute();
+
+			Assert.IsNotNull(getAllKeys.translations);
+			Assert.Greater(getAllKeys.translations.Count, 0);
+			translations.AddRange(getAllKeys.translations);
+
 			Assert.Greater(getAllKeys.translations.Count, 0);  /// I don't know why this is 0
 			bool hastargetKey = false;
 			translations.ForEach((TransfluentTranslation trans) => { if (trans.key == TRANSLATION_KEY) hastargetKey = true; });

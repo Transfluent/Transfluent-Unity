@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using Pathfinding.Serialization.JsonFx;
 
 namespace transfluent
@@ -16,11 +14,11 @@ namespace transfluent
 			//TODO: figure out an elegant way of doing this without parsing twice
 			var shell = JsonReader.Deserialize<EmptyResponseContainer>(text);
 			//Debug.Log("STATUS:" + JsonWriter.Serialize(shell));
-			if(shell.isOK())
+			if (shell.isOK())
 			{
 				var container = JsonReader.Deserialize<ResponseContainer<T>>(text);
 
-				if(container.isOK())
+				if (container.isOK())
 				{
 					response = container.response;
 				}

@@ -1,83 +1,112 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
-using transfluent;
+﻿using UnityEditor;
 using UnityEngine;
 
-public class TestEditorWindow : EditorWindow
+namespace transfluent
 {
-	private TestEditorWindowMediator _mediator;
-	[MenuItem("Window/Transfluent Helper")]
-	static void Init()
-	{
-		GetWindow<TestEditorWindow>();
-	}
-
-	public TestEditorWindow()
-	{
-		_mediator = new TestEditorWindowMediator();
-		loginScreen = new LoginGUI(_mediator);
-	}
-
-	private LoginGUI loginScreen;
-	void OnGUI()
-	{
-		if (!_mediator.authIsDone())
-		{
-			loginScreen.doGUI();
-			return;
-		}
-		EditorGUILayout.BeginHorizontal();
-		if (GUILayout.Button("reset auth"))
-		{
-			_mediator.invalidateAuth();
-			loginScreen.GetCredentialsFromDataStore();
-		}
-		EditorGUILayout.EndHorizontal();
-	}
-
-	public class LoginGUI
+	public class TestEditorWindow : EditorWindow
 	{
 		private TestEditorWindowMediator _mediator;
-		private string currentUsername;
-		private string currentPassword;
-
-		public LoginGUI(TestEditorWindowMediator mediator)
+		[MenuItem("Window/Transfluent Helper")]
+		static void Init()
 		{
-			_mediator = mediator;
-			GetCredentialsFromDataStore();
+			GetWindow<TestEditorWindow>();
 		}
 
-		public void GetCredentialsFromDataStore()
+		public TestEditorWindow()
 		{
-			var usernamePassword = _mediator.getUserNamePassword();
-			currentUsername = usernamePassword.Key;
-			currentPassword = usernamePassword.Value;
+			_mediator = new TestEditorWindowMediator();
+			loginScreen = new LoginGUI(_mediator);
 		}
-		public void doGUI()
-		{
-			EditorGUILayout.BeginHorizontal();
-			currentUsername = EditorGUILayout.TextField("username", currentUsername);
-			currentPassword = EditorGUILayout.TextField("password", currentPassword);
-			EditorGUILayout.EndHorizontal();
-			EditorGUILayout.BeginHorizontal();
 
-			if(GUILayout.Button("save"))
+		private LoginGUI loginScreen;
+		void OnGUI()
+		{
+			if(!_mediator.authIsDone())
 			{
-				_mediator.setUsernamePassword(currentUsername,currentPassword);
+				loginScreen.doGUI();
+				return;
 			}
-			if (GUILayout.Button("authenticate"))
+			EditorGUILayout.BeginHorizontal();
+			if(GUILayout.Button("reset auth"))
 			{
-				if (_mediator.doAuth(currentUsername, currentPassword))
+				_mediator.invalidateAuth();
+				loginScreen.GetCredentialsFromDataStore();
+			}
+
+
+			EditorGUILayout.EndHorizontal();
+		}
+
+		public class TextsGUI
+		{
+			private TestEditorWindowMediator _mediator;
+			private string knownTexts;
+
+			private double secondsSinceLastGotAllTexts;
+			public TextsGUI(TestEditorWindowMediator mediator)
+			{
+				_mediator = mediator;
+				Refresh();
+			}
+
+			void Refresh()
+			{
+				double timeInSecondsSinceUnityStartedUp = EditorApplication.timeSinceStartup;
+				if(secondsSinceLastGotAllTexts == timeInSecondsSinceUnityStartedUp)
+				{
+					//spamming it.. ignoringr
+					return;
+				}
+				secondsSinceLastGotAllTexts = timeInSecondsSinceUnityStartedUp;
+				// _mediator.getAllKnownTextEntries();
+			}
+
+		}
+
+
+		public class LoginGUI
+		{
+			private readonly TestEditorWindowMediator _mediator;
+			private string currentUsername;
+			private string currentPassword;
+
+			public LoginGUI(TestEditorWindowMediator mediator)
+			{
+				_mediator = mediator;
+				GetCredentialsFromDataStore();
+			}
+
+			public void GetCredentialsFromDataStore()
+			{
+				var usernamePassword = _mediator.getUserNamePassword();
+				currentUsername = usernamePassword.Key;
+				currentPassword = usernamePassword.Value;
+			}
+			public void doGUI()
+			{
+				EditorGUILayout.BeginHorizontal();
+				currentUsername = EditorGUILayout.TextField("username", currentUsername);
+				currentPassword = EditorGUILayout.TextField("password", currentPassword);
+				EditorGUILayout.EndHorizontal();
+				EditorGUILayout.BeginHorizontal();
+
+				if(GUILayout.Button("save"))
 				{
 					_mediator.setUsernamePassword(currentUsername, currentPassword);
 				}
+				if(GUILayout.Button("authenticate"))
+				{
+					if(_mediator.doAuth(currentUsername, currentPassword))
+					{
+						_mediator.setUsernamePassword(currentUsername, currentPassword);
+					}
+				}
+				EditorGUILayout.EndHorizontal();
 			}
-			EditorGUILayout.EndHorizontal();
+
 		}
 
 	}
-
-	
 
 
 }

@@ -55,7 +55,7 @@ namespace transfluent
 		{
 			if (!namedInjectionMap.ContainsKey(name))
 				namedInjectionMap.Add(name, new Dictionary<Type, object>());
-			namedInjectionMap[name].Add(valueToPutIn.GetType(), valueToPutIn);
+			namedInjectionMap[name].Add(typeof(T), valueToPutIn);
 		}
 
 		public void removeNamedMapping<T>(NamedInjections namedInjection)
@@ -115,7 +115,7 @@ namespace transfluent
 					}
 					catch (KeyNotFoundException k)
 					{
-						throw new UnboundInjectionException("Injeciton not set for type:" + typeToInject.Name +
+						throw new UnboundInjectionException("Injection not set for type:" + typeToInject.Name +
 						                                    " when trying to set on a sub objectnamed:" + injectionAttribute.name +
 						                                    " core exception:" + k);
 					}

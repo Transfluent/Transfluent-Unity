@@ -1,6 +1,4 @@
 ﻿using System;
-using UnityEngine;
-using System.Collections;
 
 namespace transfluent
 {
@@ -50,7 +48,7 @@ namespace transfluent
 		public string key { get; set; }
 		public string key_id { get; set; }
 		public Text text { get; set; }
-		
+
 	}
 
 	[Serializable]

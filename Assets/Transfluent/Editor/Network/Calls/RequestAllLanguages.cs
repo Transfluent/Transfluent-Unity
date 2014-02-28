@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 
 namespace transfluent
 {
@@ -23,6 +21,7 @@ namespace transfluent
 			return languages.Find((TransfluentLanguage2 lang) => { return lang.name == name; });
 		}
 	}
+
 	public class RequestAllLanguages : ITransfluentCall
 	{
 		public LanguageList languagesRetrieved;
@@ -44,16 +43,16 @@ namespace transfluent
 				text = responseText
 			};
 			reader.deserialize();
-			
+
 			var languages = new List<TransfluentLanguage2>();
-			foreach(var listitem in reader.response)
+			foreach (var listitem in reader.response)
 			{
-				foreach(var kvp in listitem)
+				foreach (var kvp in listitem)
 				{
 					languages.Add(kvp.Value);
 				}
 			}
-			languagesRetrieved = new LanguageList()
+			languagesRetrieved = new LanguageList
 			{
 				languages = languages
 			};

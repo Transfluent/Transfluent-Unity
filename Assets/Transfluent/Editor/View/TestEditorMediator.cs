@@ -45,7 +45,7 @@ public class TestEditorWindowMediator
 		try
 		{
 			retVal = context.manualGetMapping<string>(NamedInjections.API_TOKEN);
-		}catch(KeyNotFoundException e){}
+		}catch(KeyNotFoundException e){} //this is ok... I don't want to rewrite manualGetMapping
 		return retVal;
 	}
 	
@@ -146,5 +146,11 @@ public class TestEditorWindowMediator
 		{
 			throw new Exception("DO ERROR HANDLING HERE" + saveText.webServiceStatus);
 		}
+	}
+
+	public List<TransfluentTranslation> knownTextEntries()
+	{
+		var translations = new List<TransfluentTranslation>();
+		return translations;
 	}
 }

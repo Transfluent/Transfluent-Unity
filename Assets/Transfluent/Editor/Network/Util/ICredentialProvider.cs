@@ -14,7 +14,7 @@ namespace transfluent
 
 	public class FileBasedCredentialProvider : ICredentialProvider
 	{
-		private readonly string LocationOfTestCredentials = "Assets/TransfluentTests/Editor/Data/loginPassword.txt";
+		private const string LocationOfTestCredentials = "Assets/TransfluentTests/Editor/Data/loginPassword.txt";
 		public string username { get; protected set; }
 		public string password { get; protected set; }
 		public void save(string newUsername, string newPassword)
@@ -29,7 +29,7 @@ namespace transfluent
 
 		public FileBasedCredentialProvider()
 		{
-			TextAsset textAsset = AssetDatabase.LoadAssetAtPath(LocationOfTestCredentials, typeof(TextAsset)) as TextAsset;
+			var textAsset = AssetDatabase.LoadAssetAtPath(LocationOfTestCredentials, typeof(TextAsset)) as TextAsset;
 			string[] lines = textAsset.text.Split(new[] { '\r', '\n' });
 			username = lines[0];
 			password = lines[1];

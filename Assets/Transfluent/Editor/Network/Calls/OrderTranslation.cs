@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Pathfinding.Serialization.JsonFx;
 
 namespace transfluent
 {

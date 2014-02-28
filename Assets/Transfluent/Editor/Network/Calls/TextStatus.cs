@@ -44,7 +44,5 @@ namespace transfluent
 
 			wasTranslated = reader.response.is_translated;
 		}
-
-		
 	}
 }

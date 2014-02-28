@@ -1,23 +1,15 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using UnityEngine;
 using UnityEditor;
+using Debug = UnityEngine.Debug;
 
 namespace transfluent
 {
 	public class AsyncTester
 	{
-		[MenuItem("asink/testme")]
-		public static void testMe()
-		{
-			new AsyncTester();
-		}
-
-		private TimeSpan maxTime = new TimeSpan(0, 0, 10);
-		private Stopwatch sw;
+		private readonly TimeSpan maxTime = new TimeSpan(0, 0, 10);
+		private readonly Stopwatch sw;
 
 		private IEnumerator routineHandle;
 
@@ -29,18 +21,23 @@ namespace transfluent
 			routineHandle = testRoutine();
 		}
 
+		[MenuItem("asink/testme")]
+		public static void testMe()
+		{
+			new AsyncTester();
+		}
+
 		public IEnumerator testRoutine()
 		{
 			int maxticks = 100;
-			
+
 			//while(maxticks >0)
-			while(sw.Elapsed < maxTime)
+			while (sw.Elapsed < maxTime)
 			{
 				maxticks--;
 				//UnityEngine.Debug.Log("MAXticks:" + maxticks);
 				yield return null;
 			}
-
 		}
 
 		private void doCoroutine()
@@ -52,19 +49,17 @@ namespace transfluent
 				if (routineHandle != null)
 				{
 					//kill the reference if we no longer move forward
-					if(!routineHandle.MoveNext())
+					if (!routineHandle.MoveNext())
 					{
-						UnityEngine.Debug.Log("KILLING SELF:"+sw.Elapsed);
+						Debug.Log("KILLING SELF:" + sw.Elapsed);
 						routineHandle = null;
 					}
 				}
-					
 			}
 			else
 			{
 				EditorApplication.update = doCoroutine;
 			}
-
 		}
 	}
 }

@@ -12,8 +12,9 @@ namespace transfluent
 		public void deserialize()
 		{
 			//TODO: figure out an elegant way of doing this without parsing twice
-			var shell = JsonReader.Deserialize<EmptyResponseContainer>(text);
+			//NOTE: I do this mainly because sometimes I get an empty/unexpected response type and an "OK" type, but an error
 			//Debug.Log("STATUS:" + JsonWriter.Serialize(shell));
+			var shell = JsonReader.Deserialize<EmptyResponseContainer>(text);
 			if (shell.isOK())
 			{
 				var container = JsonReader.Deserialize<ResponseContainer<T>>(text);

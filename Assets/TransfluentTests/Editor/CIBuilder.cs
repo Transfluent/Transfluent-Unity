@@ -4,69 +4,72 @@ using UnityEditor;
 using UnityEngine;
 using UnityTest;
 
-public class CIBuilder : ScriptableObject
+namespace transfluent
 {
-	private static int GetBuildNumberFromCommandLine()
+	public class CIBuilder
 	{
-		const string buildFlag = "-BUILD_NUMBER=";
-
-		try
+		private static int GetBuildNumberFromCommandLine()
 		{
-			string[] args = Environment.GetCommandLineArgs();
-			foreach (string arg in args)
+			const string buildFlag = "-BUILD_NUMBER=";
+
+			try
 			{
-				if (arg.Contains(buildFlag))
+				string[] args = Environment.GetCommandLineArgs();
+				foreach(string arg in args)
 				{
-					string buildNumber = arg.Replace(buildFlag, "");
+					if(arg.Contains(buildFlag))
+					{
+						string buildNumber = arg.Replace(buildFlag, "");
 
 
-					return int.Parse(buildNumber);
+						return int.Parse(buildNumber);
+					}
 				}
 			}
-		}
-		catch (Exception e)
-		{
-			Debug.LogError("Error setting bundle number;" + e);
-			throw;
-		}
-		return 0; //not from command line
-	}
-
-	[MenuItem("Window/build")]
-	public static void manualBuild()
-	{
-		var build = new BuilderInstance();
-		build.autoBuildNumber = GetBuildNumberFromCommandLine();
-		build.RunTests();
-		build.Build();
-	}
-
-	public class BuilderInstance
-	{
-		public readonly string projectPath = Path.GetFullPath(Application.dataPath + Path.DirectorySeparatorChar + "..");
-		public string appName = "TransfluentEditor";
-
-		public int autoBuildNumber = 0; //build number passed from build machine, not marketing version -- 0.2, etc
-		public string buildDirectoryPath = "build";
-		public string marketingBuildNumber = "0.3"; //major, minor, patchlevel
-
-		public string pathToPackage = "Assets/Transfluent";
-		//run tests, export package
-		//TODO: make sure that package compiles without test directory -- build a dll
-		//TODO: export test results
-		public void RunTests()
-		{
-			UnitTestView.RunAllTestsBatch();
+			catch(Exception e)
+			{
+				Debug.LogError("Error setting bundle number;" + e);
+				throw;
+			}
+			return 0; //not from command line
 		}
 
-		public void Build()
+		[MenuItem("Window/build")]
+		public static void manualBuild()
 		{
-			string targetBuildPath = projectPath + Path.DirectorySeparatorChar + buildDirectoryPath;
-			if (!Directory.Exists(targetBuildPath))
-				Directory.CreateDirectory(targetBuildPath);
-			string fileLocation = string.Format("{0}-{1}.unitypackage", targetBuildPath + Path.DirectorySeparatorChar + appName,
-				autoBuildNumber);
-			AssetDatabase.ExportPackage(pathToPackage, fileLocation, ExportPackageOptions.Recurse);
+			var build = new BuilderInstance();
+			build.autoBuildNumber = GetBuildNumberFromCommandLine();
+			build.RunTests();
+			build.Build();
+		}
+
+		public class BuilderInstance
+		{
+			public readonly string projectPath = Path.GetFullPath(Application.dataPath + Path.DirectorySeparatorChar + "..");
+			public string appName = "TransfluentEditor";
+
+			public int autoBuildNumber = 0; //build number passed from build machine, not marketing version -- 0.2, etc
+			public string buildDirectoryPath = "build";
+			public string marketingBuildNumber = "0.3"; //major, minor, patchlevel
+
+			public string pathToPackage = "Assets/Transfluent";
+			//run tests, export package
+			//TODO: make sure that package compiles without test directory -- build a dll
+			//TODO: export test results
+			public void RunTests()
+			{
+				UnitTestView.RunAllTestsBatch();
+			}
+
+			public void Build()
+			{
+				string targetBuildPath = projectPath + Path.DirectorySeparatorChar + buildDirectoryPath;
+				if(!Directory.Exists(targetBuildPath))
+					Directory.CreateDirectory(targetBuildPath);
+				string fileLocation = string.Format("{0}-{1}.unitypackage", targetBuildPath + Path.DirectorySeparatorChar + appName,
+					autoBuildNumber);
+				AssetDatabase.ExportPackage(pathToPackage, fileLocation, ExportPackageOptions.Recurse);
+			}
 		}
 	}
 }

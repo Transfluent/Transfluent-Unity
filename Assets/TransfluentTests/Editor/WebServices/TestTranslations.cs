@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
-using transfluent;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Assets.Editor.Tests
+namespace transfluent.tests
 {
 	[TestFixture]
 	internal class TestTranslations
@@ -99,26 +96,6 @@ namespace Assets.Editor.Tests
 
 		public const string TRANSLATION_KEY = "UNITY_TEST_TRANSLATION_KEY";
 
-		private string reverseString(string str)
-		{
-			string[] words = str.Split(new[] {" "}, StringSplitOptions.None);
-			var sb = new StringBuilder();
-			for (int i = words.Length - 1; i >= 0; i--)
-			{
-				string word = words[i];
-
-				char[] charArray = word.ToCharArray();
-				IEnumerable<char> walker = charArray.Reverse();
-				foreach (char t in walker)
-				{
-					sb.Append(t);
-				}
-				if (i != 0)
-					sb.Append(" ");
-			}
-
-			return sb.ToString();
-		}
 
 		[Test]
 		public void getBackwardsLanguage()
@@ -143,18 +120,16 @@ namespace Assets.Editor.Tests
 			getText.Execute();
 			string reversedString = getText.resultOfCall;
 			Assert.AreNotEqual(stringToReverse, reversedString);
-
-			string manuallyReversedString = reverseString(stringToReverse);
+			var reverser = new WordReverser();
+			string manuallyReversedString = reverser.reverseString(stringToReverse);
 			Debug.Log(string.Format(" manully reversed:{0} reversed from call{1}", manuallyReversedString, reversedString));
 			Assert.AreEqual(manuallyReversedString, reversedString);
 		}
-		
 
-		//TODO: verify this fails because the backwards language is not an "Ordered" translation
 		[Test]
 		public void testListAllTranslations()
 		{
-			var getAllKeys = new GetAllExistingTranslationKeys()
+			var getAllKeys = new GetAllExistingTranslationKeys
 			{
 				authToken = accessToken,
 				service = new SyncronousEditorWebRequest(),
@@ -172,7 +147,7 @@ namespace Assets.Editor.Tests
 			Assert.Greater(getAllKeys.translations.Count, 0);
 			translations.AddRange(getAllKeys.translations);
 
-			Assert.Greater(getAllKeys.translations.Count, 0);  /// I don't know why this is 0
+			Assert.Greater(getAllKeys.translations.Count, 0); /// I don't know why this is 0
 			bool hastargetKey = false;
 			translations.ForEach((TransfluentTranslation trans) => { if (trans.key == TRANSLATION_KEY) hastargetKey = true; });
 			Assert.IsTrue(hastargetKey);

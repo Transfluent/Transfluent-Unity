@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
+﻿
 //moving from string to only supporting enums?
 public enum NamedInjections
 {

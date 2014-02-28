@@ -1,11 +1,11 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace transfluent
+namespace transfluent.editor
 {
 	public class TestEditorWindow : EditorWindow
 	{
-		private TestEditorWindowMediator _mediator;
+		private readonly TestEditorWindowMediator _mediator;
 		[MenuItem("Window/Transfluent Helper")]
 		static void Init()
 		{
@@ -18,7 +18,7 @@ namespace transfluent
 			loginScreen = new LoginGUI(_mediator);
 		}
 
-		private LoginGUI loginScreen;
+		private readonly LoginGUI loginScreen;
 		void OnGUI()
 		{
 			if(!_mediator.authIsDone())
@@ -39,7 +39,7 @@ namespace transfluent
 
 		public class TextsGUI
 		{
-			private TestEditorWindowMediator _mediator;
+			private readonly TestEditorWindowMediator _mediator;
 			private string knownTexts;
 
 			private double secondsSinceLastGotAllTexts;

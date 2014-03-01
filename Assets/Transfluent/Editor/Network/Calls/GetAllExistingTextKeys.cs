@@ -49,6 +49,9 @@ namespace transfluent
 			string url = RestUrl.getURL(RestUrl.RestAction.TEXTS) + service.encodeGETParams(getParams);
 			webServiceStatus = service.request(url);
 
+			if (webServiceStatus.status != ServiceStatus.SUCCESS)
+				return;
+
 			string responseText = webServiceStatus.text;
 
 			var reader = new ResponseReader<Dictionary<string, TransfluentTranslation>>

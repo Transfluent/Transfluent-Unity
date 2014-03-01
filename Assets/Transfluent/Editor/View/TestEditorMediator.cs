@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using transfluent;
 
 //handles interaction with core code, allowing hte editor window to focus on presentation.  Also has the nice side effect of avoiding issues in editor files (massive bugginess with optional arguments, etc)
 //seperatoion of logic, and 
@@ -18,7 +17,7 @@ namespace transfluent.editor
 		{
 			context = new InjectionContext();
 			context.addMapping<ICredentialProvider>(new EditorKeyCredentialProvider());
-			context.addMapping<IWebService>(new SyncronousEditorWebRequest());
+			context.addMapping<IWebService>(new DebugSyncronousEditorWebRequest());
 		}
 
 		public KeyValuePair<string, string> getUserNamePassword()
@@ -123,8 +122,7 @@ namespace transfluent.editor
 				group_id = groupKey,
 				languageID = currentLanguage.id
 			};
-			context.setMappings(getText);
-			getText.Execute();
+			makeCall(getText);
 
 			return getText.resultOfCall;
 		}
@@ -142,6 +140,7 @@ namespace transfluent.editor
 			var saveText = new SaveTextKey
 			{
 				text_id = textKey,
+				text = textValue,
 				group_id = groupKey,
 				language = currentLanguage.id,
 			};
@@ -153,8 +152,44 @@ namespace transfluent.editor
 
 		public List<TransfluentTranslation> knownTextEntries()
 		{
-			var translations = new List<TransfluentTranslation>();
-			return translations;
+			if(currentLanguage == null) throw new Exception("Must set current language first!");
+
+			var getAllKeys = new GetAllExistingTranslationKeys
+			{
+				language = currentLanguage.id
+			};
+			if(!makeCall(getAllKeys))
+			{
+				if (getAllKeys.webServiceStatus.rawErrorCode == 400)
+				{
+					//this just means that there are no codes for this language
+					return new List<TransfluentTranslation>();
+				}
+				throw new Exception("DO ERROR HANDLING HERE" + getAllKeys.webServiceStatus);
+			}
+			makeCall(getAllKeys);
+
+			return getAllKeys.translations;
+		}
+
+		public void setCurrentLanguageFromLanguageCode(string languageCode)
+		{
+			currentLanguage = allLanguagesSupported.getLangaugeByCode(languageCode);
+		}
+		public TransfluentLanguage GetCurrentLanguage()
+		{
+			return currentLanguage;
+		}
+
+		public void SetText(List<TransfluentTranslation> translations)
+		{
+			foreach (var translation in translations)
+			{
+				if (string.IsNullOrEmpty(translation.text_id)) continue;
+				//don't send empty string as a group id
+				if (string.IsNullOrEmpty(translation.group_id)) translation.group_id = null;
+				SetText(translation.text_id,translation.text,translation.group_id);
+			}
 		}
 	}
 }

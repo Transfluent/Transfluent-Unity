@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace transfluent
 {
-	public class GetTextKey
+	public class GetTextKey : ITransfluentCall
 	{
 		public string text_id { get; set; }
 		public string group_id { get; set; }
@@ -17,6 +17,8 @@ namespace transfluent
 		public IWebService service { get; set; }
 
 		public string resultOfCall;
+
+		public WebServiceReturnStatus webServiceStatus { get; private set; }
 
 		public void Execute()
 		{
@@ -32,12 +34,12 @@ namespace transfluent
 				webserviceParams.Add("group_id", group_id);
 			}
 			string url = RestUrl.getURL(RestUrl.RestAction.TEXT) + service.encodeGETParams(webserviceParams);
-			WebServiceReturnStatus status = service.request(url);
+			webServiceStatus = service.request(url);
 			// + service.encodeGETParams(webserviceParams)
-			string responseText = status.text;
+			string responseText = webServiceStatus.text;
 
-			if (status.status != ServiceStatus.SUCCESS)
-				throw new Exception("Unsuccessful request " + status.rawErrorCode + " response" + responseText + " url:" + url);
+			if(webServiceStatus.status != ServiceStatus.SUCCESS)
+				throw new Exception("Unsuccessful request " + webServiceStatus.rawErrorCode + " response" + responseText + " url:" + url);
 
 			var reader = new ResponseReader<string>
 			{

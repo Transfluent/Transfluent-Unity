@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -15,7 +16,17 @@ namespace transfluent.tests
 		{
 			OneTimeSetup();
 		}
+		public T justCall<T>(ITransfluentCall call)
+		{
+			if(call.getParameters().ContainsKey("token"))
+				call.getParameters().Remove("token");
 
+			call.getParameters().Add("token", accessToken);
+			var requester = new SyncronousEditorWebRequest();
+			var result = requester.request(call);
+			if (result.wasSuccessful() == false) throw new Exception("call failed");
+			return result.Parse<T>();
+		}
 		//[Test]
 		public void OneTimeSetup()
 		{
@@ -23,14 +34,12 @@ namespace transfluent.tests
 			Assert.False(string.IsNullOrEmpty(credentials.username));
 			Assert.False(string.IsNullOrEmpty(credentials.password));
 			var login = new Login
-			{
-				username = credentials.username,
-				password = credentials.password,
-				service = new SyncronousEditorWebRequest()
-			};
-			login.Execute();
+			(
+				username : credentials.username,
+				password : credentials.password
+			);
 
-			accessToken = login.token;
+			accessToken = justCall<AuthenticationResponse>(login).token;
 			if(string.IsNullOrEmpty(accessToken))
 			{
 				throw new Exception("was not able to log in!");
@@ -39,30 +48,40 @@ namespace transfluent.tests
 
 		private const string HELLO_WORLD_TEXT_KEY = "HELLO_WORLD_TEXT_KEY";
 
+		LanguageList getLanguageList()
+		{
+			var language = new RequestAllLanguages();
+			var requester = new SyncronousEditorWebRequest();
+			WebServiceReturnStatus status = requester.request(language);
+
+			Assert.True(status.wasSuccessful());
+			var retrieved = status.Parse<List<Dictionary<string, TransfluentLanguage>>>();
+			Assert.NotNull(retrieved);
+
+			LanguageList list = language.GetLanguageListFromRawReturn(retrieved);
+			Assert.NotNull(list);
+			Assert.IsTrue(list.languages.Count > 0);
+			return list;
+		}
 		[Test]
+		[ExpectedException(typeof(Exception))]
 		public void getKeyThatDoesNotExist()
 		{
-			var language = new RequestAllLanguages { service = new SyncronousEditorWebRequest() };
-			language.Execute();
-			TransfluentLanguage englishLanguage = language.languagesRetrieved.getLangaugeByCode("en-us");
+			TransfluentLanguage englishLanguage = getLanguageList().getLangaugeByCode("en-us");
 
 			var testForExistance = new GetTextKey
-			{
-				authToken = accessToken,
-				languageID = englishLanguage.id,
-				text_id = "THIS_DOES_NOT_EXIST" + Random.value,
-				service = new SyncronousEditorWebRequest()
-			};
-			Assert.Throws(typeof(Exception), testForExistance.Execute);
+			(
+				languageID : englishLanguage.id,
+				text_id    : "THIS_DOES_NOT_EXIST" + Random.value
+			);
+			justCall<string>(testForExistance);
+			//Assert.Throws(typeof(Exception), justCall<string>(testForExistance));
 		}
 
 		[Test]
 		public void testBackwardsLanguage()
 		{
-			var language = new RequestAllLanguages { service = new SyncronousEditorWebRequest() };
-			language.Execute();
-
-			LanguageList list = language.languagesRetrieved;
+			var list = getLanguageList();
 			Assert.NotNull(list);
 			Assert.IsTrue(list.languages.Count > 0);
 
@@ -74,60 +93,52 @@ namespace transfluent.tests
 			//post text key
 			string textToSave = "this is sample text" + Random.value;
 			var saveOp = new SaveTextKey
-			{
-				authToken = accessToken,
-				language = englishLanguage.id,
-				text = textToSave,
-				text_id = HELLO_WORLD_TEXT_KEY,
-				service = new SyncronousEditorWebRequest()
-			};
-			saveOp.Execute();
+			(
+				language : englishLanguage.id,
+				text     : textToSave,
+				text_id  : HELLO_WORLD_TEXT_KEY
+			);
+			var saved = justCall<bool>(saveOp);
 
-			Debug.Log("Saved successfullly:" + saveOp.savedSuccessfully);
+			Debug.Log("Saved successfullly:" + saved);
 
 			var testForExistance = new GetTextKey
-			{
-				authToken = accessToken,
-				languageID = englishLanguage.id,
-				text_id = HELLO_WORLD_TEXT_KEY,
-				service = new SyncronousEditorWebRequest()
-			};
-			testForExistance.Execute();
-			Assert.IsFalse(string.IsNullOrEmpty(testForExistance.resultOfCall));
-			Assert.AreEqual(textToSave, testForExistance.resultOfCall);
+			(
+				languageID : englishLanguage.id,
+				text_id    : HELLO_WORLD_TEXT_KEY
+			);
+			string keyFromDB = justCall<string>(testForExistance);
+			Assert.IsFalse(string.IsNullOrEmpty(keyFromDB));
+			Assert.AreEqual(textToSave, keyFromDB);
 		}
 
 		[Test]
 		public void testGetAllLanugages()
 		{
-			var language = new RequestAllLanguages { service = new SyncronousEditorWebRequest() };
-			language.Execute();
+			getLanguageList();
 		}
 
 		[Test]
 		public void testHello()
 		{
 			var hello = new Hello
-			{
-				name = "world",
-				service = new SyncronousEditorWebRequest()
-			};
-			hello.Execute();
+			(
+				name : "world"
+			);
+			var text = justCall<string>(hello);
 
-			Assert.IsNotNull(hello.helloWorldText);
-			Assert.AreEqual(hello.helloWorldText.ToLower(), "hello world");
+			Assert.IsNotNull(text);
+			Assert.AreEqual(text.ToLower(), "hello world");
 		}
 
 		[Test]
 		public void testLanguages()
 		{
-			var language = new RequestAllLanguages { service = new SyncronousEditorWebRequest() };
-			language.Execute();
+			var language = getLanguageList();
 
-			Assert.IsNotNull(language.languagesRetrieved);
-			LanguageList list = language.languagesRetrieved;
-			Assert.IsNotNull(list);
-			Assert.IsTrue(list.languages.Count > 0);
+			Assert.IsNotNull(language);
+			Assert.IsNotNull(language.languages);
+			Assert.IsTrue(language.languages.Count > 0);
 		}
 	}
 }

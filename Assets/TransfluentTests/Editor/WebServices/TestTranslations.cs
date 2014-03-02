@@ -29,14 +29,15 @@ namespace transfluent.tests
 			Assert.False(string.IsNullOrEmpty(credentials.username));
 			Assert.False(string.IsNullOrEmpty(credentials.password));
 			var login = new Login
-			{
-				username = credentials.username,
-				password = credentials.password,
-				service = new SyncronousEditorWebRequest()
-			};
-			login.Execute();
+			(
+				username : credentials.username,
+				password : credentials.password
+			);
+			var request = new DebugSyncronousEditorWebRequest();
+			var result = request.request(login);
 
-			accessToken = login.token;
+			var response = result.Parse<AuthenticationResponse>();
+			accessToken = response.token;
 			if (string.IsNullOrEmpty(accessToken))
 			{
 				throw new Exception("was not able to log in!");
@@ -48,9 +49,14 @@ namespace transfluent.tests
 		public void getLanguages()
 		{
 			var language = new RequestAllLanguages {service = new SyncronousEditorWebRequest()};
-			language.Execute();
+			var requester = new SyncronousEditorWebRequest();
+			WebServiceReturnStatus status = requester.request(language);
 
-			LanguageList list = language.languagesRetrieved;
+			Assert.True(status.wasSuccessful());
+			var retrieved = status.Parse<List<Dictionary<string, TransfluentLanguage>>>();
+			Assert.NotNull(retrieved);
+
+			LanguageList list = language.GetLanguageListFromRawReturn(retrieved);
 			Assert.NotNull(list);
 			Assert.IsTrue(list.languages.Count > 0);
 
@@ -66,74 +72,77 @@ namespace transfluent.tests
 			//post text key
 			string textToSave = textToSetTestTokenTo + Random.value;
 			var saveOp = new SaveTextKey
-			{
-				authToken = accessToken,
-				language = englishLanguage.id,
-				text = textToSave,
-				text_id = keyToSaveAndThenGet,
-				service = new SyncronousEditorWebRequest()
-			};
-			saveOp.Execute();
-
+			(
+				language : englishLanguage.id,
+				text     : textToSave,
+				text_id  : keyToSaveAndThenGet
+			);
+			justCall<bool>(saveOp);
 			var testForExistance = new GetTextKey
-			{
-				authToken = accessToken,
-				languageID = englishLanguage.id,
-				text_id = keyToSaveAndThenGet,
-				service = new SyncronousEditorWebRequest()
-			};
-			testForExistance.Execute();
-			Assert.IsFalse(string.IsNullOrEmpty(testForExistance.resultOfCall));
-			Assert.AreEqual(textToSave, testForExistance.resultOfCall);
+			(
+				languageID : englishLanguage.id,
+				text_id    : keyToSaveAndThenGet
+			);
+			string stringFromServer = justCall<string>(testForExistance);
+			Assert.IsFalse(string.IsNullOrEmpty(stringFromServer));
+			Assert.AreEqual(textToSave, stringFromServer);
 
 			//save it back to what we expect it to be
-			saveOp.text = textToSetTestTokenTo;
-			saveOp.Execute();
+			saveOp = new SaveTextKey
+			(
+				language: englishLanguage.id,
+				text: textToSetTestTokenTo,
+				text_id: keyToSaveAndThenGet
+			);
+			justCall<bool>(saveOp);
 
-			testForExistance.Execute(); //get it again
-			Assert.AreEqual(textToSetTestTokenTo, testForExistance.resultOfCall);
+			stringFromServer = justCall<string>(testForExistance);
+			Assert.AreEqual(textToSetTestTokenTo, stringFromServer);
 		}
 
 		public const string TRANSLATION_KEY = "UNITY_TEST_TRANSLATION_KEY";
 
+		public T justCall<T>(ITransfluentCall call)
+		{
+			if (call.getParameters().ContainsKey("token"))
+				call.getParameters().Remove("token");
+
+			call.getParameters().Add("token", accessToken);
+			var requester = new SyncronousEditorWebRequest();
+			var result = requester.request(call);
+			return result.Parse<T>();
+		}
 		[Test]
 		public void testAlreadyInsertedException()
 		{
 			string textToSave = textToSetTestTokenTo + Random.value;
 			var saveOp = new SaveTextKey
-			{
-				authToken = accessToken,
-				language = englishLanguage.id,
-				text = textToSave,
-				text_id = TRANSLATION_KEY,
-				service = new SyncronousEditorWebRequest()
-			};
-			saveOp.Execute();
-			saveOp.Execute(); //error 500, this looks like a temporary server error...
+			(
+				language  : englishLanguage.id,
+				text      : textToSave,
+				text_id   : TRANSLATION_KEY
+			);
+			justCall<bool>(saveOp);
+			justCall<bool>(saveOp); //error 500, this looks like a temporary server error...
 		}
 
 		[Test]
 		public void getBackwardsLanguage()
 		{
 			var englishKeyGetter = new GetTextKey
-			{
-				authToken = accessToken,
-				languageID = englishLanguage.id,
-				text_id = TRANSLATION_KEY,
-				service = new SyncronousEditorWebRequest()
-			};
-			englishKeyGetter.Execute();
-			string stringToReverse = englishKeyGetter.resultOfCall;
+			(
+				languageID : englishLanguage.id,
+				text_id    : TRANSLATION_KEY
+			);
+			
+			string stringToReverse = justCall<string>(englishKeyGetter);
 			Assert.AreEqual(stringToReverse, textToSetTestTokenTo);
 			var getText = new GetTextKey
-			{
-				authToken = accessToken,
-				languageID = backwardsLanguage.id,
-				text_id = TRANSLATION_KEY,
-				service = new SyncronousEditorWebRequest()
-			};
-			getText.Execute();
-			string reversedString = getText.resultOfCall;
+			(
+				languageID : backwardsLanguage.id,
+				text_id    : TRANSLATION_KEY
+			);
+			string reversedString = justCall<string>(getText);
 			Assert.AreNotEqual(stringToReverse, reversedString);
 			var reverser = new WordReverser();
 			string manuallyReversedString = reverser.reverseString(stringToReverse);
@@ -145,24 +154,24 @@ namespace transfluent.tests
 		public void testListAllTranslations()
 		{
 			var getAllKeys = new GetAllExistingTranslationKeys
-			{
-				authToken = accessToken,
-				service = new DebugSyncronousEditorWebRequest(),
-				language = englishLanguage.id
-			};
-			getAllKeys.Execute();
-			List<TransfluentTranslation> translations = getAllKeys.translations;
-			Assert.IsNotNull(getAllKeys.translations);
+			(
+				language : englishLanguage.id
+			);
+
+			var translations = justCall<List<TransfluentTranslation>>(getAllKeys);
+			Assert.IsNotNull(translations);
 			Assert.Greater(translations.Count, 0);
 
-			getAllKeys.language = backwardsLanguage.id;
-			getAllKeys.Execute();
+			getAllKeys = new GetAllExistingTranslationKeys
+			(
+				language: backwardsLanguage.id
+			);
+			var backwardsTranslations = justCall<List<TransfluentTranslation>>(getAllKeys);
+			Assert.IsNotNull(backwardsTranslations);
+			Assert.Greater(backwardsTranslations.Count, 0);
+			translations.AddRange(backwardsTranslations);
 
-			Assert.IsNotNull(getAllKeys.translations);
-			Assert.Greater(getAllKeys.translations.Count, 0);
-			translations.AddRange(getAllKeys.translations);
-
-			Assert.Greater(getAllKeys.translations.Count, 0); /// I don't know why this is 0
+			Assert.Greater(backwardsTranslations.Count, 0); 
 			bool hastargetKey = false;
 			translations.ForEach((TransfluentTranslation trans) => { if (trans.text_id == TRANSLATION_KEY) hastargetKey = true; });
 			Assert.IsTrue(hastargetKey);
@@ -172,12 +181,9 @@ namespace transfluent.tests
 		public void testListAllOrders()
 		{
 			var getAllKeys = new GetAllOrders
-			{
-				authToken = accessToken,
-				service = new SyncronousEditorWebRequest(),
-			};
-			getAllKeys.Execute();
-			List<TransfluentOrder> orders = getAllKeys.orders;
+			(
+			);
+			var orders = justCall<List<TransfluentOrder>>(getAllKeys);
 			Assert.IsNotNull(orders);
 			//Assert.Greater(orders.Count, 0); //TODO: test making an actual order
 		}
@@ -186,50 +192,42 @@ namespace transfluent.tests
 		public void testStatusOfAlreadyInsertedKey()
 		{
 			var englishTranslationOfEnglishKey = new TextStatus
-			{
-				authToken = accessToken,
-				text_id = TRANSLATION_KEY,
-				language_id = englishLanguage.id,
-				service = new SyncronousEditorWebRequest()
-			};
-			englishTranslationOfEnglishKey.Execute();
+			(
+				text_id     : TRANSLATION_KEY,
+				language_id : englishLanguage.id
+			);
+			bool status = justCall<TextStatusResult>(englishTranslationOfEnglishKey).is_translated;
 
-			Assert.True(englishTranslationOfEnglishKey.wasTranslated);
+			Assert.True(status);
 
 			var backwardsTranslationOfExistingKey = new TextStatus
-			{
-				authToken = accessToken,
-				text_id = TRANSLATION_KEY,
-				language_id = backwardsLanguage.id,
-				service = new SyncronousEditorWebRequest()
-			};
-			backwardsTranslationOfExistingKey.Execute();
-			Assert.IsTrue(backwardsTranslationOfExistingKey.wasTranslated);
+			(
+				text_id     : TRANSLATION_KEY,
+				language_id : backwardsLanguage.id
+			);
+			status = justCall<TextStatusResult>(backwardsTranslationOfExistingKey).is_translated;
+			Assert.IsTrue(status);
 		}
 
 		[Test]
 		public void testStatusOfNonExistantKey()
 		{
 			var englishTranslationOfEnglishKey = new TextStatus
-			{
-				authToken = accessToken,
-				text_id = TRANSLATION_KEY + " THIS IS INVALID" + Random.value,
-				language_id = englishLanguage.id,
-				service = new SyncronousEditorWebRequest()
-			};
-			englishTranslationOfEnglishKey.Execute();
+			(
+				text_id     : TRANSLATION_KEY + " THIS IS INVALID" + Random.value,
+				language_id : englishLanguage.id
+			);
+			bool status = justCall<TextStatusResult>(englishTranslationOfEnglishKey).is_translated;
 
-			Assert.False(englishTranslationOfEnglishKey.wasTranslated);
+			Assert.False(status);
 
 			var backwardsTranslationOfExistingKey = new TextStatus
-			{
-				authToken = accessToken,
-				text_id = TRANSLATION_KEY + " THIS IS INVALID" + Random.value,
-				language_id = backwardsLanguage.id,
-				service = new SyncronousEditorWebRequest()
-			};
-			backwardsTranslationOfExistingKey.Execute();
-			Assert.False(backwardsTranslationOfExistingKey.wasTranslated);
+			(
+				text_id     : TRANSLATION_KEY + " THIS IS INVALID" + Random.value,
+				language_id : backwardsLanguage.id
+			);
+			status = justCall<TextStatusResult>(englishTranslationOfEnglishKey).is_translated;
+			Assert.False(status);
 		}
 
 		[Test]
@@ -246,32 +244,29 @@ namespace transfluent.tests
 			}
 
 			var englishTranslationOfEnglishKey = new TextStatus
-			{
-				authToken = accessToken,
-				text_id = TRANSLATION_KEY,
-				language_id = nonExistantTranslationKey,
-				service = new SyncronousEditorWebRequest()
-			};
-			englishTranslationOfEnglishKey.Execute();
+			(
+				text_id     : TRANSLATION_KEY,
+				language_id : nonExistantTranslationKey
+			);
+			var result = justCall<TextStatusResult>(englishTranslationOfEnglishKey);
 
-			Assert.False(englishTranslationOfEnglishKey.wasTranslated);
+			Assert.False(result.is_translated);
 		}
 
 		[Test]
 		public void testTranslation()
 		{
 			var translateRequest = new OrderTranslation
-			{
-				source_language = englishLanguage.id,
-				target_languages = new[] {backwardsLanguage.id},
-				texts = new[] {TRANSLATION_KEY},
-				authToken = accessToken,
-				service = new SyncronousEditorWebRequest()
-			};
-			translateRequest.Execute();
-
-			Debug.Log("Full result from test translation:" + JsonWriter.Serialize(translateRequest.fullResult));
-			Assert.IsTrue(translateRequest.fullResult.word_count > 0);
+			(
+				source_language  : englishLanguage.id,
+				target_languages : new int[] {backwardsLanguage.id},
+				texts            : new string[] {TRANSLATION_KEY}
+			);
+			var translationResult = justCall<OrderTranslation.TextsTranslateResult>(translateRequest);
+			var requester = new SyncronousEditorWebRequest();
+			var result = requester.request(translateRequest);
+			Debug.Log("Full result from test translation:" + JsonWriter.Serialize(result.text));
+			Assert.IsTrue(translationResult.word_count > 0);
 		}
 	}
 }

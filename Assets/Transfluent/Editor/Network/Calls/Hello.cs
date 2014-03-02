@@ -3,33 +3,43 @@ using System.Collections.Generic;
 
 namespace transfluent
 {
-	public class Hello
+	[Route("hello", RestRequestType.GET, "http://transfluent.com/backend-api/#Hello")]
+	public class Hello : ITransfluentCall
 	{
-		public string helloWorldText;
-
-		public string name { get; set; }
-
 		[Inject(NamedInjections.API_TOKEN)]
 		public string authToken { get; set; }
 
-		[Inject]
-		public IWebService service { get; set; }
+		private Dictionary<string, string> _getParams;
 
-		public void Execute()
+		public Hello(string name)
 		{
-			
-			WebServiceReturnStatus status = service.request(RestUrl.getURL(RestUrl.RestAction.HELLO), new Dictionary<string, string>
+			_getParams = new Dictionary<string, string>
 			{
 				{"name", name},
-			});
+			};
+		}
 
+		public string Parse(WebServiceReturnStatus status)
+		{
 			string responseText = status.text;
 			var reader = new ResponseReader<String>
 			{
 				text = responseText
 			};
 			reader.deserialize();
-			helloWorldText = reader.response;
+			return reader.response;
 		}
+
+		public Dictionary<string, string> getParameters()
+		{
+			return _getParams;
+		}
+
+		public Dictionary<string, string> postParameters()
+		{
+			throw new NotImplementedException();
+		}
+
+		public Type expectedReturnType { get { return typeof(string); } }
 	}
 }

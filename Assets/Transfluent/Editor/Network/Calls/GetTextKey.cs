@@ -3,51 +3,37 @@ using System.Collections.Generic;
 
 namespace transfluent
 {
+	[Route("text", RestRequestType.GET,"http://transfluent.com/backend-api/#Text")]
 	public class GetTextKey : ITransfluentCall
 	{
-		public string text_id { get; set; }
-		public string group_id { get; set; }
-		public int languageID { get; set; }
-
+		public Type expectedReturnType { get { return typeof(string); } }
 
 		[Inject(NamedInjections.API_TOKEN)]
 		public string authToken { get; set; }
 
-		[Inject]
-		public IWebService service { get; set; }
-
-		public string resultOfCall;
-
-		public WebServiceReturnStatus webServiceStatus { get; private set; }
-
-		public void Execute()
+		private readonly Dictionary<string, string> _getParams;
+		public GetTextKey(string text_id, int languageID, string group_id=null)
 		{
-			var webserviceParams = new Dictionary<string, string>
+			_getParams = new Dictionary<string, string>
 			{
 				{"text_id", text_id},
 				{"language", languageID.ToString()},
-				{"token", authToken}
 			};
 
-			if (group_id != null)
+			if(group_id != null)
 			{
-				webserviceParams.Add("group_id", group_id);
+				_getParams.Add("group_id", group_id);
 			}
-			string url = RestUrl.getURL(RestUrl.RestAction.TEXT) + service.encodeGETParams(webserviceParams);
-			webServiceStatus = service.request(url);
-			// + service.encodeGETParams(webserviceParams)
-			string responseText = webServiceStatus.text;
+		}
 
-			if(webServiceStatus.status != ServiceStatus.SUCCESS)
-				throw new Exception("Unsuccessful request " + webServiceStatus.rawErrorCode + " response" + responseText + " url:" + url);
+		public Dictionary<string, string> getParameters()
+		{
+			return _getParams;
+		}
 
-			var reader = new ResponseReader<string>
-			{
-				text = responseText
-			};
-			reader.deserialize();
-
-			resultOfCall = reader.response;
+		public Dictionary<string, string> postParameters()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

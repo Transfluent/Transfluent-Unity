@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace transfluent
 {
@@ -22,40 +23,44 @@ namespace transfluent
 		}
 	}
 
+	[Route("languages", RestRequestType.GET, "http://transfluent.com/backend-api/#Languages")]
 	public class RequestAllLanguages : ITransfluentCall
 	{
-		public LanguageList languagesRetrieved;
+		public Type expectedReturnType { get { return typeof(LanguageList); } }
 
-		[Inject]
-		public IWebService service { get; set; }
+		private Dictionary<string, string> _getParams;
 
-		public WebServiceReturnStatus webServiceStatus { get; private set; }
-
-		public void Execute()
+		public RequestAllLanguages()
 		{
-			webServiceStatus = service.request(RestUrl.getURL(RestUrl.RestAction.LANGUAGES));
+			_getParams = new Dictionary<string, string>();
 
-			string responseText = webServiceStatus.text;
+		}
 
-
-			var reader = new ResponseReader<List<Dictionary<string, TransfluentLanguage>>>
-			{
-				text = responseText
-			};
-			reader.deserialize();
-
+		public LanguageList GetLanguageListFromRawReturn(List<Dictionary<string, TransfluentLanguage>> rawReturn)
+		{
 			var languages = new List<TransfluentLanguage>();
-			foreach (var listitem in reader.response)
+			foreach(var listitem in rawReturn)
 			{
-				foreach (var kvp in listitem)
+				foreach(var kvp in listitem)
 				{
 					languages.Add(kvp.Value);
 				}
 			}
-			languagesRetrieved = new LanguageList
+			var retrieved = new LanguageList
 			{
 				languages = languages
 			};
+			return retrieved;
+		}
+
+		public Dictionary<string, string> getParameters()
+		{
+			return _getParams;
+		}
+
+		public Dictionary<string, string> postParameters()
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

@@ -1,71 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace transfluent
 {
+	[Route("texts", RestRequestType.GET, "http://transfluent.com/backend-api/#Texts")] //expected return type?
 	public class GetAllExistingTranslationKeys : ITransfluentCall
 	{
-		public List<TransfluentTranslation> translations;
-		public Dictionary<string, TransfluentTranslation> translationsDictionary;
-
-		[DefaultValue(100)]
-		public int limit { get; set; }
-
-		public string group_id { get; set; }
-		public int offset { get; set; }
-		public int language { get; set; }
-
+		public Type expectedReturnType { get { return typeof(Dictionary<string, TransfluentTranslation>); } }
+		private readonly Dictionary<string, string> _getParams;
+			
 		[Inject(NamedInjections.API_TOKEN)]
 		public string authToken { get; set; }
 
-		[Inject]
-		public IWebService service { get; set; }
-
-		public WebServiceReturnStatus webServiceStatus { get; private set; }
-
-		public void Execute()
+		public GetAllExistingTranslationKeys(int language, string group_id = null, int limit = 100, int offset = 0)
 		{
-			if (language <= 0) throw new Exception("INVALID Language in getAllExistingKeys");
-
-			var getParams = new Dictionary<string, string>
+			if(language <= 0) throw new Exception("INVALID Language in getAllExistingKeys");
+			_getParams = new Dictionary<string, string>
 			{
 				{"language", language.ToString()},
-				{"token", authToken}
 			};
-			if (!string.IsNullOrEmpty(group_id))
+			if(!string.IsNullOrEmpty(group_id))
 			{
-				getParams.Add("groupid", group_id);
+				_getParams.Add("groupid", group_id);
 			}
-			if (limit > 0)
+			if(limit > 0)
 			{
-				getParams.Add("limit", limit.ToString());
+				_getParams.Add("limit", limit.ToString());
 			}
-			if (offset > 0)
+			if(offset > 0)
 			{
-				getParams.Add("offset", offset.ToString());
+				_getParams.Add("offset", offset.ToString());
 			}
-			string url = RestUrl.getURL(RestUrl.RestAction.TEXTS) + service.encodeGETParams(getParams);
-			webServiceStatus = service.request(url);
+		}
 
-			if (webServiceStatus.status != ServiceStatus.SUCCESS)
-				return;
+		public Dictionary<string, string> getParameters()
+		{
+			return _getParams;
+		}
 
-			string responseText = webServiceStatus.text;
-
-			var reader = new ResponseReader<Dictionary<string, TransfluentTranslation>>
-			{
-				text = responseText
-			};
-			reader.deserialize();
-			translationsDictionary = reader.response;
-
-			translations = new List<TransfluentTranslation>();
-			foreach (var kvp in translationsDictionary)
-			{
-				translations.Add(kvp.Value);
-			}
+		public Dictionary<string, string> postParameters()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

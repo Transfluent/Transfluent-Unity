@@ -1,52 +1,28 @@
-﻿namespace transfluent
+﻿using System;
+using Mono.Cecil;
+
+namespace transfluent
 {
 	public class RestUrl
 	{
-		public enum RestAction
-		{
-			AUTHENTICATE,
-			HELLO,
-			REGISTER,
-			LANGUAGES,	
-			TEXT,
-			TEXTS,
-			TEXTSTATUS,
-			TEXTSTRANSLATE,
-			TEXTWORDCOUNT,
-			COMBINEDTEXTS_SEND,
-			COMBINEDTEXTS_TRANSLATE,
-			TEXTSORDERS
-		}
 
 		//public enum TransfluentMethodType { Hello, Authenticate, Register, Languages, Text, Texts, TextStatus, 
 		//TextsTranslate, TextWordCount, CombinedTexts_Send, CombinedTexts_Translate };
 		private static string baseServiceUrl = "https://transfluent.com/v2/";
-		public RestAction action;
 
-		public string getURL()
+		public static Route GetRouteAttribute(ITransfluentCall callToGetUrlFor)
 		{
-			return baseServiceUrl + action.ToString().ToLower();
-		}
-
-		public static string getURL(RestAction action)
-		{
-			string url = baseServiceUrl;
-			switch (action)
+			object[] routeable = callToGetUrlFor.GetType().GetCustomAttributes(typeof (Route), true);
+			if (routeable.Length == 0)
 			{
-				case RestAction.TEXTSORDERS:
-					url += "texts/orders/";
-					break;
-				case RestAction.TEXTSTRANSLATE:
-					url += "texts/translate/";
-					break;
-				case RestAction.TEXTSTATUS:
-					url += "text/status/";
-					break;
-				default:
-					url += action.ToString().ToLower();
-					break;
+				throw new Exception("tried to get a url from a non-routable object:" + callToGetUrlFor.GetType());
 			}
-			return url;
+			return (routeable[0] as Route);
 		}
+		public static string GetURL(ITransfluentCall callToGetUrlFor)
+		{
+			return baseServiceUrl + GetRouteAttribute(callToGetUrlFor).route;
+		}
+
 	}
 }

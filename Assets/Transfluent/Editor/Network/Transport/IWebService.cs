@@ -13,6 +13,7 @@ namespace transfluent
 	{
 		WebServiceReturnStatus request(string url);
 		WebServiceReturnStatus request(string url, Dictionary<string, string> postParams);
+		WebServiceReturnStatus request(ITransfluentCall call);
 		string encodeGETParams(Dictionary<string, string> getParams);
 	}
 	public class DebugSyncronousEditorWebRequest : IWebService
@@ -50,6 +51,11 @@ namespace transfluent
 			return result;
 		}
 
+		public WebServiceReturnStatus request(ITransfluentCall call)
+		{
+			return realRequest.request(call);
+		}
+
 		public string encodeGETParams(Dictionary<string, string> getParams)
 		{
 			return realRequest.encodeGETParams(getParams);
@@ -84,6 +90,23 @@ namespace transfluent
 			return doWWWCall(new WWW(url, form));
 		}
 
+		public WebServiceReturnStatus request(ITransfluentCall call)
+		{
+			Route route = RestUrl.GetRouteAttribute(call);
+			string url = RestUrl.GetURL(call);
+			WebServiceReturnStatus status;
+			string urlWithGetParams = url + encodeGETParams(call.getParameters());
+			if(route.requestType == RestRequestType.GET)
+			{
+				status = request(urlWithGetParams);
+			}
+			else
+			{
+				status = request(urlWithGetParams, call.postParameters());
+			}
+
+			return status;
+		}
 		public string encodeGETParams(Dictionary<string, string> getParams)
 		{
 			var sb = new StringBuilder();
@@ -173,6 +196,21 @@ namespace transfluent
 		[JsonIgnore]
 		public byte[] bytes;
 
+		//this is here until I figure out how to get a result from status better
+		public T Parse<T>()
+		{
+			var reader = new ResponseReader<T>
+			{
+				text = text
+			};
+			reader.deserialize();
+			Debug.Log("TOSTRING STUFF " +ToString());
+			return reader.response;
+		}
+		public bool wasSuccessful()
+		{
+			return status == ServiceStatus.SUCCESS && rawErrorCode == 0;
+		}
 		public override string ToString()
 		{
 			return "RETURN STATUS:" + JsonWriter.Serialize(this) + " time in seconds taken:" + requestTimeTaken.TotalSeconds;

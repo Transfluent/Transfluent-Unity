@@ -51,7 +51,12 @@ namespace transfluent
 		public Text text { get; set; }
 
 	}
-
+	[Serializable]
+	public class AccountCreationResult
+	{
+		public string token;
+		public string password;
+	}
 	[Serializable]
 	public class TransfluentTranslation
 	{

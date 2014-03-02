@@ -4,8 +4,11 @@ using Pathfinding.Serialization.JsonFx;
 
 namespace transfluent
 {
+	[Route("texts/translate", RestRequestType.GET, "http://transfluent.com/backend-api/#TextsTranslate")]
 	public class OrderTranslation : ITransfluentCall
 	{
+		public Type expectedReturnType { get { return typeof(TextsTranslateResult); } }
+
 		public enum TranslationQuality
 		{
 			PAIR_OF_TRANSLATORS = 3,
@@ -14,31 +17,15 @@ namespace transfluent
 		}
 
 		//group_id, source_language, target_languages, texts, comment, callback_url, max_words [=1000], level [=2], token
-		public TextsTranslateResult fullResult;
-		public string group_id { get; set; }
-		public int source_language { get; set; }
-		public int[] target_languages { get; set; }
-		public string[] texts { get; set; }
-		public string comment { get; set; }
-
-		//optional
-		public int max_words { get; set; }
-
-		public TranslationQuality level { get; set; }
-
-
 		[Inject(NamedInjections.API_TOKEN)]
 		public string authToken { get; set; }
 
-		[Inject]
-		public IWebService service { get; set; }
+		private Dictionary<string, string> _getParams;
 
-		public WebServiceReturnStatus webServiceStatus { get; private set; }
-
-		public void Execute()
+		public OrderTranslation(int source_language, int[] target_languages, string[] texts, string comment=null, int max_words = 1000, TranslationQuality level = TranslationQuality.PROFESSIONAL_TRANSLATOR,string group_id=null)
 		{
 			var containerOfTextIDsToUse = new List<TextIDToTranslateContainer>();
-			foreach (string toTranslate in texts)
+			foreach(string toTranslate in texts)
 			{
 				containerOfTextIDsToUse.Add(new TextIDToTranslateContainer
 				{
@@ -46,39 +33,39 @@ namespace transfluent
 				});
 			}
 
-			var webserviceParams = new Dictionary<string, string>
+			_getParams = new Dictionary<string, string>
 			{
 				{"source_language", source_language.ToString()},
 				{"target_languages", JsonWriter.Serialize(target_languages)},
 				{"texts", JsonWriter.Serialize(containerOfTextIDsToUse)},
-				{"token", authToken},
 			};
-			if (level != 0)
+			if(level != 0)
 			{
-				webserviceParams.Add("level", ((int) level).ToString());
+				_getParams.Add("level", ((int)level).ToString());
 			}
-			if (group_id != null)
+			if(group_id != null)
 			{
-				webserviceParams.Add("group_id", group_id);
+				_getParams.Add("group_id", group_id);
 			}
-			if (!string.IsNullOrEmpty(comment))
+			if(!string.IsNullOrEmpty(comment))
 			{
-				webserviceParams.Add("comment", comment);
+				_getParams.Add("comment", comment);
 			}
-			if (max_words > 0)
+			if(max_words > 0)
 			{
-				webserviceParams.Add("max_words", max_words.ToString());
+				_getParams.Add("max_words", max_words.ToString());
 			}
-			//ReturnStatus status = service.request(RestUrl.getURL(RestUrl.RestAction.TEXTSTRANSLATE) + service.encodeGETParams(webserviceParams));
-			webServiceStatus = service.request(RestUrl.getURL(RestUrl.RestAction.TEXTSTRANSLATE), webserviceParams);
-			string responseText = webServiceStatus.text;
+		}
+		public TextsTranslateResult Parse(WebServiceReturnStatus status)
+		{
+			string responseText = status.text;
 
 			var reader = new ResponseReader<TextsTranslateResult>
 			{
 				text = responseText
 			};
 			reader.deserialize();
-			fullResult = reader.response;
+			return reader.response;
 		}
 
 		[Serializable]
@@ -92,6 +79,16 @@ namespace transfluent
 		{
 			public int ordered_word_count;
 			public int word_count;
+		}
+
+		public Dictionary<string, string> getParameters()
+		{
+			return _getParams;
+		}
+
+		public Dictionary<string, string> postParameters()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

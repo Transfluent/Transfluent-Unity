@@ -24,16 +24,18 @@ namespace transfluent
 	}
 
 	[Route("languages", RestRequestType.GET, "http://transfluent.com/backend-api/#Languages")]
-	public class RequestAllLanguages : ITransfluentCall
+	public class RequestAllLanguages : WebServiceParameters
 	{
 		public Type expectedReturnType { get { return typeof(LanguageList); } }
 
-		private Dictionary<string, string> _getParams;
-
 		public RequestAllLanguages()
 		{
-			_getParams = new Dictionary<string, string>();
+		}
 
+		public LanguageList Parse(string text)
+		{
+			var rawParams = GetResponse<List<Dictionary<string, TransfluentLanguage>>>(text);
+			return GetLanguageListFromRawReturn(rawParams);
 		}
 
 		public LanguageList GetLanguageListFromRawReturn(List<Dictionary<string, TransfluentLanguage>> rawReturn)
@@ -53,14 +55,5 @@ namespace transfluent
 			return retrieved;
 		}
 
-		public Dictionary<string, string> getParameters()
-		{
-			return _getParams;
-		}
-
-		public Dictionary<string, string> postParameters()
-		{
-			throw new System.NotImplementedException();
-		}
 	}
 }

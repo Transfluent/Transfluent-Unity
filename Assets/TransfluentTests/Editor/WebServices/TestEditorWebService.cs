@@ -44,7 +44,7 @@ namespace transfluent.tests
 		{
 			IWebService service = new SyncronousEditorWebRequest();
 			var result = service.request("https://transfluent.com/v2/hello/world");
-			Assert.AreEqual(result.rawErrorCode, 0);
+			Assert.AreEqual(result.httpErrorCode, 0);
 			Assert.NotNull(result.text);
 			Assert.Greater(result.text.Length,0);
 		}
@@ -54,7 +54,7 @@ namespace transfluent.tests
 		{
 			IWebService service = new DebugSyncronousEditorWebRequest();
 			var result = service.request("https://transfluent.com/v2/hello/world");
-			Assert.AreEqual(result.rawErrorCode, 0);
+			Assert.AreEqual(result.httpErrorCode, 0);
 			Assert.NotNull(result.text);
 			Assert.Greater(result.text.Length, 0);
 		}

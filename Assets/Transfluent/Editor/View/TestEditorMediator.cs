@@ -60,34 +60,29 @@ namespace transfluent.editor
 				var login = new Login
 					(username, password
 					);
-				WebServiceReturnStatus result = makeCall(login);
-
-				if (!result.wasSuccessful())
+				string authToken;
+				try
+				{
+					authToken = login.Parse(makeCall(login)).token;
+				}
+				catch
 				{
 					return false;
 				}
-				var response = result.Parse<AuthenticationResponse>();
 
-				if (string.IsNullOrEmpty(response.token))
-				{
-					return false;
-				}
-				context.addNamedMapping<string>(NamedInjections.API_TOKEN, response.token);
+				context.addNamedMapping<string>(NamedInjections.API_TOKEN, authToken);
 			}
 			if (allLanguagesSupported == null)
 			{
 				var languageRequest = new RequestAllLanguages();
-				WebServiceReturnStatus result = makeCall(languageRequest);
-
-				if(result.wasSuccessful())
+				try
 				{
-					return false;
+					allLanguagesSupported = languageRequest.Parse(makeCall(languageRequest));
 				}
-
-				var rawList = result.Parse<List<Dictionary<string, TransfluentLanguage>>>();
-				LanguageList list = languageRequest.GetLanguageListFromRawReturn(rawList);
-
-				allLanguagesSupported = list;
+				catch
+				{
+				}
+				
 				if (allLanguagesSupported == null) return false;
 			}
 
@@ -135,22 +130,21 @@ namespace transfluent.editor
 					group_id: groupKey,
 					languageID: currentLanguage.id
 				);
-			WebServiceReturnStatus result = makeCall(getText);
-			return result.Parse<string>();
+			return getText.Parse(makeCall(getText));
 		}
 
 		private bool wasSuccessful(WebServiceReturnStatus status)
 		{
-			return status.status == ServiceStatus.SUCCESS && status.rawErrorCode == 0;
+			return status.status == ServiceStatus.SUCCESS && status.httpErrorCode == 0;
 		}
 
-		private WebServiceReturnStatus makeCall(ITransfluentCall call)
+		private string makeCall(ITransfluentParameters call)
 		{
 			context.setMappings(call);
-			call.getParameters().Add("authToken", getCurrentAuthToken()); //TODO: find another way to do this...
+			call.getParameters.Add("authToken", getCurrentAuthToken()); //TODO: find another way to do this...
 			var service = context.manualGetMapping<IWebService>();
-
-			return service.request(call);
+			
+			return service.request(call).text;
 		}
 
 		public void SetText(string textKey, string textValue, string groupKey = null)
@@ -161,33 +155,29 @@ namespace transfluent.editor
 					text: textValue,
 					group_id: groupKey,
 					language: currentLanguage.id);
-			WebServiceReturnStatus result = makeCall(saveText);
-			if(!result.wasSuccessful())
-			{
-				throw new Exception("DO ERROR HANDLING HERE" + result);
-			}
+			makeCall(saveText);
 		}
 
 		public List<TransfluentTranslation> knownTextEntries()
 		{
 			if (currentLanguage == null) throw new Exception("Must set current language first!");
 
-			var getAllKeys = new GetAllExistingTranslationKeys
-				(currentLanguage.id);
-			WebServiceReturnStatus result = makeCall(getAllKeys);
-			if(result.wasSuccessful())
+			var getAllKeys = new GetAllExistingTranslationKeys(currentLanguage.id);
+
+			var list = new List<TransfluentTranslation>();
+			try
 			{
-				if (result.rawErrorCode == 400)
-				{
-					//this just means that there are no codes for this language
-					return new List<TransfluentTranslation>();
-				}
-				throw new Exception("DO ERROR HANDLING HERE" + result);
+				var dictionaryOfKeys = getAllKeys.Parse(makeCall(getAllKeys)) ;
+				dictionaryOfKeys.ForEach((KeyValuePair<string, TransfluentTranslation> pair) => { list.Add(pair.Value); });
 			}
-			var allKeys = result.Parse<Dictionary<string, TransfluentTranslation>>();
-			var translationsList = new List<TransfluentTranslation>();
-			allKeys.ForEach((KeyValuePair<string, TransfluentTranslation> pair) => { translationsList.Add(pair.Value); });
-			return translationsList;
+			catch (WebServiceParameters.HttpErrorCode errorcode)
+			{
+				if (errorcode.code != 400)
+				{
+					throw;
+				}
+			}
+			return list;
 		}
 
 		public void setCurrentLanguageFromLanguageCode(string languageCode)

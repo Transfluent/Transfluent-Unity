@@ -13,13 +13,14 @@ namespace transfluent
 	{
 		WebServiceReturnStatus request(string url);
 		WebServiceReturnStatus request(string url, Dictionary<string, string> postParams);
-		WebServiceReturnStatus request(ITransfluentCall call);
+		WebServiceReturnStatus request(ITransfluentParameters parameters);
 		string encodeGETParams(Dictionary<string, string> getParams);
 	}
+
 	public class DebugSyncronousEditorWebRequest : IWebService
 	{
-		public bool debug = true;
 		private readonly IWebService realRequest = new SyncronousEditorWebRequest();
+		public bool debug = true;
 
 		public DebugSyncronousEditorWebRequest()
 		{
@@ -28,9 +29,9 @@ namespace transfluent
 
 		public WebServiceReturnStatus request(string url)
 		{
-			if(debug) Debug.Log("calling url:" + url + "(GET) ");
-			var result = realRequest.request(url);
-			if(debug) Debug.Log("GOT BACK WITH RESULT:" + result);
+			if (debug) Debug.Log("calling url:" + url + "(GET) ");
+			WebServiceReturnStatus result = realRequest.request(url);
+			if (debug) Debug.Log("GOT BACK WITH RESULT:" + result);
 			return result;
 		}
 
@@ -38,20 +39,20 @@ namespace transfluent
 		{
 			if (postParams != null)
 			{
-				foreach (KeyValuePair<string, string> param in postParams)
+				foreach (var param in postParams)
 				{
-					if(debug) Debug.Log("Field added:" + param.Key + " with value:" + param.Value);
+					if (debug) Debug.Log("Field added:" + param.Key + " with value:" + param.Value);
 				}
-				Debug.Log("ALL params:"+JsonWriter.Serialize(postParams));
+				Debug.Log("ALL params:" + JsonWriter.Serialize(postParams));
 			}
-			if(debug) Debug.Log("calling url:" + url + "(POST) ");
-			var result = realRequest.request(url, postParams);
-			
-			if(debug) Debug.Log("GOT BACK WITH RESULT:" + result);
+			if (debug) Debug.Log("calling url:" + url + "(POST) ");
+			WebServiceReturnStatus result = realRequest.request(url, postParams);
+
+			if (debug) Debug.Log("GOT BACK WITH RESULT:" + result);
 			return result;
 		}
 
-		public WebServiceReturnStatus request(ITransfluentCall call)
+		public WebServiceReturnStatus request(ITransfluentParameters call)
 		{
 			return realRequest.request(call);
 		}
@@ -64,10 +65,8 @@ namespace transfluent
 
 	public class SyncronousEditorWebRequest : IWebService
 	{
-		
 		public WebServiceReturnStatus request(string url)
 		{
-			
 			return doWWWCall(new WWW(url));
 		}
 
@@ -76,42 +75,43 @@ namespace transfluent
 			var form = new WWWForm();
 			if (postParams != null)
 			{
-				foreach (KeyValuePair<string, string> param in postParams)
+				foreach (var param in postParams)
 				{
 					if (param.Value == null)
 					{
-						throw new Exception("NULL PARAMATER PASSED TO WEB REQUEST:"+param.Key);
+						throw new Exception("NULL PARAMATER PASSED TO WEB REQUEST:" + param.Key);
 					}
-					
-					form.AddField(param.Key,param.Value);
+
+					form.AddField(param.Key, param.Value);
 				}
 			}
-			
+
 			return doWWWCall(new WWW(url, form));
 		}
 
-		public WebServiceReturnStatus request(ITransfluentCall call)
+		public WebServiceReturnStatus request(ITransfluentParameters call)
 		{
 			Route route = RestUrl.GetRouteAttribute(call);
 			string url = RestUrl.GetURL(call);
 			WebServiceReturnStatus status;
-			string urlWithGetParams = url + encodeGETParams(call.getParameters());
-			if(route.requestType == RestRequestType.GET)
+			string urlWithGetParams = url + encodeGETParams(call.getParameters);
+			if (route.requestType == RestRequestType.GET)
 			{
 				status = request(urlWithGetParams);
 			}
 			else
 			{
-				status = request(urlWithGetParams, call.postParameters());
+				status = request(urlWithGetParams, call.postParameters);
 			}
 
 			return status;
 		}
+
 		public string encodeGETParams(Dictionary<string, string> getParams)
 		{
 			var sb = new StringBuilder();
 			sb.Append("?");
-			foreach(KeyValuePair<string, string> kvp in getParams)
+			foreach (var kvp in getParams)
 			{
 				sb.Append(WWW.EscapeURL(kvp.Key) + "=" + WWW.EscapeURL(kvp.Value) + "&");
 			}
@@ -124,12 +124,12 @@ namespace transfluent
 
 			var sw = new Stopwatch();
 			sw.Start();
-			while(www.isDone == false && www.error == null && sw.Elapsed.TotalSeconds < 10f)
+			while (www.isDone == false && www.error == null && sw.Elapsed.TotalSeconds < 10f)
 			{
 				//EditorApplication.Step();
 				Thread.Sleep(100);
 			}
-			
+
 			sw.Stop();
 			status.requestTimeTaken = sw.Elapsed;
 
@@ -143,33 +143,25 @@ namespace transfluent
 			{
 				status.status = ServiceStatus.SUCCESS;
 				status.text = www.text;
-				status.bytes = www.bytes;
-			}else{
+			}
+			else
+			{
 				string error = www.error;
-				status.rawErrorCode = -1;
+				status.httpErrorCode = -1;
 				int firstSpaceIndex = error.IndexOf(" ");
 				if (firstSpaceIndex > 0)
 				{
-					
-					int.TryParse(error.Substring(0, firstSpaceIndex), out status.rawErrorCode);
-					if (status.rawErrorCode == 0)
+					int.TryParse(error.Substring(0, firstSpaceIndex), out status.httpErrorCode);  //there has to be a better way to get error codes
+					if (status.httpErrorCode == 0)
 					{
-						throw new Exception("UNHANDLED ERROR CODE FORMAT:("+ error+")");
+						throw new Exception("UNHANDLED ERROR CODE FORMAT:(" + error + ")");  
 					}
-					if(status.rawErrorCode >= 400 && status.rawErrorCode <= 499)
-					{
-						status.status = ServiceStatus.APPLICATION_ERROR;
-					}
-					else
-					{
-						status.status = ServiceStatus.TRANSPORT_ERROR;
-					}
+					status.httpErrorCode = status.httpErrorCode;
 				}
 				else
 				{
 					status.status = ServiceStatus.UNKNOWN; //can't parse error status
 				}
-				
 			}
 			www.Dispose();
 			return status;
@@ -177,7 +169,6 @@ namespace transfluent
 	}
 
 
-	
 	public enum ServiceStatus
 	{
 		UNKNOWN,
@@ -189,28 +180,19 @@ namespace transfluent
 
 	public struct WebServiceReturnStatus
 	{
+		public int httpErrorCode;
 		public TimeSpan requestTimeTaken;
-		public ServiceStatus status;
-		public int rawErrorCode;
-		public string text; //if text is the  requested thing
-		[JsonIgnore]
-		public byte[] bytes;
 
-		//this is here until I figure out how to get a result from status better
-		public T Parse<T>()
-		{
-			var reader = new ResponseReader<T>
-			{
-				text = text
-			};
-			reader.deserialize();
-			Debug.Log("TOSTRING STUFF " +ToString());
-			return reader.response;
-		}
+		public ServiceStatus status;
+			//a simple helper for me to figure out if it is to be re-requested, or hard errors like missing parameters
+
+		public string text; //if text is the  requested thing
+
 		public bool wasSuccessful()
 		{
-			return status == ServiceStatus.SUCCESS && rawErrorCode == 0;
+			return status == ServiceStatus.SUCCESS && httpErrorCode == 0;
 		}
+
 		public override string ToString()
 		{
 			return "RETURN STATUS:" + JsonWriter.Serialize(this) + " time in seconds taken:" + requestTimeTaken.TotalSeconds;

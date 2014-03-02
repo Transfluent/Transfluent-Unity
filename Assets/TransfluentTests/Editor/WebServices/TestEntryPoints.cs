@@ -16,16 +16,20 @@ namespace transfluent.tests
 		{
 			OneTimeSetup();
 		}
-		public T justCall<T>(ITransfluentCall call)
+		
+		public string justCall(ITransfluentParameters call)
 		{
-			if(call.getParameters().ContainsKey("token"))
-				call.getParameters().Remove("token");
+			if(call.getParameters.ContainsKey("token"))
+				call.getParameters.Remove("token");
 
-			call.getParameters().Add("token", accessToken);
+			call.getParameters.Add("token", accessToken);
 			var requester = new SyncronousEditorWebRequest();
 			var result = requester.request(call);
-			if (result.wasSuccessful() == false) throw new Exception("call failed");
-			return result.Parse<T>();
+			if(result.httpErrorCode > 0)
+			{
+				throw new WebServiceParameters.HttpErrorCode(result.httpErrorCode);
+			}
+			return result.text;
 		}
 		//[Test]
 		public void OneTimeSetup()
@@ -38,8 +42,9 @@ namespace transfluent.tests
 				username : credentials.username,
 				password : credentials.password
 			);
+			var responseText = justCall(login);
 
-			accessToken = justCall<AuthenticationResponse>(login).token;
+			accessToken = login.Parse(responseText).token;
 			if(string.IsNullOrEmpty(accessToken))
 			{
 				throw new Exception("was not able to log in!");
@@ -55,11 +60,10 @@ namespace transfluent.tests
 			WebServiceReturnStatus status = requester.request(language);
 
 			Assert.True(status.wasSuccessful());
-			var retrieved = status.Parse<List<Dictionary<string, TransfluentLanguage>>>();
-			Assert.NotNull(retrieved);
 
-			LanguageList list = language.GetLanguageListFromRawReturn(retrieved);
+			var list = language.Parse(status.text);
 			Assert.NotNull(list);
+
 			Assert.IsTrue(list.languages.Count > 0);
 			return list;
 		}
@@ -74,8 +78,8 @@ namespace transfluent.tests
 				languageID : englishLanguage.id,
 				text_id    : "THIS_DOES_NOT_EXIST" + Random.value
 			);
-			justCall<string>(testForExistance);
-			//Assert.Throws(typeof(Exception), justCall<string>(testForExistance));
+			string rawOutput = justCall(testForExistance);
+			testForExistance.Parse(rawOutput);
 		}
 
 		[Test]
@@ -98,8 +102,7 @@ namespace transfluent.tests
 				text     : textToSave,
 				text_id  : HELLO_WORLD_TEXT_KEY
 			);
-			var saved = justCall<bool>(saveOp);
-
+			bool saved = saveOp.Parse(justCall(saveOp));
 			Debug.Log("Saved successfullly:" + saved);
 
 			var testForExistance = new GetTextKey
@@ -107,7 +110,7 @@ namespace transfluent.tests
 				languageID : englishLanguage.id,
 				text_id    : HELLO_WORLD_TEXT_KEY
 			);
-			string keyFromDB = justCall<string>(testForExistance);
+			string keyFromDB = testForExistance.Parse(justCall(testForExistance));
 			Assert.IsFalse(string.IsNullOrEmpty(keyFromDB));
 			Assert.AreEqual(textToSave, keyFromDB);
 		}
@@ -125,7 +128,7 @@ namespace transfluent.tests
 			(
 				name : "world"
 			);
-			var text = justCall<string>(hello);
+			var text = hello.Parse(justCall(hello)); 
 
 			Assert.IsNotNull(text);
 			Assert.AreEqual(text.ToLower(), "hello world");

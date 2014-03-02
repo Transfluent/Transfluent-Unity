@@ -4,33 +4,22 @@ using System.Collections.Generic;
 namespace transfluent
 {
 	[Route("text/status", RestRequestType.GET, "http://transfluent.com/backend-api/#TextStatus")]
-	public class TextStatus : ITransfluentCall
+	public class TextStatus : WebServiceParameters
 	{
 		[Inject(NamedInjections.API_TOKEN)]
 		public string authToken { get; set; }
 
-		private Dictionary<string, string> _getParams;
-
 		public TextStatus(int language_id, string text_id, string group_id = null)
 		{
-			_getParams = new Dictionary<string, string>
-			{
-				{"text_id", text_id},
-				{"language", language_id.ToString()},
-			};
-			if (!string.IsNullOrEmpty(group_id)) _getParams.Add("group_id", group_id);
+			getParameters.Add("text_id", text_id);
+			getParameters.Add("language", language_id.ToString());
+			if(!string.IsNullOrEmpty(group_id)) 
+				getParameters.Add("group_id", group_id);
 		}
 
-		public Dictionary<string, string> getParameters()
+		public TextStatusResult Parse(string text)
 		{
-			return _getParams;
+			return GetResponse<TextStatusResult>(text);
 		}
-
-		public Dictionary<string, string> postParameters()
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public Type expectedReturnType { get { return typeof(TextStatusResult); } }
 	}
 }

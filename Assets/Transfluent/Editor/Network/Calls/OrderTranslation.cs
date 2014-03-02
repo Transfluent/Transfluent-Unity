@@ -5,10 +5,8 @@ using Pathfinding.Serialization.JsonFx;
 namespace transfluent
 {
 	[Route("texts/translate", RestRequestType.GET, "http://transfluent.com/backend-api/#TextsTranslate")]
-	public class OrderTranslation : ITransfluentCall
+	public class OrderTranslation : WebServiceParameters
 	{
-		public Type expectedReturnType { get { return typeof(TextsTranslateResult); } }
-
 		public enum TranslationQuality
 		{
 			PAIR_OF_TRANSLATORS = 3,
@@ -20,7 +18,6 @@ namespace transfluent
 		[Inject(NamedInjections.API_TOKEN)]
 		public string authToken { get; set; }
 
-		private Dictionary<string, string> _getParams;
 
 		public OrderTranslation(int source_language, int[] target_languages, string[] texts, string comment=null, int max_words = 1000, TranslationQuality level = TranslationQuality.PROFESSIONAL_TRANSLATOR,string group_id=null)
 		{
@@ -33,39 +30,30 @@ namespace transfluent
 				});
 			}
 
-			_getParams = new Dictionary<string, string>
-			{
-				{"source_language", source_language.ToString()},
-				{"target_languages", JsonWriter.Serialize(target_languages)},
-				{"texts", JsonWriter.Serialize(containerOfTextIDsToUse)},
-			};
+			getParameters.Add("source_language", source_language.ToString());
+			getParameters.Add("target_languages", JsonWriter.Serialize(target_languages));
+			getParameters.Add("texts", JsonWriter.Serialize(containerOfTextIDsToUse));
+
 			if(level != 0)
 			{
-				_getParams.Add("level", ((int)level).ToString());
+				getParameters.Add("level", ((int)level).ToString());
 			}
 			if(group_id != null)
 			{
-				_getParams.Add("group_id", group_id);
+				getParameters.Add("group_id", group_id);
 			}
 			if(!string.IsNullOrEmpty(comment))
 			{
-				_getParams.Add("comment", comment);
+				getParameters.Add("comment", comment);
 			}
 			if(max_words > 0)
 			{
-				_getParams.Add("max_words", max_words.ToString());
+				getParameters.Add("max_words", max_words.ToString());
 			}
 		}
-		public TextsTranslateResult Parse(WebServiceReturnStatus status)
+		public TextsTranslateResult Parse(string text)
 		{
-			string responseText = status.text;
-
-			var reader = new ResponseReader<TextsTranslateResult>
-			{
-				text = responseText
-			};
-			reader.deserialize();
-			return reader.response;
+			return GetResponse<TextsTranslateResult>(text);
 		}
 
 		[Serializable]
@@ -81,14 +69,5 @@ namespace transfluent
 			public int word_count;
 		}
 
-		public Dictionary<string, string> getParameters()
-		{
-			return _getParams;
-		}
-
-		public Dictionary<string, string> postParameters()
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

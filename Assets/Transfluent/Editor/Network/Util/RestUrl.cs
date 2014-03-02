@@ -10,7 +10,7 @@ namespace transfluent
 		//TextsTranslate, TextWordCount, CombinedTexts_Send, CombinedTexts_Translate };
 		private static string baseServiceUrl = "https://transfluent.com/v2/";
 
-		public static Route GetRouteAttribute(ITransfluentCall callToGetUrlFor)
+		public static Route GetRouteAttribute(ITransfluentParameters callToGetUrlFor)
 		{
 			object[] routeable = callToGetUrlFor.GetType().GetCustomAttributes(typeof (Route), true);
 			if (routeable.Length == 0)
@@ -19,7 +19,7 @@ namespace transfluent
 			}
 			return (routeable[0] as Route);
 		}
-		public static string GetURL(ITransfluentCall callToGetUrlFor)
+		public static string GetURL(ITransfluentParameters callToGetUrlFor)
 		{
 			return baseServiceUrl + GetRouteAttribute(callToGetUrlFor).route;
 		}

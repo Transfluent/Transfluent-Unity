@@ -30,6 +30,7 @@ namespace transfluent
 		public int failed_count;
 		public string failed_keys;
 	}
+
 	[Serializable]
 	public class TransfluentOrder 
 	{
@@ -49,8 +50,8 @@ namespace transfluent
 		public string key { get; set; }
 		public string key_id { get; set; }
 		public Text text { get; set; }
-
 	}
+
 	[Serializable]
 	public class AccountCreationResult
 	{
@@ -96,9 +97,10 @@ namespace transfluent
 		//public string response;
 		public bool isOK()
 		{
-			return status == ResponseStatus.OK.ToString();
+			return status == ResponseStatus.OK.ToString() || error != null;
 		}
 	}
+
 	[Serializable]
 	public class ResponseContainer<T>
 	{
@@ -124,6 +126,7 @@ namespace transfluent
 			return string.Format("status:{0} error:{1} response:{2}",status,error,response);
 		}
 	}
+
 	[Serializable]
 	public class AuthenticationResponse
 	{

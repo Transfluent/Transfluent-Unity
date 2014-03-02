@@ -34,9 +34,8 @@ namespace transfluent.tests
 				password : credentials.password
 			);
 			var request = new DebugSyncronousEditorWebRequest();
-			var result = request.request(login);
 
-			var response = result.Parse<AuthenticationResponse>();
+			var response = login.Parse(request.request(login).text);
 			accessToken = response.token;
 			if (string.IsNullOrEmpty(accessToken))
 			{
@@ -48,17 +47,11 @@ namespace transfluent.tests
 
 		public void getLanguages()
 		{
-			var language = new RequestAllLanguages {service = new SyncronousEditorWebRequest()};
+			var language = new RequestAllLanguages();
 			var requester = new SyncronousEditorWebRequest();
-			WebServiceReturnStatus status = requester.request(language);
 
-			Assert.True(status.wasSuccessful());
-			var retrieved = status.Parse<List<Dictionary<string, TransfluentLanguage>>>();
-			Assert.NotNull(retrieved);
-
-			LanguageList list = language.GetLanguageListFromRawReturn(retrieved);
+			var list = language.Parse(requester.request(language).text);
 			Assert.NotNull(list);
-			Assert.IsTrue(list.languages.Count > 0);
 
 			englishLanguage = list.getLangaugeByCode("en-us");
 			backwardsLanguage = list.getLangaugeByCode(TransfluentLanguage.BACKWARDS_LANGUAGE_NAME);
@@ -77,13 +70,14 @@ namespace transfluent.tests
 				text     : textToSave,
 				text_id  : keyToSaveAndThenGet
 			);
-			justCall<bool>(saveOp);
+			justCall(saveOp);
 			var testForExistance = new GetTextKey
 			(
 				languageID : englishLanguage.id,
 				text_id    : keyToSaveAndThenGet
 			);
-			string stringFromServer = justCall<string>(testForExistance);
+			string stringFromServer = testForExistance.Parse(justCall(testForExistance));
+
 			Assert.IsFalse(string.IsNullOrEmpty(stringFromServer));
 			Assert.AreEqual(textToSave, stringFromServer);
 
@@ -94,24 +88,30 @@ namespace transfluent.tests
 				text: textToSetTestTokenTo,
 				text_id: keyToSaveAndThenGet
 			);
-			justCall<bool>(saveOp);
+			justCall(saveOp);
 
-			stringFromServer = justCall<string>(testForExistance);
+			stringFromServer = testForExistance.Parse(justCall(testForExistance));
 			Assert.AreEqual(textToSetTestTokenTo, stringFromServer);
 		}
 
 		public const string TRANSLATION_KEY = "UNITY_TEST_TRANSLATION_KEY";
 
-		public T justCall<T>(ITransfluentCall call)
+		public string justCall(ITransfluentParameters call)
 		{
-			if (call.getParameters().ContainsKey("token"))
-				call.getParameters().Remove("token");
+			if (call.getParameters.ContainsKey("token"))
+				call.getParameters.Remove("token");
 
-			call.getParameters().Add("token", accessToken);
+			call.getParameters.Add("token", accessToken);
 			var requester = new SyncronousEditorWebRequest();
 			var result = requester.request(call);
-			return result.Parse<T>();
+			if (result.httpErrorCode > 0)
+			{
+				throw new WebServiceParameters.HttpErrorCode(result.httpErrorCode);
+			}
+			return result.text;
 		}
+
+
 		[Test]
 		public void testAlreadyInsertedException()
 		{
@@ -122,8 +122,8 @@ namespace transfluent.tests
 				text      : textToSave,
 				text_id   : TRANSLATION_KEY
 			);
-			justCall<bool>(saveOp);
-			justCall<bool>(saveOp); //error 500, this looks like a temporary server error...
+			justCall(saveOp);
+			justCall(saveOp); //error 500, this looks like a temporary server error...
 		}
 
 		[Test]
@@ -134,15 +134,15 @@ namespace transfluent.tests
 				languageID : englishLanguage.id,
 				text_id    : TRANSLATION_KEY
 			);
-			
-			string stringToReverse = justCall<string>(englishKeyGetter);
+
+			string stringToReverse = englishKeyGetter.Parse(justCall(englishKeyGetter));
 			Assert.AreEqual(stringToReverse, textToSetTestTokenTo);
 			var getText = new GetTextKey
 			(
 				languageID : backwardsLanguage.id,
 				text_id    : TRANSLATION_KEY
 			);
-			string reversedString = justCall<string>(getText);
+			string reversedString = getText.Parse(justCall(getText));
 			Assert.AreNotEqual(stringToReverse, reversedString);
 			var reverser = new WordReverser();
 			string manuallyReversedString = reverser.reverseString(stringToReverse);
@@ -158,7 +158,7 @@ namespace transfluent.tests
 				language : englishLanguage.id
 			);
 
-			var translations = justCall<List<TransfluentTranslation>>(getAllKeys);
+			var translations = getAllKeys.Parse(justCall(getAllKeys));
 			Assert.IsNotNull(translations);
 			Assert.Greater(translations.Count, 0);
 
@@ -166,24 +166,20 @@ namespace transfluent.tests
 			(
 				language: backwardsLanguage.id
 			);
-			var backwardsTranslations = justCall<List<TransfluentTranslation>>(getAllKeys);
+			var backwardsTranslations = getAllKeys.Parse(justCall(getAllKeys));
 			Assert.IsNotNull(backwardsTranslations);
 			Assert.Greater(backwardsTranslations.Count, 0);
-			translations.AddRange(backwardsTranslations);
 
-			Assert.Greater(backwardsTranslations.Count, 0); 
-			bool hastargetKey = false;
-			translations.ForEach((TransfluentTranslation trans) => { if (trans.text_id == TRANSLATION_KEY) hastargetKey = true; });
-			Assert.IsTrue(hastargetKey);
+			Assert.IsTrue(backwardsTranslations.ContainsKey(TRANSLATION_KEY));
 		}
 
 		[Test]
 		public void testListAllOrders()
 		{
-			var getAllKeys = new GetAllOrders
+			var getAllOrders = new GetAllOrders
 			(
 			);
-			var orders = justCall<List<TransfluentOrder>>(getAllKeys);
+			var orders = getAllOrders.Parse(justCall(getAllOrders));
 			Assert.IsNotNull(orders);
 			//Assert.Greater(orders.Count, 0); //TODO: test making an actual order
 		}
@@ -196,7 +192,9 @@ namespace transfluent.tests
 				text_id     : TRANSLATION_KEY,
 				language_id : englishLanguage.id
 			);
-			bool status = justCall<TextStatusResult>(englishTranslationOfEnglishKey).is_translated;
+			var rawStatus = englishTranslationOfEnglishKey.Parse(justCall(englishTranslationOfEnglishKey));
+
+			bool status = rawStatus.is_translated;
 
 			Assert.True(status);
 
@@ -205,7 +203,8 @@ namespace transfluent.tests
 				text_id     : TRANSLATION_KEY,
 				language_id : backwardsLanguage.id
 			);
-			status = justCall<TextStatusResult>(backwardsTranslationOfExistingKey).is_translated;
+
+			status = backwardsTranslationOfExistingKey.Parse(justCall(backwardsTranslationOfExistingKey)).is_translated;
 			Assert.IsTrue(status);
 		}
 
@@ -217,7 +216,8 @@ namespace transfluent.tests
 				text_id     : TRANSLATION_KEY + " THIS IS INVALID" + Random.value,
 				language_id : englishLanguage.id
 			);
-			bool status = justCall<TextStatusResult>(englishTranslationOfEnglishKey).is_translated;
+
+			bool status = englishTranslationOfEnglishKey.Parse(justCall(englishTranslationOfEnglishKey)).is_translated;
 
 			Assert.False(status);
 
@@ -226,7 +226,7 @@ namespace transfluent.tests
 				text_id     : TRANSLATION_KEY + " THIS IS INVALID" + Random.value,
 				language_id : backwardsLanguage.id
 			);
-			status = justCall<TextStatusResult>(englishTranslationOfEnglishKey).is_translated;
+			status = backwardsTranslationOfExistingKey.Parse(justCall(backwardsTranslationOfExistingKey)).is_translated;
 			Assert.False(status);
 		}
 
@@ -248,7 +248,7 @@ namespace transfluent.tests
 				text_id     : TRANSLATION_KEY,
 				language_id : nonExistantTranslationKey
 			);
-			var result = justCall<TextStatusResult>(englishTranslationOfEnglishKey);
+			var result = englishTranslationOfEnglishKey.Parse(justCall(englishTranslationOfEnglishKey));
 
 			Assert.False(result.is_translated);
 		}
@@ -262,7 +262,7 @@ namespace transfluent.tests
 				target_languages : new int[] {backwardsLanguage.id},
 				texts            : new string[] {TRANSLATION_KEY}
 			);
-			var translationResult = justCall<OrderTranslation.TextsTranslateResult>(translateRequest);
+			var translationResult = translateRequest.Parse(justCall(translateRequest));
 			var requester = new SyncronousEditorWebRequest();
 			var result = requester.request(translateRequest);
 			Debug.Log("Full result from test translation:" + JsonWriter.Serialize(result.text));

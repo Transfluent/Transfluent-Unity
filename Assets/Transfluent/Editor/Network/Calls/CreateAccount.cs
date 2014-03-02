@@ -4,30 +4,20 @@ using System.Collections.Generic;
 namespace transfluent
 {
 	[Route("hello", RestRequestType.GET, "http://transfluent.com/backend-api/#Hello")]
-	public class CreateAccount : ITransfluentCall
+	public class CreateAccount : WebServiceParameters
 	{
-		public Type expectedReturnType { get { return typeof (AccountCreationResult); } }
-
-		private Dictionary<string, string> _getParams;
+		//AccountCreationResult
 		public CreateAccount(string email, bool termsOfService, bool sendPasswordOverEmail)
 		{
-			_getParams = new Dictionary<string, string>
-			{
-				{"email", email},
-				{"terms", termsOfService.ToString()},
-				{"send_password", sendPasswordOverEmail.ToString()}
-			};
+			getParameters.Add("email", email);
+			getParameters.Add("terms", termsOfService.ToString());
+			getParameters.Add("send_password", sendPasswordOverEmail.ToString());
 		}
 
-		public Dictionary<string, string> getParameters()
+		public AccountCreationResult Parse(string text)
 		{
-			return _getParams;
+			return GetResponse<AccountCreationResult>(text);
 		}
-
-		public Dictionary<string, string> postParameters()
-		{
-			return new Dictionary<string, string>();
-		}
-
 	}
+
 }

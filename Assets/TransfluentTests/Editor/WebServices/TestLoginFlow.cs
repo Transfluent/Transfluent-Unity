@@ -9,6 +9,7 @@ namespace transfluent.tests
 	[TestFixture]
 	public class TestLoginFlow
 	{
+		private const int MAX_MILLISECONDS_TO_WAIT = 20000;
 		[SetUp]
 		[TearDown]
 		public void notUsedRightNow()
@@ -29,7 +30,7 @@ namespace transfluent.tests
 		}
 
 		[Test]
-		[MaxTime(10000)]
+		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
 		public void correctLoginTest()
 		{
 			WebServiceReturnStatus status = service.request(loginUrl, new Dictionary<string, string>
@@ -53,7 +54,7 @@ namespace transfluent.tests
 		}
 
 		[Test]
-		[MaxTime(10000)]
+		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
 		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void emptyLoginPasswordPost()
 		{
@@ -64,7 +65,7 @@ namespace transfluent.tests
 			});
 		}
 		[Test]
-		[MaxTime(10000)]
+		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
 		public void makeSureApplicationLevelExceptionIsACallException()
 		{
 			Assert.Catch<CallException>(()=>service.request(loginUrl, new Dictionary<string, string>
@@ -83,7 +84,7 @@ namespace transfluent.tests
 		}
 
 		[Test]
-		[MaxTime(10000)]
+		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
 		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void noPostLogin()
 		{
@@ -91,7 +92,7 @@ namespace transfluent.tests
 		}
 
 		[Test]
-		[MaxTime(10000)]
+		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
 		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void wrongPasswordLogin()
 		{

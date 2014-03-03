@@ -124,7 +124,7 @@ namespace transfluent
 
 			var sw = new Stopwatch();
 			sw.Start();
-			while (www.isDone == false && www.error == null && sw.Elapsed.TotalSeconds < 10f)
+			while (www.isDone == false && www.error == null && sw.Elapsed.TotalSeconds < 30f)
 			{
 				//EditorApplication.Step();
 				Thread.Sleep(100);
@@ -133,9 +133,9 @@ namespace transfluent
 			sw.Stop();
 			status.requestTimeTaken = sw.Elapsed;
 
-			if (!www.isDone)
+			if (!www.isDone && www.error == null)
 			{
-				throw new TransportException("Timeout");
+				throw new TransportException("Timeout total time taken:"+sw.Elapsed);
 			}
 			if (www.error == null)
 			{

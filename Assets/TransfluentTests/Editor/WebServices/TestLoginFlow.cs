@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
 using transfluent;
+using UnityEngine;
 
 namespace transfluent.tests
 {
@@ -70,7 +71,7 @@ namespace transfluent.tests
 
 		[Test]
 		[MaxTime(10000)]
-		public void wrongPasswordLogin()
+		public void wrongPasswordLogin()	
 		{
 			WebServiceReturnStatus status = service.request(url, new Dictionary<string, string>
 		{

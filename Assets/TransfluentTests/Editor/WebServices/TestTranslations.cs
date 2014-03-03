@@ -105,7 +105,7 @@ namespace transfluent.tests
 			var requester = new SyncronousEditorWebRequest();
 			var result = requester.request(call);
 			if (result.httpErrorCode > 0)
-			{
+			{	
 				throw new WebServiceParameters.HttpErrorCode(result.httpErrorCode);
 			}
 			return result.text;

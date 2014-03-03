@@ -1,0 +1,1 @@
+﻿{"status":"OK","response":{"foo":{"text_id":"foo","group_id":"Test","language":{"name":"English","code":"en-gb","id":1},"text":"Fooooooo"},"bar":{"text_id":"bar","group_id":"Test","language":{"name":"English","code":"en-gb","id":1},"text":"Bar"}}}

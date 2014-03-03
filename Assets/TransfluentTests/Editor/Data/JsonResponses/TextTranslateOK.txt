@@ -1,0 +1,1 @@
+﻿{"status":"OK","response":{"word_count":441,"ordered_word_count":441}}

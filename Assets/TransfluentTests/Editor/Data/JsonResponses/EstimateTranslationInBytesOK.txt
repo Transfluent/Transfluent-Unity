@@ -1,0 +1,1 @@
+﻿{"status":"OK","response":{"source_bytes":440,"source_characters":440,"translated_bytes":733,"translated_characters":454,"machine_translation":"Apple App Store \u0438 App Store \u0434\u043b\u044f Mac \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u044b..."}}

@@ -138,7 +138,7 @@ namespace transfluent.tests
 		}
 
 		[Test]
-		public void testAlreadyInsertedException()
+		public void THIS_FAILS_testAlreadyInsertedException()
 		{
 			string textToSave = textToSetTestTokenTo + Random.value;
 			var saveOp = new SaveTextKey
@@ -216,9 +216,9 @@ namespace transfluent.tests
 				language_id: englishLanguage.id
 				);
 
+
 			Assert.Catch<ApplicatonLevelException>(
 				() => englishTranslationOfEnglishKey.Parse(justCall(englishTranslationOfEnglishKey)));
-
 
 			var backwardsTranslationOfExistingKey = new TextStatus
 				(

@@ -147,16 +147,17 @@ namespace transfluent
 			else
 			{
 				string error = www.error;
-				if (knownTransportError(error))
+				if (knownTransportError(error)) 
 				{
 					throw new TransportException(error);
 				}
 				status.httpErrorCode = -1;
 				int firstSpaceIndex = error.IndexOf(" ");
-				Debug.LogError("ERROR:" + error + " first space:" + firstSpaceIndex);
+				 
 				if (firstSpaceIndex > 0)
 				{
-					int.TryParse(error.Substring(0, firstSpaceIndex), out status.httpErrorCode);  //there has to be a better way to get error codes
+					int.TryParse(error.Substring(0, firstSpaceIndex), out status.httpErrorCode);
+						//there has to be a better way to get error codes
 					if (status.httpErrorCode == 0)
 					{
 						throw new Exception("UNHANDLED ERROR CODE FORMAT:(" + error + ")");
@@ -164,18 +165,11 @@ namespace transfluent
 					if (status.httpErrorCode >= 400 && status.httpErrorCode <= 499)
 					{
 						status.status = ServiceStatus.APPLICATION_ERROR;
+						throw new ApplicatonLevelException("HTTP Error code, applicatin level:" + status.httpErrorCode,status.httpErrorCode);
 					}
-					else
-					{
-						status.status = ServiceStatus.TRANSPORT_ERROR;
-					}
-					
-					status.httpErrorCode = status.httpErrorCode;
+					throw new HttpErrorCode(status.httpErrorCode);
 				}
-				else
-				{
-					status.status = ServiceStatus.UNKNOWN; //can't parse error status
-				}
+				status.status = ServiceStatus.UNKNOWN; //can't parse error status
 			}
 			www.Dispose();
 			return status;
@@ -189,6 +183,7 @@ namespace transfluent
 			}
 			return false;
 		}
+
 		//Could not resolve host: transfluent.com (Could not contact DNS servers)
 	}
 
@@ -208,7 +203,7 @@ namespace transfluent
 		public TimeSpan requestTimeTaken;
 
 		public ServiceStatus status;
-			//a simple helper for me to figure out if it is to be re-requested, or hard errors like missing parameters
+		//a simple helper for me to figure out if it is to be re-requested, or hard errors like missing parameters
 
 		public string text; //if text is the  requested thing
 

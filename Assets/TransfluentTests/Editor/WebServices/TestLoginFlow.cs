@@ -18,7 +18,7 @@ namespace transfluent.tests
 
 		public static string baseServiceUrl = "https://transfluent.com/v2/";
 		public static string requestedService = "authenticate";
-		public string url = baseServiceUrl + requestedService;
+		public string loginUrl = baseServiceUrl + requestedService;
 		private IWebService service;
 		public FileBasedCredentialProvider Provider;
 
@@ -32,7 +32,7 @@ namespace transfluent.tests
 		[MaxTime(10000)]
 		public void correctLoginTest()
 		{
-			WebServiceReturnStatus status = service.request(url, new Dictionary<string, string>
+			WebServiceReturnStatus status = service.request(loginUrl, new Dictionary<string, string>
 			{
 				{"email", Provider.username},
 				{"password", Provider.password}
@@ -58,7 +58,7 @@ namespace transfluent.tests
 		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void emptyLoginPasswordPost()
 		{
-			service.request(url, new Dictionary<string, string>
+			service.request(loginUrl, new Dictionary<string, string>
 			{
 				{"email", ""},
 				{"password", ""}
@@ -66,14 +66,13 @@ namespace transfluent.tests
 		}
 		[Test]
 		[MaxTime(10000)]
-		[ExpectedException(typeof(CallException))]
 		public void makeSureApplicationLevelExceptionIsACallException()
 		{
-			service.request(url, new Dictionary<string, string>
+			Assert.Catch<CallException>(()=>service.request(loginUrl, new Dictionary<string, string>
 			{
 				{"email", ""},
 				{"password", ""}
-			});
+			}));
 		}
 
 		[Test]
@@ -89,7 +88,7 @@ namespace transfluent.tests
 		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void noPostLogin()
 		{
-			WebServiceReturnStatus status = service.request(url); //no password params!
+			service.request(loginUrl); //no password params!
 		}
 
 		[Test]
@@ -97,12 +96,11 @@ namespace transfluent.tests
 		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void wrongPasswordLogin()
 		{
-			WebServiceReturnStatus status = service.request(url, new Dictionary<string, string>
+			WebServiceReturnStatus status = service.request(loginUrl, new Dictionary<string, string>
 			{
 				{"email", Provider.username},
 				{"password", "thisPasswordIsWrong"}
 			});
-			Assert.IsTrue(status.status == ServiceStatus.APPLICATION_ERROR);
 		}
 	}
 }

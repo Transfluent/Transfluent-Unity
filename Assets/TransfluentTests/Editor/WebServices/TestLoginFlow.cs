@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
-using transfluent;
-using UnityEngine;
 
 namespace transfluent.tests
 {
@@ -33,10 +32,10 @@ namespace transfluent.tests
 		public void correctLoginTest()
 		{
 			WebServiceReturnStatus status = service.request(url, new Dictionary<string, string>
-		{
-			{"email", Provider.username},
-			{"password", Provider.password}
-		});
+			{
+				{"email", Provider.username},
+				{"password", Provider.password}
+			});
 			Assert.IsTrue(status.status == ServiceStatus.SUCCESS);
 
 			string responseText = status.text;
@@ -63,22 +62,22 @@ namespace transfluent.tests
 
 		[Test]
 		[MaxTime(10000)]
+		[ExpectedException(typeof (ApplicationException))]
 		public void noPostLogin()
 		{
 			WebServiceReturnStatus status = service.request(url); //no password params!
-			Assert.IsTrue(status.status == ServiceStatus.APPLICATION_ERROR);
 		}
 
 		[Test]
 		[MaxTime(10000)]
-		public void wrongPasswordLogin()	
+		[ExpectedException(typeof (ApplicationException))]
+		public void wrongPasswordLogin()
 		{
 			WebServiceReturnStatus status = service.request(url, new Dictionary<string, string>
-		{
-			{"email", Provider.username},
-			{"password", "thisPasswordIsWrong"}
-		});
-
+			{
+				{"email", Provider.username},
+				{"password", "thisPasswordIsWrong"}
+			});
 			Assert.IsTrue(status.status == ServiceStatus.APPLICATION_ERROR);
 		}
 	}

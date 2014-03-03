@@ -67,8 +67,9 @@ namespace transfluent.tests
 			Assert.IsTrue(list.languages.Count > 0);
 			return list;
 		}
+
 		[Test]
-		[ExpectedException(typeof(Exception))]
+		[ExpectedException(typeof(ApplicationException))]
 		public void getKeyThatDoesNotExist()
 		{
 			TransfluentLanguage englishLanguage = getLanguageList().getLangaugeByCode("en-us");

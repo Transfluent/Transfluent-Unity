@@ -65,7 +65,7 @@ namespace transfluent.editor
 				{
 					authToken = login.Parse(makeCall(login)).token;
 				}
-				catch
+				catch(WebServiceParameters.CallException e)
 				{
 					return false;
 				}
@@ -79,7 +79,7 @@ namespace transfluent.editor
 				{
 					allLanguagesSupported = languageRequest.Parse(makeCall(languageRequest));
 				}
-				catch
+				catch(WebServiceParameters.CallException e)
 				{
 				}
 				

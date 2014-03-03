@@ -15,8 +15,8 @@ namespace transfluent
 		private readonly Dictionary<string, string> _getParameters = new Dictionary<string, string>();
 		private readonly Dictionary<string, string> _postParameters = new Dictionary<string, string>();
 
-		[Inject]
-		public IResponseReader responseReader { get; set; }
+		//[Inject]
+		public IResponseReader responseReader = new ResponseReader(); //{ get; set; }
 
 		public Dictionary<string, string> getParameters
 		{

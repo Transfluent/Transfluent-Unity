@@ -2,18 +2,18 @@
 //seperatoion of logic, and 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Castle.Core.Internal;
 
 namespace transfluent.editor
 {
-	public class TestEditorWindowMediator
+	public class TransfluentEditorWindowMediator
 	{
-		private const string DEFAULT_LANGUAGE_CODE = "en-us"; //is this needed?
 		private readonly InjectionContext context;
 		private LanguageList allLanguagesSupported;
 		private TransfluentLanguage currentLanguage; //put this in a view state?
 
-		public TestEditorWindowMediator()
+		public TransfluentEditorWindowMediator()
 		{
 			context = new InjectionContext();
 			context.addMapping<ICredentialProvider>(new EditorKeyCredentialProvider());
@@ -67,6 +67,7 @@ namespace transfluent.editor
 				}
 				catch(CallException e)
 				{
+					UnityEngine.Debug.LogError("error getting login auth token:"+e.Message);
 					return false;
 				}
 
@@ -81,6 +82,7 @@ namespace transfluent.editor
 				}
 				catch(CallException e)
 				{
+					UnityEngine.Debug.LogError("error getting all languages:" + e.Message);
 				}
 				
 				if (allLanguagesSupported == null) return false;
@@ -150,7 +152,15 @@ namespace transfluent.editor
 					text: textValue,
 					group_id: groupKey,
 					language: currentLanguage.id);
-			makeCall(saveText);
+			try
+			{
+				makeCall(saveText);
+			}
+			catch (CallException exception)
+			{
+				UnityEngine.Debug.LogError("error making setText call:" + exception.Message);
+			}
+			
 		}
 
 		public List<TransfluentTranslation> knownTextEntries()

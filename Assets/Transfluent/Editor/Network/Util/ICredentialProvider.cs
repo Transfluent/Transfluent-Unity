@@ -46,6 +46,8 @@ namespace transfluent
 		{
 			EditorPrefs.SetString(USERNAME_EDITOR_KEY, newUsername);
 			EditorPrefs.SetString(PASSWORD_EDITOR_KEY, newPassword);
+			username = newUsername;
+			password = newPassword;
 		}
 
 		public void clear()

@@ -124,13 +124,21 @@ namespace transfluent
 
 			var sw = new Stopwatch();
 			sw.Start();
-			while (www.isDone == false && www.error == null && sw.Elapsed.TotalSeconds < 30f)
+			while (true)
 			{
+				if (www.isDone)
+					break;
+				if (www.error != null)
+					break;
+				if (sw.Elapsed.TotalSeconds >= 30f)
+					break;
+					
 				//EditorApplication.Step();
 				Thread.Sleep(100);
 			}
 
 			sw.Stop();
+			
 			status.requestTimeTaken = sw.Elapsed;
 
 			if (!www.isDone && www.error == null)

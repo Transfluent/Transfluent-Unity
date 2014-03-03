@@ -6,18 +6,18 @@ using UnityEngine;
 
 namespace transfluent.editor
 {
-	public class TestEditorWindow : EditorWindow
+	public class TransfluentEditorWindow : EditorWindow
 	{
-		private readonly TestEditorWindowMediator _mediator;
+		private readonly TransfluentEditorWindowMediator _mediator;
 		[MenuItem("Window/Transfluent Helper")]
 		static void Init()
 		{
-			GetWindow<TestEditorWindow>();
+			GetWindow<TransfluentEditorWindow>();
 		}
 
-		public TestEditorWindow()
+		public TransfluentEditorWindow()
 		{
-			_mediator = new TestEditorWindowMediator();
+			_mediator = new TransfluentEditorWindowMediator();
 			loginScreen = new LoginGUI(_mediator);
 			textGui = new TextsGUI(_mediator);
 		}
@@ -70,7 +70,7 @@ namespace transfluent.editor
 		//TODO: convert to propertydrawer
 		public class TextsGUI
 		{
-			private readonly TestEditorWindowMediator _mediator;
+			private readonly TransfluentEditorWindowMediator _mediator;
 			private List<TransfluentTranslation> _translations; 
 			private string knownTexts;
 			private double secondsSinceLastGotAllTexts;
@@ -78,7 +78,7 @@ namespace transfluent.editor
 
 			private List<TransfluentTranslation> dirtyTranslations = new List<TransfluentTranslation>(); 
 
-			public TextsGUI(TestEditorWindowMediator mediator)
+			public TextsGUI(TransfluentEditorWindowMediator mediator)
 			{
 				_mediator = mediator;
 			}
@@ -99,12 +99,7 @@ namespace transfluent.editor
 				dirtyTranslations.Clear();
 
 				_translations = _mediator.knownTextEntries();
-				StringBuilder sb = new StringBuilder();
-				foreach(TransfluentTranslation translation in _translations)
-				{
-					sb.AppendLine(JsonWriter.Serialize(translation));
-				}
-				knownTexts = sb.ToString();
+
 				newTranslations.Clear();
 			}
 
@@ -134,7 +129,8 @@ namespace transfluent.editor
 
 			public void doGUI()
 			{
-				if(knownTexts == null) Refresh();
+				if(_translations == null) Refresh();
+				if (_translations == null) return;
 				
 				foreach(TransfluentTranslation translation in _translations)
 				{
@@ -178,11 +174,11 @@ namespace transfluent.editor
 		 
 		public class LoginGUI
 		{
-			private readonly TestEditorWindowMediator _mediator;
+			private readonly TransfluentEditorWindowMediator _mediator;
 			private string currentUsername;
 			private string currentPassword;
 
-			public LoginGUI(TestEditorWindowMediator mediator)
+			public LoginGUI(TransfluentEditorWindowMediator mediator)
 			{
 				_mediator = mediator;
 				GetCredentialsFromDataStore();

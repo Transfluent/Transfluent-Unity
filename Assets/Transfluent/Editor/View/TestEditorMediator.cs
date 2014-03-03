@@ -65,7 +65,7 @@ namespace transfluent.editor
 				{
 					authToken = login.Parse(makeCall(login)).token;
 				}
-				catch
+				catch(CallException e)
 				{
 					return false;
 				}
@@ -79,7 +79,7 @@ namespace transfluent.editor
 				{
 					allLanguagesSupported = languageRequest.Parse(makeCall(languageRequest));
 				}
-				catch
+				catch(CallException e)
 				{
 				}
 				
@@ -131,11 +131,6 @@ namespace transfluent.editor
 					languageID: currentLanguage.id
 				);
 			return getText.Parse(makeCall(getText));
-		}
-
-		private bool wasSuccessful(WebServiceReturnStatus status)
-		{
-			return status.status == ServiceStatus.SUCCESS && status.httpErrorCode == 0;
 		}
 
 		private string makeCall(ITransfluentParameters call)

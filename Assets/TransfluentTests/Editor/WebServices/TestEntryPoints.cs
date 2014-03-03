@@ -59,8 +59,6 @@ namespace transfluent.tests
 			var requester = new SyncronousEditorWebRequest();
 			WebServiceReturnStatus status = requester.request(language);
 
-			Assert.True(status.wasSuccessful());
-
 			var list = language.Parse(status.text);
 			Assert.NotNull(list);
 

@@ -135,13 +135,10 @@ namespace transfluent
 
 			if (!www.isDone)
 			{
-				status.status = ServiceStatus.TIMEOUT;
-				www.Dispose();
-				return status;
+				throw new TransportException("Timeout");
 			}
 			if (www.error == null)
 			{
-				status.status = ServiceStatus.SUCCESS;
 				status.text = www.text;
 			}
 			else
@@ -149,6 +146,7 @@ namespace transfluent
 				string error = www.error;
 				if (knownTransportError(error)) 
 				{
+					www.Dispose();
 					throw new TransportException(error);
 				}
 				status.httpErrorCode = -1;
@@ -156,6 +154,8 @@ namespace transfluent
 				 
 				if (firstSpaceIndex > 0)
 				{
+					www.Dispose();
+
 					int.TryParse(error.Substring(0, firstSpaceIndex), out status.httpErrorCode);
 						//there has to be a better way to get error codes
 					if (status.httpErrorCode == 0)
@@ -164,12 +164,11 @@ namespace transfluent
 					}
 					if (status.httpErrorCode >= 400 && status.httpErrorCode <= 499)
 					{
-						status.status = ServiceStatus.APPLICATION_ERROR;
 						throw new ApplicatonLevelException("HTTP Error code, applicatin level:" + status.httpErrorCode,status.httpErrorCode);
 					}
 					throw new HttpErrorCode(status.httpErrorCode);
 				}
-				status.status = ServiceStatus.UNKNOWN; //can't parse error status
+				throw new Exception("Unknown error:" + error); //can't parse error status
 			}
 			www.Dispose();
 			return status;
@@ -202,15 +201,7 @@ namespace transfluent
 		public int httpErrorCode;
 		public TimeSpan requestTimeTaken;
 
-		public ServiceStatus status;
-		//a simple helper for me to figure out if it is to be re-requested, or hard errors like missing parameters
-
 		public string text; //if text is the  requested thing
-
-		public bool wasSuccessful()
-		{
-			return status == ServiceStatus.SUCCESS && httpErrorCode == 0;
-		}
 
 		public override string ToString()
 		{

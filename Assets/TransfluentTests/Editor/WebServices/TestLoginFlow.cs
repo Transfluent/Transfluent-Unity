@@ -37,7 +37,6 @@ namespace transfluent.tests
 				{"email", Provider.username},
 				{"password", Provider.password}
 			});
-			Assert.IsTrue(status.status == ServiceStatus.SUCCESS);
 
 			string responseText = status.text;
 			Assert.IsNotNull(responseText);

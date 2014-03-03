@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace transfluent
 {
@@ -13,46 +12,81 @@ namespace transfluent
 
 	public class WebServiceParameters : ITransfluentParameters
 	{
-		readonly Dictionary<string,string> _getParameters = new Dictionary<string, string>();
-		readonly Dictionary<string,string> _postParameters = new Dictionary<string, string>();
-		public Dictionary<string, string> getParameters { get { return _getParameters; } }
-		public Dictionary<string, string> postParameters { get { return _postParameters; } }
-		/*
+		private readonly Dictionary<string, string> _getParameters = new Dictionary<string, string>();
+		private readonly Dictionary<string, string> _postParameters = new Dictionary<string, string>();
+
 		[Inject]
 		public IResponseReader responseReader { get; set; }
 
-		EmptyResponseContainer getResponseContainer(string text)
+		public Dictionary<string, string> getParameters
+		{
+			get { return _getParameters; }
+		}
+
+		public Dictionary<string, string> postParameters
+		{
+			get { return _postParameters; }
+		}
+
+		private EmptyResponseContainer getResponseContainer(string text)
 		{
 			return responseReader.deserialize<EmptyResponseContainer>(text);
 		}
 
 		protected T GetResponse<T>(string text)
 		{
-			var responseContainer = getResponseContainer(text);
-			
+			EmptyResponseContainer responseContainer = getResponseContainer(text);
+
 			if (!responseContainer.isOK())
 			{
 				throw new ApplicatonLevelException("Response indicated an error:" + responseContainer, responseContainer.error);
 			}
-			return responseReader.deserialize<T>(text);
-		}
-		*/
-		public class HttpErrorCode : Exception
-		{
-			public int code;
-			public HttpErrorCode(int httpErrorCode) : base()
-			{
-				code = httpErrorCode;
-			}
+			var responseFullyParse = responseReader.deserialize<ResponseContainer<T>>(text);
+			return responseFullyParse.response;
 		}
 
-		public class ApplicatonLevelException : Exception
+		//something specific to the call went wrong
+		public class ApplicatonLevelException : CallException
 		{
 			public Error details;
+
 			public ApplicatonLevelException(string message, Error error)
 				: base(message)
 			{
 				details = error;
+			}
+		}
+		//base class for handling known exceptions 
+		public abstract class CallException : Exception
+		{
+			public CallException()
+			{
+			}
+
+			public CallException(string message) : base(message)
+			{
+			}
+
+			//use this constructor for other exceptions that we want to wrap
+			public CallException(string message, Exception innerException) : base(message, innerException)
+			{
+			}
+		}
+		//We got an http error code
+		public class HttpErrorCode : CallException
+		{
+			public int code;
+
+			public HttpErrorCode(int httpErrorCode)
+			{
+				code = httpErrorCode;
+			}
+		}
+		//Other unknown transport exception
+		public class TransportException : CallException
+		{
+			public TransportException(string message) : base(message)
+			{
 			}
 		}
 	}

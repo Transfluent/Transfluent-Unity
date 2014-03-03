@@ -97,7 +97,7 @@ namespace transfluent
 		//public string response;
 		public bool isOK()
 		{
-			return status == ResponseStatus.OK.ToString() || error != null;
+			return status == ResponseStatus.OK.ToString() && error == null;
 		}
 	}
 

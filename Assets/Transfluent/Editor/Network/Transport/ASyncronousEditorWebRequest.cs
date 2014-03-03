@@ -21,7 +21,7 @@ namespace transfluent
 			routineHandle = testRoutine();
 		}
 
-		[MenuItem("asink/testme")]
+		//[MenuItem("asink/testme")]
 		public static void testMe()
 		{
 			new AsyncTester();

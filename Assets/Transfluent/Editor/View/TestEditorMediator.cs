@@ -65,7 +65,7 @@ namespace transfluent.editor
 				{
 					authToken = login.Parse(makeCall(login)).token;
 				}
-				catch(WebServiceParameters.CallException e)
+				catch
 				{
 					return false;
 				}
@@ -79,7 +79,7 @@ namespace transfluent.editor
 				{
 					allLanguagesSupported = languageRequest.Parse(makeCall(languageRequest));
 				}
-				catch(WebServiceParameters.CallException e)
+				catch
 				{
 				}
 				
@@ -170,7 +170,7 @@ namespace transfluent.editor
 				var dictionaryOfKeys = getAllKeys.Parse(makeCall(getAllKeys)) ;
 				dictionaryOfKeys.ForEach((KeyValuePair<string, TransfluentTranslation> pair) => { list.Add(pair.Value); });
 			}
-			catch (WebServiceParameters.HttpErrorCode errorcode)
+			catch (HttpErrorCode errorcode)
 			{
 				if (errorcode.code != 400)
 				{

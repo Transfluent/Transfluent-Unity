@@ -27,7 +27,7 @@ namespace transfluent.tests
 			var result = requester.request(call);
 			if(result.httpErrorCode > 0)
 			{
-				throw new WebServiceParameters.HttpErrorCode(result.httpErrorCode);
+				throw new HttpErrorCode(result.httpErrorCode);
 			}
 			return result.text;
 		}
@@ -69,7 +69,7 @@ namespace transfluent.tests
 		}
 
 		[Test]
-		[ExpectedException(typeof(ApplicationException))]
+		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void getKeyThatDoesNotExist()
 		{
 			TransfluentLanguage englishLanguage = getLanguageList().getLangaugeByCode("en-us");

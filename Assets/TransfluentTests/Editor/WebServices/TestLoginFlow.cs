@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
 
@@ -53,6 +54,29 @@ namespace transfluent.tests
 		}
 
 		[Test]
+		[MaxTime(10000)]
+		[ExpectedException(typeof(ApplicatonLevelException))]
+		public void emptyLoginPasswordPost()
+		{
+			service.request(url, new Dictionary<string, string>
+			{
+				{"email", ""},
+				{"password", ""}
+			});
+		}
+		[Test]
+		[MaxTime(10000)]
+		[ExpectedException(typeof(CallException))]
+		public void makeSureApplicationLevelExceptionIsACallException()
+		{
+			service.request(url, new Dictionary<string, string>
+			{
+				{"email", ""},
+				{"password", ""}
+			});
+		}
+
+		[Test]
 		public void loadTestCredentials()
 		{
 			Provider = new FileBasedCredentialProvider();
@@ -62,7 +86,7 @@ namespace transfluent.tests
 
 		[Test]
 		[MaxTime(10000)]
-		[ExpectedException(typeof (ApplicationException))]
+		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void noPostLogin()
 		{
 			WebServiceReturnStatus status = service.request(url); //no password params!
@@ -70,7 +94,7 @@ namespace transfluent.tests
 
 		[Test]
 		[MaxTime(10000)]
-		[ExpectedException(typeof (ApplicationException))]
+		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void wrongPasswordLogin()
 		{
 			WebServiceReturnStatus status = service.request(url, new Dictionary<string, string>

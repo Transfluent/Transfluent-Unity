@@ -72,7 +72,7 @@ namespace transfluent.tests
 		//should I wrap JsonTypeCoercionException with an app-specific exception?
 		//In theory, the parse()
 		[Test]
-		[ExpectedException(typeof (WebServiceParameters.ApplicatonLevelException))]
+		[ExpectedException(typeof (ApplicatonLevelException))]
 		public void TestAuthenticateFailure()
 		{
 			var login = getType<Login>();
@@ -81,7 +81,7 @@ namespace transfluent.tests
 			{
 				AuthenticationResponse result = login.Parse(file);
 			}
-			catch (WebServiceParameters.ApplicatonLevelException e)
+			catch (ApplicatonLevelException e)
 			{
 				Assert.NotNull(e.details);
 				Assert.AreEqual(e.details.type, "EBackendSecurityViolation");

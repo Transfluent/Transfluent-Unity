@@ -104,7 +104,7 @@ namespace transfluent.tests
 			WebServiceReturnStatus result = requester.request(call);
 			if (result.httpErrorCode > 0)
 			{
-				throw new WebServiceParameters.HttpErrorCode(result.httpErrorCode);
+				throw new HttpErrorCode(result.httpErrorCode);
 			}
 			return result.text;
 		}
@@ -216,7 +216,7 @@ namespace transfluent.tests
 				language_id: englishLanguage.id
 				);
 
-			Assert.Catch<ApplicationException>(
+			Assert.Catch<ApplicatonLevelException>(
 				() => englishTranslationOfEnglishKey.Parse(justCall(englishTranslationOfEnglishKey)));
 
 
@@ -225,7 +225,7 @@ namespace transfluent.tests
 				text_id: TRANSLATION_KEY + " THIS IS INVALID" + Random.value,
 				language_id: backwardsLanguage.id
 				);
-			Assert.Catch<ApplicationException>(
+			Assert.Catch<ApplicatonLevelException>(
 				() => backwardsTranslationOfExistingKey.Parse(justCall(backwardsTranslationOfExistingKey)));
 		}
 

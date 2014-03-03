@@ -44,50 +44,57 @@ namespace transfluent
 			var responseFullyParse = responseReader.deserialize<ResponseContainer<T>>(text);
 			return responseFullyParse.response;
 		}
+	}
 
-		//something specific to the call went wrong
-		public class ApplicatonLevelException : CallException
+	//something specific to the call went wrong
+	public class ApplicatonLevelException : CallException
+	{
+		public Error details;
+		public ApplicatonLevelException(string message, int httpStatusCode)
+			: base(message)
 		{
-			public Error details;
-
-			public ApplicatonLevelException(string message, Error error)
-				: base(message)
-			{
-				details = error;
-			}
+			details = new Error() {message = "HTTP ERROR CODE:" + httpStatusCode};
 		}
-		//base class for handling known exceptions 
-		public abstract class CallException : Exception
+		public ApplicatonLevelException(string message, Error error)
+			: base(message)
 		{
-			public CallException()
-			{
-			}
-
-			public CallException(string message) : base(message)
-			{
-			}
-
-			//use this constructor for other exceptions that we want to wrap
-			public CallException(string message, Exception innerException) : base(message, innerException)
-			{
-			}
+			details = error;
 		}
-		//We got an http error code
-		public class HttpErrorCode : CallException
-		{
-			public int code;
+	}
 
-			public HttpErrorCode(int httpErrorCode)
-			{
-				code = httpErrorCode;
-			}
-		}
-		//Other unknown transport exception
-		public class TransportException : CallException
+	//base class for handling known exceptions 
+	public abstract class CallException : Exception
+	{
+		public CallException()
 		{
-			public TransportException(string message) : base(message)
-			{
-			}
+		}
+
+		public CallException(string message) : base(message)
+		{
+		}
+
+		//use this constructor for other exceptions that we want to wrap
+		public CallException(string message, Exception innerException) : base(message, innerException)
+		{
+		}
+	}
+
+	//We got an http error code
+	public class HttpErrorCode : CallException
+	{
+		public int code;
+
+		public HttpErrorCode(int httpErrorCode)
+		{
+			code = httpErrorCode;
+		}
+	}
+
+	//Other unknown transport exception
+	public class TransportException : CallException
+	{
+		public TransportException(string message) : base(message)
+		{
 		}
 	}
 }

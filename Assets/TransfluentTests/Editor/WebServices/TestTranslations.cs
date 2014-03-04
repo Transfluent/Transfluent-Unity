@@ -28,9 +28,7 @@ namespace transfluent.tests
 			var credentials = new FileBasedCredentialProvider();
 			Assert.False(string.IsNullOrEmpty(credentials.username));
 			Assert.False(string.IsNullOrEmpty(credentials.password));
-			var login = new Login
-				(credentials.username, credentials.password
-				);
+			var login = new Login(credentials.username, credentials.password);
 			var request = new DebugSyncronousEditorWebRequest();
 
 			AuthenticationResponse response = login.Parse(request.request(login).text);

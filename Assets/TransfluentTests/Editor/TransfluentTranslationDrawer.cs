@@ -1,4 +1,6 @@
-﻿using transfluent;
+﻿using System;
+using System.Net.Configuration;
+using transfluent;
 using UnityEditor;
 using UnityEngine;
 
@@ -34,23 +36,9 @@ namespace transfluent
 				EditorGUI.LabelField(currentRect, " NULL FIELD");
 				return;
 			}
-			EditorGUI.LabelField(currentRect, prop.name + " type:" + prop.propertyType);
+			EditorGUI.LabelField(currentRect, prop.name,EditorStyles.boldLabel); //+ " type:" + prop.propertyType);
 			ypos += 20;
-			switch(prop.propertyType)
-			{
-				case SerializedPropertyType.Integer:
-					EditorGUI.LabelField(currentRect, prop.intValue.ToString());
-					break;
-				case SerializedPropertyType.Boolean:
-					EditorGUI.LabelField(currentRect, prop.boolValue.ToString());
-					break;
-				case SerializedPropertyType.Float:
-					EditorGUI.LabelField(currentRect, prop.floatValue.ToString());
-					break;
-				case SerializedPropertyType.String:
-					EditorGUI.LabelField(currentRect, prop.stringValue);
-					break;
-			}
+			EditorGUI.LabelField(currentRect, getStringValue(prop));
 		}
 
 		private void printThing(SerializedProperty prop, string name)
@@ -59,6 +47,61 @@ namespace transfluent
 			printThing(prop.FindPropertyRelative(name));
 			ypos += 40;
 		}
+		
+		void printEditableField(SerializedProperty prop)
+		{
+			if(prop == null)
+			{
+				EditorGUI.LabelField(currentRect, " NULL FIELD");
+				return;
+			}
+			EditorGUI.LabelField(currentRect, "Editable field: " + prop.name, EditorStyles.boldLabel);
+			ypos += 20;
+			Rect singleHighRect = currentRect;
+			singleHighRect.height = 20;
+			string newValue = EditorGUI.TextField(singleHighRect, getStringValue(prop));
+			try
+			{
+				switch (prop.propertyType)
+				{
+					case SerializedPropertyType.Integer:
+						prop.intValue = int.Parse(newValue);
+						break;
+					case SerializedPropertyType.Boolean:
+						prop.boolValue = bool.Parse(newValue);
+						break;
+					case SerializedPropertyType.Float:
+						prop.floatValue = float.Parse(newValue);
+						break;
+					case SerializedPropertyType.String:
+						prop.stringValue = newValue;
+						break;
+				}
+			}
+			catch
+			{
+				//parsing errors should be ignored
+			}
+			
+		}
+
+		public string getStringValue(SerializedProperty prop)
+		{
+			switch(prop.propertyType)
+			{
+				case SerializedPropertyType.Integer:
+					return prop.intValue.ToString();
+				case SerializedPropertyType.Boolean:
+					return prop.boolValue.ToString();
+				case SerializedPropertyType.Float:
+					return prop.floatValue.ToString();
+				case SerializedPropertyType.String:
+					return prop.stringValue;
+			}
+			throw new Exception("unhandled prop type" + prop.propertyType);
+		}
+
+
 
 		public override void OnGUI(Rect pos, SerializedProperty prop, GUIContent label)
 		{
@@ -69,24 +112,22 @@ namespace transfluent
 
 			EditorGUI.LabelField(currentRect, prop.name);
 			ypos += 20;
-
-
-			EditorGUI.BeginProperty(pos, label, prop);
-
-			//EditorGUILayout.LabelField("translation field");
-			SerializedProperty textID = prop.FindPropertyRelative("text_id");
-			SerializedProperty groupID = prop.FindPropertyRelative("group_id");
-			SerializedProperty language = prop.FindPropertyRelative("language");
-			SerializedProperty text = prop.FindPropertyRelative("text");
-
-			/*printThing(prop, "text_id");
-				printThing(prop, "group_id");
-				printThing(prop, "language");
-				printThing(prop, "text");*/
+			
+			//printThing();
+			printThing(prop, "text_id");
+			printThing(prop, "group_id");
+			//printThing(prop, "language");  //TODO: show as an enum popup?
+			printEditableField(prop.FindPropertyRelative("text"));
 
 			//EditorGUI.BeginChangeCheck();
 
 			//reflection over members?
+			/*
+			 * 
+			 * SerializedProperty textID = prop.FindPropertyRelative("text_id");
+			SerializedProperty groupID = prop.FindPropertyRelative("group_id");
+			SerializedProperty language = prop.FindPropertyRelative("language");
+			SerializedProperty text = prop.FindPropertyRelative("text");
 			if(textID != null)
 			{
 				ypos += 40;
@@ -94,8 +135,8 @@ namespace transfluent
 				Rect textRect = currentRect;
 				textRect.height = base.GetPropertyHeight(prop, label);
 				ypos += textRect.height;
-				textID.stringValue = EditorGUI.TextField(textRect, "text id", textID.stringValue);
-			}
+				EditorGUI.LabelField(textRect, "text id", textID.stringValue);
+			}*/
 			/*
 				if (groupID != null)
 				{
@@ -104,7 +145,7 @@ namespace transfluent
 				}
 				 */
 
-			EditorGUI.EndProperty();
+			//EditorGUI.EndProperty();
 		}
 	}
 }

@@ -5,7 +5,7 @@ using Object = System.Object;
 namespace transfluent
 {
 	[Serializable]
-	public class TransfluentLanguage
+	public class TransfluentLanguage : Object
 	{
 		public const string BACKWARDS_LANGUAGE_NAME = "xx-xx";
 

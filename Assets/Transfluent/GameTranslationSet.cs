@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace transfluent
 {
 	public class GameTranslationSet : ScriptableObject
 	{
-		public TransfluentTranslation translation;
-		public TransfluentTranslation translation2;
+		public List<TransfluentTranslation> allTranslations;
 	}
 }

@@ -1,8 +1,14 @@
-﻿using UnityEngine;
+﻿using transfluent;
+using UnityEngine;
 
 public class InternationalTextDisplay : MonoBehaviour
 {
 	[SerializeField] string textToDisplay = "我是一个中国人的一句。";
+
+	[SerializeField]
+	private TransfluentTranslation translation = new TransfluentTranslation();
+
+
 	// Use this for initialization
 	void Start()
 	{
@@ -17,6 +23,6 @@ public class InternationalTextDisplay : MonoBehaviour
 
 	void OnGUI()
 	{
-		GUILayout.TextField(textToDisplay);
+		//GUILayout.TextField(textToDisplay);
 	}
 }

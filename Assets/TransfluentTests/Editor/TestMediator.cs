@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.Remoting;
-using System.Text;
-using System.Threading;
-using transfluent.editor;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
-using Debug = UnityEngine.Debug;
+using transfluent.editor;
 
 namespace transfluent.tests
 {
@@ -15,12 +8,13 @@ namespace transfluent.tests
 	public class TestMediator
 	{
 		private TransfluentEditorWindowMediator mediator;
+
 		[TestFixtureSetUp]
 		public void testCreation()
 		{
 			mediator = new TransfluentEditorWindowMediator();
 			Assert.IsNotNullOrEmpty(mediator.getUserNamePassword().Key);
-			
+
 			Assert.NotNull(mediator.getUserNamePassword());
 			Assert.IsNotNullOrEmpty(mediator.getUserNamePassword().Key);
 			Assert.IsNotNullOrEmpty(mediator.getUserNamePassword().Value);
@@ -32,7 +26,6 @@ namespace transfluent.tests
 		[Test]
 		public void setCurrentLanguage()
 		{
-			
 		}
 
 		[Test]
@@ -46,15 +39,12 @@ namespace transfluent.tests
 			Assert.NotNull(mediator.GetCurrentLanguage());
 			Assert.AreEqual(mediator.GetCurrentLanguage().code, langauge);
 
-			var textEntries = mediator.knownTextEntries();
+			List<TransfluentTranslation> textEntries = mediator.knownTextEntries();
 
 			Assert.NotNull(textEntries);
 
 
 			Assert.Greater(textEntries.Count, 0);
 		}
-
 	}
-
 }
-

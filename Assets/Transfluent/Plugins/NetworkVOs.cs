@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace transfluent
 {
@@ -37,19 +38,19 @@ namespace transfluent
 		[Serializable]
 		public class Text
 		{
-			public string source { get; set; }
-			public string translated { get; set; }
+			public string source;
+			public string translated;
 		}
 
-		public string order_id { get; set; }
-		public string status_text { get; set; }
-		public string status { get; set; }
-		public int source_language { get; set; }
-		public int target_language { get; set; }
-		//public Nullable<int> group_id { get; set; } //it is null if there was not one set
-		public string key { get; set; }
-		public string key_id { get; set; }
-		public Text text { get; set; }
+		public string order_id;
+		public string status_text;
+		public string status;
+		public int source_language;
+		public int target_language;
+		//public Nullable<int> group_id; //it is null if there was not one set
+		public string key;
+		public string key_id;
+		public Text text;
 	}
 
 	[Serializable]
@@ -61,10 +62,10 @@ namespace transfluent
 	[Serializable]
 	public class TransfluentTranslation
 	{
-		public string text_id { get; set; }
-		public string group_id { get; set; }
-		public TransfluentLanguage language { get; set; }
-		public string text { get; set; }
+		public string text_id;
+		public string group_id;
+		public TransfluentLanguage language;
+		public string text;
 	}
 
 	[Serializable]
@@ -77,8 +78,8 @@ namespace transfluent
 	public class Error
 	{
 		public Error() { }
-		public String type { get; set; }
-		public String message { get; set; }
+		public String type;
+		public String message;
 	}
 	[Serializable]
 	public class EmptyResponseContainer
@@ -90,9 +91,9 @@ namespace transfluent
 			OK,
 			ERROR
 		}
-		public string status { get; set; }
+		public string status;
 		public Error error;
-		public object result { get; set; }
+		public object result;
 
 		//public string response;
 		public bool isOK()
@@ -111,9 +112,9 @@ namespace transfluent
 			OK,
 			ERROR
 		}
-		public string status { get; set; }
+		public string status;
 		public Error error;
-		public T response { get; set; }
+		public T response;
 
 		//public string response;
 		public bool isOK()
@@ -130,17 +131,17 @@ namespace transfluent
 	[Serializable]
 	public class AuthenticationResponse
 	{
-		public string token { get; set; }
-		public string expires { get; set; }
+		public string token;
+		public string expires;
 	}
 
 	[Serializable]
 	public class TranslateRequest
 	{
-		public TransfluentLanguage[] TargetLanguageS { get; set; }
-		public TransfluentLanguage sourceLangauge { get; set; }
-		public string text_identifier { get; set; }
+		public TransfluentLanguage[] TargetLanguageS;
+		public TransfluentLanguage sourceLangauge;
+		public string text_identifier;
 
-		public string authToken { get; set; }
+		public string authToken;
 	}
 }

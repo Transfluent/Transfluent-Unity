@@ -58,9 +58,7 @@ namespace transfluent.editor
 		{
 			if (string.IsNullOrEmpty(getCurrentAuthToken()))
 			{
-				var login = new Login
-					(username, password
-					);
+				var login = new Login(username, password);
 				string authToken;
 				try
 				{

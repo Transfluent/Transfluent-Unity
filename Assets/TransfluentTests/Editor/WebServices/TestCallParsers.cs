@@ -79,7 +79,8 @@ namespace transfluent.tests
 			string file = getTestFile("LoginFailure");
 			try
 			{
-				AuthenticationResponse result = login.Parse(file);
+				login.Parse(file);
+				//AuthenticationResponse result = login.Parse(file);
 			}
 			catch (ApplicatonLevelException e)
 			{

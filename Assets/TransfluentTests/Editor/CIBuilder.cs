@@ -21,7 +21,6 @@ namespace transfluent
 					{
 						string buildNumber = arg.Replace(buildFlag, "");
 
-
 						return int.Parse(buildNumber);
 					}
 				}

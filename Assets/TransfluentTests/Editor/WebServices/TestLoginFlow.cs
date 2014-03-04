@@ -96,7 +96,7 @@ namespace transfluent.tests
 		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void wrongPasswordLogin()
 		{
-			WebServiceReturnStatus status = service.request(loginUrl, new Dictionary<string, string>
+			service.request(loginUrl, new Dictionary<string, string>
 			{
 				{"email", Provider.username},
 				{"password", "thisPasswordIsWrong"}

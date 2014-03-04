@@ -24,14 +24,14 @@ namespace transfluent
 
 		public DebugSyncronousEditorWebRequest()
 		{
-			Debug.Log("CREATING SYNC REQUESTs");
+			if(debug) Debug.Log("CREATING SYNC REQUESTs");
 		}
 
 		public WebServiceReturnStatus request(string url)
 		{
-			if (debug) Debug.Log("calling url:" + url + "(GET) ");
+			if(debug) Debug.Log("calling url:" + url + "(GET) ");
 			WebServiceReturnStatus result = realRequest.request(url);
-			if (debug) Debug.Log("GOT BACK WITH RESULT:" + result);
+			if(debug) Debug.Log("GOT BACK WITH RESULT:" + result);
 			return result;
 		}
 
@@ -41,14 +41,14 @@ namespace transfluent
 			{
 				foreach (var param in postParams)
 				{
-					if (debug) Debug.Log("Field added:" + param.Key + " with value:" + param.Value);
+					if(debug) Debug.Log("Field added:" + param.Key + " with value:" + param.Value);
 				}
-				Debug.Log("ALL params:" + JsonWriter.Serialize(postParams));
+				if(debug) Debug.Log("ALL params:" + JsonWriter.Serialize(postParams));
 			}
-			if (debug) Debug.Log("calling url:" + url + "(POST) ");
+			if(debug) Debug.Log("calling url:" + url + "(POST) ");
 			WebServiceReturnStatus result = realRequest.request(url, postParams);
 
-			if (debug) Debug.Log("GOT BACK WITH RESULT:" + result);
+			if(debug) Debug.Log("GOT BACK WITH RESULT:" + result);
 			return result;
 		}
 
@@ -115,7 +115,12 @@ namespace transfluent
 			{
 				sb.Append(WWW.EscapeURL(kvp.Key) + "=" + WWW.EscapeURL(kvp.Value) + "&");
 			}
-			return sb.ToString();
+			string fullUrl = sb.ToString();
+			if (fullUrl.EndsWith("&"))
+			{
+				fullUrl = fullUrl.Substring(0, fullUrl.LastIndexOf("&"));
+			}
+			return fullUrl;
 		}
 
 		private WebServiceReturnStatus doWWWCall(WWW www)
@@ -192,16 +197,6 @@ namespace transfluent
 		}
 
 		//Could not resolve host: transfluent.com (Could not contact DNS servers)
-	}
-
-
-	public enum ServiceStatus
-	{
-		UNKNOWN,
-		SUCCESS,
-		TRANSPORT_ERROR,
-		APPLICATION_ERROR,
-		TIMEOUT,
 	}
 
 	public struct WebServiceReturnStatus

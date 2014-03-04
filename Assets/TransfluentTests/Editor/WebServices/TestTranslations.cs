@@ -68,7 +68,8 @@ namespace transfluent.tests
 				text: textToSave,
 				text_id: keyToSaveAndThenGet
 				);
-			justCall(saveOp);
+			string callText = justCall(saveOp);
+			Assert.IsTrue(saveOp.Parse(callText));
 			var testForExistance = new GetTextKey
 				(
 				languageID: englishLanguage.id,
@@ -86,7 +87,8 @@ namespace transfluent.tests
 				text: textToSetTestTokenTo,
 				text_id: keyToSaveAndThenGet
 				);
-			justCall(saveOp);
+			callText = justCall(saveOp);
+			Assert.IsTrue(saveOp.Parse(callText));
 
 			stringFromServer = testForExistance.Parse(justCall(testForExistance));
 			Assert.AreEqual(textToSetTestTokenTo, stringFromServer);

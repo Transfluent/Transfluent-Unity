@@ -1,9 +1,10 @@
 ﻿//handles interaction with core code, allowing hte editor window to focus on presentation.  Also has the nice side effect of avoiding issues in editor files (massive bugginess with optional arguments, etc)
 //seperatoion of logic, and 
+
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Castle.Core.Internal;
+using UnityEngine;
 
 namespace transfluent.editor
 {
@@ -65,9 +66,9 @@ namespace transfluent.editor
 				{
 					authToken = login.Parse(makeCall(login)).token;
 				}
-				catch(CallException e)
+				catch (CallException e)
 				{
-					UnityEngine.Debug.LogError("error getting login auth token:"+e.Message);
+					Debug.LogError("error getting login auth token:" + e.Message);
 					return false;
 				}
 
@@ -80,11 +81,11 @@ namespace transfluent.editor
 				{
 					allLanguagesSupported = languageRequest.Parse(makeCall(languageRequest));
 				}
-				catch(CallException e)
+				catch (CallException e)
 				{
-					UnityEngine.Debug.LogError("error getting all languages:" + e.Message);
+					Debug.LogError("error getting all languages:" + e.Message);
 				}
-				
+
 				if (allLanguagesSupported == null) return false;
 			}
 
@@ -138,9 +139,10 @@ namespace transfluent.editor
 		private string makeCall(ITransfluentParameters call)
 		{
 			context.setMappings(call);
-			call.getParameters.Add("authToken", getCurrentAuthToken()); //TODO: find another way to do this...
-			var service = context.manualGetMapping<IWebService>();
+			call.getParameters.Add("token", getCurrentAuthToken()); //TODO: find another way to do this...
 			
+			var service = context.manualGetMapping<IWebService>();
+
 			return service.request(call).text;
 		}
 
@@ -158,9 +160,8 @@ namespace transfluent.editor
 			}
 			catch (CallException exception)
 			{
-				UnityEngine.Debug.LogError("error making setText call:" + exception.Message);
+				Debug.LogError("error making setText call:" + exception.Message);
 			}
-			
 		}
 
 		public List<TransfluentTranslation> knownTextEntries()
@@ -172,12 +173,13 @@ namespace transfluent.editor
 			var list = new List<TransfluentTranslation>();
 			try
 			{
-				var dictionaryOfKeys = getAllKeys.Parse(makeCall(getAllKeys)) ;
+				Dictionary<string, TransfluentTranslation> dictionaryOfKeys = getAllKeys.Parse(makeCall(getAllKeys));
 				dictionaryOfKeys.ForEach((KeyValuePair<string, TransfluentTranslation> pair) => { list.Add(pair.Value); });
 			}
-			catch (HttpErrorCode errorcode)
+			catch (ApplicatonLevelException errorcode)
 			{
-				if (errorcode.code != 400)
+				//Debug.Log("App error:"+errorcode);
+				if (errorcode.details.type != 400.ToString())
 				{
 					throw;
 				}

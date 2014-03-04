@@ -53,7 +53,7 @@ namespace transfluent
 		public ApplicatonLevelException(string message, int httpStatusCode)
 			: base(message)
 		{
-			details = new Error() {message = "HTTP ERROR CODE:" + httpStatusCode};
+			details = new Error() {message = "HTTP ERROR CODE:" + httpStatusCode,type=httpStatusCode.ToString()};
 		}
 		public ApplicatonLevelException(string message, Error error)
 			: base(message)

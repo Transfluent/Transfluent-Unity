@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Object = System.Object;
 
 namespace transfluent
 {
@@ -60,7 +61,7 @@ namespace transfluent
 		public string password;
 	}
 	[Serializable]
-	public class TransfluentTranslation
+	public class TransfluentTranslation : Object
 	{
 		public string text_id;
 		public string group_id;

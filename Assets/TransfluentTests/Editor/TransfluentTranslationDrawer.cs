@@ -67,6 +67,10 @@ namespace transfluent
 			originalRect = pos;
 			ypos = 0;
 
+			EditorGUI.LabelField(currentRect, prop.name);
+			ypos += 20;
+
+
 			EditorGUI.BeginProperty(pos, label, prop);
 
 			//EditorGUILayout.LabelField("translation field");

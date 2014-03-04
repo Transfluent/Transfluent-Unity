@@ -1,22 +1,33 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using transfluent;
 using UnityEditor;
 using UnityEngine;
-using transfluent;
-using System.Collections;
+
+//NOTE:not drawing language right now
 
 namespace transfluent
 {
-	//not drawing language right now
 	[CustomPropertyDrawer(typeof(TransfluentTranslation))]
 	public class TransfluentTranslationDrawer : PropertyDrawer
 	{
-		public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+		private Rect originalRect;
+		private float ypos;
+
+		private Rect currentRect
 		{
-			return base.GetPropertyHeight(property, label) + 500;
+			get
+			{
+				var rect = new Rect(originalRect);
+				rect.y += ypos;
+				return rect;
+			}
 		}
 
-		void printThing(SerializedProperty prop)
+		public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+		{
+			return base.GetPropertyHeight(property, label) + 200;
+		}
+
+		private void printThing(SerializedProperty prop)
 		{
 			if(prop == null)
 			{
@@ -42,29 +53,15 @@ namespace transfluent
 			}
 		}
 
-		void printThing(SerializedProperty prop, string name)
+		private void printThing(SerializedProperty prop, string name)
 		{
 			prop.FindPropertyRelative(name);
 			printThing(prop.FindPropertyRelative(name));
 			ypos += 40;
 		}
 
-		private Rect currentRect
-		{
-			get
-			{
-				var rect = new Rect(originalRect);
-				rect.y += ypos;
-				return rect;
-			}
-		}
-
-		private float ypos;
-		private Rect originalRect;
-
 		public override void OnGUI(Rect pos, SerializedProperty prop, GUIContent label)
 		{
-
 			if(prop == null)
 				return;
 			originalRect = pos;
@@ -79,9 +76,9 @@ namespace transfluent
 			SerializedProperty text = prop.FindPropertyRelative("text");
 
 			/*printThing(prop, "text_id");
-			printThing(prop, "group_id");
-			printThing(prop, "language");
-			printThing(prop, "text");*/
+				printThing(prop, "group_id");
+				printThing(prop, "language");
+				printThing(prop, "text");*/
 
 			//EditorGUI.BeginChangeCheck();
 
@@ -89,22 +86,21 @@ namespace transfluent
 			if(textID != null)
 			{
 				ypos += 40;
-				Rect drawArea = new Rect(pos.x, pos.y, pos.width - 50, pos.height);
-				var textRect = currentRect;
+				var drawArea = new Rect(pos.x, pos.y, pos.width - 50, pos.height);
+				Rect textRect = currentRect;
 				textRect.height = base.GetPropertyHeight(prop, label);
 				ypos += textRect.height;
 				textID.stringValue = EditorGUI.TextField(textRect, "text id", textID.stringValue);
 			}
 			/*
-			if (groupID != null)
-			{
-				Rect drawArea2 = new Rect(pos.x, pos.y, pos.width - 50, pos.height);
-				EditorGUI.LabelField(drawArea2, "group id", groupID.stringValue);
-			}
-			 */
+				if (groupID != null)
+				{
+					Rect drawArea2 = new Rect(pos.x, pos.y, pos.width - 50, pos.height);
+					EditorGUI.LabelField(drawArea2, "group id", groupID.stringValue);
+				}
+				 */
 
 			EditorGUI.EndProperty();
 		}
 	}
-
 }

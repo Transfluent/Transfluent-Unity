@@ -53,7 +53,6 @@ namespace transfluent
 						set.allTranslations = translations;
 						EditorUtility.SetDirty(set); 
 						AssetDatabase.SaveAssets();
-						//break;
 					}
 				}
 				catch (Exception e)

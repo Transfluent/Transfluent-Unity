@@ -1,4 +1,6 @@
-﻿using transfluent;
+﻿using System.Collections.Generic;
+using System.Runtime.Versioning;
+using transfluent;
 using UnityEngine;
 
 public class InternationalTextDisplay : MonoBehaviour
@@ -8,6 +10,7 @@ public class InternationalTextDisplay : MonoBehaviour
 	[SerializeField]
 	private TransfluentTranslation translation = new TransfluentTranslation();
 
+	List<string> knownStrings = new List<string>();
 
 	// Use this for initialization
 	void Start()
@@ -23,6 +26,23 @@ public class InternationalTextDisplay : MonoBehaviour
 
 	void OnGUI()
 	{
-		//GUILayout.TextField(textToDisplay);
+		GUILayout.TextField(textToDisplay);
+		if(GUILayout.Button("TEST GET KNOWN TRANSLATIONS"))
+		{
+			knownStrings.Clear();
+			var list = Resources.LoadAll<GameTranslationSet>("");  //this is *not* Assets/Transfluent/Resources, since all resources get put in the "resources" folder
+			//Debug.Log("Number of translation sets:" + list.Length);
+			foreach (GameTranslationSet set in list)
+			{
+				foreach (TransfluentTranslation trans in set.allTranslations)
+				{
+					knownStrings.Add(trans.text);
+				}
+			}
+		}
+		foreach (string knownString in knownStrings)
+		{
+			GUILayout.Label(knownString);
+		}
 	}
 }

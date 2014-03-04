@@ -10,7 +10,7 @@ namespace transfluent.editor
 	{
 		private readonly TransfluentEditorWindowMediator _mediator;
 		[MenuItem("Window/Transfluent Helper")]
-		static void Init()
+		public static void Init()
 		{
 			GetWindow<TransfluentEditorWindow>();
 		}

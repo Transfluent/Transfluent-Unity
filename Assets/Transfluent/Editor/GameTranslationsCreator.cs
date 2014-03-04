@@ -36,7 +36,7 @@ namespace transfluent
 			if (string.IsNullOrEmpty(usernamePassword.Key) || string.IsNullOrEmpty(usernamePassword.Value))
 			{
 				EditorUtility.DisplayDialog("Login please","Please login using editor window before trying to use this functionality","ok");
-
+				TransfluentEditorWindow.Init();
 				return;
 			}
 			mediator.doAuth(usernamePassword.Key, usernamePassword.Value);

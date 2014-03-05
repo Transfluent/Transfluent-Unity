@@ -14,15 +14,16 @@ namespace Assets.Transfluent
 	class WrapperGenerator
 	{
 		const string headerFormat = @"using UnityEngine;
-
+using System;
 //wrapper around unity's gui, except to grab text as quickly as possbile and spit it into an internal db
 //http://docs.unity3d.com/Documentation/ScriptReference/GUI.html
 namespace transfluent.guiwrapper
 {{
-
+#pragma warning disable 618
 	public partial class {0}
 	{{";
 		private const string footer = @"	}
+#pragma warning restore 618
 }";
 		public bool debug = false;
 		public WrapperGenerator(){}
@@ -43,6 +44,7 @@ namespace transfluent.guiwrapper
 			{typeof(char),"char"},
 			{typeof(void),"void"},
 		};
+
 
 		public string getWrappedFile(Type type)
 		{
@@ -141,7 +143,6 @@ namespace transfluent.guiwrapper
 				{
 					ParameterInfo paramInfo = myParameters[i];
 					//TODO: use paramInfo.ParameterType.IsPrimitive to make System.Void be just void
-
 					ParamWrapped toAdd = new ParamWrapped()
 					{
 						defaultValue = paramInfo.DefaultValue.ToString(),
@@ -149,15 +150,25 @@ namespace transfluent.guiwrapper
 						name = paramInfo.Name,
 						type = paramInfo.ParameterType,
 						isParams = paramInfo.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0, //http://stackoverflow.com/questions/627656/determining-if-a-parameter-uses-params-using-reflection-in-c
-						isRef = paramInfo.ParameterType.IsByRef
+						isRef = paramInfo.ParameterType.IsByRef,
+						
 					};
 					
 					parameters.Add(toAdd);
 				}
 				//TODO: ensure default values are handled appropriately
-				functionString = createRealParamString(methodInfo.Name, methodInfo.ReturnType, parameters.ToArray());
+				functionString = createRealParamString(methodInfo.Name, methodInfo.ReturnType, parameters.ToArray(), obsoleteString(methodInfo));
 			}
-			string createRealParamString(string methodName, Type returnType, ParamWrapped[] parameters)
+			string obsoleteString(MethodInfo methodInfo)
+			{
+				var ObsolteAttributes = methodInfo.GetCustomAttributes(typeof(ObsoleteAttribute), false) as ObsoleteAttribute[];
+				if (ObsolteAttributes.Length <= 0)
+					return "";
+				//only return the first "obsolte" attribute
+				return "[Obsolete(\"" + ObsolteAttributes[0].Message + "\")]\n";
+			}
+
+			string createRealParamString(string methodName, Type returnType, ParamWrapped[] parameters,string attributes)
 			{
 				StringBuilder paramBuilder = new StringBuilder();
 				StringBuilder valuesToPassToRealFunction = new StringBuilder();
@@ -184,8 +195,8 @@ namespace transfluent.guiwrapper
 					}
 				}
 				string optionallyReturnTheValue = returnType == typeof(void) ? "" : "return ";
-				string functionFormatted = string.Format("public static {0} {1}({2})\n{{\n {4} {5}.{1}({3});\n}}\n",
-					cleanType(returnType), methodName, paramBuilder, valuesToPassToRealFunction, optionallyReturnTheValue, typeThatWeAreForwardingTo);
+				string functionFormatted = string.Format("{6}public static {0} {1}({2})\n{{\n {4} {5}.{1}({3});\n}}\n",
+					cleanType(returnType), methodName, paramBuilder, valuesToPassToRealFunction, optionallyReturnTheValue, typeThatWeAreForwardingTo, attributes);
 				return functionFormatted;
 			}
 			string cleanType(Type type)

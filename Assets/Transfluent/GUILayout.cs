@@ -1,10 +1,10 @@
 using UnityEngine;
-
+using System;
 //wrapper around unity's gui, except to grab text as quickly as possbile and spit it into an internal db
 //http://docs.unity3d.com/Documentation/ScriptReference/GUI.html
 namespace transfluent.guiwrapper
 {
-
+#pragma warning disable 618
 	public partial class GUILayout
 	{
 
@@ -438,4 +438,5 @@ public static UnityEngine.GUILayoutOption ExpandHeight( bool expand)
 }
 
 	}
+#pragma warning restore 618
 }

@@ -1,10 +1,10 @@
 using UnityEngine;
-
+using System;
 //wrapper around unity's gui, except to grab text as quickly as possbile and spit it into an internal db
 //http://docs.unity3d.com/Documentation/ScriptReference/GUI.html
 namespace transfluent.guiwrapper
 {
-
+#pragma warning disable 618
 	public partial class EditorGUILayout
 	{
 
@@ -344,6 +344,7 @@ public static void IntPopup( UnityEditor.SerializedProperty property, UnityEngin
 {
   UnityEditor.EditorGUILayout.IntPopup(property,displayedOptions,optionValues,label,options);
 }
+[Obsolete("This function is obsolete and the style is not used.")]
 public static void IntPopup( UnityEditor.SerializedProperty property, UnityEngine.GUIContent[] displayedOptions, System.Int32[] optionValues, UnityEngine.GUIContent label, UnityEngine.GUIStyle style,params UnityEngine.GUILayoutOption[] options)
 {
   UnityEditor.EditorGUILayout.IntPopup(property,displayedOptions,optionValues,label,style,options);
@@ -444,6 +445,7 @@ public static System.Enum EnumMaskField( System.Enum enumValue,params UnityEngin
 {
  return  UnityEditor.EditorGUILayout.EnumMaskField(enumValue,options);
 }
+[Obsolete("Check the docs for the usage of the new parameter 'allowSceneObjects'.")]
 public static UnityEngine.Object ObjectField( UnityEngine.Object obj, System.Type objType,params UnityEngine.GUILayoutOption[] options)
 {
  return  UnityEditor.EditorGUILayout.ObjectField(obj,objType,options);
@@ -452,6 +454,7 @@ public static UnityEngine.Object ObjectField( UnityEngine.Object obj, System.Typ
 {
  return  UnityEditor.EditorGUILayout.ObjectField(obj,objType,allowSceneObjects,options);
 }
+[Obsolete("Check the docs for the usage of the new parameter 'allowSceneObjects'.")]
 public static UnityEngine.Object ObjectField( System.String label, UnityEngine.Object obj, System.Type objType,params UnityEngine.GUILayoutOption[] options)
 {
  return  UnityEditor.EditorGUILayout.ObjectField(label,obj,objType,options);
@@ -460,6 +463,7 @@ public static UnityEngine.Object ObjectField( System.String label, UnityEngine.O
 {
  return  UnityEditor.EditorGUILayout.ObjectField(label,obj,objType,allowSceneObjects,options);
 }
+[Obsolete("Check the docs for the usage of the new parameter 'allowSceneObjects'.")]
 public static UnityEngine.Object ObjectField( UnityEngine.GUIContent label, UnityEngine.Object obj, System.Type objType,params UnityEngine.GUILayoutOption[] options)
 {
  return  UnityEditor.EditorGUILayout.ObjectField(label,obj,objType,options);
@@ -706,4 +710,5 @@ public static UnityEngine.Rect GetControlRect( bool hasLabel, float height, Unit
 }
 
 	}
+#pragma warning restore 618
 }

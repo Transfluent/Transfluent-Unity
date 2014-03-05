@@ -1,10 +1,10 @@
 using UnityEngine;
-
+using System;
 //wrapper around unity's gui, except to grab text as quickly as possbile and spit it into an internal db
 //http://docs.unity3d.com/Documentation/ScriptReference/GUI.html
 namespace transfluent.guiwrapper
 {
-
+#pragma warning disable 618
 	public partial class EditorGUI
 	{
 
@@ -504,6 +504,7 @@ public static UnityEngine.Object ObjectField( UnityEngine.Rect position, UnityEn
 {
  return  UnityEditor.EditorGUI.ObjectField(position,obj,objType,allowSceneObjects);
 }
+[Obsolete("Check the docs for the usage of the new parameter 'allowSceneObjects'.")]
 public static UnityEngine.Object ObjectField( UnityEngine.Rect position, UnityEngine.Object obj, System.Type objType)
 {
  return  UnityEditor.EditorGUI.ObjectField(position,obj,objType);
@@ -512,6 +513,7 @@ public static UnityEngine.Object ObjectField( UnityEngine.Rect position, System.
 {
  return  UnityEditor.EditorGUI.ObjectField(position,label,obj,objType,allowSceneObjects);
 }
+[Obsolete("Check the docs for the usage of the new parameter 'allowSceneObjects'.")]
 public static UnityEngine.Object ObjectField( UnityEngine.Rect position, System.String label, UnityEngine.Object obj, System.Type objType)
 {
  return  UnityEditor.EditorGUI.ObjectField(position,label,obj,objType);
@@ -520,6 +522,7 @@ public static UnityEngine.Object ObjectField( UnityEngine.Rect position, UnityEn
 {
  return  UnityEditor.EditorGUI.ObjectField(position,label,obj,objType,allowSceneObjects);
 }
+[Obsolete("Check the docs for the usage of the new parameter 'allowSceneObjects'.")]
 public static UnityEngine.Object ObjectField( UnityEngine.Rect position, UnityEngine.GUIContent label, UnityEngine.Object obj, System.Type objType)
 {
  return  UnityEditor.EditorGUI.ObjectField(position,label,obj,objType);
@@ -754,4 +757,5 @@ public static bool PropertyField( UnityEngine.Rect position, UnityEditor.Seriali
 }
 
 	}
+#pragma warning restore 618
 }

@@ -178,7 +178,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 974352551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f77e80afb1ad14389ad6238e00a8de63, type: 3}
+  m_Script: {fileID: 11500000, guid: 65bd0001b6ace44779d2d3a91f62317b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   textToDisplay: "\u6211\u662F\u4E00\u4E2A\u4E2D\u56FD\u4EBA\u7684\u4E00\u53E5\u3002"

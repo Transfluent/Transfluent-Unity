@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security;
 using transfluent.editor;
 using UnityEditor;
 using UnityEngine;
@@ -23,6 +22,7 @@ namespace transfluent
 			var set = ScriptableObject.CreateInstance<GameTranslationSet>();
 			AssetDatabase.CreateAsset(set, uniqueName);
 			AssetDatabase.SaveAssets();
+
 			return set;
 		}
 

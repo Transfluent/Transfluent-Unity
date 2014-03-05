@@ -1,0 +1,2 @@
+find script location, and use that as a basis for where the other files are — master script configuration?
+

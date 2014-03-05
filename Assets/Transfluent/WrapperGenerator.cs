@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
@@ -68,6 +69,11 @@ namespace transfluent
 			var generator = new WrapperGenerator();
 			var guiFileText = generator.getWrappedFile(typeof(UnityEngine.GUI));
 			Debug.Log(guiFileText);
+
+			FileUtil.DeleteFileOrDirectory("Assets/Transfluent/GUI.cs");
+			File.WriteAllText("Assets/Transfluent/GUI.cs",guiFileText);
+			AssetDatabase.SaveAssets();
+			AssetDatabase.ImportAsset("Assets/Transfluent/GUI.cs", ImportAssetOptions.ForceSynchronousImport);
 		}
 
 		public class MethodRepresentation

@@ -1,63 +1,49 @@
-﻿using System;
 using UnityEngine;
 
-
-
 //wrapper around unity's gui, except to grab text as quickly as possbile and spit it into an internal db
-
 //http://docs.unity3d.com/Documentation/ScriptReference/GUI.html
-#if false
 namespace transfluent
-
 {
-
-
 
 	public partial class GUI
-
 	{
-		System.Void set_skin(UnityEngine.GUISkin value)
-		{
-			UnityEngine.GUI.skin = value;
-			//return UnityEngine.GUI.set_skin(UnityEngine.GUISkin value);
-		}
-		/*
-		 * public static GUISkin skin
-		{
-			get { return UnityEngine.GUI.skin; }
-			set { UnityEngine.GUI.skin = value; }
-		}
-		 * public static Rect ModalWindow(int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, string text)
-		{
-			return UnityEngine.GUI.ModalWindow(id, clientRect, func,text);
-		}
-		 */
-		UnityEngine.Rect ModalWindow(System.Int32 id,UnityEngine.Rect clientRect,UnityEngine.GUI.WindowFunction func,System.String text)
-{
- return UnityEngine.GUI.ModalWindow(id,clientRect, func, text);
+
+ public static UnityEngine.GUISkin skin {
+ get { return UnityEngine.GUI.skin; }
+ set { UnityEngine.GUI.skin = value; }
 }
-	}
-
+ public static UnityEngine.Color color {
+ get { return UnityEngine.GUI.color; }
+ set { UnityEngine.GUI.color = value; }
 }
-
-#endif //false
-using UnityEngine;
-
-
-
-//wrapper around unity's gui, except to grab text as quickly as possbile and spit it into an internal db
-
-//http://docs.unity3d.com/Documentation/ScriptReference/GUI.html
-
-namespace transfluent
-
-{
-
-
-
-	public partial class GUI
-
-	{
+ public static UnityEngine.Color backgroundColor {
+ get { return UnityEngine.GUI.backgroundColor; }
+ set { UnityEngine.GUI.backgroundColor = value; }
+}
+ public static UnityEngine.Color contentColor {
+ get { return UnityEngine.GUI.contentColor; }
+ set { UnityEngine.GUI.contentColor = value; }
+}
+ public static System.Boolean changed {
+ get { return UnityEngine.GUI.changed; }
+ set { UnityEngine.GUI.changed = value; }
+}
+ public static System.Boolean enabled {
+ get { return UnityEngine.GUI.enabled; }
+ set { UnityEngine.GUI.enabled = value; }
+}
+ public static UnityEngine.Matrix4x4 matrix {
+ get { return UnityEngine.GUI.matrix; }
+ set { UnityEngine.GUI.matrix = value; }
+}
+ public static System.String tooltip {
+ get { return UnityEngine.GUI.tooltip; }
+ set { UnityEngine.GUI.tooltip = value; }
+}
+ public static System.Int32 depth {
+ get { return UnityEngine.GUI.depth; }
+ set { UnityEngine.GUI.depth = value; }
+}
 System.Void Label(UnityEngine.Rect position,System.String text)
 {
   UnityEngine.GUI.Label(position,text);
@@ -488,5 +474,4 @@ System.Void UnfocusWindow()
 }
 
 	}
-
 }

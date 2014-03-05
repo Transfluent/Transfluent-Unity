@@ -60,7 +60,9 @@ namespace transfluent
 				if(debug) Debug.Log(functionDef);
 			}
 			string header = string.Format(headerFormat, type.Name);
-			return string.Format("{0}\n{1}\n{2}\n{3}", header, gettersSetters, funcitons, footer);
+			string fullFile = string.Format("{0}\n{1}\n{2}\n{3}", header, gettersSetters, funcitons, footer);
+
+			return fullFile.Replace("\r\n", "\n"); //could do the other way around, but just want the line endings to be the same
 		}
 
 		[MenuItem("Window/Test Generating GUI file")]
@@ -73,7 +75,8 @@ namespace transfluent
 			FileUtil.DeleteFileOrDirectory("Assets/Transfluent/GUI.cs");
 			File.WriteAllText("Assets/Transfluent/GUI.cs",guiFileText);
 			AssetDatabase.SaveAssets();
-			AssetDatabase.ImportAsset("Assets/Transfluent/GUI.cs", ImportAssetOptions.ForceSynchronousImport);
+			AssetDatabase.ImportAsset("Assets/Transfluent/GUI.cs");
+			AssetDatabase.Refresh();
 		}
 
 		public class MethodRepresentation

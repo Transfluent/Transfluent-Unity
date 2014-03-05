@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
@@ -10,65 +11,63 @@ namespace Assets.Transfluent
 {
 	class WrapperGenerator
 	{
-		[MenuItem("Window/Test Generating GUI file")]
-		public void test()
+		const string headerFormat = @"using UnityEngine;
+
+//wrapper around unity's gui, except to grab text as quickly as possbile and spit it into an internal db
+//http://docs.unity3d.com/Documentation/ScriptReference/GUI.html
+namespace transfluent
+{{
+
+	public partial class {0}
+	{{";
+		private const string footer = @"	}
+}";
+		public bool debug = false;
+		public WrapperGenerator(){}
+			
+		public string getWrappedFile(Type type)
 		{
-			Type type = typeof(UnityEngine.GUI);
-			MemberInfo[] members = type.FindMembers(MemberTypes.Property,
-					BindingFlags.Static | BindingFlags.FlattenHierarchy | BindingFlags.SetProperty | BindingFlags.Public, null, null);
+			PropertyInfo[] properties = type.GetProperties(BindingFlags.Static | BindingFlags.FlattenHierarchy | BindingFlags.SetProperty | BindingFlags.GetProperty| BindingFlags.Public);
 
-			foreach(MemberInfo member in members)
+			StringBuilder gettersSetters = new StringBuilder();
+			foreach(PropertyInfo property in properties)
 			{
-				Debug.Log("Member name:" + member.Name);
-			}
+				if (property.CanRead || property.CanWrite)
+				{
+					string name = property.Name;
+					string possibleGetter = property.CanRead ? string.Format("get {{ return UnityEngine.GUI.{0}; }}", name) : "";
+					string possibleSetter = property.CanWrite ? string.Format("set {{ UnityEngine.GUI.{0} = value; }}",name) : "";
 
+					string stringProp = string.Format("\n public static {0} {{ {1} {2} }}", property.Name, possibleGetter, possibleSetter);
+					if(debug) Debug.Log("Prop: " + stringProp);
+					gettersSetters.Append(stringProp);
+				}
+			}
 
 			StringBuilder funcitons = new StringBuilder();
 			MethodInfo[] methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
 			List<MethodInfo> specialMethods = new List<MethodInfo>();
 			foreach(MethodInfo methodInfo in methods)
 			{
-				//skip the getters/setters for now
-				if(methodInfo.IsSpecialName)
+				if(methodInfo.IsSpecialName) //do not add the getters/setters, as those are added another way
 				{
 					specialMethods.Add(methodInfo);
 					continue;
 				}
 				string functionDef = new MethodRepresentation(methodInfo).functionString;
 				funcitons.Append(functionDef);
-				Debug.Log(functionDef);
-				StringBuilder sb = new StringBuilder("name:" + methodInfo.Name + " returns:" + methodInfo.ReturnType);
-				ParameterInfo[] myParameters = methodInfo.GetParameters();
-				sb.Append(" (");
-				//foreach (ParameterInfo paramInfo in myParameters)
-				for(int i = 0; i < myParameters.Length; i++)
-				{
-					ParameterInfo paramInfo = myParameters[i];
-					sb.Append(paramInfo.ParameterType + " " + paramInfo.Name);
-					if(paramInfo.IsOptional)
-					{
-						sb.Append("=" + paramInfo.DefaultValue);
-					}
-					sb.Append(",");
-				}
-				//TODO: remove final comma
-				sb.Append(")");
-				//TODO: default values
-				Debug.Log(sb.ToString());
-				// methodInfo.Name
+				if(debug) Debug.Log(functionDef);
 			}
-			string header = @"using UnityEngine;
+			string header = string.Format(headerFormat, type.Name);
+			return string.Format("{0}\n{1}\n{2}", header, funcitons, footer);
+		}
 
-//wrapper around unity's gui, except to grab text as quickly as possbile and spit it into an internal db
-//http://docs.unity3d.com/Documentation/ScriptReference/GUI.html
-namespace transfluent
-{
-
-	public partial class GUI
-	{";
-			string footer = @"	}
-}";
-			Debug.Log(string.Format("{0}\n{1}\n{2}", header, funcitons, footer));
+		[MenuItem("Window/Test Generating GUI file")]
+		public static void test()
+		{
+			var generator = new WrapperGenerator();
+			var guiFileText = generator.getWrappedFile(typeof(UnityEngine.GUI));
+			Debug.Log(guiFileText);
 		}
 
 		public class MethodRepresentation

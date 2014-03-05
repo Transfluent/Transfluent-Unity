@@ -1,10 +1,18 @@
-﻿using System.Collections.Generic;
+﻿#define transfluent
+using System.Collections.Generic;
 using transfluent;
 using UnityEngine;
+#if transfluent
+using GUI = transfluent.guiwrapper.GUI;
+using GUILayout = transfluent.guiwrapper.GUILayout; 
+#else
 using GUI = UnityEngine.GUI;
 using GUILayout = UnityEngine.GUILayout;
+#endif
+/*
 
-public class InternationalTextDisplay : MonoBehaviour
+*/
+public class InternationalTextDisplayWithTransfluent : MonoBehaviour
 {
 	private readonly List<string> knownStrings = new List<string>();
 	[SerializeField] private string textToDisplay = "我是一个中国人的一句。";

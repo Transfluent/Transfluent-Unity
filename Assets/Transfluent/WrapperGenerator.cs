@@ -17,7 +17,7 @@ namespace Assets.Transfluent
 
 //wrapper around unity's gui, except to grab text as quickly as possbile and spit it into an internal db
 //http://docs.unity3d.com/Documentation/ScriptReference/GUI.html
-namespace transfluent
+namespace transfluent.guiwrapper
 {{
 
 	public partial class {0}
@@ -83,11 +83,11 @@ namespace transfluent
 			var guiFileText = generator.getWrappedFile(type);
 			Debug.Log(guiFileText);
 
-			//FileUtil.DeleteFileOrDirectory(file);
-			//File.WriteAllText(file, guiFileText);
-			//AssetDatabase.SaveAssets();
-			//AssetDatabase.ImportAsset(file);
-			//AssetDatabase.Refresh();
+			FileUtil.DeleteFileOrDirectory(file);
+			File.WriteAllText(file, guiFileText);
+			AssetDatabase.SaveAssets();
+			AssetDatabase.ImportAsset(file);
+			AssetDatabase.Refresh();
 		}
 
 		public class MethodRepresentation
@@ -152,7 +152,6 @@ namespace transfluent
 					}
 				}
 				string optionallyReturnTheValue = returnType == typeof(void) ? "" : "return ";
-				Debug.Log("Forwarding to:"+ typeThatWeAreForwardingTo);
 				string functionFormatted = string.Format("public static {0} {1}({2})\n{{\n {4} {5}.{1}({3});\n}}\n",
 					cleanType(returnType), methodName, paramBuilder, valuesToPassToRealFunction, optionallyReturnTheValue, typeThatWeAreForwardingTo);
 				return functionFormatted;

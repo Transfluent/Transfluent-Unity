@@ -93,8 +93,8 @@ namespace transfluent.guiwrapper
 		{
 			generateSourceFromType("Assets/Transfluent/GUI.cs", typeof(UnityEngine.GUI));
 			generateSourceFromType("Assets/Transfluent/GUILayout.cs", typeof(UnityEngine.GUILayout));
-			generateSourceFromType("Assets/Transfluent/EditorGUI.cs", typeof(UnityEditor.EditorGUI));
-			generateSourceFromType("Assets/Transfluent/EditorGUILayout.cs", typeof(UnityEditor.EditorGUILayout));
+			generateSourceFromType("Assets/Transfluent/Editor/EditorGUI.cs", typeof(UnityEditor.EditorGUI));
+			generateSourceFromType("Assets/Transfluent/Editor/EditorGUILayout.cs", typeof(UnityEditor.EditorGUILayout));
 		}
 
 		static void generateSourceFromType(string file, Type type)

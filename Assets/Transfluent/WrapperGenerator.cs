@@ -38,7 +38,7 @@ namespace transfluent
 					string possibleGetter = property.CanRead ? string.Format("get {{ return UnityEngine.GUI.{0}; }}", name) : "";
 					string possibleSetter = property.CanWrite ? string.Format("set {{ UnityEngine.GUI.{0} = value; }}",name) : "";
 
-					string stringProp = string.Format("\n public static {0} {{ {1} {2} }}", property.Name, possibleGetter, possibleSetter);
+					string stringProp = string.Format("\n public static {0} {1} {{\n {2}\n {3}\n}}",property.PropertyType,  property.Name, possibleGetter, possibleSetter);
 					if(debug) Debug.Log("Prop: " + stringProp);
 					gettersSetters.Append(stringProp);
 				}
@@ -59,7 +59,7 @@ namespace transfluent
 				if(debug) Debug.Log(functionDef);
 			}
 			string header = string.Format(headerFormat, type.Name);
-			return string.Format("{0}\n{1}\n{2}", header, funcitons, footer);
+			return string.Format("{0}\n{1}\n{2}\n{3}", header, gettersSetters, funcitons, footer);
 		}
 
 		[MenuItem("Window/Test Generating GUI file")]

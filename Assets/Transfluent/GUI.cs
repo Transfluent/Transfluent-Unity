@@ -102,197 +102,377 @@ namespace transfluent
 			UnityEngine.GUI.BeginGroup(position, content, style);
 		}
 
-		private static Vector2 BeginScrollView(Rect position, Vector2 scrollPosition, Rect viewRect)
+		public static Vector2 BeginScrollView(Rect position, Vector2 scrollPosition, Rect viewRect)
 		{
 			return UnityEngine.GUI.BeginScrollView(position, scrollPosition, viewRect);
 		}
 
-		private static Vector2 BeginScrollView(Rect position, Vector2 scrollPosition, Rect viewRect, bool alwaysShowHorizontal,
+		public static Vector2 BeginScrollView(Rect position, Vector2 scrollPosition, Rect viewRect, bool alwaysShowHorizontal,
 			bool alwaysShowVertical)
 		{
 			return UnityEngine.GUI.BeginScrollView(position, scrollPosition, viewRect, alwaysShowHorizontal, alwaysShowVertical);
 		}
 
-		private static Vector2 BeginScrollView(Rect position, Vector2 scrollPosition, Rect viewRect,
+		public static Vector2 BeginScrollView(Rect position, Vector2 scrollPosition, Rect viewRect,
 			GUIStyle horizontalScrollbar, GUIStyle verticalScrollbar)
 		{
 			return UnityEngine.GUI.BeginScrollView(position, scrollPosition, viewRect, horizontalScrollbar, verticalScrollbar);
 		}
 
-		static Vector2 BeginScrollView(Rect position, Vector2 scrollPosition, Rect viewRect, bool alwaysShowHorizontal,
+		public static Vector2 BeginScrollView(Rect position, Vector2 scrollPosition, Rect viewRect, bool alwaysShowHorizontal,
 			bool alwaysShowVertical, GUIStyle horizontalScrollbar, GUIStyle verticalScrollbar)
 		{
 			return UnityEngine.GUI.BeginScrollView(position, scrollPosition, viewRect, alwaysShowHorizontal, alwaysShowVertical,
 				horizontalScrollbar, verticalScrollbar);
 		}
 
-		static void Box(Rect position, string text)
+		public static void Box(Rect position, string text)
 		{
 			UnityEngine.GUI.Box(position,text);
 		}
 
-		static void Box(Rect position, Texture image)
+		public static void Box(Rect position, Texture image)
 		{
 			UnityEngine.GUI.Box(position, image);
 		}
 
-		static void Box(Rect position, GUIContent content)
+		public static void Box(Rect position, GUIContent content)
 		{
 			UnityEngine.GUI.Box(position, content);
 		}
 
-		static void Box(Rect position, string text, GUIStyle style)
+		public static void Box(Rect position, string text, GUIStyle style)
 		{
 			UnityEngine.GUI.Box(position, text,style);
 		}
 
-		static void Box(Rect position, Texture image, GUIStyle style)
+		public static void Box(Rect position, Texture image, GUIStyle style)
 		{
 			UnityEngine.GUI.Box(position, image, style);
 		}
 
-		static void Box(Rect position, GUIContent content, GUIStyle style)
+		public static void Box(Rect position, GUIContent content, GUIStyle style)
 		{
 			UnityEngine.GUI.Box(position, content, style);
 		}
 
-		static void BringWindowToBack(int windowID)
+		public static void BringWindowToBack(int windowID)
 		{
 			UnityEngine.GUI.BringWindowToBack(windowID);
 		}
 
-		static void BringWindowToFront(int windowID)
+		public static void BringWindowToFront(int windowID)
 		{
 			UnityEngine.GUI.BringWindowToFront(windowID);
 		}
 
-		static bool Button(Rect position, string text)
+		public static bool Button(Rect position, string text)
 		{
 			return UnityEngine.GUI.Button(position, text);
 		}
 
-		static bool Button(Rect position, Texture image)
+		public static bool Button(Rect position, Texture image)
 		{
 			return UnityEngine.GUI.Button(position, image);
 		}
 
-		static bool Button(Rect position, GUIContent content)
+		public static bool Button(Rect position, GUIContent content)
 		{
 			return UnityEngine.GUI.Button(position, content);
 		}
 
-		static bool Button(Rect position, string text, GUIStyle style)
+		public static bool Button(Rect position, string text, GUIStyle style)
 		{
 			return UnityEngine.GUI.Button(position, text,style);
 		}
 
-		static bool Button(Rect position, Texture image, GUIStyle style)
+		public static bool Button(Rect position, Texture image, GUIStyle style)
 		{
 			return UnityEngine.GUI.Button(position, image,style);
 		}
 
-		static bool Button(Rect position, GUIContent content, GUIStyle style)
+		public static bool Button(Rect position, GUIContent content, GUIStyle style)
 		{
 			return UnityEngine.GUI.Button(position, content, style);
 		}
 
-		static void DragWindow(Rect position)
+		public static void DragWindow(Rect position)
 		{
 			UnityEngine.GUI.DragWindow(position);
 		}
 
-		static void DrawTexture(Rect position, Texture image, ScaleMode scaleMode = ScaleMode.StretchToFill,
+		public static void DrawTexture(Rect position, Texture image, ScaleMode scaleMode = ScaleMode.StretchToFill,
 			bool alphaBlend = true, float imageAspect = 0)
 		{
 			UnityEngine.GUI.DrawTexture(position,image,scaleMode,alphaBlend,imageAspect);
 		}
 
-		static void DrawTextureWithTexCoords(Rect position, Texture image, Rect texCoords, bool alphaBlend = true)
+		public static void DrawTextureWithTexCoords(Rect position, Texture image, Rect texCoords, bool alphaBlend = true)
 		{
 			UnityEngine.GUI.DrawTextureWithTexCoords(position, image, texCoords, alphaBlend);
 		}
 
-		static void EndGroup()
+		public static void EndGroup()
 		{
 			UnityEngine.GUI.EndGroup();
 		}
 
-		static void EndScrollView()
+		public static void EndScrollView()
 		{
 			UnityEngine.GUI.EndScrollView();
 		}
 
-		static void EndScrollView(bool handleScrollWheel)
+		public static void EndScrollView(bool handleScrollWheel)
 		{
 			UnityEngine.GUI.EndScrollView(handleScrollWheel);
 		}
 
-		private static void FocusControl(string name)
+		public static void FocusControl(string name)
 		{
 			UnityEngine.GUI.FocusControl(name);
 		}
 
-		static void FocusWindow(int windowID)
+		public static void FocusWindow(int windowID)
 		{
 			UnityEngine.GUI.FocusWindow(windowID);
 		}
 
-		static string GetNameOfFocusedControl()
+		public static string GetNameOfFocusedControl()
 		{
 			return UnityEngine.GUI.GetNameOfFocusedControl();
 		}
 
-		static float HorizontalScrollbar(Rect position, float value, float size, float leftValue, float rightValue)
+		public static float HorizontalScrollbar(Rect position, float value, float size, float leftValue, float rightValue)
 		{
 			return UnityEngine.GUI.HorizontalScrollbar(position, value, size, leftValue, rightValue);
 		}
 
-		static float HorizontalScrollbar(Rect position, float value, float size, float leftValue, float rightValue,
+		public static float HorizontalScrollbar(Rect position, float value, float size, float leftValue, float rightValue,
 			GUIStyle style)
 		{
 			return UnityEngine.GUI.HorizontalScrollbar(position, value, size, leftValue, rightValue,style);
 		}
 
-		static float HorizontalSlider(Rect position, float value, float leftValue, float rightValue)
+		public static float HorizontalSlider(Rect position, float value, float leftValue, float rightValue)
 		{
 			return UnityEngine.GUI.HorizontalSlider(position, value, leftValue, rightValue);
 		}
 
-		static float HorizontalSlider(Rect position, float value, float leftValue, float rightValue, GUIStyle slider,
+		public static float HorizontalSlider(Rect position, float value, float leftValue, float rightValue, GUIStyle slider,
 			GUIStyle thumb)
 		{
 			return UnityEngine.GUI.HorizontalSlider(position, value, leftValue, rightValue, slider, thumb);
 		}
 
-		static void Label(Rect position, string text)
+		public static void Label(Rect position, string text)
 		{
 			UnityEngine.GUI.Label(position, text);
 		}
 
-		static void Label(Rect position, Texture image)
+		public static void Label(Rect position, Texture image)
 		{
 			UnityEngine.GUI.Label(position, image);
 		}
 
-		static void Label(Rect position, GUIContent content)
+		public static void Label(Rect position, GUIContent content)
 		{
 			UnityEngine.GUI.Label(position, content);
 		}
 
-		static void Label(Rect position, string text, GUIStyle style)
+		public static void Label(Rect position, string text, GUIStyle style)
 		{
 			UnityEngine.GUI.Label(position, text, style);
 		}
 
-		static void Label(Rect position, Texture image, GUIStyle style)
+		public static void Label(Rect position, Texture image, GUIStyle style)
 		{
 			UnityEngine.GUI.Label(position, image, style);
 		}
 
-		static void Label(Rect position, GUIContent content, GUIStyle style)
+		public static void Label(Rect position, GUIContent content, GUIStyle style)
 		{
 			UnityEngine.GUI.Label(position, content, style);
 		}
 
+		public static Rect ModalWindow(int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, string text)
+		{
+			return UnityEngine.GUI.ModalWindow(id, clientRect, func,text);
+		}
+
+		public static Rect ModalWindow(int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, Texture image)
+		{
+			return UnityEngine.GUI.ModalWindow(id, clientRect, func, image);
+		}
+
+		public static Rect ModalWindow(int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, GUIContent content)
+		{
+			return UnityEngine.GUI.ModalWindow(id, clientRect, func, content);
+		}
+
+		public static Rect ModalWindow(int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, string text, GUIStyle style)
+		{
+			return UnityEngine.GUI.ModalWindow(id, clientRect, func, text,style);
+		}
+
+		public static Rect ModalWindow(int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, Texture image, GUIStyle style)
+		{
+			return UnityEngine.GUI.ModalWindow(id, clientRect, func, image, style);
+		}
+
+		public static Rect ModalWindow(int id, Rect clientRect, UnityEngine.GUI.WindowFunction func, GUIContent content,
+			GUIStyle style)
+		{
+			return UnityEngine.GUI.ModalWindow(id, clientRect, func, content, style);
+		}
+
+		public static string PasswordField(Rect position, string password, char maskChar)
+		{
+			return UnityEngine.GUI.PasswordField(position, password, maskChar);
+		}
+
+		public static string PasswordField(Rect position, string password, char maskChar, int maxLength)
+		{
+			return UnityEngine.GUI.PasswordField(position, password, maskChar,maxLength);
+		}
+		public static string PasswordField(Rect position, string password, char maskChar, GUIStyle style)
+		{
+			return UnityEngine.GUI.PasswordField(position, password, maskChar, style);
+		}
+		public static string PasswordField(Rect position, string password, char maskChar, int maxLength, GUIStyle style)
+		{
+			return UnityEngine.GUI.PasswordField(position, password, maskChar, maxLength, style);
+		}
+
+		public static bool RepeatButton(Rect position, string text)
+		{
+			return UnityEngine.GUI.RepeatButton(position, text);
+		}
+		public static bool RepeatButton(Rect position, Texture image)
+		{
+			return UnityEngine.GUI.RepeatButton(position, image);
+		}
+		public static bool RepeatButton(Rect position, GUIContent content)
+		{
+			return UnityEngine.GUI.RepeatButton(position, content);
+		}
+		public static bool RepeatButton(Rect position, string text, GUIStyle style)
+		{
+			return UnityEngine.GUI.RepeatButton(position, text, style);
+		}
+		public static bool RepeatButton(Rect position, Texture image, GUIStyle style)
+		{
+			return UnityEngine.GUI.RepeatButton(position, image,style);
+		}
+		public static bool RepeatButton(Rect position, GUIContent content, GUIStyle style)
+		{
+			return UnityEngine.GUI.RepeatButton(position, content,style);
+		}
+		public static void ScrollTo(Rect position)
+		{
+			UnityEngine.GUI.ScrollTo(position);
+		}
+
+		public static int SelectionGrid(Rect position, int selected, string[] texts, int xCount)
+		{
+			return UnityEngine.GUI.SelectionGrid(position, selected, texts, xCount);
+		}
+
+		public static int SelectionGrid(Rect position, int selected, Texture[] images, int xCount)
+		{
+			return UnityEngine.GUI.SelectionGrid(position, selected, images, xCount);
+		}
+
+		public static int SelectionGrid(Rect position, int selected, GUIContent[] content, int xCount)
+		{
+			return UnityEngine.GUI.SelectionGrid(position, selected, content, xCount);
+		}
+
+		public static int SelectionGrid(Rect position, int selected, string[] texts, int xCount, GUIStyle style)
+		{
+			return UnityEngine.GUI.SelectionGrid(position, selected, texts, xCount,style);
+		}
+
+		public static int SelectionGrid(Rect position, int selected, Texture[] images, int xCount, GUIStyle style)
+		{
+			return UnityEngine.GUI.SelectionGrid(position, selected, images, xCount,style);
+		}
+
+		public static int SelectionGrid(Rect position, int selected, GUIContent[] contents, int xCount, GUIStyle style)
+		{
+			return UnityEngine.GUI.SelectionGrid(position, selected, contents, xCount,style);
+		}
+
+		public static void SetNextControlName(string name)
+		{
+			UnityEngine.GUI.SetNextControlName(name);
+		}
+
+		public static string TextArea(Rect position, string text)
+		{
+			return UnityEngine.GUI.TextArea(position, text);
+		}
+		public static string TextArea(Rect position, string text, int maxLength)
+		{
+			return UnityEngine.GUI.TextArea(position, text,maxLength);
+		}
+		public static string TextArea(Rect position, string text, GUIStyle style)
+		{
+			return UnityEngine.GUI.TextArea(position, text,style);
+		}
+
+		public static string TextArea(Rect position, string text, int maxLength, GUIStyle style)
+		{
+			return UnityEngine.GUI.TextArea(position, text,maxLength,style);
+		}
+
+		public static string TextField(Rect position, string text)
+		{
+			return UnityEngine.GUI.TextField(position, text);
+		}
+
+		public static string TextField(Rect position, string text, int maxLength)
+		{
+			return UnityEngine.GUI.TextField(position, text,maxLength);
+		}
+
+		public static string TextField(Rect position, string text, GUIStyle style)
+		{
+			return UnityEngine.GUI.TextField(position, text, style);
+		}
+
+		public static string TextField(Rect position, string text, int maxLength, GUIStyle style)
+		{
+			return UnityEngine.GUI.TextField(position, text, maxLength, style);
+		}
+
+		public static bool Toggle(Rect position, bool value, string text)
+		{
+			return UnityEngine.GUI.Toggle(position, value, text);
+		}
+
+		public static bool Toggle(Rect position, bool value, Texture image)
+		{
+			return UnityEngine.GUI.Toggle(position, value, image);
+		}
+
+		public static bool Toggle(Rect position, bool value, GUIContent content)
+		{
+			return UnityEngine.GUI.Toggle(position, value, content);
+		}
+
+		public static bool Toggle(Rect position, bool value, string text, GUIStyle style)
+		{
+			return UnityEngine.GUI.Toggle(position, value, text,style);
+		}
+
+		public static bool Toggle(Rect position, bool value, Texture image, GUIStyle style)
+		{
+			return UnityEngine.GUI.Toggle(position, value, image, style);
+		}
+
+		public static bool Toggle(Rect position, bool value, GUIContent content, GUIStyle style)
+		{
+			return UnityEngine.GUI.Toggle(position, value, content, style);
+		}
 	}
 }

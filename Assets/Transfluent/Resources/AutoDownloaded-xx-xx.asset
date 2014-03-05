@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36b78a28da3d648a29fac727c8d4a5f2, type: 3}
+  m_Name: AutoDownloaded-xx-xx
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - text_id: HELLO_WORLD_TEXT_KEY
+    group_id: 
+    language:
+      name: Pseudo language
+      code: xx-xx
+      id: 500
+    text: 1099551.0txet elpmas si siht
+  - text_id: UNITY_TEST_TRANSLATION_KEY
+    group_id: 
+    language:
+      name: Pseudo language
+      code: xx-xx
+      id: 500
+    text: 41875530.0txet tset si siht
+  - text_id: TEST_CREATION_OF_A_KEY
+    group_id: 
+    language:
+      name: Pseudo language
+      code: xx-xx
+      id: 500
+    text: rotide morf etaerc tset
+  - text_id: TEST_CREATION_OF_A_KEY2
+    group_id: 
+    language:
+      name: Pseudo language
+      code: xx-xx
+      id: 500
+    text: detaerc osla saw siht
+  - text_id: TEST_TEXT
+    group_id: 
+    language:
+      name: Pseudo language
+      code: xx-xx
+      id: 500
+    text: DLROW OLLEH
+  - text_id: sprechen sie deutsch
+    group_id: TEST
+    language:
+      name: Pseudo language
+      code: xx-xx
+      id: 500
+    text: ?gniyas uoy era tahW

@@ -7,6 +7,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
+using UnityTest;
 
 namespace Assets.Transfluent
 {
@@ -28,16 +29,19 @@ namespace transfluent
 			
 		public string getWrappedFile(Type type)
 		{
+			string forwardToType = type.FullName;// "UnityEngine."+ type.Name;
+			forwardToType = forwardToType.Replace("+", ".");//handle inner classes
 			PropertyInfo[] properties = type.GetProperties(BindingFlags.Static | BindingFlags.FlattenHierarchy | BindingFlags.SetProperty | BindingFlags.GetProperty| BindingFlags.Public);
 
 			StringBuilder gettersSetters = new StringBuilder();
 			foreach(PropertyInfo property in properties)
 			{
+				//string propForward = "UnityEngine." + forwardToType;//not sue why the method info works and this doesn'
 				if (property.CanRead || property.CanWrite)
 				{
 					string name = property.Name;
-					string possibleGetter = property.CanRead ? string.Format("get {{ return UnityEngine.GUI.{0}; }}", name) : "";
-					string possibleSetter = property.CanWrite ? string.Format("set {{ UnityEngine.GUI.{0} = value; }}",name) : "";
+					string possibleGetter = property.CanRead ? string.Format("get {{ return {0}.{1}; }}", forwardToType, name) : "";
+					string possibleSetter = property.CanWrite ? string.Format("set {{ {0}.{1} = value; }}", forwardToType,name) : "";
 
 					string stringProp = string.Format("\n public static {0} {1} {{\n {2}\n {3}\n}}",property.PropertyType,  property.Name, possibleGetter, possibleSetter);
 					if(debug) Debug.Log("Prop: " + stringProp);
@@ -55,7 +59,8 @@ namespace transfluent
 					specialMethods.Add(methodInfo);
 					continue;
 				}
-				string functionDef = new MethodRepresentation(methodInfo).functionString;
+				
+				string functionDef = new MethodRepresentation(methodInfo,forwardToType).functionString;
 				funcitons.Append(functionDef);
 				if(debug) Debug.Log(functionDef);
 			}
@@ -68,15 +73,21 @@ namespace transfluent
 		[MenuItem("Window/Test Generating GUI file")]
 		public static void test()
 		{
+			generateSourceFromType("Assets/Transfluent/GUI.cs", typeof(UnityEngine.GUI));
+			generateSourceFromType("Assets/Transfluent/GUILayout.cs", typeof(UnityEngine.GUILayout));
+		}
+
+		static void generateSourceFromType(string file, Type type)
+		{
 			var generator = new WrapperGenerator();
-			var guiFileText = generator.getWrappedFile(typeof(UnityEngine.GUI));
+			var guiFileText = generator.getWrappedFile(type);
 			Debug.Log(guiFileText);
 
-			FileUtil.DeleteFileOrDirectory("Assets/Transfluent/GUI.cs");
-			File.WriteAllText("Assets/Transfluent/GUI.cs",guiFileText);
-			AssetDatabase.SaveAssets();
-			AssetDatabase.ImportAsset("Assets/Transfluent/GUI.cs");
-			AssetDatabase.Refresh();
+			//FileUtil.DeleteFileOrDirectory(file);
+			//File.WriteAllText(file, guiFileText);
+			//AssetDatabase.SaveAssets();
+			//AssetDatabase.ImportAsset(file);
+			//AssetDatabase.Refresh();
 		}
 
 		public class MethodRepresentation
@@ -90,13 +101,18 @@ namespace transfluent
 			}
 
 			public string functionString;
+			string typeThatWeAreForwardingTo;
 
-			public MethodRepresentation(MethodInfo methodInfo)
+			public MethodRepresentation(MethodInfo methodInfo,string unitysTargetType)
 			{
+				typeThatWeAreForwardingTo = unitysTargetType;
+
 				List<ParamWrapped> parameters = new List<ParamWrapped>();
 				StringBuilder sb = new StringBuilder("name:" + methodInfo.Name + " returns:" + methodInfo.ReturnType);
 				ParameterInfo[] myParameters = methodInfo.GetParameters();
 				sb.Append(" (");
+
+				//methodInfo.op
 				//foreach (ParameterInfo paramInfo in myParameters)
 				for(int i = 0; i < myParameters.Length; i++)
 				{
@@ -136,8 +152,9 @@ namespace transfluent
 					}
 				}
 				string optionallyReturnTheValue = returnType == typeof(void) ? "" : "return ";
-				string functionFormatted = string.Format("{0} {1}({2})\n{{\n {4} UnityEngine.GUI.{1}({3});\n}}\n",
-					cleanType(returnType), methodName, paramBuilder, valuesToPassToRealFunction, optionallyReturnTheValue);
+				Debug.Log("Forwarding to:"+ typeThatWeAreForwardingTo);
+				string functionFormatted = string.Format("public static {0} {1}({2})\n{{\n {4} {5}.{1}({3});\n}}\n",
+					cleanType(returnType), methodName, paramBuilder, valuesToPassToRealFunction, optionallyReturnTheValue, typeThatWeAreForwardingTo);
 				return functionFormatted;
 			}
 			string cleanType(Type type)

@@ -26,11 +26,28 @@ namespace transfluent.guiwrapper
 }";
 		public bool debug = false;
 		public WrapperGenerator(){}
-			
+
+		[MenuItem("Window/TypeTest")]
+		public static void typeTest()
+		{
+			Debug.Log(typeof(bool));
+		}
+		//The primitive types are Boolean, Byte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64, IntPtr, UIntPtr, Char, Double, and Single.
+		private static Dictionary<Type, string> objectToPrimitiveNameMap = new Dictionary<Type, string>()
+		{
+			{typeof(bool),"bool"},
+			{typeof(int),"int"},
+			{typeof(float),"float"},
+			{typeof(byte),"byte"},
+			{typeof(double),"double"},
+			{typeof(char),"char"},
+			{typeof(void),"void"},
+		};
+
 		public string getWrappedFile(Type type)
 		{
 			string forwardToType = type.FullName;// "UnityEngine."+ type.Name;
-			forwardToType = forwardToType.Replace("+", ".");//handle inner classes
+			forwardToType = forwardToType.Replace("+", ".");//handle inner classes per http://msdn.microsoft.com/en-us/library/w3f99sx1(v=vs.110).aspx
 			PropertyInfo[] properties = type.GetProperties(BindingFlags.Static | BindingFlags.FlattenHierarchy | BindingFlags.SetProperty | BindingFlags.GetProperty| BindingFlags.Public);
 
 			StringBuilder gettersSetters = new StringBuilder();
@@ -66,7 +83,8 @@ namespace transfluent.guiwrapper
 			}
 			string header = string.Format(headerFormat, type.Name);
 			string fullFile = string.Format("{0}\n{1}\n{2}\n{3}", header, gettersSetters, funcitons, footer);
-
+			fullFile = fullFile.Replace("System.Single&", "float");  //ugh
+			fullFile = fullFile.Replace("System.Void", "void");
 			return fullFile.Replace("\r\n", "\n"); //could do the other way around, but just want the line endings to be the same
 		}
 
@@ -75,13 +93,16 @@ namespace transfluent.guiwrapper
 		{
 			generateSourceFromType("Assets/Transfluent/GUI.cs", typeof(UnityEngine.GUI));
 			generateSourceFromType("Assets/Transfluent/GUILayout.cs", typeof(UnityEngine.GUILayout));
+			generateSourceFromType("Assets/Transfluent/EditorGUI.cs", typeof(UnityEditor.EditorGUI));
+			generateSourceFromType("Assets/Transfluent/EditorGUILayout.cs", typeof(UnityEditor.EditorGUILayout));
 		}
 
 		static void generateSourceFromType(string file, Type type)
 		{
 			var generator = new WrapperGenerator();
 			var guiFileText = generator.getWrappedFile(type);
-			Debug.Log(guiFileText);
+
+			//Debug.Log(guiFileText);
 
 			FileUtil.DeleteFileOrDirectory(file);
 			File.WriteAllText(file, guiFileText);
@@ -98,6 +119,8 @@ namespace transfluent.guiwrapper
 				public string name;
 				public bool isOptional;
 				public string defaultValue;
+				public bool isParams;
+				public bool isRef;
 			}
 
 			public string functionString;
@@ -124,8 +147,11 @@ namespace transfluent.guiwrapper
 						defaultValue = paramInfo.DefaultValue.ToString(),
 						isOptional = paramInfo.IsOptional,
 						name = paramInfo.Name,
-						type = paramInfo.ParameterType
+						type = paramInfo.ParameterType,
+						isParams = paramInfo.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0, //http://stackoverflow.com/questions/627656/determining-if-a-parameter-uses-params-using-reflection-in-c
+						isRef = paramInfo.ParameterType.IsByRef
 					};
+					
 					parameters.Add(toAdd);
 				}
 				//TODO: ensure default values are handled appropriately
@@ -138,8 +164,14 @@ namespace transfluent.guiwrapper
 				for(int i = 0; i < parameters.Length; i++)
 				{
 					ParamWrapped paramInfo = parameters[i];
-					paramBuilder.Append(string.Format("{0} {1}", cleanType(paramInfo.type), paramInfo.name));
-					valuesToPassToRealFunction.Append(paramInfo.name);
+					string specialModifierString = "";
+					if (paramInfo.isRef)
+						specialModifierString = "ref";
+					if (paramInfo.isParams)
+						specialModifierString = "params";
+					paramBuilder.Append(string.Format("{0} {1} {2}",specialModifierString, cleanType(paramInfo.type), paramInfo.name));
+
+					valuesToPassToRealFunction.Append(paramInfo.isRef ? "ref " + paramInfo.name : paramInfo.name);
 
 					if(paramInfo.isOptional)
 					{
@@ -158,6 +190,29 @@ namespace transfluent.guiwrapper
 			}
 			string cleanType(Type type)
 			{
+				if (type.IsByRef)
+				{
+					if(type.Name == "Single&")
+					{
+						return objectToPrimitiveNameMap[typeof(float)];
+					}
+					Debug.LogWarning("Likely missing a reference type:"+type.Name);
+				}
+				if (type.IsPrimitive)
+				{
+					//Debug.Log("GETTING TYPE:"+type.Name);
+					try
+					{
+						return objectToPrimitiveNameMap[type];
+					}
+					catch(Exception e)
+					{
+						throw new Exception("Tried looking up an unmapped primitive of type:"+type + " ",e);
+					}
+					
+					
+				}
+					
 				return type.FullName.Replace("+", ".");
 			}
 		}

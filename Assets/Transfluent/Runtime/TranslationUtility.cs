@@ -127,10 +127,7 @@ namespace transfluent
 			return set; 
 		}
 
-
 	}
-
-	
 
 	//NOTE: this is using the source text as the text key itself
 	public class TransfluentUtilityInstance

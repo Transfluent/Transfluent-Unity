@@ -8,35 +8,16 @@ namespace transfluent
 {
 	class GameTimeWWW
 	{
-		private GameTimeWWWMonobehaviour routineRunner;
-		public GameTimeWWW()
-		{
-			routineRunner = GameObject.FindObjectOfType<GameTimeWWWMonobehaviour>();
-			if(routineRunner == null)
-			{
-				GameObject go = new GameObject("serviceRunner");
-				routineRunner = go.AddComponent<GameTimeWWWMonobehaviour>();
-			}
-		}
-
+		private IRoutineRunner runner = new RoutineRuner();
+		
 		public void startRoutine(IEnumerator routine)
 		{
-			routineRunner.StartCoroutine(routine);
+			runner.runRoutine(routine);
 		}
 
-		void webRequest(ITransfluentParameters call, Action<WebServiceReturnStatus> onStatusDone)
-		{
-			GotstatusUpdate wrappedReturn = status =>
-			{
-				if (onStatusDone != null)
-					onStatusDone(status);
-				return null;
-			};
-			routineRunner.StartCoroutine(doWebRequest(call, wrappedReturn));
-		}
 		public void webRequest(ITransfluentParameters call, GotstatusUpdate onStatusDone)
 		{
-			routineRunner.StartCoroutine(doWebRequest(call, onStatusDone));
+			runner.runRoutine(doWebRequest(call, onStatusDone));
 		}
 		public delegate IEnumerator GotstatusUpdate(WebServiceReturnStatus status);
 
@@ -60,13 +41,9 @@ namespace transfluent
 			
 			if (onStatusDone != null)
 			{
-				routineRunner.StartCoroutine(onStatusDone(status));
+				runner.runRoutine(onStatusDone(status));
 			}
 		}
 	}
 
-	class GameTimeWWWMonobehaviour : MonoBehaviour
-	{
-		
-	}
 }

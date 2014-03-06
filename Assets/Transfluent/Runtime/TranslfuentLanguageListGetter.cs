@@ -52,25 +52,23 @@ public class TranslfuentLanguageListGetter
 		}
 	}
 
+	private GameTimeWWW www;
 	private void getLanguageListForSO(LanguageListSO so)
 	{
+		if (www == null)
+		{
+			www = new GameTimeWWW();
+		}
 		if (webRequest == null)
 		{
-			var www = new GameTimeWWW();
-			GameTimeWWW.GotstatusUpdate statusUpdate = gotResultOfLanguageList;
-			www.webRequest(webRequest, statusUpdate);
+			webRequest = new RequestAllLanguages();
+			
+			www.webRequest(webRequest, gotResultOfLanguageList);
 		}
 	}
 
 	private IEnumerator gotResultOfLanguageList(WebServiceReturnStatus status)
 	{
-		//someone alread set it
-		if (_languageList.list != null)
-		{
-			Debug.LogError("Timing error on transfluentLanguageListGetter");	
-			doReturnCall();
-			yield break;
-		}
 		Debug.Log("STATUS TEXT:" + status.text);
 		if (string.IsNullOrEmpty(status.text))
 		{

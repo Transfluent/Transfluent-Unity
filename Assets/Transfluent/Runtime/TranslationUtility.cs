@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using Pathfinding.Serialization.JsonFx;
 using UnityEditor;
 using UnityEngine;
@@ -111,11 +110,11 @@ namespace transfluent
 	public class TrnaslationSetGetter
 	{
 		private const string basePath = "Assets/Transfluent/Resources/";
-		private const string fileName = "UnknownTranslations";
+		private const string fileName = "UnknownTranslations"; 
 
 		public GameTranslationSet getMissingSet(int sourceLanguageID,int destinationLanguageID)
 		{
-			string missingSetList = string.Format("{0}{1}-fromid_{2}-toid_{3}", basePath, fileName, sourceLanguageID, destinationLanguageID);
+			string missingSetList = string.Format("{0}{1}-fromid_{2}-toid_{3}.asset", basePath, fileName, sourceLanguageID, destinationLanguageID);
 			Debug.Log("Creating GameTranslationSet " + missingSetList);
 			GameTranslationSet set = AssetDatabase.LoadAssetAtPath(missingSetList, typeof(GameTranslationSet)) as GameTranslationSet;
 			if(set != null)

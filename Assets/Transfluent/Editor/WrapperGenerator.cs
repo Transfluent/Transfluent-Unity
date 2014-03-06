@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
-using UnityTest;
 
 namespace Assets.Transfluent
 {
-	class WrapperGenerator
+	internal class WrapperGenerator
 	{
-		const string headerFormat = @"using UnityEngine;
+		private const string headerFormat = @"using UnityEngine;
 using System;
 //wrapper around unity's gui, except to grab text as quickly as possbile and spit it into an internal db
 //http://docs.unity3d.com/Documentation/ScriptReference/GUI.html
@@ -25,67 +22,73 @@ namespace transfluent.guiwrapper
 		private const string footer = @"	}
 #pragma warning restore 618
 }";
+
+		private static readonly Dictionary<Type, string> objectToPrimitiveNameMap = new Dictionary<Type, string>
+		{
+			{typeof (bool), "bool"},
+			{typeof (int), "int"},
+			{typeof (float), "float"},
+			{typeof (byte), "byte"},
+			{typeof (double), "double"},
+			{typeof (char), "char"},
+			{typeof (void), "void"},
+		};
+
 		public bool debug = false;
-		public WrapperGenerator(){}
 
 		[MenuItem("Window/TypeTest")]
 		public static void typeTest()
 		{
-			Debug.Log(typeof(bool));
+			Debug.Log(typeof (bool));
 		}
+
 		//The primitive types are Boolean, Byte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64, IntPtr, UIntPtr, Char, Double, and Single.
-		private static Dictionary<Type, string> objectToPrimitiveNameMap = new Dictionary<Type, string>()
-		{
-			{typeof(bool),"bool"},
-			{typeof(int),"int"},
-			{typeof(float),"float"},
-			{typeof(byte),"byte"},
-			{typeof(double),"double"},
-			{typeof(char),"char"},
-			{typeof(void),"void"},
-		};
 
 
 		public string getWrappedFile(Type type)
 		{
-			string forwardToType = type.FullName;// "UnityEngine."+ type.Name;
-			forwardToType = forwardToType.Replace("+", ".");//handle inner classes per http://msdn.microsoft.com/en-us/library/w3f99sx1(v=vs.110).aspx
-			PropertyInfo[] properties = type.GetProperties(BindingFlags.Static | BindingFlags.FlattenHierarchy | BindingFlags.SetProperty | BindingFlags.GetProperty| BindingFlags.Public);
+			string forwardToType = type.FullName; // "UnityEngine."+ type.Name;
+			forwardToType = forwardToType.Replace("+", ".");
+				//handle inner classes per http://msdn.microsoft.com/en-us/library/w3f99sx1(v=vs.110).aspx
+			PropertyInfo[] properties =
+				type.GetProperties(BindingFlags.Static | BindingFlags.FlattenHierarchy | BindingFlags.SetProperty |
+				                   BindingFlags.GetProperty | BindingFlags.Public);
 
-			StringBuilder gettersSetters = new StringBuilder();
-			foreach(PropertyInfo property in properties)
+			var gettersSetters = new StringBuilder();
+			foreach (PropertyInfo property in properties)
 			{
 				//string propForward = "UnityEngine." + forwardToType;//not sue why the method info works and this doesn'
 				if (property.CanRead || property.CanWrite)
 				{
 					string name = property.Name;
 					string possibleGetter = property.CanRead ? string.Format("get {{ return {0}.{1}; }}", forwardToType, name) : "";
-					string possibleSetter = property.CanWrite ? string.Format("set {{ {0}.{1} = value; }}", forwardToType,name) : "";
+					string possibleSetter = property.CanWrite ? string.Format("set {{ {0}.{1} = value; }}", forwardToType, name) : "";
 
-					string stringProp = string.Format("\n public static {0} {1} {{\n {2}\n {3}\n}}",property.PropertyType,  property.Name, possibleGetter, possibleSetter);
-					if(debug) Debug.Log("Prop: " + stringProp);
+					string stringProp = string.Format("\n public static {0} {1} {{\n {2}\n {3}\n}}", property.PropertyType,
+						property.Name, possibleGetter, possibleSetter);
+					if (debug) Debug.Log("Prop: " + stringProp);
 					gettersSetters.Append(stringProp);
 				}
 			}
 
-			StringBuilder funcitons = new StringBuilder();
+			var funcitons = new StringBuilder();
 			MethodInfo[] methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
-			List<MethodInfo> specialMethods = new List<MethodInfo>();
-			foreach(MethodInfo methodInfo in methods)
+			var specialMethods = new List<MethodInfo>();
+			foreach (MethodInfo methodInfo in methods)
 			{
-				if(methodInfo.IsSpecialName) //do not add the getters/setters, as those are added another way
+				if (methodInfo.IsSpecialName) //do not add the getters/setters, as those are added another way
 				{
 					specialMethods.Add(methodInfo);
 					continue;
 				}
-				
-				string functionDef = new MethodRepresentation(methodInfo,forwardToType).functionString;
+
+				string functionDef = new MethodRepresentation(methodInfo, forwardToType).functionString;
 				funcitons.Append(functionDef);
-				if(debug) Debug.Log(functionDef);
+				if (debug) Debug.Log(functionDef);
 			}
 			string header = string.Format(headerFormat, type.Name);
 			string fullFile = string.Format("{0}\n{1}\n{2}\n{3}", header, gettersSetters, funcitons, footer);
-			fullFile = fullFile.Replace("System.Single&", "float");  //ugh
+			fullFile = fullFile.Replace("System.Single&", "float"); //ugh
 			fullFile = fullFile.Replace("System.Void", "void");
 			return fullFile.Replace("\r\n", "\n"); //could do the other way around, but just want the line endings to be the same
 		}
@@ -93,16 +96,16 @@ namespace transfluent.guiwrapper
 		[MenuItem("Window/Test Generating GUI file")]
 		public static void test()
 		{
-			generateSourceFromType("Assets/Transfluent/GUI.cs", typeof(UnityEngine.GUI));
-			generateSourceFromType("Assets/Transfluent/GUILayout.cs", typeof(UnityEngine.GUILayout));
-			generateSourceFromType("Assets/Transfluent/Editor/EditorGUI.cs", typeof(UnityEditor.EditorGUI));
-			generateSourceFromType("Assets/Transfluent/Editor/EditorGUILayout.cs", typeof(UnityEditor.EditorGUILayout));
+			generateSourceFromType("Assets/Transfluent/GUI.cs", typeof (GUI));
+			generateSourceFromType("Assets/Transfluent/GUILayout.cs", typeof (GUILayout));
+			generateSourceFromType("Assets/Transfluent/Editor/EditorGUI.cs", typeof (EditorGUI));
+			generateSourceFromType("Assets/Transfluent/Editor/EditorGUILayout.cs", typeof (EditorGUILayout));
 		}
 
-		static void generateSourceFromType(string file, Type type)
+		private static void generateSourceFromType(string file, Type type)
 		{
 			var generator = new WrapperGenerator();
-			var guiFileText = generator.getWrappedFile(type);
+			string guiFileText = generator.getWrappedFile(type);
 
 			//Debug.Log(guiFileText);
 
@@ -115,64 +118,56 @@ namespace transfluent.guiwrapper
 
 		public class MethodRepresentation
 		{
-			struct ParamWrapped
-			{
-				public Type type;
-				public string name;
-				public bool isOptional;
-				public string defaultValue;
-				public bool isParams;
-				public bool isRef;
-			}
-
+			private readonly string typeThatWeAreForwardingTo;
 			public string functionString;
-			string typeThatWeAreForwardingTo;
 
-			public MethodRepresentation(MethodInfo methodInfo,string unitysTargetType)
+			public MethodRepresentation(MethodInfo methodInfo, string unitysTargetType)
 			{
 				typeThatWeAreForwardingTo = unitysTargetType;
 
-				List<ParamWrapped> parameters = new List<ParamWrapped>();
-				StringBuilder sb = new StringBuilder("name:" + methodInfo.Name + " returns:" + methodInfo.ReturnType);
+				var parameters = new List<ParamWrapped>();
+				var sb = new StringBuilder("name:" + methodInfo.Name + " returns:" + methodInfo.ReturnType);
 				ParameterInfo[] myParameters = methodInfo.GetParameters();
 				sb.Append(" (");
 
 				//methodInfo.op
 				//foreach (ParameterInfo paramInfo in myParameters)
-				for(int i = 0; i < myParameters.Length; i++)
+				for (int i = 0; i < myParameters.Length; i++)
 				{
 					ParameterInfo paramInfo = myParameters[i];
 					//TODO: use paramInfo.ParameterType.IsPrimitive to make System.Void be just void
-					ParamWrapped toAdd = new ParamWrapped()
+					var toAdd = new ParamWrapped
 					{
 						defaultValue = paramInfo.DefaultValue.ToString(),
 						isOptional = paramInfo.IsOptional,
 						name = paramInfo.Name,
 						type = paramInfo.ParameterType,
-						isParams = paramInfo.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0, //http://stackoverflow.com/questions/627656/determining-if-a-parameter-uses-params-using-reflection-in-c
+						isParams = paramInfo.GetCustomAttributes(typeof (ParamArrayAttribute), false).Length > 0,
+						//http://stackoverflow.com/questions/627656/determining-if-a-parameter-uses-params-using-reflection-in-c
 						isRef = paramInfo.ParameterType.IsByRef,
-						
 					};
-					
+
 					parameters.Add(toAdd);
 				}
 				//TODO: ensure default values are handled appropriately
-				functionString = createRealParamString(methodInfo.Name, methodInfo.ReturnType, parameters.ToArray(), obsoleteString(methodInfo));
+				functionString = createRealParamString(methodInfo.Name, methodInfo.ReturnType, parameters.ToArray(),
+					obsoleteString(methodInfo));
 			}
-			string obsoleteString(MethodInfo methodInfo)
+
+			private string obsoleteString(MethodInfo methodInfo)
 			{
-				var ObsolteAttributes = methodInfo.GetCustomAttributes(typeof(ObsoleteAttribute), false) as ObsoleteAttribute[];
+				var ObsolteAttributes = methodInfo.GetCustomAttributes(typeof (ObsoleteAttribute), false) as ObsoleteAttribute[];
 				if (ObsolteAttributes.Length <= 0)
 					return "";
 				//only return the first "obsolte" attribute
 				return "[Obsolete(\"" + ObsolteAttributes[0].Message + "\")]\n";
 			}
 
-			string createRealParamString(string methodName, Type returnType, ParamWrapped[] parameters,string attributes)
+			private string createRealParamString(string methodName, Type returnType, ParamWrapped[] parameters, string attributes)
 			{
-				StringBuilder paramBuilder = new StringBuilder();
-				StringBuilder valuesToPassToRealFunction = new StringBuilder();
-				for(int i = 0; i < parameters.Length; i++)
+				var paramBuilder = new StringBuilder();
+				var valuesToPassToRealFunction = new StringBuilder();
+				for (int i = 0; i < parameters.Length; i++)
 				{
 					ParamWrapped paramInfo = parameters[i];
 					string specialModifierString = "";
@@ -180,34 +175,37 @@ namespace transfluent.guiwrapper
 						specialModifierString = "ref";
 					if (paramInfo.isParams)
 						specialModifierString = "params";
-					paramBuilder.Append(string.Format("{0} {1} {2}",specialModifierString, cleanType(paramInfo.type), paramInfo.name));
+					paramBuilder.Append(string.Format("{0} {1} {2}", specialModifierString, cleanType(paramInfo.type), paramInfo.name));
 
 					valuesToPassToRealFunction.Append(paramInfo.isRef ? "ref " + paramInfo.name : paramInfo.name);
 
-					if(paramInfo.isOptional)
+					if (paramInfo.isOptional)
 					{
-						paramBuilder.Append(string.Format("={0}", paramInfo.defaultValue));  //how are strings handled in this?  "" vs just a blank
+						paramBuilder.Append(string.Format("={0}", paramInfo.defaultValue));
+							//how are strings handled in this?  "" vs just a blank
 					}
-					if(i != parameters.Length - 1)
+					if (i != parameters.Length - 1)
 					{
 						valuesToPassToRealFunction.Append(",");
 						paramBuilder.Append(",");
 					}
 				}
-				string optionallyReturnTheValue = returnType == typeof(void) ? "" : "return ";
+				string optionallyReturnTheValue = returnType == typeof (void) ? "" : "return ";
 				string functionFormatted = string.Format("{6}public static {0} {1}({2})\n{{\n {4} {5}.{1}({3});\n}}\n",
-					cleanType(returnType), methodName, paramBuilder, valuesToPassToRealFunction, optionallyReturnTheValue, typeThatWeAreForwardingTo, attributes);
+					cleanType(returnType), methodName, paramBuilder, valuesToPassToRealFunction, optionallyReturnTheValue,
+					typeThatWeAreForwardingTo, attributes);
 				return functionFormatted;
 			}
-			string cleanType(Type type)
+
+			private string cleanType(Type type)
 			{
 				if (type.IsByRef)
 				{
-					if(type.Name == "Single&")
+					if (type.Name == "Single&")
 					{
-						return objectToPrimitiveNameMap[typeof(float)];
+						return objectToPrimitiveNameMap[typeof (float)];
 					}
-					Debug.LogWarning("Likely missing a reference type:"+type.Name);
+					Debug.LogWarning("Likely missing a reference type:" + type.Name);
 				}
 				if (type.IsPrimitive)
 				{
@@ -216,15 +214,23 @@ namespace transfluent.guiwrapper
 					{
 						return objectToPrimitiveNameMap[type];
 					}
-					catch(Exception e)
+					catch (Exception e)
 					{
-						throw new Exception("Tried looking up an unmapped primitive of type:"+type + " ",e);
+						throw new Exception("Tried looking up an unmapped primitive of type:" + type + " ", e);
 					}
-					
-					
 				}
-					
+
 				return type.FullName.Replace("+", ".");
+			}
+
+			private struct ParamWrapped
+			{
+				public string defaultValue;
+				public bool isOptional;
+				public bool isParams;
+				public bool isRef;
+				public string name;
+				public Type type;
 			}
 		}
 	}

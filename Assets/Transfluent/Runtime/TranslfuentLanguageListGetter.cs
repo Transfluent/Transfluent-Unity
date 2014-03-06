@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using Pathfinding.Serialization.JsonFx;
 using transfluent;
 using UnityEditor;
 using UnityEngine;

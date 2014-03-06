@@ -131,16 +131,12 @@ namespace transfluent
 			string textId = sourceText;
 			bool alreadyHasTextID = missingTranslationDB.allTranslations.TrueForAll((TransfluentTranslation otherlang) =>
 			{
-				if(textId != otherlang.text_id && sourceLanguage.id.ToString() == otherlang.group_id)
+				if(textId == otherlang.text_id)
 						return false;
 				return true;
 			});
 			if (alreadyHasTextID)
 				return;
-			foreach(var transfluentTranslation in missingTranslationDB.allTranslations)
-			{
-				
-			}
 
 			missingTranslationDB.allTranslations.Add(new TransfluentTranslation
 			{

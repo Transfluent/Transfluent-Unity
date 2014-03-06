@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Pathfinding.Serialization.JsonFx;
 using transfluent;
 using UnityEditor;
 using UnityEngine;
@@ -26,7 +27,7 @@ public class TranslfuentLanguageListGetter
 		}
 		else
 		{
-			getLanguageListForSO(_languageList);
+			getLanguageListForSO();
 		}
 	}
 
@@ -40,9 +41,14 @@ public class TranslfuentLanguageListGetter
 		}
 	}
 
+	public static string LanguageListPath()
+	{
+		return basePath + fileName + ".asset";
+	}
+
 	private void getLanguageListSO()
 	{
-		string languageListFilePath = basePath + fileName + ".asset";
+		string languageListFilePath = LanguageListPath();
 		_languageList = AssetDatabase.LoadAssetAtPath(languageListFilePath, typeof(LanguageListSO)) as LanguageListSO;
 		if (_languageList == null)
 		{
@@ -53,7 +59,7 @@ public class TranslfuentLanguageListGetter
 	}
 
 	private GameTimeWWW www;
-	private void getLanguageListForSO(LanguageListSO so)
+	private void getLanguageListForSO()
 	{
 		if (www == null)
 		{
@@ -62,9 +68,9 @@ public class TranslfuentLanguageListGetter
 		if (webRequest == null)
 		{
 			webRequest = new RequestAllLanguages();
-			
-			www.webRequest(webRequest, gotResultOfLanguageList);
 		}
+		www.webRequest(webRequest, gotResultOfLanguageList);
+		
 	}
 
 	private IEnumerator gotResultOfLanguageList(WebServiceReturnStatus status)
@@ -83,12 +89,15 @@ public class TranslfuentLanguageListGetter
 		try
 		{
 			Debug.Log("Debugging status text:"+ status.text);
-			_languageList.list = webRequest.Parse(status.text);
+
+			var tmpList = webRequest.Parse(status.text);
+			_languageList.list = tmpList;
+			EditorUtility.SetDirty(_languageList);
 			doReturnCall();
 		}
 		catch (Exception e)
 		{
-			Debug.LogError("Error while parsing message:" + status.text + "  error:"+ e.Message);
+			Debug.LogError("Error while parsing message:" + status.text + "  error:"+ e.Message + " original stack:"+ e.StackTrace);
 		}
 	}
 }

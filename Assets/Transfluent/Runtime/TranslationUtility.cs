@@ -32,12 +32,6 @@ namespace transfluent
 			get { return _failedSetup; }
 		}
 
-		[MenuItem("TEST/BLAH")]
-		public static void getLanguageList()
-		{
-			new TranslfuentLanguageListGetter((LanguageList myList) => { Debug.Log("NEW LIST:" + JsonWriter.Serialize(myList)); });
-		}
-
 		public string getTranslation(string sourceText)
 		{
 			if (_instance == null)
@@ -75,9 +69,7 @@ namespace transfluent
 
 			_newList = newList;
 
-			var missing = new TrnaslationSetGetter();
-			Debug.Log("DEST LANG:" + destLang);
-			Debug.Log("NEW LIST:" + JsonWriter.Serialize(newList));
+			var missing = new TranslationGetter();
 			TransfluentLanguage dest = _newList.getLangaugeByCode(destLang);
 			TransfluentLanguage source = _newList.getLangaugeByCode(sourceLang);
 
@@ -87,9 +79,9 @@ namespace transfluent
 				sourceLanguage = source,
 				languageList = _newList,
 				destinationLanguageTranslationDB = getTranslationSet(destLang),
-				missingTranslationDB = missing.getMissingSet(source.id, dest.id)
+				
 			};
-			_instance.destinationLanguageTranslationDB = missing.getMissingSet(source.id, dest.id);
+			_instance.missingTranslationDB = missing.getMissingSet(source.id, dest.id);
 		}
 
 		private GameTranslationSet getTranslationSet(string languageCode)
@@ -103,7 +95,7 @@ namespace transfluent
 		}
 	}
 
-	public class TrnaslationSetGetter
+	public class TranslationGetter
 	{
 		private const string basePath = "Assets/Transfluent/Resources/";
 		private const string fileName = "UnknownTranslations";
@@ -112,11 +104,9 @@ namespace transfluent
 		{
 			string missingSetList = string.Format("{0}{1}-fromid_{2}-toid_{3}.asset", basePath, fileName, sourceLanguageID,
 				destinationLanguageID);
-			Debug.Log("Creating GameTranslationSet " + missingSetList);
 			var set = AssetDatabase.LoadAssetAtPath(missingSetList, typeof (GameTranslationSet)) as GameTranslationSet;
 			if (set != null)
 				return set;
-
 
 			set = ScriptableObject.CreateInstance<GameTranslationSet>();
 			AssetDatabase.CreateAsset(set, missingSetList);

@@ -14,11 +14,7 @@ namespace transfluent
 		WebServiceReturnStatus request(string url);
 		WebServiceReturnStatus request(string url, Dictionary<string, string> postParams);
 		WebServiceReturnStatus request(ITransfluentParameters parameters);
-	}
-
-	
-
-	
+	}	
 
 	public struct WebServiceReturnStatus
 	{

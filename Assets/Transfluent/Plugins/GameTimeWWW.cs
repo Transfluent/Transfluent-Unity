@@ -13,8 +13,12 @@ namespace transfluent
 		private GameTimeWWWMonobehaviour routineRunner;
 		public GameTimeWWW()
 		{
-			GameObject go = new GameObject("serviceRunner");
-			routineRunner = go.AddComponent<GameTimeWWWMonobehaviour>();
+			routineRunner = GameObject.FindObjectOfType<GameTimeWWWMonobehaviour>();
+			if(routineRunner == null)
+			{
+				GameObject go = new GameObject("serviceRunner");
+				routineRunner = go.AddComponent<GameTimeWWWMonobehaviour>();
+			}
 		}
 
 		public void startRoutine(IEnumerator routine)
@@ -22,7 +26,7 @@ namespace transfluent
 			routineRunner.StartCoroutine(routine);
 		}
 
-		public void webRequest(WebServiceParameters call,Action<WebServiceReturnStatus> onStatusDone)
+		void webRequest(ITransfluentParameters call, Action<WebServiceReturnStatus> onStatusDone)
 		{
 			GotstatusUpdate wrappedReturn = status =>
 			{
@@ -32,19 +36,17 @@ namespace transfluent
 			};
 			routineRunner.StartCoroutine(doWebRequest(call, wrappedReturn));
 		}
-		public void webRequest(WebServiceParameters call, GotstatusUpdate onStatusDone)
+		public void webRequest(ITransfluentParameters call, GotstatusUpdate onStatusDone)
 		{
 			routineRunner.StartCoroutine(doWebRequest(call, onStatusDone));
 		}
 		public delegate IEnumerator GotstatusUpdate(WebServiceReturnStatus status);
 
-		IEnumerator doWebRequest(WebServiceParameters call, GotstatusUpdate onStatusDone)
+		IEnumerator doWebRequest(ITransfluentParameters call, GotstatusUpdate onStatusDone)
 		{
-
 			WWWFacade facade = new WWWFacade();
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
-			
 			WWW www = facade.request(call);
 
 			yield return www;

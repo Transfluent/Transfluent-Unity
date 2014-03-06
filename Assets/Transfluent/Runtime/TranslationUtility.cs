@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System.Collections;
@@ -8,7 +9,7 @@ namespace transfluent
 
 	public class TranslfuentLanguageListGetter
 	{
-		private static string basePath = "Assets/Transfluent/Resources";
+		private static string basePath = "Assets/Transfluent/Resources/";
 		private static string fileName = "LanguageList";
 		public static LanguageList getLanguageListFromSO()
 		{
@@ -16,14 +17,16 @@ namespace transfluent
 			LanguageListSO set = AssetDatabase.LoadAssetAtPath(languageListFilePath,typeof(LanguageListSO)) as LanguageListSO;
 			if(set != null)
 				return set.list;
-
+			Debug.Log("Creating languageListSO");
 			set = ScriptableObject.CreateInstance<LanguageListSO>();
 			AssetDatabase.CreateAsset(set, languageListFilePath);
-			AssetDatabase.SaveAssets();
 			if (set.list == null)
 			{
 				set.list = new LanguageList();
 			}
+			EditorUtility.SetDirty(set);
+			AssetDatabase.SaveAssets();
+			
 			return set.list;
 		}
 
@@ -37,26 +40,28 @@ namespace transfluent
 
 	public class MissingTranslationSetGetter
 	{
-		private static string basePath = "Assets/Transfluent/Resources";
+		private static string basePath = "Assets/Transfluent/Resources/";
 		private static string fileName = "UnknownTranslations";
 
 		public static GameTranslationSet getMissingSet(int sourceLanguageID,int destinationLanguageID)
 		{
 			string missingSetList = string.Format("{0}{1}-fromid_{2}-toid_{3}", basePath, fileName, sourceLanguageID, destinationLanguageID);
+			Debug.Log("Creating GameTranslationSet " + missingSetList);
 			GameTranslationSet set = AssetDatabase.LoadAssetAtPath(missingSetList, typeof(GameTranslationSet)) as GameTranslationSet;
 			if(set != null)
 				return set;
 
+			Debug.Log("Creating GameTranslationSet "+missingSetList);
+
 			set = ScriptableObject.CreateInstance<GameTranslationSet>();
 			AssetDatabase.CreateAsset(set, missingSetList);
-			AssetDatabase.SaveAssets();
 			if(set.allTranslations == null)
 			{
 				set.allTranslations = new List<TransfluentTranslation>();
 			}
+			Debug.Log("Creating GameTranslationSet " + missingSetList);
 			return set; 
 		}
-
 
 	}
 
@@ -64,6 +69,10 @@ namespace transfluent
 	{
 		public static TransfluentUtility utility = new TransfluentUtility();
 
+		public static string getTranslation(string sourceText)
+		{
+			return utility.getTranslationInstance(sourceText);
+		}
 		private LanguageList list;
 		private bool _failedSetup = false;
 		public bool failedSetup { get { return _failedSetup; } }
@@ -90,8 +99,9 @@ namespace transfluent
 					destinationLanguage = list.getLangaugeByCode(destinationLanguage)
 				};
 			}
-			catch
+			catch(Exception e)
 			{
+				Debug.LogError("Failure to get assets:" + e.Message + " stack:" + e.StackTrace);
 				_failedSetup = true;
 				return false;
 			}
@@ -99,7 +109,7 @@ namespace transfluent
 			return true;
 		}
 
-		public string getTranslation(string originalLanguageText)
+		public string getTranslationInstance(string originalLanguageText)
 		{
 			if (!Init()) return originalLanguageText;
 			return _utility.getTranslation(originalLanguageText);

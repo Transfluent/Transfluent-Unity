@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using NSubstitute.Routing.Handlers;
-using NUnit.Core.Extensibility;
 
 namespace transfluent
 {

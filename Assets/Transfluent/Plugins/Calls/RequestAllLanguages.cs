@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 namespace transfluent
 {
-	
-
 	[Route("languages", RestRequestType.GET, "http://transfluent.com/backend-api/#Languages")]
 	public class RequestAllLanguages : WebServiceParameters
 	{

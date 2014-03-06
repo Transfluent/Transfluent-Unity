@@ -27,6 +27,6 @@ public class LanguageList
 
 public class LanguageListSO : ScriptableObject
 {
-	public LanguageList list;
+	public LanguageList list = new LanguageList();
 
 }

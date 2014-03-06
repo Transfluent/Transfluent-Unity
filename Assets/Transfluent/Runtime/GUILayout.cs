@@ -1,10 +1,10 @@
 using UnityEngine;
-using System;
+
 //wrapper around unity's gui, except to grab text as quickly as possbile and spit it into an internal db
 //http://docs.unity3d.com/Documentation/ScriptReference/GUI.html
 namespace transfluent.guiwrapper
 {
-#pragma warning disable 618
+
 	public partial class GUILayout
 	{
 
@@ -14,7 +14,7 @@ public static void Label( UnityEngine.Texture image,params UnityEngine.GUILayout
 }
 public static void Label( System.String text,params UnityEngine.GUILayoutOption[] options)
 {
-  UnityEngine.GUILayout.Label(text,options);
+	UnityEngine.GUILayout.Label(TransfluentUtility.getTranslation(text), options);
 }
 public static void Label( UnityEngine.GUIContent content,params UnityEngine.GUILayoutOption[] options)
 {
@@ -62,7 +62,7 @@ public static bool Button( UnityEngine.Texture image,params UnityEngine.GUILayou
 }
 public static bool Button( System.String text,params UnityEngine.GUILayoutOption[] options)
 {
- return  UnityEngine.GUILayout.Button(text,options);
+	return UnityEngine.GUILayout.Button(TransfluentUtility.getTranslation(text), options);
 }
 public static bool Button( UnityEngine.GUIContent content,params UnityEngine.GUILayoutOption[] options)
 {
@@ -106,7 +106,7 @@ public static bool RepeatButton( UnityEngine.GUIContent content, UnityEngine.GUI
 }
 public static System.String TextField( System.String text,params UnityEngine.GUILayoutOption[] options)
 {
- return  UnityEngine.GUILayout.TextField(text,options);
+	return UnityEngine.GUILayout.TextField(TransfluentUtility.getTranslation(text), options);
 }
 public static System.String TextField( System.String text, int maxLength,params UnityEngine.GUILayoutOption[] options)
 {
@@ -438,5 +438,4 @@ public static UnityEngine.GUILayoutOption ExpandHeight( bool expand)
 }
 
 	}
-#pragma warning restore 618
 }

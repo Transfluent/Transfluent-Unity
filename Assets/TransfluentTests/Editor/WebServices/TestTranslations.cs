@@ -94,7 +94,7 @@ namespace transfluent.tests
 
 		public const string TRANSLATION_KEY = "UNITY_TEST_TRANSLATION_KEY";
 
-		public string justCall(ITransfluentParameters call)
+		public string justCall(WebServiceParameters call)
 		{
 			if (call.getParameters.ContainsKey("token"))
 				call.getParameters.Remove("token");

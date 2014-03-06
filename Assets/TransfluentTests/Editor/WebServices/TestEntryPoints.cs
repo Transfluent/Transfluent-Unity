@@ -17,7 +17,7 @@ namespace transfluent.tests
 			OneTimeSetup();
 		}
 		
-		public string justCall(ITransfluentParameters call)
+		public string justCall(WebServiceParameters call)
 		{
 			if(call.getParameters.ContainsKey("token"))
 				call.getParameters.Remove("token");

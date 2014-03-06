@@ -9,7 +9,7 @@ namespace transfluent
 	[Serializable]
 	public class LanguageListSO : ScriptableObject
 	{
-		public LanguageList list = new LanguageList();
+		public LanguageList list;
 
 	}
 }

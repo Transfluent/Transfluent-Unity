@@ -6,58 +6,43 @@ using UnityEngine;
 
 namespace transfluent
 {
-	public class GameTranslationsCreator
+	
+
+	public class DownloadAllGameTranslations
 	{
-		private static string basePath = "Assets/Transfluent/Resources/";
-		[MenuItem("Window/Create new game translations set")]
-		public static void DoMenuItem()
-		{
-			CreateGameTranslation("GameTranslationSet");
-		}
-
-		public static GameTranslationSet CreateGameTranslation(string fileName)
-		{
-			string gameTranslationFileName = basePath + fileName + ".asset";
-			string uniqueName = AssetDatabase.GenerateUniqueAssetPath(gameTranslationFileName);
-			var set = ScriptableObject.CreateInstance<GameTranslationSet>();
-			AssetDatabase.CreateAsset(set, uniqueName);
-			AssetDatabase.SaveAssets();
-
-			return set;
-		}
-
 		// I don't know if I am going to expose this, but it is something to do
 		//maybe as sub-functionality on the scriptableobject?  push/pull on the object itself?
+
 		[MenuItem("Window/Download All Transfluent data")]
 		public static void doDownload()
 		{
 			TransfluentEditorWindowMediator mediator = new TransfluentEditorWindowMediator();
 			var usernamePassword = mediator.getUserNamePassword();
-			if (string.IsNullOrEmpty(usernamePassword.Key) || string.IsNullOrEmpty(usernamePassword.Value))
+			if(String.IsNullOrEmpty(usernamePassword.Key) || String.IsNullOrEmpty(usernamePassword.Value))
 			{
-				EditorUtility.DisplayDialog("Login please","Please login using editor window before trying to use this functionality","ok");
+				EditorUtility.DisplayDialog("Login please", "Please login using editor window before trying to use this functionality", "ok");
 				TransfluentEditorWindow.Init();
 				return;
 			}
 			mediator.doAuth(usernamePassword.Key, usernamePassword.Value);
 			List<string> allLanguageCodes = mediator.getAllLanguageCodes();
-			foreach (string languageCode in allLanguageCodes)
+			foreach(string languageCode in allLanguageCodes)
 			{
 				try
 				{
 					mediator.setCurrentLanguageFromLanguageCode(languageCode);
 					List<TransfluentTranslation> translations = mediator.knownTextEntries();
-					if (translations.Count > 0)
+					if(translations.Count > 0)
 					{
-						GameTranslationSet set = CreateGameTranslation("AutoDownloaded-" + languageCode);
+						GameTranslationSet set = GameTranslationsCreator.CreateGameTranslation("AutoDownloaded-" + languageCode);
 						set.allTranslations = translations;
-						EditorUtility.SetDirty(set); 
+						EditorUtility.SetDirty(set);
 						AssetDatabase.SaveAssets();
 					}
 				}
-				catch (Exception e)
+				catch(Exception e)
 				{
-					Debug.LogError("error while downloading translations:"+e.Message + " stack:"+e.StackTrace);
+					Debug.LogError("error while downloading translations:" + e.Message + " stack:" + e.StackTrace);
 				}
 			}
 		}

@@ -1,76 +1,119 @@
 ﻿using System;
 using System.Collections.Generic;
-using transfluent;
+using System.Security.Cryptography;
+using Pathfinding.Serialization.JsonFx;
 using UnityEditor;
 using UnityEngine;
-using System.Collections;
 
 namespace transfluent
 {
-
-	public class TranslfuentLanguageListGetter
+	public class TransfluentUtility
 	{
-		private static string basePath = "Assets/Transfluent/Resources/";
-		private static string fileName = "LanguageList";
+		public static TransfluentUtility utility = new TransfluentUtility();
 
-
-		[MenuItem("Test/MakeLanguageList")]
-		public static LanguageList getLanguageListFromSO()
+		[MenuItem("TEST/BLAH")]
+		public static void getLanguageList()
 		{
-			string languageListFilePath = basePath + fileName + ".asset";
-			LanguageListSO set = AssetDatabase.LoadAssetAtPath(languageListFilePath,typeof(LanguageListSO)) as LanguageListSO;
-			if(set != null)
-				return set.list;
-			Debug.Log("Creating languageListSO");
-			set = ScriptableObject.CreateInstance<LanguageListSO>();
-			AssetDatabase.CreateAsset(set, languageListFilePath);
-			AssetDatabase.SaveAssets();
-			if (set.list == null)
+			new TranslfuentLanguageListGetter((LanguageList myList) =>
 			{
-				//RequestAllLanguages req = new RequestAllLanguages();
-				//SynchronousEditorWebRequest req = new SynchronousEditorWebRequest();
-				set.list = new LanguageList();
+				Debug.Log("NEW LIST:"+JsonWriter.Serialize(myList));
+
+			});
+		}
+
+		private LanguageList _newList;
+		private TransfluentUtilityInstance _instance;
+
+		private bool _failedSetup;
+		public bool failedSetup { get { return _failedSetup; } }
+
+		public string getTranslation(string sourceText)
+		{
+			if (_instance == null)
+			{
+				return sourceText; //TODO: add the missing translations db in this condition
+			}
+			return _instance.getTranslation(sourceText);
+		}
+
+
+		public TransfluentUtility()
+		{
+			Init("en-us", "xx-xx");
+		}
+
+		private string sourceLang;
+		private string destLang;
+
+		public TransfluentUtility(string sourceLanguage, string destinationLanguage)
+		{
+
+			Init(sourceLanguage, destinationLanguage);
+		}
+
+		void Init(string sourceLanguage, string destinationLanguage)
+		{
+			sourceLang = sourceLanguage;
+			destLang = destinationLanguage;
+
+			try
+			{
+				new TranslfuentLanguageListGetter(onGotList);
+			}
+			catch(Exception e)
+			{
+				Debug.LogError("Failure to get assets:" + e.Message + " stack:" + e.StackTrace);
+				_failedSetup = true;
+			}
+
+		}
+
+		void onGotList(LanguageList newList)
+		{
+			if (newList == null)
+			{
+				_failedSetup = true;
+				Debug.LogError("Could not load new language list");
+				return;
+				//Init(sourceLang, destLang);
 			}
 			
+			_newList = newList;
+
+			TrnaslationSetGetter missing = new TrnaslationSetGetter();
+			Debug.Log("DEST LANG:" + destLang);
+			Debug.Log("NEW LIST:"+JsonWriter.Serialize(newList));
+			var dest = _newList.getLangaugeByCode(destLang);
+			var source = _newList.getLangaugeByCode(sourceLang);
 			
-			return set.list;
+			_instance = new TransfluentUtilityInstance()
+			{
+				destinationLanguage = dest,
+				sourceLanguage = source,
+				languageList = _newList,
+				destinationLanguageTranslationDB = getTranslationSet(destLang),
+				missingTranslationDB = missing.getMissingSet(source.id,dest.id)
+			};
+			_instance.destinationLanguageTranslationDB = missing.getMissingSet(source.id,dest.id);
 		}
 
-		[MenuItem("Test/Make language list 2")]
-		public static void blah()
+		GameTranslationSet getTranslationSet(string languageCode)
 		{
-			string gameTranslationFileName = basePath + fileName + ".asset";
-			string uniqueName = AssetDatabase.GenerateUniqueAssetPath(gameTranslationFileName);
-			var set = ScriptableObject.CreateInstance<LanguageListSO>();
-			AssetDatabase.CreateAsset(set, uniqueName);
-			AssetDatabase.SaveAssets();
-		}
-
-		[MenuItem("Test/Make language list 3")]
-		public static void blah2()
-		{
-			string gameTranslationFileName = basePath + fileName + ".asset";
-			string uniqueName = AssetDatabase.GenerateUniqueAssetPath(gameTranslationFileName);
-			var set = ScriptableObject.CreateInstance<GameTranslationSet>();
-			AssetDatabase.CreateAsset(set, uniqueName);
-			AssetDatabase.SaveAssets();
-		}
-
-
-		public static void saveLanguageList(LanguageList list)
-		{
-			var oldList = getLanguageListFromSO();
-			oldList.languages.Clear();
-			oldList.languages.AddRange(list.languages);
+			var destinationLanguageKnownTranslationSet = GameTranslationsCreator.GetTranslaitonSet(languageCode);
+			if(destinationLanguageKnownTranslationSet == null)
+			{
+				destinationLanguageKnownTranslationSet = GameTranslationsCreator.CreateGameTranslation(languageCode);
+			}
+			return destinationLanguageKnownTranslationSet;
 		}
 	}
 
-	public class MissingTranslationSetGetter
+	public class TrnaslationSetGetter
 	{
-		private static string basePath = "Assets/Transfluent/Resources/";
-		private static string fileName = "UnknownTranslations";
+		private const string basePath = "Assets/Transfluent/Resources/";
+		private const string fileName = "UnknownTranslations";
 
-		public static GameTranslationSet getMissingSet(int sourceLanguageID,int destinationLanguageID)
+		public GameTranslationSet getMissingSet(int sourceLanguageID,int destinationLanguageID)
 		{
 			string missingSetList = string.Format("{0}{1}-fromid_{2}-toid_{3}", basePath, fileName, sourceLanguageID, destinationLanguageID);
 			Debug.Log("Creating GameTranslationSet " + missingSetList);
@@ -78,72 +121,16 @@ namespace transfluent
 			if(set != null)
 				return set;
 
-			Debug.Log("Creating GameTranslationSet "+missingSetList);
 
 			set = ScriptableObject.CreateInstance<GameTranslationSet>();
 			AssetDatabase.CreateAsset(set, missingSetList);
-			if(set.allTranslations == null)
-			{
-				set.allTranslations = new List<TransfluentTranslation>();
-			}
-			Debug.Log("Creating GameTranslationSet " + missingSetList);
 			return set; 
 		}
 
+
 	}
 
-	public class TransfluentUtility
-	{
-		public static TransfluentUtility utility = new TransfluentUtility();
-
-		public static string getTranslation(string sourceText)
-		{
-			return utility.getTranslationInstance(sourceText);
-		}
-		private LanguageList list;
-		private bool _failedSetup = false;
-		public bool failedSetup { get { return _failedSetup; } }
-		private TransfluentUtilityInstance _utility;
-
-		public bool Init()
-		{
-			return Init("en-us", "xx-xx");
-		}
-
-		public bool Init(string sourceLanguage,string destinationLanguage)
-		{
-			if(_failedSetup) return false; //don't spam the below operations!
-			try
-			{
-				if(list == null)
-				{
-					list = TranslfuentLanguageListGetter.getLanguageListFromSO();
-				}
-				_failedSetup = true;
-				return false;
-				/*_utility = new TransfluentUtilityInstance()
-				{
-					languageList = list,
-					sourceLanguage = list.getLangaugeByCode(sourceLanguage),
-					destinationLanguage = list.getLangaugeByCode(destinationLanguage)
-				};*/
-			}
-			catch(Exception e)
-			{
-				Debug.LogError("Failure to get assets:" + e.Message + " stack:" + e.StackTrace);
-				_failedSetup = true;
-				return false;
-			}
-
-			return true;
-		}
-
-		public string getTranslationInstance(string originalLanguageText)
-		{
-			if (!Init()) return originalLanguageText;
-			return _utility.getTranslation(originalLanguageText);
-		}
-	}
+	
 
 	//NOTE: this is using the source text as the text key itself
 	public class TransfluentUtilityInstance
@@ -197,5 +184,42 @@ namespace transfluent
 			return sourceText;
 		}
 
+	}
+	public class GameTranslationsCreator
+	{
+		private static
+			
+			string basePath = "Assets/Transfluent/Resources/";
+		[MenuItem("Window/Create new game translations set")]
+		public static void DoMenuItem()
+		{
+			CreateGameTranslation("GameTranslationSet");
+		}
+
+		public static GameTranslationSet CreateGameTranslation(string fileName)
+		{
+			string gameTranslationFileName = basePath + fileName + ".asset";
+			string uniqueName = AssetDatabase.GenerateUniqueAssetPath(gameTranslationFileName);
+			var set = ScriptableObject.CreateInstance<GameTranslationSet>();
+			AssetDatabase.CreateAsset(set, uniqueName);
+			AssetDatabase.SaveAssets();
+
+			return set;
+		}
+
+		public static string fileNameFromLanguageCode(string languageCode)
+		{
+			return "AutoDownloaded-" + languageCode + ".asset";
+		}
+
+		public static GameTranslationSet GetTranslaitonSet(string langaugeCode)
+		{
+			string fileName = fileNameFromLanguageCode(langaugeCode);
+			string path = basePath + fileName;
+			GameTranslationSet set = AssetDatabase.LoadAssetAtPath(path, typeof(GameTranslationSet)) as GameTranslationSet;
+			if(set != null)
+				return set;
+			return CreateGameTranslation(fileName);
+		}
 	}
 }

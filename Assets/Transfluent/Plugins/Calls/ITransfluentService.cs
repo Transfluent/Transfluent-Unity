@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace transfluent
 {
@@ -8,6 +9,7 @@ namespace transfluent
 	{
 		Dictionary<string, string> getParameters { get; }
 		Dictionary<string, string> postParameters { get; }
+		IResponseReader responseReader { get; }
 	}
 
 	public class WebServiceParameters : ITransfluentParameters
@@ -16,7 +18,8 @@ namespace transfluent
 		private readonly Dictionary<string, string> _postParameters = new Dictionary<string, string>();
 
 		//[Inject]
-		public IResponseReader responseReader = new ResponseReader(); //{ get; set; }
+		 IResponseReader _responseReader = new ResponseReader(); //{ get; set; }
+		public IResponseReader responseReader {get { return _responseReader; }}
 
 		public Dictionary<string, string> getParameters
 		{
@@ -44,6 +47,7 @@ namespace transfluent
 			var responseFullyParse = responseReader.deserialize<ResponseContainer<T>>(text);
 			return responseFullyParse.response;
 		}
+
 	}
 
 	//something specific to the call went wrong

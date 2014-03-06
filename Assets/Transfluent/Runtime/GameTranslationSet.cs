@@ -5,6 +5,6 @@ namespace transfluent
 {
 	public class GameTranslationSet : ScriptableObject
 	{
-		public List<TransfluentTranslation> allTranslations;
+		public List<TransfluentTranslation> allTranslations = new List<TransfluentTranslation>();
 	}
 }

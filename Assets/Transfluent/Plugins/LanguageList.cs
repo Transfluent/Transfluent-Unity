@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using transfluent;
-using UnityEditor;
-using UnityEngine;
-using System.Collections;
-
-
 
 [Serializable]
 public class LanguageList
 {
-	public List<TransfluentLanguage> languages { get; set; }
+	public List<TransfluentLanguage> languages;
 
 	public TransfluentLanguage getLangaugeByID(int id)
 	{

@@ -129,19 +129,23 @@ namespace transfluent
 		private void addNewMissingTranslation(string sourceText)
 		{
 			string textId = sourceText;
-			bool alreadyHasTextID = missingTranslationDB.allTranslations.TrueForAll((TransfluentTranslation otherlang) =>
+			bool shouldAdd = missingTranslationDB.allTranslations.TrueForAll((TransfluentTranslation otherlang) =>
 			{
-				if(textId == otherlang.text_id)
-						return false;
+				if (textId == otherlang.text_id)
+				{
+					return false;
+				}
+						
 				return true;
 			});
-			if (alreadyHasTextID)
+
+			if(!shouldAdd)
 				return;
 
 			missingTranslationDB.allTranslations.Add(new TransfluentTranslation
 			{
 				group_id = sourceLanguage.id.ToString(),
-				language = destinationLanguage,
+				language = destinationLanguage, 
 				text = sourceText,
 				text_id = textId
 			});

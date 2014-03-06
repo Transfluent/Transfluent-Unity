@@ -4,6 +4,9 @@ using transfluent;
 using UnityEditor;
 using UnityEngine;
 using System.Collections;
+
+
+
 [Serializable]
 public class LanguageList
 {
@@ -25,8 +28,3 @@ public class LanguageList
 	}
 }
 
-public class LanguageListSO : ScriptableObject
-{
-	public LanguageList list = new LanguageList();
-
-}

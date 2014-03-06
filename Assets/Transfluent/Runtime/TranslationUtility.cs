@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using transfluent;
 using UnityEditor;
 using UnityEngine;
 using System.Collections;
@@ -11,6 +12,9 @@ namespace transfluent
 	{
 		private static string basePath = "Assets/Transfluent/Resources/";
 		private static string fileName = "LanguageList";
+
+
+		[MenuItem("Test/MakeLanguageList")]
 		public static LanguageList getLanguageListFromSO()
 		{
 			string languageListFilePath = basePath + fileName + ".asset";
@@ -20,15 +24,38 @@ namespace transfluent
 			Debug.Log("Creating languageListSO");
 			set = ScriptableObject.CreateInstance<LanguageListSO>();
 			AssetDatabase.CreateAsset(set, languageListFilePath);
+			AssetDatabase.SaveAssets();
 			if (set.list == null)
 			{
+				//RequestAllLanguages req = new RequestAllLanguages();
+				//SynchronousEditorWebRequest req = new SynchronousEditorWebRequest();
 				set.list = new LanguageList();
 			}
-			EditorUtility.SetDirty(set);
-			AssetDatabase.SaveAssets();
+			
 			
 			return set.list;
 		}
+
+		[MenuItem("Test/Make language list 2")]
+		public static void blah()
+		{
+			string gameTranslationFileName = basePath + fileName + ".asset";
+			string uniqueName = AssetDatabase.GenerateUniqueAssetPath(gameTranslationFileName);
+			var set = ScriptableObject.CreateInstance<LanguageListSO>();
+			AssetDatabase.CreateAsset(set, uniqueName);
+			AssetDatabase.SaveAssets();
+		}
+
+		[MenuItem("Test/Make language list 3")]
+		public static void blah2()
+		{
+			string gameTranslationFileName = basePath + fileName + ".asset";
+			string uniqueName = AssetDatabase.GenerateUniqueAssetPath(gameTranslationFileName);
+			var set = ScriptableObject.CreateInstance<GameTranslationSet>();
+			AssetDatabase.CreateAsset(set, uniqueName);
+			AssetDatabase.SaveAssets();
+		}
+
 
 		public static void saveLanguageList(LanguageList list)
 		{
@@ -92,12 +119,14 @@ namespace transfluent
 				{
 					list = TranslfuentLanguageListGetter.getLanguageListFromSO();
 				}
-				_utility = new TransfluentUtilityInstance()
+				_failedSetup = true;
+				return false;
+				/*_utility = new TransfluentUtilityInstance()
 				{
 					languageList = list,
 					sourceLanguage = list.getLangaugeByCode(sourceLanguage),
 					destinationLanguage = list.getLangaugeByCode(destinationLanguage)
-				};
+				};*/
 			}
 			catch(Exception e)
 			{

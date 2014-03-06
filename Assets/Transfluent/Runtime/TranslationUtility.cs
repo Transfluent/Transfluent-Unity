@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Pathfinding.Serialization.JsonFx;
 using UnityEditor;
 using UnityEngine;
 
@@ -82,6 +81,7 @@ namespace transfluent
 				
 			};
 			_instance.missingTranslationDB = missing.getMissingSet(source.id, dest.id);
+			_instance.init();
 		}
 
 		private GameTranslationSet getTranslationSet(string languageCode)
@@ -125,14 +125,29 @@ namespace transfluent
 		public GameTranslationSet destinationLanguageTranslationDB { get; set; }
 		public LanguageList languageList { get; set; }
 
+
 		private void addNewMissingTranslation(string sourceText)
 		{
+			string textId = sourceText;
+			bool alreadyHasTextID = missingTranslationDB.allTranslations.TrueForAll((TransfluentTranslation otherlang) =>
+			{
+				if(textId != otherlang.text_id && sourceLanguage.id.ToString() == otherlang.group_id)
+						return false;
+				return true;
+			});
+			if (alreadyHasTextID)
+				return;
+			foreach(var transfluentTranslation in missingTranslationDB.allTranslations)
+			{
+				
+			}
+
 			missingTranslationDB.allTranslations.Add(new TransfluentTranslation
 			{
 				group_id = sourceLanguage.id.ToString(),
 				language = destinationLanguage,
 				text = sourceText,
-				text_id = sourceText
+				text_id = textId
 			});
 #if UNITY_EDITOR
 			EditorUtility.SetDirty(missingTranslationDB);
@@ -162,6 +177,7 @@ namespace transfluent
 			}
 			if (!notTranslatedCache.Contains(sourceText))
 			{
+				notTranslatedCache.Add(sourceText);
 				addNewMissingTranslation(sourceText);
 			}
 			return sourceText;

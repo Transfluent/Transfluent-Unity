@@ -12,4 +12,265 @@ MonoBehaviour:
   m_Name: LanguageList
   m_EditorClassIdentifier: 
   list:
-    languages: []
+    languages:
+    - name: English (United Kingdom)
+      code: en-gb
+      id: 1
+    - name: French (France)
+      code: fr-fr
+      id: 2
+    - name: German
+      code: de-de
+      id: 3
+    - name: Chinese (Mandarin, Simplified) (People's Republic of China)
+      code: zh-cn
+      id: 4
+    - name: Chinese (Hong Kong S.A.R)
+      code: zh-hk
+      id: 5
+    - name: Spanish (Spain)
+      code: es-es
+      id: 6
+    - name: Japanese
+      code: ja-jp
+      id: 7
+    - name: Korean
+      code: ko-kr
+      id: 8
+    - name: Tagalog (Philippines)
+      code: tl-ph
+      id: 9
+    - name: Portuguese (Brazil)
+      code: pt-br
+      id: 10
+    - name: Finnish
+      code: fi-fi
+      id: 11
+    - name: Italian
+      code: it-it
+      id: 12
+    - name: Dutch
+      code: nl-nl
+      id: 13
+    - name: Swedish
+      code: sv-se
+      id: 14
+    - name: Russian
+      code: ru-ru
+      id: 15
+    - name: Hindi
+      code: hi-in
+      id: 16
+    - name: Arabic
+      code: ar-sa
+      id: 17
+    - name: Malay
+      code: ms-my
+      id: 18
+    - name: Romanian
+      code: ro-ro
+      id: 19
+    - name: Lithuanian
+      code: lt-lt
+      id: 20
+    - name: Hebrew
+      code: he-il
+      id: 21
+    - name: Danish
+      code: da-dk
+      id: 22
+    - name: Vietnamese
+      code: vi-vn
+      id: 23
+    - name: Polish
+      code: pl-pl
+      id: 24
+    - name: Turkish
+      code: tr-tr
+      id: 25
+    - name: Thai
+      code: th-th
+      id: 26
+    - name: Norwegian
+      code: no-no
+      id: 27
+    - name: Ukrainian
+      code: uk-ua
+      id: 28
+    - name: Hungarian
+      code: hu-hu
+      id: 29
+    - name: Greek
+      code: el-gr
+      id: 30
+    - name: Czech
+      code: cs-cz
+      id: 31
+    - name: Catalan
+      code: ca-ad
+      id: 32
+    - name: Esperanto
+      code: eo-eo
+      id: 33
+    - name: Bengali
+      code: bn-bd
+      id: 34
+    - name: Urdu
+      code: ur-pk
+      id: 35
+    - name: Latin
+      code: la-it
+      id: 36
+    - name: Persian
+      code: fa-ir
+      id: 37
+    - name: Slovak
+      code: sk-sk
+      id: 38
+    - name: Bulgarian
+      code: bg-bg
+      id: 39
+    - name: Estonian
+      code: et-ee
+      id: 40
+    - name: Latvian
+      code: lv-lv
+      id: 41
+    - name: Somali
+      code: so-so
+      id: 42
+    - name: Serbian
+      code: sr-rs
+      id: 43
+    - name: Croatian
+      code: hr-hr
+      id: 44
+    - name: Albanian
+      code: sq-al
+      id: 45
+    - name: Azerbaijani
+      code: az-az
+      id: 46
+    - name: Tamil
+      code: ta-in
+      id: 47
+    - name: Swahili
+      code: sw-ke
+      id: 48
+    - name: Macedonian
+      code: mk-mk
+      id: 49
+    - name: Tibetan
+      code: bo-cn
+      id: 50
+    - name: Punjabi
+      code: pa-in
+      id: 51
+    - name: Javanese
+      code: jv-id
+      id: 52
+    - name: Armenian
+      code: hy-am
+      id: 53
+    - name: Basque
+      code: eu-es
+      id: 54
+    - name: Kyrgyz
+      code: ky-kg
+      id: 55
+    - name: Chinese (Traditional) (Taiwan)
+      code: zh-tw
+      id: 56
+    - name: Amharic
+      code: am-et
+      id: 57
+    - name: Akan-Twi
+      code: tw-gh
+      id: 58
+    - name: Hausa
+      code: ha-ng
+      id: 59
+    - name: Igbo
+      code: ig-ng
+      id: 60
+    - name: Slovenian
+      code: sl-si
+      id: 61
+    - name: Indonesian
+      code: id-id
+      id: 128
+    - name: Portuguese (Portugal)
+      code: pt-pt
+      id: 129
+    - name: Afrikaans
+      code: af-za
+      id: 130
+    - name: Bosnian
+      code: bs-ba
+      id: 131
+    - name: Georgian
+      code: ka-ge
+      id: 132
+    - name: Kazakh
+      code: kk-kz
+      id: 133
+    - name: Central Khmer
+      code: km-kh
+      id: 134
+    - name: Lao
+      code: lo-la
+      id: 135
+    - name: Pashto
+      code: ps-af
+      id: 136
+    - name: Uzbek
+      code: uz-uz
+      id: 137
+    - name: Mongolian
+      code: mn-mn
+      id: 138
+    - name: Nepali
+      code: ne-np
+      id: 139
+    - name: Welsh
+      code: cy-gb
+      id: 140
+    - name: Icelandic
+      code: is-is
+      id: 141
+    - name: Taiwan Chinese (Singapore)
+      code: zh-sg
+      id: 142
+    - name: Tigrinya
+      code: ti-bo
+      id: 143
+    - name: Spanish (Latin America)
+      code: es-la
+      id: 144
+    - name: French (Canada)
+      code: fr-ca
+      id: 145
+    - name: English (Canada)
+      code: en-ca
+      id: 146
+    - name: English (Singapore)
+      code: en-sg
+      id: 147
+    - name: English (United States)
+      code: en-us
+      id: 148
+    - name: Spanish (Chile)
+      code: es-cl
+      id: 149
+    - name: Spanish (Colombia)
+      code: es-co
+      id: 150
+    - name: Spanish (Mexico)
+      code: es-mx
+      id: 151
+    - name: Spanish (Venezuela)
+      code: es-ve
+      id: 152
+    - name: Pseudo language
+      code: xx-xx
+      id: 500

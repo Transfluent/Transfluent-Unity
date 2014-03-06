@@ -10,21 +10,33 @@ namespace transfluent
 	{
 		public static TransfluentUtility utility = new TransfluentUtility();
 
+		private bool _failedSetup;
+		private TransfluentUtilityInstance _instance;
+		private LanguageList _newList;
+
+		private string destLang;
+		private string sourceLang;
+
+		public TransfluentUtility()
+		{
+			Init("en-us", "xx-xx");
+		}
+
+		public TransfluentUtility(string sourceLanguage, string destinationLanguage)
+		{
+			Init(sourceLanguage, destinationLanguage);
+		}
+
+		public bool failedSetup
+		{
+			get { return _failedSetup; }
+		}
+
 		[MenuItem("TEST/BLAH")]
 		public static void getLanguageList()
 		{
-			new TranslfuentLanguageListGetter((LanguageList myList) =>
-			{
-				Debug.Log("NEW LIST:"+JsonWriter.Serialize(myList));
-
-			});
+			new TranslfuentLanguageListGetter((LanguageList myList) => { Debug.Log("NEW LIST:" + JsonWriter.Serialize(myList)); });
 		}
-
-		private LanguageList _newList;
-		private TransfluentUtilityInstance _instance;
-
-		private bool _failedSetup;
-		public bool failedSetup { get { return _failedSetup; } }
 
 		public string getTranslation(string sourceText)
 		{
@@ -35,22 +47,7 @@ namespace transfluent
 			return _instance.getTranslation(sourceText);
 		}
 
-
-		public TransfluentUtility()
-		{
-			Init("en-us", "xx-xx");
-		}
-
-		private string sourceLang;
-		private string destLang;
-
-		public TransfluentUtility(string sourceLanguage, string destinationLanguage)
-		{
-
-			Init(sourceLanguage, destinationLanguage);
-		}
-
-		void Init(string sourceLanguage, string destinationLanguage)
+		private void Init(string sourceLanguage, string destinationLanguage)
 		{
 			sourceLang = sourceLanguage;
 			destLang = destinationLanguage;
@@ -59,15 +56,14 @@ namespace transfluent
 			{
 				new TranslfuentLanguageListGetter(onGotList);
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				Debug.LogError("Failure to get assets:" + e.Message + " stack:" + e.StackTrace);
 				_failedSetup = true;
 			}
-
 		}
 
-		void onGotList(LanguageList newList)
+		private void onGotList(LanguageList newList)
 		{
 			if (newList == null)
 			{
@@ -76,30 +72,30 @@ namespace transfluent
 				return;
 				//Init(sourceLang, destLang);
 			}
-			
+
 			_newList = newList;
 
-			TrnaslationSetGetter missing = new TrnaslationSetGetter();
+			var missing = new TrnaslationSetGetter();
 			Debug.Log("DEST LANG:" + destLang);
-			Debug.Log("NEW LIST:"+JsonWriter.Serialize(newList));
-			var dest = _newList.getLangaugeByCode(destLang);
-			var source = _newList.getLangaugeByCode(sourceLang);
-			
-			_instance = new TransfluentUtilityInstance()
+			Debug.Log("NEW LIST:" + JsonWriter.Serialize(newList));
+			TransfluentLanguage dest = _newList.getLangaugeByCode(destLang);
+			TransfluentLanguage source = _newList.getLangaugeByCode(sourceLang);
+
+			_instance = new TransfluentUtilityInstance
 			{
 				destinationLanguage = dest,
 				sourceLanguage = source,
 				languageList = _newList,
 				destinationLanguageTranslationDB = getTranslationSet(destLang),
-				missingTranslationDB = missing.getMissingSet(source.id,dest.id)
+				missingTranslationDB = missing.getMissingSet(source.id, dest.id)
 			};
-			_instance.destinationLanguageTranslationDB = missing.getMissingSet(source.id,dest.id);
+			_instance.destinationLanguageTranslationDB = missing.getMissingSet(source.id, dest.id);
 		}
 
-		GameTranslationSet getTranslationSet(string languageCode)
+		private GameTranslationSet getTranslationSet(string languageCode)
 		{
-			var destinationLanguageKnownTranslationSet = GameTranslationsCreator.GetTranslaitonSet(languageCode);
-			if(destinationLanguageKnownTranslationSet == null)
+			GameTranslationSet destinationLanguageKnownTranslationSet = GameTranslationsCreator.GetTranslaitonSet(languageCode);
+			if (destinationLanguageKnownTranslationSet == null)
 			{
 				destinationLanguageKnownTranslationSet = GameTranslationsCreator.CreateGameTranslation(languageCode);
 			}
@@ -110,27 +106,29 @@ namespace transfluent
 	public class TrnaslationSetGetter
 	{
 		private const string basePath = "Assets/Transfluent/Resources/";
-		private const string fileName = "UnknownTranslations"; 
+		private const string fileName = "UnknownTranslations";
 
-		public GameTranslationSet getMissingSet(int sourceLanguageID,int destinationLanguageID)
+		public GameTranslationSet getMissingSet(int sourceLanguageID, int destinationLanguageID)
 		{
-			string missingSetList = string.Format("{0}{1}-fromid_{2}-toid_{3}.asset", basePath, fileName, sourceLanguageID, destinationLanguageID);
+			string missingSetList = string.Format("{0}{1}-fromid_{2}-toid_{3}.asset", basePath, fileName, sourceLanguageID,
+				destinationLanguageID);
 			Debug.Log("Creating GameTranslationSet " + missingSetList);
-			GameTranslationSet set = AssetDatabase.LoadAssetAtPath(missingSetList, typeof(GameTranslationSet)) as GameTranslationSet;
-			if(set != null)
+			var set = AssetDatabase.LoadAssetAtPath(missingSetList, typeof (GameTranslationSet)) as GameTranslationSet;
+			if (set != null)
 				return set;
 
 
 			set = ScriptableObject.CreateInstance<GameTranslationSet>();
 			AssetDatabase.CreateAsset(set, missingSetList);
-			return set; 
+			return set;
 		}
-
 	}
 
 	//NOTE: this is using the source text as the text key itself
 	public class TransfluentUtilityInstance
 	{
+		private readonly Dictionary<string, string> allKnownTranslations = new Dictionary<string, string>();
+		private readonly List<string> notTranslatedCache = new List<string>();
 		public TransfluentLanguage sourceLanguage { get; set; }
 		public TransfluentLanguage destinationLanguage { get; set; }
 		public GameTranslationSet missingTranslationDB { get; set; }
@@ -139,7 +137,7 @@ namespace transfluent
 
 		private void addNewMissingTranslation(string sourceText)
 		{
-			missingTranslationDB.allTranslations.Add(new TransfluentTranslation()
+			missingTranslationDB.allTranslations.Add(new TransfluentTranslation
 			{
 				group_id = sourceLanguage.id.ToString(),
 				language = destinationLanguage,
@@ -155,18 +153,17 @@ namespace transfluent
 		{
 			foreach (TransfluentTranslation trans in destinationLanguageTranslationDB.allTranslations)
 			{
-				allKnownTranslations.Add(trans.text_id,trans.text);
+				allKnownTranslations.Add(trans.text_id, trans.text);
 			}
 			return true;
 		}
-		
+
 		/*
 		public string getGroupId()
 		{
 			return "UNITY_AUTO_GENERATED";
 		}*/
-		Dictionary<string,string> allKnownTranslations = new Dictionary<string, string>(); 
-		List<string> notTranslatedCache = new List<string>(); 
+
 		public string getTranslation(string sourceText)
 		{
 			if (allKnownTranslations.ContainsKey(sourceText))
@@ -179,13 +176,13 @@ namespace transfluent
 			}
 			return sourceText;
 		}
-
 	}
+
 	public class GameTranslationsCreator
 	{
 		private static
-			
 			string basePath = "Assets/Transfluent/Resources/";
+
 		[MenuItem("Window/Create new game translations set")]
 		public static void DoMenuItem()
 		{
@@ -212,8 +209,8 @@ namespace transfluent
 		{
 			string fileName = fileNameFromLanguageCode(langaugeCode);
 			string path = basePath + fileName;
-			GameTranslationSet set = AssetDatabase.LoadAssetAtPath(path, typeof(GameTranslationSet)) as GameTranslationSet;
-			if(set != null)
+			var set = AssetDatabase.LoadAssetAtPath(path, typeof (GameTranslationSet)) as GameTranslationSet;
+			if (set != null)
 				return set;
 			return CreateGameTranslation(fileName);
 		}

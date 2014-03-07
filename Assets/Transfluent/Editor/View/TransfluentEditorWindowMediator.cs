@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Castle.Core.Internal;
+using UnityEditor;
 using UnityEngine;
 
 namespace transfluent.editor
@@ -184,9 +185,10 @@ namespace transfluent.editor
 			}
 			return list;
 		}
-
+		IKeyStore _keyStore = new EditorKeyStore(); //TODO: inject this, as it will need to be consistent
 		public void setCurrentLanguageFromLanguageCode(string languageCode)
 		{
+			_keyStore.set("CURRENT_LANGUAGE", languageCode);
 			currentLanguage = allLanguagesSupported.getLangaugeByCode(languageCode);
 		}
 

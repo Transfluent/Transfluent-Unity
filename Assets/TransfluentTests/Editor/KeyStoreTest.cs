@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Castle.Core.Internal;
 using NUnit.Framework;
 
 namespace transfluent.tests
@@ -44,7 +46,7 @@ namespace transfluent.tests
 			byte[] bytes =  Encoding.UTF8.GetBytes(input);
 			var mem = new MemoryStream(bytes);
 			var reader = new StreamReader(mem);
-			return reader;  //Why you readin?  ... we got ourselves a reader here
+			return reader; //Why you readin?  ... we got ourselves a reader here
 		}
 		[Test]
 		public void testFileStreamKeyStore()
@@ -86,10 +88,48 @@ namespace transfluent.tests
 		[Test]
 		public void testEqualityOfInMemoryDictionary()
 		{
+			Dictionary<string,string> randomvalues = new Dictionary<string, string>()
+			{
+				{"KEYYYYYYY"+UnityEngine.Random.value,"valuuuuuuuueeeee"+UnityEngine.Random.value},
+				{"chunky"+UnityEngine.Random.value,"monkey"+UnityEngine.Random.value},
+				{"that "+UnityEngine.Random.value,"funky"+UnityEngine.Random.value},
+				{"1234","5678"},
+				{"abc","def"},
+			};
 			var inMemory = new InMemoryKeyStore();
 			var playerprefs = new PlayerPrefsKeyStore();
-			var editor = new EditorKeyCredentialProvider();
-			var fileProvider = new FileBasedCredentialProvider()
+			var editor = new EditorKeyStore();
+			List<string> values = new List<string>();
+			randomvalues.ForEach((KeyValuePair<string, string> kvp) =>
+			{
+				values.Add(kvp.Value);
+			});
+			string valueStringNewlineDelimited = string.Join("\n", values.ToArray());
+			var fileProvider = new FileLineBasedKeyStore(getMemoryStream(valueStringNewlineDelimited), values);
+			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(inMemory));
+			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(playerprefs));
+			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(editor));
+			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(fileProvider));
+
+			foreach (KeyValuePair<string, string> kvp in randomvalues)
+			{
+				UnityEngine.Debug.Log("Setting kvp:" + kvp.Key + " val" + kvp.Value);
+				inMemory.set(kvp.Key,kvp.Value);
+				playerprefs.set(kvp.Key, kvp.Value);
+				editor.set(kvp.Key, kvp.Value);
+				fileProvider.set(kvp.Key, kvp.Value);
+			}
+			standardCheck(inMemory,dictionary);
+			standardCheck(playerprefs,dictionary);
+			standardCheck(editor,dictionary);
+			standardCheck(fileProvider,dictionary);
+
+
+			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(inMemory));
+			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(playerprefs));
+			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(editor));
+			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(fileProvider));
+			
 		}
 
 		void standardCheck(IKeyStore store, Dictionary<string, string> keyValueMap)

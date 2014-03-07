@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 
@@ -77,9 +80,9 @@ namespace transfluent
 
 	public class FileLineBasedKeyStore : IKeyStore
 	{
-		private string[] lines;
+		private List<string> lines;
 		private List<string> _keyMap;
-
+		
 		public FileLineBasedKeyStore(StreamReader reader, List<string> keyMap)
 		{
 			var text = reader.ReadToEnd();
@@ -89,13 +92,16 @@ namespace transfluent
 		public FileLineBasedKeyStore(string fileName, List<string> keyMap )
 		{
 			_keyMap = keyMap;
-			init(File.ReadAllText(fileName));
+			//string text = File.ReadAllText(fileName); //this gives you the wrong path, not a project based one
+			string text = (AssetDatabase.LoadAssetAtPath(fileName, typeof (TextAsset)) as TextAsset).text;
+			init(text);
 		}
 
 		public void init(string text)
 		{
-			lines = text.Split(new[] { '\r', '\n' });
-			if(_keyMap.Count < lines.Length)
+			lines = new List<string>( text.Split(new[] {'\r', '\n'}));
+
+			if(_keyMap.Count < lines.Count)
 			{
 				throw new FileLoadException("More keys requested than there were lines in the file");
 			}
@@ -107,13 +113,20 @@ namespace transfluent
 			{
 				return "";
 			}
+			
 			//we checked that these indexes aren't invalid up front
 			return lines[_keyMap.IndexOf(key)];
 		}
 
 		public void set(string key, string value)
 		{
-			lines[_keyMap.IndexOf(key)] = value;
+			//Debug.Log(string.Format("key{0} index{1}  lineCount{2}", key, _keyMap.IndexOf(key), lines.Count));
+			if (_keyMap.Contains(key))
+			{
+				lines[_keyMap.IndexOf(key)] = value;
+			}
+			_keyMap.Add(key);
+			lines.Add(value);
 		}
 	}
 	public class CommandLineKeyStore : IKeyStore

@@ -28,13 +28,14 @@ namespace transfluent
 			List<string> allLanguageCodes = mediator.getAllLanguageCodes();
 			foreach(string languageCode in allLanguageCodes)
 			{
+				
 				try
 				{
 					mediator.setCurrentLanguageFromLanguageCode(languageCode);
 					List<TransfluentTranslation> translations = mediator.knownTextEntries();
 					if(translations.Count > 0)
 					{
-						GameTranslationSet set = GameTranslationsCreator.CreateGameTranslation("AutoDownloaded-" + languageCode);
+						GameTranslationSet set = GameTranslationsCreator.GetTranslaitonSet(languageCode);
 						set.allTranslations = translations;
 						EditorUtility.SetDirty(set);
 						AssetDatabase.SaveAssets();

@@ -74,7 +74,6 @@ public class TranslfuentLanguageListGetter
 
 	private IEnumerator gotResultOfLanguageList(WebServiceReturnStatus status)
 	{
-		Debug.Log("STATUS TEXT:" + status.text);
 		if (string.IsNullOrEmpty(status.text))
 		{
 			Debug.LogWarning("Could not get language list, retrying");
@@ -87,8 +86,6 @@ public class TranslfuentLanguageListGetter
 		}
 		try
 		{
-			Debug.Log("Debugging status text:"+ status.text);
-
 			var tmpList = webRequest.Parse(status.text);
 			_languageList.list = tmpList;
 			EditorUtility.SetDirty(_languageList);

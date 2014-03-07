@@ -1,47 +1,75 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using transfluent;
 using UnityEngine;
-using GUI = UnityEngine.GUI;
-using GUILayout = UnityEngine.GUILayout;
 
 public class InternationalTextDisplay : MonoBehaviour
 {
-	private readonly List<string> knownStrings = new List<string>();
-	[SerializeField] private string textToDisplay = "我是一个中国人的一句。";
+	private readonly Dictionary<TransfluentLanguage, GameTranslationSet> languageToGameTransationSetDictionary =
+		new Dictionary<TransfluentLanguage, GameTranslationSet>();
 
-	[SerializeField] private TransfluentTranslation translation = new TransfluentTranslation();
-
+	private LanguageList _list;
 	// Use this for initialization
 	private void Start()
 	{
+		var getter = new TranslfuentLanguageListGetter((LanguageList list) =>
+		{
+			_list = list;
+			setLanguage();
+		});
 	}
 
-	// Update is called once per frame
-	private void Update()
+	private void setLanguage()
 	{
+		foreach (TransfluentLanguage lang in _list.languages)
+		{
+			languageToGameTransationSetDictionary.Add(lang, translationSetFromLanguage(lang));
+		}
 	}
 
+	public GameTranslationSet translationSetFromLanguage(TransfluentLanguage language)
+	{
+		return GameTranslationsCreator.GetTranslaitonSet(language.code);
+	}
 
+	private GameTranslationSet currentTranslationSet;
+	private Vector2 scrollPosition;
 	private void OnGUI()
 	{
-		GUILayout.TextField(textToDisplay);
-		if (GUILayout.Button("TEST GET KNOWN TRANSLATIONS"))
+		if (_list == null)
 		{
-			knownStrings.Clear();
-			GameTranslationSet[] list = Resources.LoadAll<GameTranslationSet>("");
-				//this is *not* Assets/Transfluent/Resources, since all resources get put in the "resources" folder
-			//Debug.Log("Number of translation sets:" + list.Length);
-			foreach (GameTranslationSet set in list)
+			GUILayout.Label("Loading" + new string('.', Time.frameCount%3));
+		}
+		else
+		{
+			GUILayout.BeginVertical();
+			//GUI.BeginScrollView(new Rect(10, 300, 100, 100), Vector2.zero, new Rect(0, 0, 220, 200));
+			scrollPosition = GUILayout.BeginScrollView(scrollPosition);
+			int guiHeight = 40;
+			int currenty = 0;
+
+			foreach (TransfluentLanguage language in _list.languages)
 			{
-				foreach (TransfluentTranslation trans in set.allTranslations)
+				if (GUILayout.Button(language.name))
 				{
-					knownStrings.Add(trans.text);
+					currentTranslationSet = translationSetFromLanguage(language);
+				}
+				//GUI.Button(new Rect(0, currenty, 100, guiHeight), language.name);
+				currenty += guiHeight;
+			}
+			GUILayout.EndScrollView();
+
+			GUILayout.EndVertical();
+
+			GUILayout.BeginVertical();
+			if(currentTranslationSet != null)
+			{
+				foreach(TransfluentTranslation translation in currentTranslationSet.allTranslations)
+				{
+					GUILayout.Label(string.Format("text id:{0} group id:{1} text:{2}",translation.text_id,translation.group_id,translation.text));
 				}
 			}
-		}
-		foreach (string knownString in knownStrings)
-		{
-			GUILayout.Label(knownString);
+			GUILayout.EndVertical();
 		}
 	}
 }

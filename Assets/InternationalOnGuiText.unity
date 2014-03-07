@@ -216,18 +216,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 974352551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65bd0001b6ace44779d2d3a91f62317b, type: 3}
+  m_Script: {fileID: 11500000, guid: 1cfe08dd1f9ba4e369505b10a4b0255c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textToDisplay: "\u6211\u662F\u4E00\u4E2A\u4E2D\u56FD\u4EBA\u7684\u4E00\u53E5\u3002"
-  translation:
-    text_id: hello there
-    group_id: 
-    language:
-      name: 
-      code: 
-      id: 0
-    text: 
+  scrollPosition: {x: 0, y: 0}
+  longString: This is a long-ish string
 --- !u!4 &974352553
 Transform:
   m_ObjectHideFlags: 0

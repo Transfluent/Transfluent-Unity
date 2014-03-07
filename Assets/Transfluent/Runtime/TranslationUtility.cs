@@ -87,10 +87,6 @@ namespace transfluent
 		private GameTranslationSet getTranslationSet(string languageCode)
 		{
 			GameTranslationSet destinationLanguageKnownTranslationSet = GameTranslationsCreator.GetTranslaitonSet(languageCode);
-			if (destinationLanguageKnownTranslationSet == null)
-			{
-				destinationLanguageKnownTranslationSet = GameTranslationsCreator.CreateGameTranslation(languageCode);
-			}
 			return destinationLanguageKnownTranslationSet;
 		}
 	}
@@ -195,12 +191,13 @@ namespace transfluent
 			CreateGameTranslation("GameTranslationSet");
 		}
 
-		public static GameTranslationSet CreateGameTranslation(string fileName)
+		static GameTranslationSet CreateGameTranslation(string fileName)
 		{
-			string gameTranslationFileName = basePath + fileName + ".asset";
-			string uniqueName = AssetDatabase.GenerateUniqueAssetPath(gameTranslationFileName);
+			Debug.Log("CreateTHings " + fileName);
 			var set = ScriptableObject.CreateInstance<GameTranslationSet>();
-			AssetDatabase.CreateAsset(set, uniqueName);
+			AssetDatabase.CreateAsset(set,fileName);
+			
+			EditorUtility.SetDirty(set);
 			AssetDatabase.SaveAssets();
 
 			return set;
@@ -211,14 +208,19 @@ namespace transfluent
 			return "AutoDownloaded-" + languageCode + ".asset";
 		}
 
+		public static GameTranslationSet GetTranslaitonSetFromPath(string path)
+		{
+			var set = AssetDatabase.LoadAssetAtPath(path, typeof(GameTranslationSet)) as GameTranslationSet;
+			if(set != null)
+				return set;
+			
+			return CreateGameTranslation(path);
+		}
 		public static GameTranslationSet GetTranslaitonSet(string langaugeCode)
 		{
 			string fileName = fileNameFromLanguageCode(langaugeCode);
 			string path = basePath + fileName;
-			var set = AssetDatabase.LoadAssetAtPath(path, typeof (GameTranslationSet)) as GameTranslationSet;
-			if (set != null)
-				return set;
-			return CreateGameTranslation(fileName);
+			return GetTranslaitonSetFromPath(path);
 		}
 	}
 }

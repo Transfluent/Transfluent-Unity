@@ -33,3 +33,10 @@ MonoBehaviour:
       code: fr-fr
       id: 2
     text: HELLO WORLD
+  - text_id: THIS IS FROM THE EDITOR
+    group_id: 
+    language:
+      name: French (France)
+      code: fr-fr
+      id: 2
+    text: hi there

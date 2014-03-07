@@ -18,14 +18,14 @@ MonoBehaviour:
       name: Pseudo language
       code: xx-xx
       id: 500
-    text: 1099551.0txet elpmas si siht
+    text: 19737970.0txet elpmas si siht
   - text_id: UNITY_TEST_TRANSLATION_KEY
     group_id: 
     language:
       name: Pseudo language
       code: xx-xx
       id: 500
-    text: 41875530.0txet tset si siht
+    text: 829786.0txet tset si siht
   - text_id: TEST_CREATION_OF_A_KEY
     group_id: 
     language:
@@ -54,3 +54,10 @@ MonoBehaviour:
       code: xx-xx
       id: 500
     text: ?gniyas uoy era tahW
+  - text_id: THIS IS FROM THE EDITOR
+    group_id: 
+    language:
+      name: Pseudo language
+      code: xx-xx
+      id: 500
+    text: ereht ih

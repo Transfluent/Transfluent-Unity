@@ -28,7 +28,6 @@ namespace transfluent
 			List<string> allLanguageCodes = mediator.getAllLanguageCodes();
 			foreach(string languageCode in allLanguageCodes)
 			{
-				
 				try
 				{
 					mediator.setCurrentLanguageFromLanguageCode(languageCode);

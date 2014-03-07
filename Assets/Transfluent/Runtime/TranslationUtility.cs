@@ -208,19 +208,19 @@ namespace transfluent
 			return "AutoDownloaded-" + languageCode + ".asset";
 		}
 
-		public static GameTranslationSet GetTranslaitonSetFromPath(string path)
+		public static GameTranslationSet GetTranslaitonSetFromPath(string path,bool allowNull=false)
 		{
 			var set = AssetDatabase.LoadAssetAtPath(path, typeof(GameTranslationSet)) as GameTranslationSet;
-			if(set != null)
+			if(set != null || allowNull)
 				return set;
 			
 			return CreateGameTranslation(path);
 		}
-		public static GameTranslationSet GetTranslaitonSet(string langaugeCode)
+		public static GameTranslationSet GetTranslaitonSet(string langaugeCode, bool allowNull = false)
 		{
 			string fileName = fileNameFromLanguageCode(langaugeCode);
 			string path = basePath + fileName;
-			return GetTranslaitonSetFromPath(path);
+			return GetTranslaitonSetFromPath(path,allowNull);
 		}
 	}
 }

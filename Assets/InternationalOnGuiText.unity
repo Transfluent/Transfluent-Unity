@@ -216,11 +216,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 974352551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cfe08dd1f9ba4e369505b10a4b0255c, type: 3}
+  m_Script: {fileID: 11500000, guid: f77e80afb1ad14389ad6238e00a8de63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollPosition: {x: 0, y: 0}
-  longString: This is a long-ish string
 --- !u!4 &974352553
 Transform:
   m_ObjectHideFlags: 0

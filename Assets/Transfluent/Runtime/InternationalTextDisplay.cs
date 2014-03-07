@@ -23,13 +23,15 @@ public class InternationalTextDisplay : MonoBehaviour
 	{
 		foreach (TransfluentLanguage lang in _list.languages)
 		{
-			languageToGameTransationSetDictionary.Add(lang, translationSetFromLanguage(lang));
+			var translationSet = translationSetFromLanguage(lang);
+			if(translationSet != null)
+				languageToGameTransationSetDictionary.Add(lang, translationSet);
 		}
 	}
 
 	public GameTranslationSet translationSetFromLanguage(TransfluentLanguage language)
 	{
-		return GameTranslationsCreator.GetTranslaitonSet(language.code);
+		return GameTranslationsCreator.GetTranslaitonSet(language.code,true);
 	}
 
 	private GameTranslationSet currentTranslationSet;

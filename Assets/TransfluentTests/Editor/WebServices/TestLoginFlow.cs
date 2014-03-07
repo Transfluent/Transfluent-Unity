@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
+using transfluent.editor;
 
 namespace transfluent.tests
 {

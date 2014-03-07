@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Castle.Core.Internal;
 using NUnit.Framework;
+using transfluent.editor;
 
 namespace transfluent.tests
 {
@@ -130,6 +131,9 @@ namespace transfluent.tests
 			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(editor));
 			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(fileProvider));
 			
+			FileBasedCredentialProvider provider = new FileBasedCredentialProvider();
+			Assert.AreEqual(provider.username,"alex@transfluent.com");
+			UnityEngine.Debug.Log("HELLO"+provider.username);
 		}
 
 		void standardCheck(IKeyStore store, Dictionary<string, string> keyValueMap)
@@ -138,11 +142,12 @@ namespace transfluent.tests
 			{
 				store.set(kvp.Key, kvp.Value);
 			}
-			//make sure that it wasn't just giving you the last result put in
+			//make sure that it wasn't just giving you the last result put in by iterating over the entire dictionary again
 			foreach(KeyValuePair<string, string> kvp in keyValueMap)
 			{
 				Assert.AreEqual(store.get(kvp.Key), keyValueMap[kvp.Key]);
 			}
+
 		}
 	}
 }

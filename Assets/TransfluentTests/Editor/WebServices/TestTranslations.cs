@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
+using transfluent.editor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

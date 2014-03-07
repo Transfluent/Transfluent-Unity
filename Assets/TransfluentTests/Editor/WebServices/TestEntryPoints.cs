@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using transfluent.editor;
 using Random = UnityEngine.Random;
 
 namespace transfluent.tests

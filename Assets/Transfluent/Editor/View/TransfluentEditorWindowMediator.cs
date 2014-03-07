@@ -49,8 +49,9 @@ namespace transfluent.editor
 			{
 				retVal = context.manualGetMapping<string>(NamedInjections.API_TOKEN);
 			}
-			catch (KeyNotFoundException e)
+			catch (KeyNotFoundException)
 			{
+
 			} //this is ok... I don't want to rewrite manualGetMapping
 			return retVal;
 		}

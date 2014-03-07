@@ -28,7 +28,7 @@ namespace transfluent.editor
 				return;
 			}
 			EditorGUILayout.BeginHorizontal();
-			bool languageChanged = showCurrentLanguage();
+			showCurrentLanguage();
 
 			if (_mediator.GetCurrentLanguage() == null)
 			{

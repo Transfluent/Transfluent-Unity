@@ -12,7 +12,7 @@ public class InternationalTextDisplay : MonoBehaviour
 	// Use this for initialization
 	private void Start()
 	{
-		var getter = new TranslfuentLanguageListGetter((LanguageList list) =>
+		new TranslfuentLanguageListGetter((LanguageList list) =>
 		{
 			_list = list;
 			setLanguage();

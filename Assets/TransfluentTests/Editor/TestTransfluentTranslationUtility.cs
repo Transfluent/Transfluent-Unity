@@ -39,7 +39,7 @@ public class TestTransfluentTranslationUtility
 		AssetDatabase.DeleteAsset(TranslfuentLanguageListGetter.LanguageListPath().Replace(".asset",""));
 		//AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 		
-		TranslfuentLanguageListGetter getter = new TranslfuentLanguageListGetter((LanguageList newList) =>
+		new TranslfuentLanguageListGetter((LanguageList newList) =>
 		{	
 			Assert.NotNull(newList);
 			Assert.NotNull(newList.languages);

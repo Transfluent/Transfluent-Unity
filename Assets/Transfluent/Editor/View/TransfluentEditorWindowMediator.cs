@@ -3,9 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Castle.Core.Internal;
 using UnityEditor;
-using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace transfluent.editor
 {
@@ -76,20 +77,28 @@ namespace transfluent.editor
 			}
 			if (allLanguagesSupported == null)
 			{
-				var languageRequest = new RequestAllLanguages();
-				try
-				{
-					allLanguagesSupported = languageRequest.Parse(makeCall(languageRequest));
-				}
-				catch (CallException e)
-				{
-					Debug.LogError("error getting all languages:" + e.Message);
-				}
+				allLanguagesSupported = ResourceLoadFacade.getLanguageList();
+				if (allLanguagesSupported == null)
+					requestAllLanguagesInEditorSynchronous();
 
 				if (allLanguagesSupported == null) return false;
 			}
 
 			return true;
+		}
+		
+		[Conditional("UNITY_EDITOR")]
+		public void requestAllLanguagesInEditorSynchronous()
+		{
+			try
+			{
+				var languageRequest = new RequestAllLanguages();
+				allLanguagesSupported = languageRequest.Parse(makeCall(languageRequest));
+			}
+			catch(CallException e)
+			{
+				Debug.LogError("error getting all languages:" + e.Message);
+			}
 		}
 
 		private bool doAuth()

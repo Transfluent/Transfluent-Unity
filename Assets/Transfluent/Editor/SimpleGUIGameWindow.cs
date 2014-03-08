@@ -14,7 +14,7 @@ namespace transfluent.editor
 			loginScreen = new TransfluentEditorWindow.LoginGUI(_mediator);
 		}
 
-		[MenuItem("Window/Transfluent Helper")]
+		[MenuItem("Window/Set Current Language")]
 		public static void Init()
 		{
 			GetWindow<SimpleGUIGameWindow>();

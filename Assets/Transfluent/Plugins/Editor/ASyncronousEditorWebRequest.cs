@@ -2,47 +2,169 @@
 using System.Collections;
 using System.Diagnostics;
 using UnityEditor;
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 namespace transfluent.editor
 {
-	public class AsyncTester
+	[ExecuteInEditMode]
+	public class AsyncEditorWebRequester
+	{
+		private GameTimeWWW www;
+		public AsyncEditorWebRequester()
+		{
+		}
+
+		[MenuItem("asink/test asink hijack")]
+		public static void MakeRequests()
+		{
+			var hijack = new AsyncEditorWebRequester();
+			hijack.DoThing(new RequestAllLanguages(), gotStatusUpdate);
+			hijack.DoThing(new Hello("World"), gotStatusUpdate);
+			Debug.Log("DOING THING");
+		}
+
+		static IEnumerator gotStatusUpdate(WebServiceReturnStatus status)
+		{
+			Debug.Log("Web request got back:"+status);
+			yield return null;
+		}
+
+		public void DoThing(ITransfluentParameters parameters,GameTimeWWW.GotstatusUpdate statusUpdated)
+		{
+			www = new GameTimeWWW();
+			www.runner = new AsyncRunner();
+			www.webRequest(parameters,statusUpdated);
+
+		}
+	}
+	[ExecuteInEditMode]
+	public class AsyncRunner : IRoutineRunner
+	{
+		private static readonly TimeSpan maxTime = new TimeSpan(0, 0, 10);
+		private Stopwatch sw;
+
+		public AsyncRunner()
+		{
+			
+		}
+
+		[MenuItem("asink/testme2")]
+		public static void testMe()
+		{
+			AsyncRunner runner = new AsyncRunner();
+			runner.runRoutine(testRoutine());
+
+		}
+		static IEnumerator testRoutine()
+		{
+			Stopwatch sw = new Stopwatch();
+			sw.Start();
+			int ticks = 0;
+			//while(maxticks >0)
+			while(ticks < 100)//sw.Elapsed < maxTime)
+			{
+				ticks++;
+				UnityEngine.Debug.Log("MAXticks:" + ticks + " time:" + sw.Elapsed);
+				yield return null;
+			}
+			Debug.LogWarning(ticks + "TOTLAL TIME:" + sw.Elapsed);
+			yield return null;
+			Debug.LogWarning("LAST LINE OF COROUTINE");
+		}
+
+		public void runRoutine(IEnumerator routineToRun)
+		{
+			
+			_routineHandle = routineToRun;
+			sw = new Stopwatch();
+			sw.Start();
+			Debug.Log("Run routine");
+			doCoroutine();
+		}
+		private IEnumerator _routineHandle;
+		private void doCoroutine()
+		{
+			Debug.Log("DO COROTUINE");
+			if(sw.Elapsed < maxTime) 
+			{
+				//if routineHandl e.Current == waitforseconds... wait for that many seconds before checking or moving forward again
+				if (_routineHandle != null)
+				{
+					//kill the reference if we no longer move forward
+					if (!_routineHandle.MoveNext())
+					{
+						Debug.LogWarning("KILLING SELF as otherCoroutine ended:" + sw.Elapsed);
+						_routineHandle = null;
+						EditorApplication.update = null;
+					}
+					else
+					{
+						Debug.Log("setting up to run again");
+						EditorApplication.update = doCoroutine;
+					}
+				}
+				else
+				{
+					Debug.LogWarning("ENDED COROUTINE BECAUSE routine is over");
+					EditorApplication.update = null;
+				}
+			}
+			else
+			{
+				Debug.LogWarning("waiting for next editor update");
+				EditorApplication.update = doCoroutine;
+			}
+		}
+	}
+	[ExecuteInEditMode]
+	public class AsyncTester : IRoutineRunner
 	{
 		private readonly TimeSpan maxTime = new TimeSpan(0, 0, 10);
 		private readonly Stopwatch sw;
 
 		private IEnumerator routineHandle;
 
+		private int counter;
 		public AsyncTester()
 		{
+			counter = staticCounter++;
 			sw = new Stopwatch();
-			EditorApplication.update += doCoroutine;
-
 			routineHandle = testRoutine();
+			EditorApplication.update += doCoroutine;			
 		}
 
-		//[MenuItem("asink/testme")]
+		[MenuItem("asink/testme")]
 		public static void testMe()
 		{
-			new AsyncTester();
-		}
 
+			new AsyncTester();
+			//new AsyncTester();
+			//new AsyncTester();
+		}
+		
+	
 		public IEnumerator testRoutine()
 		{
 			int maxticks = 100;
-
+			Debug.Log(counter+"MAXticks:" + maxticks);
 			//while(maxticks >0)
-			while (sw.Elapsed < maxTime)
+			while (sw.Elapsed < maxTime )
 			{
 				maxticks--;
-				//UnityEngine.Debug.Log("MAXticks:" + maxticks);
+				//UnityEngine.Debug.Log("MAXticks:" + maxticks + " time:" + sw.Elapsed);
 				yield return null;
 			}
+			Debug.LogWarning(counter + "TOTLAL TIME:" + sw.Elapsed);
+			yield return null;
+			Debug.LogWarning("LAST LINE OF COROUTINE");
 		}
 
+		public static int staticCounter = 1;
 		private void doCoroutine()
 		{
-			sw.Start();
+			
+			//Debug.Log(counter + "coroutine:" );
 			if (sw.Elapsed < maxTime) //if(true) also works.
 			{
 				//if routineHandl e.Current == waitforseconds... wait for that many seconds before checking or moving forward again
@@ -51,7 +173,7 @@ namespace transfluent.editor
 					//kill the reference if we no longer move forward
 					if (!routineHandle.MoveNext())
 					{
-						Debug.Log("KILLING SELF:" + sw.Elapsed);
+						Debug.LogWarning(counter + "KILLING SELF as otherCoroutine ended:" + sw.Elapsed);
 						routineHandle = null;
 					}
 				}
@@ -60,6 +182,11 @@ namespace transfluent.editor
 			{
 				EditorApplication.update = doCoroutine;
 			}
+		}
+
+		public void runRoutine(IEnumerator routineToRun)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

@@ -46,7 +46,7 @@ public class InternationalTextDisplay : MonoBehaviour
 	{
 		if (_list == null)
 		{
-			GUILayout.Label("Loading" + new string('.', Time.frameCount%3));
+			GUILayout.Label("Loading" + new string('.', Mathf.FloorToInt(Time.realtimeSinceStartup) %3));
 		}
 		else
 		{

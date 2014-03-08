@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace transfluent
 {
-	class GameTimeWWW
+	public class GameTimeWWW
 	{
-		private IRoutineRunner runner = new RoutineRuner();
+		public IRoutineRunner runner = new RoutineRunner();
 		
 		public void startRoutine(IEnumerator routine)
 		{

@@ -6,10 +6,10 @@ public interface IRoutineRunner
 	void runRoutine(IEnumerator routineToRun);
 }
 
-public class RoutineRuner : IRoutineRunner
+public class RoutineRunner : IRoutineRunner
 {
 	private RunnerMonobehaviour runner;
-	public RoutineRuner()
+	public RoutineRunner()
 	{
 		runner = GameObject.FindObjectOfType<RunnerMonobehaviour>();
 		if(runner == null)

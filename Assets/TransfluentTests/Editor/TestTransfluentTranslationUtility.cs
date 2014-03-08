@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
 using transfluent;
+using transfluent.editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -35,24 +36,32 @@ public class TestTransfluentTranslationUtility
 	[Test]
 	public void testLanguageListGetterWithNoList()
 	{
-		Debug.Log("PATH:" + TranslfuentLanguageListGetter.LanguageListPath());
-		AssetDatabase.DeleteAsset(TranslfuentLanguageListGetter.LanguageListPath().Replace(".asset",""));
-		//AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+		//LanguageList list = ResourceLoadAdapter.getLanguageList();
+		//Assets/Transfluent/Resources/LanguageList.asset
+		string languageListPath = "Assets/Transfluent/Resources/LanguageList.asset";
+		AssetDatabase.DeleteAsset(languageListPath);
+		IWebService service = new SyncronousEditorWebRequest();
+		var request = new RequestAllLanguages();
+		var status = service.request(request);
+		LanguageList list = request.Parse(status.text);
+		Assert.NotNull(list);
+		Assert.NotNull(list.languages);
+		Assert.Greater(list.languages.Count, 0);
+
+		var so = ResourceCreator.CreateSO<LanguageListSO>("LanguageList");
+		so.list = list;
+		EditorUtility.SetDirty(so);
 		
-		new TranslfuentLanguageListGetter((LanguageList newList) =>
-		{	
-			Assert.NotNull(newList);
-			Assert.NotNull(newList.languages);
-			Assert.Greater(newList.languages.Count,0);
-			
-			AssetDatabase.SaveAssets();
-			//manual load
-			var fromDisk = AssetDatabase.LoadAssetAtPath(TranslfuentLanguageListGetter.LanguageListPath(), typeof (LanguageListSO)) as LanguageListSO;
-			Assert.NotNull(fromDisk);
-			Assert.NotNull(fromDisk.list);
-			Assert.NotNull(fromDisk.list.languages);
-			Assert.Greater(fromDisk.list.languages.Count, 0);
-			Debug.Log("newlist:"+JsonWriter.Serialize(newList));
-		});
+		LanguageList newList = ResourceLoadFacade.getLanguageList(); //NOTE: THIS IS THE RUNTIME VERSION... not the editor time version
+
+		AssetDatabase.SaveAssets();
+		//manual load
+
+		LanguageListSO fromDisk = AssetDatabase.LoadAssetAtPath(languageListPath, typeof (LanguageListSO)) as LanguageListSO;
+		Assert.NotNull(fromDisk);
+		Assert.NotNull(fromDisk.list);
+		Assert.NotNull(fromDisk.list.languages);
+		Assert.Greater(fromDisk.list.languages.Count, 0);
+		Debug.Log("newlist:"+JsonWriter.Serialize(newList));
 	}
 }

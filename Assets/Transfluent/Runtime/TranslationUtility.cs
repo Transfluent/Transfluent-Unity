@@ -47,11 +47,11 @@ namespace transfluent
 
 			try
 			{
-				new TranslfuentLanguageListGetter(onGotList);
+				onGotList(ResourceLoadFacade.getLanguageList());
 			}
 			catch (Exception e)
 			{
-				Debug.LogError("Failure to get assets:" + e.Message + " stack:" + e.StackTrace);
+				Debug.LogError("Failure to set up transfluent translations assets:" + e.Message + " stack:" + e.StackTrace);
 				_failedSetup = true;
 			}
 		}
@@ -68,45 +68,20 @@ namespace transfluent
 
 			_newList = newList;
 
-			var missing = new TranslationGetter();
 			TransfluentLanguage dest = _newList.getLangaugeByCode(destLang);
 			TransfluentLanguage source = _newList.getLangaugeByCode(sourceLang);
+			//TODO: replace this immediately with something that is specific to the editor
+			var missingTranslations = GameTranslationGetter.GetMissingTranslationSet(source.id, dest.id);
 
 			_instance = new TransfluentUtilityInstance
 			{
 				destinationLanguage = dest,
 				sourceLanguage = source,
 				languageList = _newList,
-				destinationLanguageTranslationDB = getTranslationSet(destLang),
-				
+				destinationLanguageTranslationDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destLang),
+				missingTranslationDB = missingTranslations,
 			};
-			_instance.missingTranslationDB = missing.getMissingSet(source.id, dest.id);
 			_instance.init();
-		}
-
-		private GameTranslationSet getTranslationSet(string languageCode)
-		{
-			GameTranslationSet destinationLanguageKnownTranslationSet = GameTranslationsCreator.GetTranslaitonSet(languageCode);
-			return destinationLanguageKnownTranslationSet;
-		}
-	}
-
-	public class TranslationGetter
-	{
-		private const string basePath = "Assets/Transfluent/Resources/";
-		private const string fileName = "UnknownTranslations";
-
-		public GameTranslationSet getMissingSet(int sourceLanguageID, int destinationLanguageID)
-		{
-			string missingSetList = string.Format("{0}{1}-fromid_{2}-toid_{3}.asset", basePath, fileName, sourceLanguageID,
-				destinationLanguageID);
-			var set = AssetDatabase.LoadAssetAtPath(missingSetList, typeof (GameTranslationSet)) as GameTranslationSet;
-			if (set != null)
-				return set;
-
-			set = ScriptableObject.CreateInstance<GameTranslationSet>();
-			AssetDatabase.CreateAsset(set, missingSetList);
-			return set;
 		}
 	}
 
@@ -124,6 +99,7 @@ namespace transfluent
 
 		private void addNewMissingTranslation(string sourceText)
 		{
+			
 			string textId = sourceText;
 			bool shouldAdd = missingTranslationDB.allTranslations.TrueForAll((TransfluentTranslation otherlang) =>
 			{
@@ -171,56 +147,15 @@ namespace transfluent
 			{
 				return allKnownTranslations[sourceText];
 			}
-			if (!notTranslatedCache.Contains(sourceText))
+			if (missingTranslationDB != null && !notTranslatedCache.Contains(sourceText))
 			{
 				notTranslatedCache.Add(sourceText);
+
 				addNewMissingTranslation(sourceText);
 			}
 			return sourceText;
 		}
 	}
 
-	public class GameTranslationsCreator
-	{
-		private static
-			string basePath = "Assets/Transfluent/Resources/";
-
-		[MenuItem("Window/Create new game translations set")]
-		public static void DoMenuItem()
-		{
-			CreateGameTranslation("GameTranslationSet");
-		}
-
-		static GameTranslationSet CreateGameTranslation(string fileName)
-		{
-			Debug.Log("CreateTHings " + fileName);
-			var set = ScriptableObject.CreateInstance<GameTranslationSet>();
-			AssetDatabase.CreateAsset(set,fileName);
-			
-			EditorUtility.SetDirty(set);
-			AssetDatabase.SaveAssets();
-
-			return set;
-		}
-
-		public static string fileNameFromLanguageCode(string languageCode)
-		{
-			return "AutoDownloaded-" + languageCode + ".asset";
-		}
-
-		public static GameTranslationSet GetTranslaitonSetFromPath(string path,bool allowNull=false)
-		{
-			var set = AssetDatabase.LoadAssetAtPath(path, typeof(GameTranslationSet)) as GameTranslationSet;
-			if(set != null || allowNull)
-				return set;
-			
-			return CreateGameTranslation(path);
-		}
-		public static GameTranslationSet GetTranslaitonSet(string langaugeCode, bool allowNull = false)
-		{
-			string fileName = fileNameFromLanguageCode(langaugeCode);
-			string path = basePath + fileName;
-			return GetTranslaitonSetFromPath(path,allowNull);
-		}
-	}
+	
 }

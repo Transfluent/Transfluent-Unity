@@ -19,3 +19,10 @@ MonoBehaviour:
       code: de-de
       id: 3
     text: What are you saying?
+  - text_id: TEST_KEY_2
+    group_id: 
+    language:
+      name: German
+      code: de-de
+      id: 3
+    text: this is test text

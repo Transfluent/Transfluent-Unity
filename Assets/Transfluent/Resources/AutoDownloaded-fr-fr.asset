@@ -40,3 +40,10 @@ MonoBehaviour:
       code: fr-fr
       id: 2
     text: hi there
+  - text_id: hello world
+    group_id: 
+    language:
+      name: French (France)
+      code: fr-fr
+      id: 2
+    text: stuff

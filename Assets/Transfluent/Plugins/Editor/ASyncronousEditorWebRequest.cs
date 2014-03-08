@@ -4,7 +4,7 @@ using System.Diagnostics;
 using UnityEditor;
 using Debug = UnityEngine.Debug;
 
-namespace transfluent
+namespace transfluent.editor
 {
 	public class AsyncTester
 	{

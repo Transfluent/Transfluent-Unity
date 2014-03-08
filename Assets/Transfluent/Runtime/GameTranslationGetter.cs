@@ -1,0 +1,39 @@
+﻿using UnityEditor;
+using UnityEngine;
+
+namespace transfluent
+{
+	public class GameTranslationGetter
+	{
+		public static string fileNameFromLanguageCode(string languageCode)
+		{
+			return "AutoDownloaded-" + languageCode + ".asset";
+		}
+
+		public static GameTranslationSet GetTranslaitonSetFromPath(string path)
+		{
+			return Resources.Load(path) as GameTranslationSet;
+		}
+
+		public static string GetMissingTranslationSetFilename(int sourceLanguageID, int destinationLanguageID)
+		{
+			const string fileName = "UnknownTranslations";
+			string missingSetList = string.Format("{0}-fromid_{1}-toid_{2}.asset", fileName, sourceLanguageID,
+				destinationLanguageID);
+			return missingSetList;
+		}
+		public static GameTranslationSet GetTranslaitonSetFromLanguageCode(string langaugeCode)
+		{
+			string fileName = fileNameFromLanguageCode(langaugeCode);
+			string path = fileName;
+			return ResourceLoadFacade.LoadResource<GameTranslationSet>(path);
+		}
+
+		public static GameTranslationSet GetMissingTranslationSet(int sourceLanguageID, int destinationLanguageID)
+		{
+			string filename = GetMissingTranslationSetFilename(sourceLanguageID, destinationLanguageID);
+			return ResourceLoadFacade.LoadResource<GameTranslationSet>(filename);
+		}
+	}
+
+}

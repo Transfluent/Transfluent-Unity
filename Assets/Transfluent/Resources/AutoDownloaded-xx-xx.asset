@@ -18,14 +18,14 @@ MonoBehaviour:
       name: Pseudo language
       code: xx-xx
       id: 500
-    text: 19737970.0txet elpmas si siht
+    text: 6710496.0txet elpmas si siht
   - text_id: UNITY_TEST_TRANSLATION_KEY
     group_id: 
     language:
       name: Pseudo language
       code: xx-xx
       id: 500
-    text: 829786.0txet tset si siht
+    text: 76237140.0txet tset si siht
   - text_id: TEST_CREATION_OF_A_KEY
     group_id: 
     language:
@@ -61,3 +61,17 @@ MonoBehaviour:
       code: xx-xx
       id: 500
     text: ereht ih
+  - text_id: hello world
+    group_id: 
+    language:
+      name: Pseudo language
+      code: xx-xx
+      id: 500
+    text: ffuts
+  - text_id: TEST_KEY_2
+    group_id: 
+    language:
+      name: Pseudo language
+      code: xx-xx
+      id: 500
+    text: txet tset si siht

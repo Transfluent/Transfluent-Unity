@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using transfluent;
 using UnityEngine;
@@ -12,11 +13,16 @@ public class InternationalTextDisplay : MonoBehaviour
 	// Use this for initialization
 	private void Start()
 	{
-		new TranslfuentLanguageListGetter((LanguageList list) =>
+		try
 		{
-			_list = list;
-			setLanguage();
-		});
+			_list = ResourceLoadFacade.getLanguageList();
+		}
+		catch
+		{
+			throw new Exception("Invalid setup for transfluent, disabling translation");
+		}
+		
+		setLanguage();
 	}
 
 	private void setLanguage()
@@ -31,7 +37,7 @@ public class InternationalTextDisplay : MonoBehaviour
 
 	public GameTranslationSet translationSetFromLanguage(TransfluentLanguage language)
 	{
-		return GameTranslationsCreator.GetTranslaitonSet(language.code,true);
+		return GameTranslationGetter.GetTranslaitonSetFromLanguageCode(language.code);
 	}
 
 	private GameTranslationSet currentTranslationSet;

@@ -39,7 +39,7 @@ namespace transfluent.tests
 				throw new Exception("was not able to log in!");
 			}
 			getLanguages();
-			SaveRetrieveKey(TRANSLATION_KEY);
+			SaveRetrieveKey(TRANSLATION_KEY,englishLanguage);
 		}
 
 		public void getLanguages()
@@ -57,13 +57,13 @@ namespace transfluent.tests
 			Assert.NotNull(backwardsLanguage);
 		}
 
-		public void SaveRetrieveKey(string keyToSaveAndThenGet)
+		public void SaveRetrieveKey(string keyToSaveAndThenGet,TransfluentLanguage language)
 		{
 			//post text key
 			string textToSave = textToSetTestTokenTo + Random.value;
 			var saveOp = new SaveTextKey
 				(
-				language: englishLanguage.id,
+				language: language.id,
 				text: textToSave,
 				text_id: keyToSaveAndThenGet
 				);
@@ -71,7 +71,7 @@ namespace transfluent.tests
 			Assert.IsTrue(saveOp.Parse(callText));
 			var testForExistance = new GetTextKey
 				(
-				languageID: englishLanguage.id,
+				languageID: language.id,
 				text_id: keyToSaveAndThenGet
 				);
 			string stringFromServer = testForExistance.Parse(justCall(testForExistance));
@@ -82,7 +82,7 @@ namespace transfluent.tests
 			//save it back to what we expect it to be
 			saveOp = new SaveTextKey
 				(
-				language: englishLanguage.id,
+				language: language.id,
 				text: textToSetTestTokenTo,
 				text_id: keyToSaveAndThenGet
 				);
@@ -264,6 +264,34 @@ namespace transfluent.tests
 			WebServiceReturnStatus result = requester.request(translateRequest);
 			Debug.Log("Full result from test translation:" + JsonWriter.Serialize(result.text));
 			Assert.IsTrue(translationResult.word_count > 0);
+		}
+
+		//NOTE: keys are not immediately translated
+		[Test]
+		public void testGermanKeyBackwards()
+		{
+			var german = languageCache.getLangaugeByCode("de-de");
+			Assert.NotNull(german);
+			SaveRetrieveKey("TEST_KEY_2", german);
+			var englishTranslationOfEnglishKey = new TextStatus
+				(
+				text_id: TRANSLATION_KEY,
+				language_id: german.id
+				);
+			TextStatusResult rawStatus = englishTranslationOfEnglishKey.Parse(justCall(englishTranslationOfEnglishKey));
+
+			bool status = rawStatus.is_translated;
+
+			Assert.True(status);
+
+			var backwardsTranslationOfExistingKey = new TextStatus
+				(
+				text_id: TRANSLATION_KEY,
+				language_id: backwardsLanguage.id
+				);
+
+			status = backwardsTranslationOfExistingKey.Parse(justCall(backwardsTranslationOfExistingKey)).is_translated;
+			Assert.IsTrue(status);
 		}
 	}
 }

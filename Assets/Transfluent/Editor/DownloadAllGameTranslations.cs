@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using transfluent.editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace transfluent
+namespace transfluent.editor
 {
-	
-
 	public class DownloadAllGameTranslations
 	{
 		// I don't know if I am going to expose this, but it is something to do
@@ -34,7 +31,13 @@ namespace transfluent
 					List<TransfluentTranslation> translations = mediator.knownTextEntries();
 					if(translations.Count > 0)
 					{
-						GameTranslationSet set = GameTranslationsCreator.GetTranslaitonSet(languageCode);
+						GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode);
+						if (set == null)
+						{
+							set = ResourceCreator.CreateSO<GameTranslationSet>(GameTranslationGetter.fileNameFromLanguageCode(languageCode));
+						}
+
+						//GameTranslationSet set = GameTranslationsCreator.GetTranslaitonSet(languageCode);
 						set.allTranslations = translations;
 						EditorUtility.SetDirty(set);
 						AssetDatabase.SaveAssets();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace transfluent
@@ -47,7 +48,22 @@ namespace transfluent
 			var responseFullyParse = responseReader.deserialize<ResponseContainer<T>>(text);
 			return responseFullyParse.response;
 		}
-
+		
+		public override string ToString()
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.Append("getparams:");
+			foreach (KeyValuePair<string, string> kvp in getParameters)
+			{
+				sb.Append(string.Format("key:{0} value{1}", kvp.Key, kvp.Value));
+			}
+			sb.Append("Postparams:");
+			foreach(KeyValuePair<string, string> kvp in postParameters)
+			{
+				sb.Append(string.Format("key:{0} value{1}", kvp.Key, kvp.Value));
+			}
+			return sb.ToString();
+		}
 	}
 
 	//something specific to the call went wrong

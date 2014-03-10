@@ -67,7 +67,6 @@ namespace transfluent.editor
 			return false;
 		}
 
-		//TODO: convert to propertydrawer
 		public class TextsGUI
 		{
 			private readonly TransfluentEditorWindowMediator _mediator;

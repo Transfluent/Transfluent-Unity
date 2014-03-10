@@ -4,7 +4,7 @@ using transfluent.editor;
 using UnityEditor;
 using UnityEngine;
 
-public class SelectLanguagesWindow : EditorWindow
+public class SetupTranslationConfiguration : EditorWindow
 {
 	private readonly TransfluentEditorWindowMediator _mediator;
 	private LanguageList _languages;
@@ -13,7 +13,8 @@ public class SelectLanguagesWindow : EditorWindow
 	private string sourceLanguageCode;
 	IKeyStore store = new EditorKeyStore();
 
-	public SelectLanguagesWindow()
+
+	public SetupTranslationConfiguration()
 	{
 		_mediator = new TransfluentEditorWindowMediator();
 		
@@ -25,10 +26,10 @@ public class SelectLanguagesWindow : EditorWindow
 		_languages = _mediator.getLanguageList();
 	}
 
-	[MenuItem("Window/Select Languages Window")]
+	[MenuItem("Window/Setup Tranlsation Configuraiton")]
 	public static void Init()
 	{
-		GetWindow<SelectLanguagesWindow>();
+		GetWindow<SetupTranslationConfiguration>();
 	}
 
 	public void OnGUI()
@@ -68,10 +69,13 @@ public class SelectLanguagesWindow : EditorWindow
 		}
 		return set;
 	}
-	public void setAllDestinationLanguages()
+
+	
+
+	public void setAllDestinationLanguagesMenu()
 	{
 		var sourceLanguageSet = getOrCreateGameTranslationSet(sourceLanguageCode);
-
+		
 	}
 
 	public TransfluentLanguage showLanguageSelector(string label,TransfluentLanguage currentLanguageSelection)

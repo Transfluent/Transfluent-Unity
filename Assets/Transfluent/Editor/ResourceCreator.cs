@@ -7,11 +7,17 @@ namespace transfluent.editor
 	{
 		private const string basePath = "Assets/Transfluent/Resources/";
 
-		public static T CreateSO<T>(string fileName) where T : ScriptableObject
+		public static void SaveSO(string fileName, ScriptableObject so)
 		{
-			var resource = ScriptableObject.CreateInstance<T>();
+			string path = getPathFromFileName(fileName);
+			AssetDatabase.CreateAsset(so, path);
+			SetResourceDirtyAndSave(so);
+		}
+
+		static string getPathFromFileName(string fileName)
+		{
 			string path;
-			if (!fileName.Contains(basePath))
+			if(!fileName.Contains(basePath))
 			{
 				path = basePath + fileName;
 			}
@@ -19,10 +25,17 @@ namespace transfluent.editor
 			{
 				path = fileName;
 			}
-			if (!path.ToLower().EndsWith(".asset"))
+			if(!path.ToLower().EndsWith(".asset"))
 			{
 				path += ".asset";
 			}
+			return path;
+		}
+
+		public static T CreateSO<T>(string fileName) where T : ScriptableObject
+		{
+			var resource = ScriptableObject.CreateInstance<T>();
+			string path = getPathFromFileName(fileName);
 
 			AssetDatabase.CreateAsset(resource, path);
 			SetResourceDirtyAndSave(resource);

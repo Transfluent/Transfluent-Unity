@@ -21,5 +21,14 @@ public class LanguageList
 	{
 		return languages.Find((TransfluentLanguage lang) => { return lang.name == name; });
 	}
+	public List<string> getListOfIdentifiersFromLanguageList()
+	{
+		var list = new List<string>();
+		foreach(var lang in languages)
+		{
+			list.Add(lang.name);
+		}
+		return list;
+	}
 }
 

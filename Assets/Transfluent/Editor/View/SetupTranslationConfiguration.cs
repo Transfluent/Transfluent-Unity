@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 using transfluent;
 using transfluent.editor;
 using UnityEditor;
 using UnityEngine;
 
+[Obsolete]
 public class SetupTranslationConfiguration : EditorWindow
 {
 	private readonly TransfluentEditorWindowMediator _mediator;
@@ -12,7 +15,6 @@ public class SetupTranslationConfiguration : EditorWindow
 	private const string SOURCE_GAME_LANGUAGE_KEY = "SOURCE_GAME_LANGUAGE";
 	private string sourceLanguageCode;
 	IKeyStore store = new EditorKeyStore();
-
 
 	public SetupTranslationConfiguration()
 	{
@@ -68,9 +70,7 @@ public class SetupTranslationConfiguration : EditorWindow
 			set = ResourceCreator.CreateSO<GameTranslationSet>(GameTranslationGetter.fileNameFromLanguageCode(languageCode));
 		}
 		return set;
-	}
-
-	
+	}	
 
 	public void setAllDestinationLanguagesMenu()
 	{

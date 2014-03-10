@@ -90,7 +90,7 @@ namespace transfluent.editor
 			if (allLanguagesSupported == null)
 			{
 				requestAllLanguagesInEditorSynchronous();
-				if (allLanguagesSupported != null)
+				if (allLanguagesSupported == null)
 				{
 					//allLanguagesSupported, 
 					var languageListSO = ResourceCreator.CreateSO<LanguageListSO>("LanguageList");

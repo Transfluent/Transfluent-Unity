@@ -77,14 +77,29 @@ namespace transfluent.editor
 			}
 			if (allLanguagesSupported == null)
 			{
-				allLanguagesSupported = ResourceLoadFacade.getLanguageList();
-				if (allLanguagesSupported == null)
-					requestAllLanguagesInEditorSynchronous();
-
-				if (allLanguagesSupported == null) return false;
+				getLanguageList();
+				if(allLanguagesSupported == null) return false;
 			}
 
 			return true;
+		}
+
+		public LanguageList getLanguageList()
+		{
+			allLanguagesSupported = ResourceLoadFacade.getLanguageList();
+			if (allLanguagesSupported == null)
+			{
+				requestAllLanguagesInEditorSynchronous();
+				if (allLanguagesSupported != null)
+				{
+					//allLanguagesSupported, 
+					var languageListSO = ResourceCreator.CreateSO<LanguageListSO>("LanguageList");
+					languageListSO.list = allLanguagesSupported;
+					ResourceCreator.SetResourceDirtyAndSave(languageListSO);
+				}
+			}
+				
+			return allLanguagesSupported;
 		}
 		
 		[Conditional("UNITY_EDITOR")]
@@ -109,7 +124,7 @@ namespace transfluent.editor
 
 		public List<string> getAllLanguageCodes()
 		{
-			if (!doAuth())
+			if (getLanguageList() == null)
 			{
 				throw new Exception("Cannot login");
 			}
@@ -147,8 +162,11 @@ namespace transfluent.editor
 
 		private string makeCall(ITransfluentParameters call)
 		{
-			context.setMappings(call);
-			call.getParameters.Add("token", getCurrentAuthToken()); //TODO: find another way to do this...
+			if (!string.IsNullOrEmpty(getCurrentAuthToken()))
+			{
+				context.setMappings(call);
+				call.getParameters.Add("token", getCurrentAuthToken()); //TODO: find another way to do this...
+			}
 			
 			var service = context.manualGetMapping<IWebService>();
 

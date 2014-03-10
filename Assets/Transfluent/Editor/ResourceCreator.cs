@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace transfluent.editor
 {
@@ -7,10 +7,8 @@ namespace transfluent.editor
 	{
 		private const string basePath = "Assets/Transfluent/Resources/";
 
-		public static T 
-			CreateSO<T>(string fileName) where T : ScriptableObject
+		public static T CreateSO<T>(string fileName) where T : ScriptableObject
 		{
-			
 			var resource = ScriptableObject.CreateInstance<T>();
 			string path;
 			if (!fileName.Contains(basePath))
@@ -25,11 +23,17 @@ namespace transfluent.editor
 			{
 				path += ".asset";
 			}
-			AssetDatabase.CreateAsset(resource, path);
 
-			EditorUtility.SetDirty(resource);
-			AssetDatabase.SaveAssets();
+			AssetDatabase.CreateAsset(resource, path);
+			SetResourceDirtyAndSave(resource);
+
 			return resource;
+		}
+
+		public static void SetResourceDirtyAndSave(Object obj)
+		{
+			EditorUtility.SetDirty(obj);
+			AssetDatabase.SaveAssets();
 		}
 	}
 }

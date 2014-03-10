@@ -26,20 +26,46 @@ public class SetupTranslationConfiguration2 : EditorWindow
 
 		//= ResourceCreator.CreateSO<GameTranslationSet>(GameTranslationGetter.fileNameFromLanguageCode(languageCode));
 
-		_languages = _mediator.getLanguageList();
-		_allKnownConfigurations = allKnownConfigurations();
+		
 	}
 
-	private string groupidDisplayed;
+	[MenuItem("Window/makeConfig")]
+	public static void makeMenuItem()
+	{
+		getOrCreateGameTranslationConfig("");
+		getOrCreateGameTranslationConfig("testGroup");
+	}
+
+	private bool initialized = false;
+
+	void Initialize()
+	{
+		if (EditorApplication.isUpdating || EditorApplication.isCompiling)
+			return;
+		_languages = _mediator.getLanguageList();
+		_allKnownConfigurations = allKnownConfigurations();
+		initialized = true;
+	}
+
+
+	private string groupidDisplayed="";
 	public void OnGUI()
 	{
+		//NOTE: potential fix for errors while trying to load or create resources while it reloads/compiles the unity editor
+		if (!initialized)
+		{
+			Initialize();
+			return;
+		}
+
 		if(!GetLanguagesGUI())
 		{
 			return;
 		}
 		if(_allKnownConfigurations.Count == 0)
 		{
-			groupidDisplayed = GUILayout.TextField("Group id");
+			GUILayout.Label("Group Id:");
+			groupidDisplayed = GUILayout.TextField(groupidDisplayed);
 			if(GUILayout.Button("Create a new Config"))
 			{
 				if(groupidExists(groupidDisplayed))
@@ -48,6 +74,8 @@ public class SetupTranslationConfiguration2 : EditorWindow
 					return;
 				}
 				TranslationConfigurationSO config = getOrCreateGameTranslationConfig(groupidDisplayed); //TODO: handle other config spaces
+				config.translation_set_group = groupidDisplayed;
+ 
 				_allKnownConfigurations.Add(config);
 			}
 			if(_allKnownConfigurations.Count == 0) return;
@@ -59,17 +87,26 @@ public class SetupTranslationConfiguration2 : EditorWindow
 			return;
 		}
 		DisplaySelectedTranslationConfiguration(selectedConfig);
-
 	}
 
+	private int newSourceLanguageIndex = 0;
 	private int newDestinationLanguageIndex = 0;
 	void DisplaySelectedTranslationConfiguration(TranslationConfigurationSO so)
 	{
+		List<string> knownLanguageDisplayNames = _languages.getListOfIdentifiersFromLanguageList();
+
 		EditorGUILayout.LabelField("group identifier:" + so.translation_set_group);
 		EditorGUILayout.LabelField("source language:" + so.sourceLanguage.name);
+		List<string> identifiers = _languages.getListOfIdentifiersFromLanguageList();
+		newSourceLanguageIndex = EditorGUILayout.Popup(newSourceLanguageIndex, knownLanguageDisplayNames.ToArray());
+		if(GUILayout.Button("SET Source to this language" + knownLanguageDisplayNames[newSourceLanguageIndex]))
+		{
+			so.sourceLanguage = _languages.getLangaugeByName(knownLanguageDisplayNames[newSourceLanguageIndex]);
+		}
 
 		EditorGUILayout.LabelField("destination language(s):");
 		TransfluentLanguage removeThisLang = null;
+
 		foreach(TransfluentLanguage lang in so.destinationLanguages)
 		{
 			EditorGUILayout.LabelField("destination language:" + lang.name);
@@ -83,17 +120,25 @@ public class SetupTranslationConfiguration2 : EditorWindow
 			so.destinationLanguages.Remove(removeThisLang);
 		}
 
-		List<string> knownLanguageDisplayNames = _languages.getListOfIdentifiersFromLanguageList();
+		
 
 		newDestinationLanguageIndex = EditorGUILayout.Popup(newDestinationLanguageIndex, knownLanguageDisplayNames.ToArray());
 
 		if(GUILayout.Button("Create a new Destination Language"))
 		{
 			TransfluentLanguage lang = _languages.languages[newDestinationLanguageIndex];
-			if(!so.destinationLanguages.TrueForAll((TransfluentLanguage exists) => { return exists.id == lang.id; }))
+			if (so.sourceLanguage.id == lang.id)
 			{
-				EditorUtility.DisplayDialog("Error", "You already have added this language", "OK", "");
+				EditorUtility.DisplayDialog("Error", "Cannot have the source language be the destination language", "OK", "");
 				return;
+			}
+			foreach (TransfluentLanguage exists in so.destinationLanguages)
+			{
+				if (exists.id == lang.id)
+				{
+					EditorUtility.DisplayDialog("Error", "You already have added this language", "OK", "");
+					return;
+				}
 			}
 			so.destinationLanguages.Add(lang);
 		}
@@ -107,19 +152,20 @@ public class SetupTranslationConfiguration2 : EditorWindow
 		List<string> knownConfigNames = new List<string>();
 		int selectedIndex = 0;
 		knownConfigNames.Add("No Config");
+
 		foreach(TranslationConfigurationSO so in _allKnownConfigurations)
 		{
-			knownConfigNames.Add(so.translation_set_group);
+			knownConfigNames.Add("Group:"+so.translation_set_group);
 		}
 		if(selectedConfig != null)
 		{
-			selectedIndex = knownConfigNames.IndexOf(selectedConfig.translation_set_group);
+			selectedIndex = knownConfigNames.IndexOf("Group:" + selectedConfig.translation_set_group);
 		}
 
 		int newIndex = EditorGUILayout.Popup(selectedIndex, knownConfigNames.ToArray());
 		if(newIndex != 0)
 		{
-			selectedConfig = _allKnownConfigurations[newIndex];
+			selectedConfig = _allKnownConfigurations[newIndex-1];
 		}
 		else
 		{
@@ -130,14 +176,14 @@ public class SetupTranslationConfiguration2 : EditorWindow
 	bool groupidExists(string groupid)
 	{
 		return
-			(_allKnownConfigurations.TrueForAll(
+			!(_allKnownConfigurations.TrueForAll(
 				(TranslationConfigurationSO so) => { return so.translation_set_group != groupid; }));
 	}
-	string configFileNameFromGroupID(string groupid)
+	static string configFileNameFromGroupID(string groupid)
 	{
 		return "TranslationConfigurationSO_" + groupid;
 	}
-	TranslationConfigurationSO getOrCreateGameTranslationConfig(string groupid)
+	static public TranslationConfigurationSO getOrCreateGameTranslationConfig(string groupid)
 	{
 		string fileName = configFileNameFromGroupID(groupid);
 		var config =
@@ -147,6 +193,7 @@ public class SetupTranslationConfiguration2 : EditorWindow
 		{
 			config = ResourceCreator.CreateSO<TranslationConfigurationSO>(fileName);
 		}
+		config.translation_set_group = groupid;
 		return config;
 	}
 

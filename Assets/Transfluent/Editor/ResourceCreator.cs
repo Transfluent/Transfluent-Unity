@@ -1,5 +1,7 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace transfluent.editor
 {
@@ -11,7 +13,6 @@ namespace transfluent.editor
 		{
 			string path = getPathFromFileName(fileName);
 			AssetDatabase.CreateAsset(so, path);
-			SetResourceDirtyAndSave(so);
 		}
 
 		static string getPathFromFileName(string fileName)
@@ -35,18 +36,18 @@ namespace transfluent.editor
 		public static T CreateSO<T>(string fileName) where T : ScriptableObject
 		{
 			var resource = ScriptableObject.CreateInstance<T>();
+			if (resource == null)
+			{
+				throw new Exception("Cannot create SO of type:"+typeof(T));
+			}
 			string path = getPathFromFileName(fileName);
 
 			AssetDatabase.CreateAsset(resource, path);
-			SetResourceDirtyAndSave(resource);
+			EditorUtility.SetDirty(resource);
+			AssetDatabase.SaveAssets();
 
 			return resource;
 		}
 
-		public static void SetResourceDirtyAndSave(Object obj)
-		{
-			EditorUtility.SetDirty(obj);
-			AssetDatabase.SaveAssets();
-		}
 	}
 }

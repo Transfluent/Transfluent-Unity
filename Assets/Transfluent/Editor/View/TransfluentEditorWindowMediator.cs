@@ -90,12 +90,12 @@ namespace transfluent.editor
 			if (allLanguagesSupported == null)
 			{
 				requestAllLanguagesInEditorSynchronous();
-				if (allLanguagesSupported == null)
+				if (allLanguagesSupported != null)
 				{
 					//allLanguagesSupported, 
 					var languageListSO = ResourceCreator.CreateSO<LanguageListSO>("LanguageList");
 					languageListSO.list = allLanguagesSupported;
-					ResourceCreator.SetResourceDirtyAndSave(languageListSO);
+					//do I need to set this dirty?
 				}
 			}
 				

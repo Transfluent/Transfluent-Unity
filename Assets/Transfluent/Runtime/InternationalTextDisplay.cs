@@ -12,9 +12,9 @@ public class InternationalTextDisplay : MonoBehaviour
 	// Use this for initialization
 	private void Start()
 	{
+		config = ResourceLoadFacade.LoadConfigGroup("");
 		populateKnownTranslationsInGroup();
 		TransfluentUtility.utility.setLanguage("xx-xx");
-		config = ResourceLoadFacade.LoadConfigGroup("");
 	}
 
 	private void populateKnownTranslationsInGroup()

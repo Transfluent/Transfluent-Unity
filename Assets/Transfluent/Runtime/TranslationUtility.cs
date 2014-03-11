@@ -48,23 +48,7 @@ namespace transfluent
 			Init(config.sourceLanguage.code, config.sourceLanguage.code);
 		}
 
-		public void setLanguage(string languageCode)
-		{
-			if (_instance == null)
-			{
-				Debug.Log("Language translation has not yet beet set up, cannot set language now");
-				return;
-			}
-
-			TransfluentLanguage source = _instance.sourceLanguage;
-			TransfluentLanguage dest = _newList.getLangaugeByCode(languageCode);
-			
-			//TODO: replace this immediately with something that is specific to the editor
-			var knownTranslations = GameTranslationGetter.GetMissingTranslationSet(source.id, dest.id);
-			var missingTranslations = GameTranslationGetter.GetMissingTranslationSet(source.id, dest.id);
-			_instance.setNewDestinationLanguage(knownTranslations.allTranslations,missingTranslations.allTranslations);
-
-		}
+		
 
 		public bool failedSetup
 		{
@@ -147,6 +131,29 @@ namespace transfluent
 				missingTranslationDB = missingTranslationsList,
 			};
 			_instance.init();
+		}
+		public void setLanguage(string languageCode)
+		{
+			if(_instance == null)
+			{
+				Debug.Log("Language translation has not yet beet set up, cannot set language now");
+				return;
+			}
+
+			TransfluentLanguage source = _instance.sourceLanguage;
+			TransfluentLanguage dest = _newList.getLangaugeByCode(languageCode);
+
+
+
+			//TODO: replace this immediately with something that is specific to the editor
+			var knownTranslations = GameTranslationGetter.GetMissingTranslationSet(source.id, dest.id);
+			var missingTranslations = GameTranslationGetter.GetMissingTranslationSet(source.id, dest.id);
+
+			var missingTranslationsList = missingTranslations == null ? null : missingTranslations.allTranslations;
+			var destLangDBList = knownTranslations == null ? new List<TransfluentTranslation>() : knownTranslations.allTranslations;
+
+			_instance.setNewDestinationLanguage(destLangDBList, missingTranslationsList);
+
 		}
 	}
 

@@ -18,7 +18,7 @@ namespace transfluent
 
 		public TransfluentUtility()
 		{
-			Init("en-us", "xx-xx");
+			//Init("en-us", "xx-xx");
 		}
 
 		public TransfluentUtility(string sourceLanguage, string destinationLanguageCode)
@@ -91,14 +91,18 @@ namespace transfluent
 			TransfluentLanguage source = _newList.getLangaugeByCode(sourceLang);
 			//TODO: replace this immediately with something that is specific to the editor
 			var missingTranslations = GameTranslationGetter.GetMissingTranslationSet(source.id, dest.id);
-
+			var destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destLang);
+#if UNITY_EDITOR
+			EditorUtility.SetDirty(missingTranslations);
+			EditorUtility.SetDirty(destLangDB);
+#endif
 			_instance = new TransfluentUtilityInstance
 			{
 				destinationLanguage = dest,
 				sourceLanguage = source,
 				languageList = _newList,
-				destinationLanguageTranslationDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destLang),
-				missingTranslationDB = missingTranslations,
+				destinationLanguageTranslationDB = destLangDB.allTranslations,
+				missingTranslationDB = missingTranslations.allTranslations,
 			};
 			_instance.init();
 		}
@@ -111,8 +115,8 @@ namespace transfluent
 		private readonly List<string> notTranslatedCache = new List<string>();
 		public TransfluentLanguage sourceLanguage { get; set; }
 		public TransfluentLanguage destinationLanguage { get; set; }
-		public GameTranslationSet missingTranslationDB { get; set; }
-		public GameTranslationSet destinationLanguageTranslationDB { get; set; }
+		public List<TransfluentTranslation> missingTranslationDB { get; set; }
+		public List<TransfluentTranslation> destinationLanguageTranslationDB { get; set; }
 		public LanguageList languageList { get; set; }
 
 
@@ -120,7 +124,7 @@ namespace transfluent
 		{
 			
 			string textId = sourceText;
-			bool shouldAdd = missingTranslationDB.allTranslations.TrueForAll((TransfluentTranslation otherlang) =>
+			bool shouldAdd = missingTranslationDB.TrueForAll((TransfluentTranslation otherlang) =>
 			{
 				if (textId == otherlang.text_id)
 				{
@@ -129,25 +133,23 @@ namespace transfluent
 						
 				return true;
 			});
-
+			
 			if(!shouldAdd)
 				return;
 
-			missingTranslationDB.allTranslations.Add(new TransfluentTranslation
+			missingTranslationDB.Add(new TransfluentTranslation
 			{
 				group_id = sourceLanguage.id.ToString(),
 				language = destinationLanguage, 
 				text = sourceText,
 				text_id = textId
 			});
-#if UNITY_EDITOR
-			EditorUtility.SetDirty(missingTranslationDB);
-#endif
+
 		}
 
 		public bool init()
 		{
-			foreach (TransfluentTranslation trans in destinationLanguageTranslationDB.allTranslations)
+			foreach (TransfluentTranslation trans in destinationLanguageTranslationDB)
 			{
 				allKnownTranslations.Add(trans.text_id, trans.text);
 			}

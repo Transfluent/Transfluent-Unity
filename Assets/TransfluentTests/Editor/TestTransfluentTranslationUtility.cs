@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
 using transfluent;
 using transfluent.editor;
@@ -20,7 +21,8 @@ public class TestTransfluentTranslationUtility
 		string thisTextDoesNotExist = "THIS DOES NOT EXIST" + Random.value;
 		//string noDestinationLanguageSet = TransfluentUtility.utility.getTranslation();
 		var util = new TransfluentUtility("en-us", "en-us");
-		util.getTranslation(thisTextDoesNotExist);
+		
+		Assert.AreEqual(util.getTranslation(thisTextDoesNotExist), thisTextDoesNotExist);
 	}
 	[Test]
 	public void testLoadingEnglishKnownKey()
@@ -31,6 +33,7 @@ public class TestTransfluentTranslationUtility
 		//string noDestinationLanguageSet = TransfluentUtility.utility.getTranslation();
 		var util = new TransfluentUtility("en-us", "en-us");
 		Debug.Log("TEXT KEY:" + util.getTranslation(textKeyExists));
+
 	}
 
 	[Test]
@@ -63,5 +66,44 @@ public class TestTransfluentTranslationUtility
 		Assert.NotNull(fromDisk.list.languages);
 		Assert.Greater(fromDisk.list.languages.Count, 0);
 		Debug.Log("newlist:"+JsonWriter.Serialize(newList));
+	}
+
+
+	[Test]
+	public void testInstance()
+	{
+		var sourceLanguage = new TransfluentLanguage() {code = "ba-r", id = 502, name = "bar"};
+		var destinationLanguage = new TransfluentLanguage() {code = "fo-o", id = 501, name = "foo"};
+
+		TransfluentUtilityInstance instance = new TransfluentUtilityInstance()
+		{
+			languageList = new LanguageList()
+			{
+				languages = new List<TransfluentLanguage>()
+				{
+					sourceLanguage,
+					destinationLanguage
+				}
+			},
+			destinationLanguage = destinationLanguage,
+			sourceLanguage = sourceLanguage,
+			destinationLanguageTranslationDB = new List<TransfluentTranslation>()
+				{
+					new TransfluentTranslation(){language = sourceLanguage,text="world hello",text_id = "hello world"}
+				},
+			missingTranslationDB  = new List<TransfluentTranslation>()
+		};
+		instance.init();
+
+		Assert.Less(instance.missingTranslationDB.Count,1);
+		string toTranslateDoesNotExist = "THIS DOES NOT EXIST";
+		Assert.AreEqual(instance.getTranslation(toTranslateDoesNotExist), toTranslateDoesNotExist);
+		Assert.AreEqual(instance.missingTranslationDB.Count, 1);
+
+		string toTranslateAndExists = "hello world";
+		string translationResult = "world hello";
+		Assert.AreEqual(translationResult,instance.getTranslation(toTranslateAndExists));
+
+
 	}
 }

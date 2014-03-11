@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using transfluent;
 using UnityEngine;
-using UnityEditor;
 
 public class TranslationConfigurationSO : ScriptableObject
 {

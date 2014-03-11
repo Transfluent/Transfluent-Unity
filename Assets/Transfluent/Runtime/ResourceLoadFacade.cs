@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 namespace transfluent
@@ -21,15 +20,6 @@ namespace transfluent
 		public static string TranslationConfigurationSOFileNameFromGroupID(string groupid)
 		{
 			return "TranslationConfigurationSO_" + groupid;
-		}
-
-		[MenuItem("asink/testthing")]
-		public static void testLoadConfigGroup()
-		{
-			Debug.Log("location:"+TranslationConfigurationSOFileNameFromGroupID(""));
-			var config = LoadConfigGroup("");
-			Debug.Log("Config is null:"+(config == null));
-
 		}
 
 		public static TranslationConfigurationSO LoadConfigGroup(string configGroup)

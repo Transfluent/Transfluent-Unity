@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
-using UnityEditor;
 using UnityEngine;
-using UnityTest;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif 
 
 namespace transfluent
 {
@@ -14,7 +15,7 @@ namespace transfluent
 		private bool _failedSetup;
 		private TransfluentUtilityInstance _instance;
 		private LanguageList _newList;
-
+		
 		public TransfluentUtilityInstance getUtilityInstanceForDebugging()
 		{
 			return _instance;
@@ -140,8 +141,6 @@ namespace transfluent
 
 			TransfluentLanguage source = _instance.sourceLanguage;
 			TransfluentLanguage dest = _newList.getLangaugeByCode(languageCode);
-
-
 
 			//TODO: replace this immediately with something that is specific to the editor
 			var knownTranslations = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(dest.code);

@@ -1,17 +1,10 @@
 ﻿using Pathfinding.Serialization.JsonFx;
 using transfluent;
-using UnityEditor;
 using UnityEngine;
 using System.Collections;
 
 public class TestCall : MonoBehaviour
 {
-	[MenuItem("Window/TestWWW")]
-	public static void doesGameTimeWWWWorkInEditorMenuContext()
-	{
-		GameTimeWWW www = new GameTimeWWW();
-		www.webRequest(langParser, OnStatusDoneStatic);
-	}
 	static RequestAllLanguages langParser = new RequestAllLanguages();
 	static IEnumerator OnStatusDoneStatic(WebServiceReturnStatus status)
 	{

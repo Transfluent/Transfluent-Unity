@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 namespace transfluent
@@ -24,9 +25,9 @@ namespace transfluent
 		}
 		public static GameTranslationSet GetTranslaitonSetFromLanguageCode(string langaugeCode)
 		{
-			string fileName = fileNameFromLanguageCode(langaugeCode);
-			string path = fileName;
-			return ResourceLoadFacade.LoadResource<GameTranslationSet>(path);
+			string fileName = fileNameFromLanguageCode(langaugeCode).Replace(".asset","");
+			var loaded =  ResourceLoadFacade.LoadResource<GameTranslationSet>(fileName);
+			return loaded;
 		}
 
 		public static GameTranslationSet GetMissingTranslationSet(int sourceLanguageID, int destinationLanguageID)

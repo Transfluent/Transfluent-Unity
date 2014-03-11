@@ -101,8 +101,6 @@ namespace transfluent
 
 			TransfluentLanguage dest = _newList.getLangaugeByCode(destinationLanguageCode);
 			TransfluentLanguage source = _newList.getLangaugeByCode(sourceLanguageCode);
-			//TODO: replace this immediately with something that is specific to the editor
-			Debug.Log("Source id:" + (source == null) + " destination:" + (dest == null) + " source lang" + sourceLanguageCode + " dest lang:" + destinationLanguageCode);
 			var missingTranslations = GameTranslationGetter.GetMissingTranslationSet(source.id, dest.id);
 			var destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destinationLanguageCode);
 
@@ -146,9 +144,9 @@ namespace transfluent
 
 
 			//TODO: replace this immediately with something that is specific to the editor
-			var knownTranslations = GameTranslationGetter.GetMissingTranslationSet(source.id, dest.id);
+			var knownTranslations = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(dest.code);
 			var missingTranslations = GameTranslationGetter.GetMissingTranslationSet(source.id, dest.id);
-
+			
 			var missingTranslationsList = missingTranslations == null ? null : missingTranslations.allTranslations;
 			var destLangDBList = knownTranslations == null ? new List<TransfluentTranslation>() : knownTranslations.allTranslations;
 

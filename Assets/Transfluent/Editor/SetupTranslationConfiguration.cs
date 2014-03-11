@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using transfluent;
 using transfluent.editor;
 using UnityEditor;
@@ -63,30 +64,38 @@ public class SetupTranslationConfiguration : EditorWindow
 		}
 		if (_allKnownConfigurations.Count == 0)
 		{
-			GUILayout.Label("Group Id:");
-			groupidDisplayed = GUILayout.TextField(groupidDisplayed);
-			if (GUILayout.Button("Create a new Config"))
-			{
-				if (groupidExists(groupidDisplayed))
-				{
-					EditorUtility.DisplayDialog("Error", "Group ID Exists, cannot create again", "OK", "");
-					return;
-				}
-				TranslationConfigurationSO config = getOrCreateGameTranslationConfig(groupidDisplayed);
-					//TODO: handle other config spaces
-				config.translation_set_group = groupidDisplayed;
-
-				_allKnownConfigurations.Add(config);
-			}
+			createANewConfig();
 			if (_allKnownConfigurations.Count == 0) return;
 		}
 
 		SelectAConfig();
+		createANewConfig();
 		if (selectedConfig == null)
 		{
 			return;
 		}
 		DisplaySelectedTranslationConfiguration(selectedConfig);
+	}
+
+	void createANewConfig()
+	{
+		GUILayout.Label("Group Id:");
+		groupidDisplayed = GUILayout.TextField(groupidDisplayed);
+		if(GUILayout.Button("Create a new Config"))
+		{
+			if(groupidExists(groupidDisplayed))
+			{
+				EditorUtility.DisplayDialog("Error", "Group ID Exists, cannot create again", "OK", "");
+				return;
+			}
+			TranslationConfigurationSO config = getOrCreateGameTranslationConfig(groupidDisplayed);
+			//TODO: handle other config spaces
+			config.translation_set_group = groupidDisplayed;
+
+			_allKnownConfigurations.Add(config);
+
+			selectedConfig = config;
+		}
 	}
 
 	private void DisplaySelectedTranslationConfiguration(TranslationConfigurationSO so)
@@ -130,11 +139,9 @@ public class SetupTranslationConfiguration : EditorWindow
 			}
 			foreach (TransfluentLanguage exists in so.destinationLanguages)
 			{
-				if (exists.id == lang.id)
-				{
-					EditorUtility.DisplayDialog("Error", "You already have added this language", "OK", "");
-					return;
-				}
+				if (exists.id != lang.id) continue;
+				EditorUtility.DisplayDialog("Error", "You already have added this language", "OK", "");
+				return;
 			}
 			so.destinationLanguages.Add(lang);
 		}
@@ -184,12 +191,9 @@ public class SetupTranslationConfiguration : EditorWindow
 	{
 		string fileName = configFileNameFromGroupID(groupid);
 		var config =
-			ResourceLoadFacade.LoadResource<TranslationConfigurationSO>(fileName);
+			ResourceLoadFacade.LoadResource<TranslationConfigurationSO>(fileName) ??
+			ResourceCreator.CreateSO<TranslationConfigurationSO>(fileName);
 
-		if (config == null)
-		{
-			config = ResourceCreator.CreateSO<TranslationConfigurationSO>(fileName);
-		}
 		config.translation_set_group = groupid;
 		return config;
 	}

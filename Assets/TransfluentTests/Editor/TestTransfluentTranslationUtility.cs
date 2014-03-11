@@ -89,7 +89,8 @@ public class TestTransfluentTranslationUtility
 			sourceLanguage = sourceLanguage,
 			destinationLanguageTranslationDB = new List<TransfluentTranslation>()
 				{
-					new TransfluentTranslation(){language = sourceLanguage,text="world hello",text_id = "hello world"}
+					new TransfluentTranslation(){language = sourceLanguage,text="world hello",text_id = "hello world"},
+					new TransfluentTranslation(){language = sourceLanguage,text="formatted {0} text",text_id = "formatted text"},
 				},
 			missingTranslationDB  = new List<TransfluentTranslation>()
 		};
@@ -99,6 +100,19 @@ public class TestTransfluentTranslationUtility
 		string toTranslateDoesNotExist = "THIS DOES NOT EXIST";
 		Assert.AreEqual(instance.getTranslation(toTranslateDoesNotExist), toTranslateDoesNotExist);
 		Assert.AreEqual(instance.missingTranslationDB.Count, 1);
+
+		string toTranslateDoesNotExist2 = "THIS DOES NOT EXIST formattted {0}";
+		Assert.AreEqual(instance.getFormattedTranslation(toTranslateDoesNotExist2, "nope"), string.Format(toTranslateDoesNotExist2, "nope"));
+		Assert.AreEqual(instance.missingTranslationDB.Count, 2);
+		bool hasThing = false;
+		instance.missingTranslationDB.ForEach((TransfluentTranslation trans)=>
+		{
+			if (trans.text == toTranslateDoesNotExist2) hasThing = true;
+		});
+		Assert.IsTrue(hasThing);
+
+		string formattedStringThatExists = "formatted {0} text";
+		Assert.AreEqual(instance.getFormattedTranslation(formattedStringThatExists,"success"),"formatted success text");
 
 		string toTranslateAndExists = "hello world";
 		string translationResult = "world hello";

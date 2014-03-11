@@ -54,9 +54,11 @@ namespace transfluent
 		//ie "Hi, my name is {0}" instead of "Hi, my name is $NAME" or some other scheme
 		public string getFormattedTranslation(string sourceText,params object[] formatStrings)
 		{
-			//TODO: add notes to formatted strings for translators to not change *exact* format
-			//or alternatively... take them out and put them back in
-			return string.Format(getTranslation(sourceText), formatStrings);
+			if(_instance == null)
+			{
+				return string.Format(sourceText,formatStrings); //TODO: add the missing translations db in this condition
+			}
+			return _instance.getFormattedTranslation(sourceText,formatStrings);
 		}
 
 		private void Init(string sourceLanguageCode, string destinationLanguageCode)
@@ -161,6 +163,15 @@ namespace transfluent
 		{
 			return "UNITY_AUTO_GENERATED";
 		}*/
+
+		//same format as string.format for now, not tokenized
+		//ie "Hi, my name is {0}" instead of "Hi, my name is $NAME" or some other scheme
+		public string getFormattedTranslation(string sourceText, params object[] formatStrings)
+		{
+			//TODO: add notes to formatted strings for translators to not change *exact* format
+			//or alternatively... take them out and put them back in
+			return string.Format(getTranslation(sourceText), formatStrings);
+		}
 
 		public string getTranslation(string sourceText)
 		{

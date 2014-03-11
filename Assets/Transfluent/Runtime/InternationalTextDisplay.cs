@@ -9,6 +9,9 @@ public class InternationalTextDisplay : MonoBehaviour
 	private List<TransfluentLanguage> supportedLanguages = new List<TransfluentLanguage>(); 
 
 	private TranslationConfigurationSO config;
+	[SerializeField]
+	private string testText;
+
 	// Use this for initialization
 	private void Start()
 	{
@@ -37,6 +40,7 @@ public class InternationalTextDisplay : MonoBehaviour
 	private Vector2 scrollPosition;
 	private void OnGUI()
 	{
+		GUILayout.Label("Test manual text:" + testText);
 		if (TransfluentUtility.utility == null)
 		{
 			GUILayout.Label("Loading" + new string('.', Mathf.FloorToInt(Time.realtimeSinceStartup) %3));
@@ -63,6 +67,10 @@ public class InternationalTextDisplay : MonoBehaviour
 					TransfluentUtilityInstance utilityInstance = TransfluentUtility.utility.getUtilityInstanceForDebugging();
 
 					currentTranslationSet = utilityInstance.destinationLanguageTranslationDB;
+					foreach (TransfluentTranslation trans in currentTranslationSet)
+					{
+						Debug.Log(string.Format("key:{0} value:{1}",trans.text_id,trans.text));
+					}
 				}
 				//GUI.Button(new Rect(0, currenty, 100, guiHeight), language.name);
 				currenty += guiHeight;

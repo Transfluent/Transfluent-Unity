@@ -21,9 +21,19 @@ namespace transfluent
 			Init("en-us", "xx-xx");
 		}
 
-		public TransfluentUtility(string sourceLanguage, string destinationLanguage)
+		public TransfluentUtility(string sourceLanguage, string destinationLanguageCode)
 		{
-			Init(sourceLanguage, destinationLanguage);
+			Init(sourceLanguage, destinationLanguageCode);
+		}
+
+		public TransfluentUtility(TranslationConfigurationSO so,string destinationLanguageCode=null)
+		{
+			string destCode = destinationLanguageCode;
+			if (destCode == null)
+			{
+				destCode = so.sourceLanguage.code;
+			}
+			Init(so.sourceLanguage.code, destCode);
 		}
 
 		public bool failedSetup
@@ -49,10 +59,10 @@ namespace transfluent
 			return string.Format(getTranslation(sourceText), formatStrings);
 		}
 
-		private void Init(string sourceLanguage, string destinationLanguage)
+		private void Init(string sourceLanguageCode, string destinationLanguageCode)
 		{
-			sourceLang = sourceLanguage;
-			destLang = destinationLanguage;
+			sourceLang = sourceLanguageCode;
+			destLang = destinationLanguageCode;
 
 			try
 			{

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEditor;
 using UnityEngine;
+using UnityTest;
 
 namespace transfluent
 {
@@ -13,14 +15,16 @@ namespace transfluent
 		private TransfluentUtilityInstance _instance;
 		private LanguageList _newList;
 
-		private string destLang;
-		private string sourceLang;
-
+		public TransfluentUtilityInstance getUtilityInstanceForDebugging()
+		{
+			return _instance;
+		}
 		public TransfluentUtility()
 		{
+			setTranslationGroup();
 			//Init("en-us", "xx-xx");
 		}
-
+		
 		public TransfluentUtility(string sourceLanguage, string destinationLanguageCode)
 		{
 			Init(sourceLanguage, destinationLanguageCode);
@@ -34,6 +38,32 @@ namespace transfluent
 				destCode = so.sourceLanguage.code;
 			}
 			Init(so.sourceLanguage.code, destCode);
+		}
+
+		public void setTranslationGroup(string translationGroup="")
+		{
+			var config = ResourceLoadFacade.LoadConfigGroup(translationGroup);
+			//config = ResourceLoadFacade.LoadConfigGroup("");
+			if (config == null) throw new Exception("could not load default config group:"+translationGroup);
+			Init(config.sourceLanguage.code, config.sourceLanguage.code);
+		}
+
+		public void setLanguage(string languageCode)
+		{
+			if (_instance == null)
+			{
+				Debug.Log("Language translation has not yet beet set up, cannot set language now");
+				return;
+			}
+
+			TransfluentLanguage source = _instance.sourceLanguage;
+			TransfluentLanguage dest = _newList.getLangaugeByCode(languageCode);
+			
+			//TODO: replace this immediately with something that is specific to the editor
+			var knownTranslations = GameTranslationGetter.GetMissingTranslationSet(source.id, dest.id);
+			var missingTranslations = GameTranslationGetter.GetMissingTranslationSet(source.id, dest.id);
+			_instance.setNewDestinationLanguage(knownTranslations.allTranslations,missingTranslations.allTranslations);
+
 		}
 
 		public bool failedSetup
@@ -63,12 +93,9 @@ namespace transfluent
 
 		private void Init(string sourceLanguageCode, string destinationLanguageCode)
 		{
-			sourceLang = sourceLanguageCode;
-			destLang = destinationLanguageCode;
-
 			try
 			{
-				onGotList(ResourceLoadFacade.getLanguageList());
+				setupIndividualAssets(sourceLanguageCode,destinationLanguageCode);
 			}
 			catch (Exception e)
 			{
@@ -77,9 +104,10 @@ namespace transfluent
 			}
 		}
 
-		private void onGotList(LanguageList newList)
+		private void setupIndividualAssets(string sourceLanguageCode, string destinationLanguageCode)
 		{
-			if (newList == null)
+			_newList =  ResourceLoadFacade.getLanguageList();
+			if(_newList == null)
 			{
 				_failedSetup = true;
 				Debug.LogError("Could not load new language list");
@@ -87,24 +115,36 @@ namespace transfluent
 				//Init(sourceLang, destLang);
 			}
 
-			_newList = newList;
-
-			TransfluentLanguage dest = _newList.getLangaugeByCode(destLang);
-			TransfluentLanguage source = _newList.getLangaugeByCode(sourceLang);
+			TransfluentLanguage dest = _newList.getLangaugeByCode(destinationLanguageCode);
+			TransfluentLanguage source = _newList.getLangaugeByCode(sourceLanguageCode);
 			//TODO: replace this immediately with something that is specific to the editor
+			Debug.Log("Source id:" + (source == null) + " destination:" + (dest == null) + " source lang" + sourceLanguageCode + " dest lang:" + destinationLanguageCode);
 			var missingTranslations = GameTranslationGetter.GetMissingTranslationSet(source.id, dest.id);
-			var destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destLang);
+			var destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destinationLanguageCode);
+
+			var missingTranslationsList = missingTranslations == null ? null : missingTranslations.allTranslations;
+			var destLangDBList = destLangDB == null ? new List<TransfluentTranslation>() : destLangDB.allTranslations;
+
 #if UNITY_EDITOR
-			EditorUtility.SetDirty(missingTranslations);
-			EditorUtility.SetDirty(destLangDB);
+			if (missingTranslations == null)
+			{
+				//create one?
+				//missingTranslations = ResourceCreator.CreateSO<GameTranslationSet>(GameTranslationGetter.fileNameFromLanguageCode(languageCode));
+			}
+			else
+			{
+				EditorUtility.SetDirty(missingTranslations);
+				EditorUtility.SetDirty(destLangDB);
+			}
+			
 #endif
 			_instance = new TransfluentUtilityInstance
 			{
 				destinationLanguage = dest,
 				sourceLanguage = source,
 				languageList = _newList,
-				destinationLanguageTranslationDB = destLangDB.allTranslations,
-				missingTranslationDB = missingTranslations.allTranslations,
+				destinationLanguageTranslationDB = destLangDBList,
+				missingTranslationDB = missingTranslationsList,
 			};
 			_instance.init();
 		}
@@ -117,7 +157,7 @@ namespace transfluent
 		private readonly List<string> notTranslatedCache = new List<string>();
 		public TransfluentLanguage sourceLanguage { get; set; }
 		public TransfluentLanguage destinationLanguage { get; set; }
-		public List<TransfluentTranslation> missingTranslationDB { get; set; }
+		public List<TransfluentTranslation> missingTranslationDB { get; set; }  //TODO: note this is funcitonatliy only for the editor. make sure this is not touched at runtime
 		public List<TransfluentTranslation> destinationLanguageTranslationDB { get; set; }
 		public LanguageList languageList { get; set; }
 
@@ -147,6 +187,15 @@ namespace transfluent
 				text_id = textId
 			});
 
+		}
+
+		public void setNewDestinationLanguage(List<TransfluentTranslation> translationsInNewDestinationLanguage,List<TransfluentTranslation> missingTranslations)
+		{
+			destinationLanguageTranslationDB = translationsInNewDestinationLanguage;
+			missingTranslationDB = missingTranslations;
+			allKnownTranslations.Clear();
+			notTranslatedCache.Clear();
+			init();
 		}
 
 		public bool init()

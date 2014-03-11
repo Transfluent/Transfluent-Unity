@@ -89,13 +89,20 @@ public class SetupTranslationConfiguration : EditorWindow
 				return;
 			}
 			TranslationConfigurationSO config = getOrCreateGameTranslationConfig(groupidDisplayed);
-			//TODO: handle other config spaces
-			config.translation_set_group = groupidDisplayed;
+			saveCurrentConfig();
 
 			_allKnownConfigurations.Add(config);
 
 			selectedConfig = config;
 		}
+	}
+
+	void saveCurrentConfig()
+	{
+		TranslationConfigurationSO config = getOrCreateGameTranslationConfig(groupidDisplayed);
+		config.translation_set_group = groupidDisplayed;
+		EditorUtility.SetDirty(config);
+		AssetDatabase.SaveAssets();
 	}
 
 	private void DisplaySelectedTranslationConfiguration(TranslationConfigurationSO so)
@@ -124,6 +131,7 @@ public class SetupTranslationConfiguration : EditorWindow
 		if (removeThisLang != null)
 		{
 			so.destinationLanguages.Remove(removeThisLang);
+			saveCurrentConfig();
 		}
 
 
@@ -143,7 +151,9 @@ public class SetupTranslationConfiguration : EditorWindow
 				EditorUtility.DisplayDialog("Error", "You already have added this language", "OK", "");
 				return;
 			}
+			
 			so.destinationLanguages.Add(lang);
+			saveCurrentConfig();
 		}
 	}
 
@@ -182,16 +192,13 @@ public class SetupTranslationConfiguration : EditorWindow
 				(TranslationConfigurationSO so) => { return so.translation_set_group != groupid; }));
 	}
 
-	private static string configFileNameFromGroupID(string groupid)
-	{
-		return "TranslationConfigurationSO_" + groupid;
-	}
+	
 
 	public static TranslationConfigurationSO getOrCreateGameTranslationConfig(string groupid)
 	{
-		string fileName = configFileNameFromGroupID(groupid);
+		string fileName = ResourceLoadFacade.TranslationConfigurationSOFileNameFromGroupID(groupid);
 		var config =
-			ResourceLoadFacade.LoadResource<TranslationConfigurationSO>(fileName) ??
+			ResourceLoadFacade.LoadConfigGroup(groupid) ??
 			ResourceCreator.CreateSO<TranslationConfigurationSO>(fileName);
 
 		config.translation_set_group = groupid;

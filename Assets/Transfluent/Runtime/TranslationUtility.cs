@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace transfluent
@@ -104,7 +102,6 @@ namespace transfluent
 		{
 			allKnownTranslations.Clear();
 		}
-
 
 		//same format as string.format for now, not tokenized
 		//ie "Hi, my name is {0}" instead of "Hi, my name is $NAME" or some other scheme

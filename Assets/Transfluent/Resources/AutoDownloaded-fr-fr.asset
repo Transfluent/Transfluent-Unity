@@ -47,3 +47,31 @@ MonoBehaviour:
       code: fr-fr
       id: 2
     text: stuff
+  - text_id: 1
+    group_id: 
+    language:
+      name: French (France)
+      code: fr-fr
+      id: 2
+    text: un
+  - text_id: 2
+    group_id: 
+    language:
+      name: French (France)
+      code: fr-fr
+      id: 2
+    text: deux
+  - text_id: 3
+    group_id: 
+    language:
+      name: French (France)
+      code: fr-fr
+      id: 2
+    text: trois
+  - text_id: 4
+    group_id: 
+    language:
+      name: French (France)
+      code: fr-fr
+      id: 2
+    text: quatre

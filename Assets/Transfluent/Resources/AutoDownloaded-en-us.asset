@@ -18,11 +18,39 @@ MonoBehaviour:
       name: English (United States)
       code: en-us
       id: 148
-    text: this is sample text0.6940176
+    text: this is sample text0.5576579
   - text_id: UNITY_TEST_TRANSLATION_KEY
     group_id: 
     language:
       name: English (United States)
       code: en-us
       id: 148
-    text: this is test text0.04173267
+    text: this is test text0.0132891
+  - text_id: 1
+    group_id: 
+    language:
+      name: English (United States)
+      code: en-us
+      id: 148
+    text: One
+  - text_id: 2
+    group_id: 
+    language:
+      name: English (United States)
+      code: en-us
+      id: 148
+    text: __2__
+  - text_id: 3
+    group_id: 
+    language:
+      name: English (United States)
+      code: en-us
+      id: 148
+    text: Three
+  - text_id: 4
+    group_id: 
+    language:
+      name: English (United States)
+      code: en-us
+      id: 148
+    text: 4

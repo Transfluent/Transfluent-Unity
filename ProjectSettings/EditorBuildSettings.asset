@@ -6,4 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Transfluent/Examples/SimpleRuntime.unity
+  - enabled: 1
     path: Assets/InternationalOnGuiText.unity

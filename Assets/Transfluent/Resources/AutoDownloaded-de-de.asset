@@ -26,3 +26,31 @@ MonoBehaviour:
       code: de-de
       id: 3
     text: this is test text
+  - text_id: 1
+    group_id: 
+    language:
+      name: German
+      code: de-de
+      id: 3
+    text: "\u4E00"
+  - text_id: 2
+    group_id: 
+    language:
+      name: German
+      code: de-de
+      id: 3
+    text: "\u4E8C"
+  - text_id: 3
+    group_id: 
+    language:
+      name: German
+      code: de-de
+      id: 3
+    text: "\u4E09"
+  - text_id: 4
+    group_id: 
+    language:
+      name: German
+      code: de-de
+      id: 3
+    text: "\u56DB"

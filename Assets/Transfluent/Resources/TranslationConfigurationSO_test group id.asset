@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fafeb2470ca3483f86b1ea6a32029c9, type: 3}
+  m_Name: TranslationConfigurationSO_test group id
+  m_EditorClassIdentifier: 
+  sourceLanguage:
+    name: English (United States)
+    code: en-us
+    id: 148
+  destinationLanguages:
+  - name: French (France)
+    code: fr-fr
+    id: 2
+  translation_set_group: test group id

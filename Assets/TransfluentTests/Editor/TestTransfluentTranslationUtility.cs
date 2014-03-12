@@ -50,7 +50,6 @@ public class TestTransfluentTranslationUtility
 	[Test]
 	public void testInstance()
 	{
-		var sourceLanguage = new TransfluentLanguage() {code = "ba-r", id = 502, name = "bar"};
 		var destinationLanguage = new TransfluentLanguage() {code = "fo-o", id = 501, name = "foo"};
 
 		TransfluentUtilityInstance instance = new TransfluentUtilityInstance()
@@ -76,7 +75,5 @@ public class TestTransfluentTranslationUtility
 		string toTranslateAndExists = "hello world";
 		string translationResult = "world hello";
 		Assert.AreEqual(translationResult,instance.getTranslation(toTranslateAndExists));
-
-
 	}
 }

@@ -20,7 +20,7 @@ public class TestCall : MonoBehaviour
 		GameTimeWWW www = new GameTimeWWW();
 		langGetter = new RequestAllLanguages();
 		www.webRequest(new RequestAllLanguages(), OnStatusDone);
-		TransfluentUtility.utility.getTranslation("HELLO WORLD");
+		TransfluentUtility.getTranslation("HELLO WORLD");
 		//Action<> <WebServiceReturnStatus>
 		//www.webRequest(, OnStatusDone);
 	}

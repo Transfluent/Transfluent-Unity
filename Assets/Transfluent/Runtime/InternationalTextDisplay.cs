@@ -17,7 +17,7 @@ public class InternationalTextDisplay : MonoBehaviour
 	{
 		config = ResourceLoadFacade.LoadConfigGroup("");
 		populateKnownTranslationsInGroup();
-		TransfluentUtility.utility.setLanguage("xx-xx");
+		TransfluentUtility.changeStaticInstanceConfig("xx-xx");
 	}
 
 	private void populateKnownTranslationsInGroup()
@@ -41,18 +41,7 @@ public class InternationalTextDisplay : MonoBehaviour
 	private void OnGUI()
 	{
 		GUILayout.Label("Test manual text:" + testText);
-		if (TransfluentUtility.utility == null)
-		{
-			GUILayout.Label("Loading" + new string('.', Mathf.FloorToInt(Time.realtimeSinceStartup) %3));
-		}
-		else
-		{
-			if (TransfluentUtility.utility.failedSetup)
-			{
-				GUILayout.Label("Error in setting up translations");
-				return;
-			}
-
+		
 			GUILayout.BeginVertical();
 			//GUI.BeginScrollView(new Rect(10, 300, 100, 100), Vector2.zero, new Rect(0, 0, 220, 200));
 			scrollPosition = GUILayout.BeginScrollView(scrollPosition);
@@ -63,13 +52,12 @@ public class InternationalTextDisplay : MonoBehaviour
 			{
 				if (GUILayout.Button(language.name))
 				{
-					TransfluentUtility.utility.setLanguage(language.code);
-					TransfluentUtilityInstance utilityInstance = TransfluentUtility.utility.getUtilityInstanceForDebugging();
+					TransfluentUtility.changeStaticInstanceConfig(language.code);
+					TransfluentUtilityInstance utilityInstance = TransfluentUtility.getUtilityInstanceForDebugging();
 
-					currentTranslationSet = utilityInstance.destinationLanguageTranslationDB;
-					foreach (TransfluentTranslation trans in currentTranslationSet)
+					foreach (KeyValuePair<string,string> trans in utilityInstance.allKnownTranslations)
 					{
-						Debug.Log(string.Format("key:{0} value:{1}",trans.text_id,trans.text));
+						Debug.Log(string.Format("key:{0} value:{1}",trans.Key,trans.Value));
 					}
 				}
 				//GUI.Button(new Rect(0, currenty, 100, guiHeight), language.name);
@@ -89,5 +77,4 @@ public class InternationalTextDisplay : MonoBehaviour
 			}
 			GUILayout.EndVertical();
 		}
-	}
 }

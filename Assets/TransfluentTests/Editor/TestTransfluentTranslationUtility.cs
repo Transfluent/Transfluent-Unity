@@ -15,28 +15,6 @@ public class TestTransfluentTranslationUtility
 	}
 
 	[Test]
-	public void testLoadingEnglishMissingKey()
-	{
-		//by default the utility goes to backwards language
-		string thisTextDoesNotExist = "THIS DOES NOT EXIST" + Random.value;
-		//string noDestinationLanguageSet = TransfluentUtility.utility.getTranslation();
-		var util = new TransfluentUtility("en-us", "en-us");
-		
-		Assert.AreEqual(util.getTranslation(thisTextDoesNotExist), thisTextDoesNotExist);
-	}
-	[Test]
-	public void testLoadingEnglishKnownKey()
-	{
-		//by default the utility goes to backwards language
-		string textKeyExists = "HELLO_WORLD_TEXT_KEY";
-
-		//string noDestinationLanguageSet = TransfluentUtility.utility.getTranslation();
-		var util = new TransfluentUtility("en-us", "en-us");
-		Debug.Log("TEXT KEY:" + util.getTranslation(textKeyExists));
-
-	}
-
-	[Test]
 	public void testLanguageListGetterWithNoList()
 	{
 		//LanguageList list = ResourceLoadAdapter.getLanguageList();
@@ -77,39 +55,20 @@ public class TestTransfluentTranslationUtility
 
 		TransfluentUtilityInstance instance = new TransfluentUtilityInstance()
 		{
-			languageList = new LanguageList()
-			{
-				languages = new List<TransfluentLanguage>()
-				{
-					sourceLanguage,
-					destinationLanguage
-				}
-			},
 			destinationLanguage = destinationLanguage,
-			sourceLanguage = sourceLanguage,
-			destinationLanguageTranslationDB = new List<TransfluentTranslation>()
-				{
-					new TransfluentTranslation(){language = sourceLanguage,text="world hello",text_id = "hello world"},
-					new TransfluentTranslation(){language = sourceLanguage,text="formatted {0} text",text_id = "formatted text"},
-				},
-			missingTranslationDB  = new List<TransfluentTranslation>()
+			allKnownTranslations = new Dictionary<string,string>
+			{
+				{"hello world","world hello"},
+				{"formatted {0} text","formatted text"}
+			},
 		};
-		instance.init();
 
-		Assert.Less(instance.missingTranslationDB.Count,1);
 		string toTranslateDoesNotExist = "THIS DOES NOT EXIST";
 		Assert.AreEqual(instance.getTranslation(toTranslateDoesNotExist), toTranslateDoesNotExist);
-		Assert.AreEqual(instance.missingTranslationDB.Count, 1);
 
 		string toTranslateDoesNotExist2 = "THIS DOES NOT EXIST formattted {0}";
 		Assert.AreEqual(instance.getFormattedTranslation(toTranslateDoesNotExist2, "nope"), string.Format(toTranslateDoesNotExist2, "nope"));
-		Assert.AreEqual(instance.missingTranslationDB.Count, 2);
-		bool hasThing = false;
-		instance.missingTranslationDB.ForEach((TransfluentTranslation trans)=>
-		{
-			if (trans.text == toTranslateDoesNotExist2) hasThing = true;
-		});
-		Assert.IsTrue(hasThing);
+		
 
 		string formattedStringThatExists = "formatted {0} text";
 		Assert.AreEqual(instance.getFormattedTranslation(formattedStringThatExists,"success"),"formatted success text");

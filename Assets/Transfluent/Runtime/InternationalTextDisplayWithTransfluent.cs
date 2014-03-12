@@ -9,47 +9,80 @@ using GUILayout = transfluent.guiwrapper.GUILayout;
 using GUI = UnityEngine.GUI;
 using GUILayout = UnityEngine.GUILayout;
 #endif
-/*
 
-*/
 public class InternationalTextDisplayWithTransfluent : MonoBehaviour
 {
-	private readonly List<string> knownStrings = new List<string>();
-	[SerializeField] private string textToDisplay = "我是一个中国人的一句。";
+	private List<TransfluentLanguage> supportedLanguages = new List<TransfluentLanguage>();
 
-	//[SerializeField] private TransfluentTranslation translation = new TransfluentTranslation();
+	private TranslationConfigurationSO config;
+	[SerializeField]
+	private string testText;
 
 	// Use this for initialization
 	private void Start()
 	{
+		config = ResourceLoadFacade.LoadConfigGroup("");
+		populateKnownTranslationsInGroup();
+		TransfluentUtility.changeStaticInstanceConfig("xx-xx");
 	}
 
-	// Update is called once per frame
-	private void Update()
+	private void populateKnownTranslationsInGroup()
 	{
+
+		supportedLanguages.Add(config.sourceLanguage);
+
+		foreach(TransfluentLanguage lang in config.destinationLanguages)
+		{
+			supportedLanguages.Add(lang);
+		}
 	}
 
+	public GameTranslationSet translationSetFromLanguage(TransfluentLanguage language)
+	{
+		return GameTranslationGetter.GetTranslaitonSetFromLanguageCode(language.code);
+	}
 
+	private TransfluentUtilityInstance translationHelper;
+	private Vector2 scrollPosition;
 	private void OnGUI()
 	{
-		GUILayout.TextField(textToDisplay);
-		if (GUILayout.Button("TEST GET KNOWN TRANSLATIONS"))
+		UnityEngine.GUILayout.Label("Test manual text:" + testText);
+
+		UnityEngine.GUILayout.BeginVertical();
+		//GUI.BeginScrollView(new Rect(10, 300, 100, 100), Vector2.zero, new Rect(0, 0, 220, 200));
+		scrollPosition = UnityEngine.GUILayout.BeginScrollView(scrollPosition);
+		int guiHeight = 40;
+		int currenty = 0;
+
+		foreach(TransfluentLanguage language in supportedLanguages)
 		{
-			knownStrings.Clear();
-			GameTranslationSet[] list = Resources.LoadAll<GameTranslationSet>("");
-				//this is *not* Assets/Transfluent/Resources, since all resources get put in the "resources" folder
-			//Debug.Log("Number of translation sets:" + list.Length);
-			foreach (GameTranslationSet set in list)
+			//TODO: show groups available
+			if(UnityEngine.GUILayout.Button(language.name))
 			{
-				foreach (TransfluentTranslation trans in set.allTranslations)
+				TransfluentUtility.changeStaticInstanceConfig(language.code);
+				translationHelper = TransfluentUtility.getUtilityInstanceForDebugging();
+
+				foreach(KeyValuePair<string, string> trans in translationHelper.allKnownTranslations)
 				{
-					knownStrings.Add(trans.text);
+					Debug.Log(string.Format("key:{0} value:{1}", trans.Key, trans.Value));
+
 				}
 			}
+			//GUI.Button(new Rect(0, currenty, 100, guiHeight), language.name);
+			currenty += guiHeight;
 		}
-		foreach (string knownString in knownStrings)
+		UnityEngine.GUILayout.EndScrollView();
+
+		UnityEngine.GUILayout.EndVertical();
+
+		UnityEngine.GUILayout.BeginVertical();
+		if(translationHelper != null)
 		{
-			GUILayout.Label(knownString);
+			foreach(KeyValuePair<string, string> translation in translationHelper.allKnownTranslations)
+			{
+				UnityEngine.GUILayout.Label(string.Format("text id:{0} group id:{1} text:{2}", translation.Key, translationHelper.groupBeingShown, translation.Value));
+			}
 		}
+		UnityEngine.GUILayout.EndVertical();
 	}
 }

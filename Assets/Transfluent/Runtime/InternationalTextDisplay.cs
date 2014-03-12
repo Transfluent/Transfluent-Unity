@@ -36,7 +36,7 @@ public class InternationalTextDisplay : MonoBehaviour
 		return GameTranslationGetter.GetTranslaitonSetFromLanguageCode(language.code);
 	}
 
-	private List<TransfluentTranslation> currentTranslationSet;
+	private TransfluentUtilityInstance translationHelper;
 	private Vector2 scrollPosition;
 	private void OnGUI()
 	{
@@ -50,14 +50,16 @@ public class InternationalTextDisplay : MonoBehaviour
 
 			foreach(TransfluentLanguage language in supportedLanguages)
 			{
+				//TODO: show groups available
 				if (GUILayout.Button(language.name))
 				{
 					TransfluentUtility.changeStaticInstanceConfig(language.code);
-					TransfluentUtilityInstance utilityInstance = TransfluentUtility.getUtilityInstanceForDebugging();
+					translationHelper = TransfluentUtility.getUtilityInstanceForDebugging();
 
-					foreach (KeyValuePair<string,string> trans in utilityInstance.allKnownTranslations)
+					foreach(KeyValuePair<string, string> trans in translationHelper.allKnownTranslations)
 					{
 						Debug.Log(string.Format("key:{0} value:{1}",trans.Key,trans.Value));
+
 					}
 				}
 				//GUI.Button(new Rect(0, currenty, 100, guiHeight), language.name);
@@ -68,11 +70,11 @@ public class InternationalTextDisplay : MonoBehaviour
 			GUILayout.EndVertical();
 
 			GUILayout.BeginVertical();
-			if(currentTranslationSet != null)
+			if(translationHelper != null)
 			{
-				foreach(TransfluentTranslation translation in currentTranslationSet)
+				foreach(KeyValuePair<string,string> translation in translationHelper.allKnownTranslations)
 				{
-					GUILayout.Label(string.Format("text id:{0} group id:{1} text:{2}",translation.text_id,translation.group_id,translation.text));
+					GUILayout.Label(string.Format("text id:{0} group id:{1} text:{2}", translation.Key, translationHelper.groupBeingShown, translation.Value));
 				}
 			}
 			GUILayout.EndVertical();

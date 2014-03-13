@@ -190,11 +190,11 @@ namespace transfluent.editor
 			}
 		}
 
-		public List<TransfluentTranslation> knownTextEntries()
+		public List<TransfluentTranslation> knownTextEntries(string groupid=null)
 		{
 			if (currentLanguage == null) throw new Exception("Must set current language first!");
 
-			var getAllKeys = new GetAllExistingTranslationKeys(currentLanguage.id);
+			var getAllKeys = new GetAllExistingTranslationKeys(currentLanguage.id, groupid);
 
 			var list = new List<TransfluentTranslation>();
 			try

@@ -13,36 +13,52 @@ namespace transfluent.editor
 		[MenuItem("Window/Download All Transfluent data")]
 		public static void doDownload()
 		{
+			var mediator = getAuthenticatedMediator();
+			if(mediator == null) return;
+			
+			List<string> allLanguageCodes = mediator.getAllLanguageCodes();
+			downloadTranslationSetsFromLanguageCodeList(allLanguageCodes);
+		}
+
+		static TransfluentEditorWindowMediator getAuthenticatedMediator()
+		{
 			var mediator = new TransfluentEditorWindowMediator();
 			KeyValuePair<string, string> usernamePassword = mediator.getUserNamePassword();
-			if (String.IsNullOrEmpty(usernamePassword.Key) || String.IsNullOrEmpty(usernamePassword.Value))
+			if(String.IsNullOrEmpty(usernamePassword.Key) || String.IsNullOrEmpty(usernamePassword.Value))
 			{
 				EditorUtility.DisplayDialog("Login please",
 					"Please login using editor window before trying to use this functionality", "ok");
 				TransfluentEditorWindow.Init();
-				return;
+				return null;
 			}
 			mediator.doAuth(usernamePassword.Key, usernamePassword.Value);
-			List<string> allLanguageCodes = mediator.getAllLanguageCodes();
-			foreach (string languageCode in allLanguageCodes)
+			return mediator;
+		}
+		public static void downloadTranslationSetsFromLanguageCodeList(List<string> languageCodes, string groupid = null)
+		{
+			var mediator = getAuthenticatedMediator();
+			if(mediator == null) return;
+
+			foreach(string languageCode in languageCodes)
 			{
 				try
 				{
 					mediator.setCurrentLanguageFromLanguageCode(languageCode);
-					List<TransfluentTranslation> translations = mediator.knownTextEntries();
-					if (translations.Count > 0)
+					List<TransfluentTranslation> translations = mediator.knownTextEntries(groupid);
+					if(translations.Count > 0)
 					{
 						GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode) ??
-						                         ResourceCreator.CreateSO<GameTranslationSet>(
-							                         GameTranslationGetter.fileNameFromLanguageCode(languageCode));
+												 ResourceCreator.CreateSO<GameTranslationSet>(
+													 GameTranslationGetter.fileNameFromLanguageCode(languageCode));
 
-						//GameTranslationSet set = GameTranslationsCreator.GetTranslaitonSet(languageCode);
-						set.allTranslations = translations;
+
+						set.mergeInNewListOfTranslations(translations);
+
 						EditorUtility.SetDirty(set);
 						AssetDatabase.SaveAssets();
 					}
 				}
-				catch (Exception e)
+				catch(Exception e)
 				{
 					Debug.LogError("error while downloading translations:" + e.Message + " stack:" + e.StackTrace);
 				}

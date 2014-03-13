@@ -13,26 +13,28 @@ namespace transfluent.editor
 		[MenuItem("Window/Download All Transfluent data")]
 		public static void doDownload()
 		{
-			TransfluentEditorWindowMediator mediator = new TransfluentEditorWindowMediator();
-			var usernamePassword = mediator.getUserNamePassword();
-			if(String.IsNullOrEmpty(usernamePassword.Key) || String.IsNullOrEmpty(usernamePassword.Value))
+			var mediator = new TransfluentEditorWindowMediator();
+			KeyValuePair<string, string> usernamePassword = mediator.getUserNamePassword();
+			if (String.IsNullOrEmpty(usernamePassword.Key) || String.IsNullOrEmpty(usernamePassword.Value))
 			{
-				EditorUtility.DisplayDialog("Login please", "Please login using editor window before trying to use this functionality", "ok");
+				EditorUtility.DisplayDialog("Login please",
+					"Please login using editor window before trying to use this functionality", "ok");
 				TransfluentEditorWindow.Init();
 				return;
 			}
 			mediator.doAuth(usernamePassword.Key, usernamePassword.Value);
 			List<string> allLanguageCodes = mediator.getAllLanguageCodes();
-			foreach(string languageCode in allLanguageCodes)
+			foreach (string languageCode in allLanguageCodes)
 			{
 				try
 				{
 					mediator.setCurrentLanguageFromLanguageCode(languageCode);
 					List<TransfluentTranslation> translations = mediator.knownTextEntries();
-					if(translations.Count > 0)
+					if (translations.Count > 0)
 					{
 						GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode) ??
-						                         ResourceCreator.CreateSO<GameTranslationSet>(GameTranslationGetter.fileNameFromLanguageCode(languageCode));
+						                         ResourceCreator.CreateSO<GameTranslationSet>(
+							                         GameTranslationGetter.fileNameFromLanguageCode(languageCode));
 
 						//GameTranslationSet set = GameTranslationsCreator.GetTranslaitonSet(languageCode);
 						set.allTranslations = translations;
@@ -40,7 +42,7 @@ namespace transfluent.editor
 						AssetDatabase.SaveAssets();
 					}
 				}
-				catch(Exception e)
+				catch (Exception e)
 				{
 					Debug.LogError("error while downloading translations:" + e.Message + " stack:" + e.StackTrace);
 				}
@@ -48,4 +50,3 @@ namespace transfluent.editor
 		}
 	}
 }
-

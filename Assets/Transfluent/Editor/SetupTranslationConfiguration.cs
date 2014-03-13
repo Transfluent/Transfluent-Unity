@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using transfluent;
 using transfluent.editor;
 using UnityEditor;
@@ -20,10 +19,6 @@ public class SetupTranslationConfiguration : EditorWindow
 	public SetupTranslationConfiguration()
 	{
 		_mediator = new TransfluentEditorWindowMediator();
-
-		//config = CreateInstance<>()
-
-		//= ResourceCreator.CreateSO<GameTranslationSet>(GameTranslationGetter.fileNameFromLanguageCode(languageCode));
 	}
 
 	[MenuItem("Window/SetupTranslationConfiguration2")]
@@ -77,13 +72,13 @@ public class SetupTranslationConfiguration : EditorWindow
 		DisplaySelectedTranslationConfiguration(selectedConfig);
 	}
 
-	void createANewConfig()
+	private void createANewConfig()
 	{
 		GUILayout.Label("Group Id:");
 		groupidDisplayed = GUILayout.TextField(groupidDisplayed);
-		if(GUILayout.Button("Create a new Config"))
+		if (GUILayout.Button("Create a new Config"))
 		{
-			if(groupidExists(groupidDisplayed))
+			if (groupidExists(groupidDisplayed))
 			{
 				EditorUtility.DisplayDialog("Error", "Group ID Exists, cannot create again", "OK", "");
 				return;
@@ -97,7 +92,7 @@ public class SetupTranslationConfiguration : EditorWindow
 		}
 	}
 
-	void saveCurrentConfig()
+	private void saveCurrentConfig()
 	{
 		TranslationConfigurationSO config = getOrCreateGameTranslationConfig(groupidDisplayed);
 		config.translation_set_group = groupidDisplayed;
@@ -151,7 +146,7 @@ public class SetupTranslationConfiguration : EditorWindow
 				EditorUtility.DisplayDialog("Error", "You already have added this language", "OK", "");
 				return;
 			}
-			
+
 			so.destinationLanguages.Add(lang);
 			saveCurrentConfig();
 		}
@@ -192,12 +187,11 @@ public class SetupTranslationConfiguration : EditorWindow
 				(TranslationConfigurationSO so) => { return so.translation_set_group != groupid; }));
 	}
 
-	
 
 	public static TranslationConfigurationSO getOrCreateGameTranslationConfig(string groupid)
 	{
 		string fileName = ResourceLoadFacade.TranslationConfigurationSOFileNameFromGroupID(groupid);
-		var config =
+		TranslationConfigurationSO config =
 			ResourceLoadFacade.LoadConfigGroup(groupid) ??
 			ResourceCreator.CreateSO<TranslationConfigurationSO>(fileName);
 

@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Castle.Core.Internal;
-using UnityEditor;
 using Debug = UnityEngine.Debug;
 
 namespace transfluent.editor
 {
 	public class TransfluentEditorWindowMediator
 	{
+		private readonly IKeyStore _keyStore = new EditorKeyStore(); //TODO: inject this, as it will need to be consistent
 		private readonly InjectionContext context;
 		private LanguageList allLanguagesSupported;
 		private TransfluentLanguage currentLanguage; //put this in a view state?
@@ -52,7 +52,6 @@ namespace transfluent.editor
 			}
 			catch (KeyNotFoundException)
 			{
-
 			} //this is ok... I don't want to rewrite manualGetMapping
 			return retVal;
 		}
@@ -78,7 +77,7 @@ namespace transfluent.editor
 			if (allLanguagesSupported == null)
 			{
 				getLanguageList();
-				if(allLanguagesSupported == null) return false;
+				if (allLanguagesSupported == null) return false;
 			}
 
 			return true;
@@ -98,10 +97,10 @@ namespace transfluent.editor
 					//do I need to set this dirty?
 				}
 			}
-				
+
 			return allLanguagesSupported;
 		}
-		
+
 		[Conditional("UNITY_EDITOR")]
 		public void requestAllLanguagesInEditorSynchronous()
 		{
@@ -110,7 +109,7 @@ namespace transfluent.editor
 				var languageRequest = new RequestAllLanguages();
 				allLanguagesSupported = languageRequest.Parse(makeCall(languageRequest));
 			}
-			catch(CallException e)
+			catch (CallException e)
 			{
 				Debug.LogError("error getting all languages:" + e.Message);
 			}
@@ -167,7 +166,7 @@ namespace transfluent.editor
 				context.setMappings(call);
 				call.getParameters.Add("token", getCurrentAuthToken()); //TODO: find another way to do this...
 			}
-			
+
 			var service = context.manualGetMapping<IWebService>();
 
 			return service.request(call).text;
@@ -213,7 +212,7 @@ namespace transfluent.editor
 			}
 			return list;
 		}
-		IKeyStore _keyStore = new EditorKeyStore(); //TODO: inject this, as it will need to be consistent
+
 		public void setCurrentLanguageFromLanguageCode(string languageCode)
 		{
 			_keyStore.set("CURRENT_LANGUAGE", languageCode);

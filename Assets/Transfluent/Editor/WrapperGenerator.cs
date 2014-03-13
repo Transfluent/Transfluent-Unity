@@ -130,8 +130,6 @@ namespace transfluent.guiwrapper
 				ParameterInfo[] myParameters = methodInfo.GetParameters();
 				sb.Append(" (");
 
-				//methodInfo.op
-				//foreach (ParameterInfo paramInfo in myParameters)
 				for (int i = 0; i < myParameters.Length; i++)
 				{
 					ParameterInfo paramInfo = myParameters[i];

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net.Configuration;
-using transfluent;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,7 +6,7 @@ using UnityEngine;
 
 namespace transfluent
 {
-	[CustomPropertyDrawer(typeof(TransfluentTranslation))]
+	[CustomPropertyDrawer(typeof (TransfluentTranslation))]
 	public class TransfluentTranslationDrawer : PropertyDrawer
 	{
 		private Rect originalRect;
@@ -31,12 +29,12 @@ namespace transfluent
 
 		private void printThing(SerializedProperty prop)
 		{
-			if(prop == null)
+			if (prop == null)
 			{
 				EditorGUI.LabelField(currentRect, " NULL FIELD");
 				return;
 			}
-			EditorGUI.LabelField(currentRect, prop.name,EditorStyles.boldLabel); //+ " type:" + prop.propertyType);
+			EditorGUI.LabelField(currentRect, prop.name, EditorStyles.boldLabel); //+ " type:" + prop.propertyType);
 			ypos += 20;
 			EditorGUI.LabelField(currentRect, getStringValue(prop));
 		}
@@ -47,10 +45,10 @@ namespace transfluent
 			printThing(prop.FindPropertyRelative(name));
 			ypos += 40;
 		}
-		
-		void printEditableField(SerializedProperty prop)
+
+		private void printEditableField(SerializedProperty prop)
 		{
-			if(prop == null)
+			if (prop == null)
 			{
 				EditorGUI.LabelField(currentRect, " NULL FIELD");
 				return;
@@ -82,12 +80,11 @@ namespace transfluent
 			{
 				//parsing errors should be ignored
 			}
-			
 		}
 
 		public string getStringValue(SerializedProperty prop)
 		{
-			switch(prop.propertyType)
+			switch (prop.propertyType)
 			{
 				case SerializedPropertyType.Integer:
 					return prop.intValue.ToString();
@@ -102,17 +99,16 @@ namespace transfluent
 		}
 
 
-
 		public override void OnGUI(Rect pos, SerializedProperty prop, GUIContent label)
 		{
-			if(prop == null)
+			if (prop == null)
 				return;
 			originalRect = pos;
 			ypos = 0;
 
 			EditorGUI.LabelField(currentRect, prop.name);
 			ypos += 20;
-			
+
 			//printThing();
 			printThing(prop, "text_id");
 			printThing(prop, "group_id");

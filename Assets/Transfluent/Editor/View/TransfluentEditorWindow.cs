@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text;
-using Pathfinding.Serialization.JsonFx;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,11 +7,9 @@ namespace transfluent.editor
 	public class TransfluentEditorWindow : EditorWindow
 	{
 		private readonly TransfluentEditorWindowMediator _mediator;
-		[MenuItem("Window/Transfluent Helper")]
-		public static void Init()
-		{
-			GetWindow<TransfluentEditorWindow>();
-		}
+
+		private readonly LoginGUI loginScreen;
+		private readonly TextsGUI textGui;
 
 		public TransfluentEditorWindow()
 		{
@@ -22,30 +18,34 @@ namespace transfluent.editor
 			textGui = new TextsGUI(_mediator);
 		}
 
-		private readonly TextsGUI textGui;
-		private readonly LoginGUI loginScreen;
-		void OnGUI()
+		[MenuItem("Window/Transfluent Helper")]
+		public static void Init()
 		{
-			if(!_mediator.authIsDone())
+			GetWindow<TransfluentEditorWindow>();
+		}
+
+		private void OnGUI()
+		{
+			if (!_mediator.authIsDone())
 			{
 				loginScreen.doGUI();
 				return;
 			}
 			EditorGUILayout.BeginHorizontal();
-			if(GUILayout.Button("reset auth"))
+			if (GUILayout.Button("reset auth"))
 			{
 				_mediator.invalidateAuth();
 				loginScreen.GetCredentialsFromDataStore();
 			}
 			bool languageChanged = showCurrentLanguage();
 
-			if(_mediator.GetCurrentLanguage() == null)
+			if (_mediator.GetCurrentLanguage() == null)
 			{
 				return;
 			}
 			EditorGUILayout.EndHorizontal();
 
-			if(languageChanged)
+			if (languageChanged)
 				textGui.Refresh();
 
 			textGui.doGUI();
@@ -56,10 +56,10 @@ namespace transfluent.editor
 			List<string> languageNames = _mediator.getAllLanguageCodes();
 			TransfluentLanguage currentLanguage = _mediator.GetCurrentLanguage();
 			int currentLanguageIndex = 0;
-			if(currentLanguage != null)
+			if (currentLanguage != null)
 				currentLanguageIndex = languageNames.IndexOf(currentLanguage.code);
 			int newLanguageIndex = EditorGUILayout.Popup("Current language", currentLanguageIndex, languageNames.ToArray());
-			if(currentLanguageIndex != newLanguageIndex)
+			if (currentLanguageIndex != newLanguageIndex)
 			{
 				_mediator.setCurrentLanguageFromLanguageCode(languageNames[newLanguageIndex]);
 				return true;
@@ -67,15 +67,57 @@ namespace transfluent.editor
 			return false;
 		}
 
+
+		public class LoginGUI
+		{
+			private readonly TransfluentEditorWindowMediator _mediator;
+			private string currentPassword;
+			private string currentUsername;
+
+			public LoginGUI(TransfluentEditorWindowMediator mediator)
+			{
+				_mediator = mediator;
+				GetCredentialsFromDataStore();
+			}
+
+			public void GetCredentialsFromDataStore()
+			{
+				KeyValuePair<string, string> usernamePassword = _mediator.getUserNamePassword();
+				currentUsername = usernamePassword.Key;
+				currentPassword = usernamePassword.Value;
+			}
+
+			public void doGUI()
+			{
+				EditorGUILayout.BeginHorizontal();
+				currentUsername = EditorGUILayout.TextField("username", currentUsername);
+				currentPassword = EditorGUILayout.TextField("password", currentPassword);
+				EditorGUILayout.EndHorizontal();
+				EditorGUILayout.BeginHorizontal();
+
+				if (GUILayout.Button("save"))
+				{
+					_mediator.setUsernamePassword(currentUsername, currentPassword);
+				}
+				if (GUILayout.Button("authenticate"))
+				{
+					if (_mediator.doAuth(currentUsername, currentPassword))
+					{
+						_mediator.setUsernamePassword(currentUsername, currentPassword);
+					}
+				}
+				EditorGUILayout.EndHorizontal();
+			}
+		}
+
 		public class TextsGUI
 		{
 			private readonly TransfluentEditorWindowMediator _mediator;
-			private List<TransfluentTranslation> _translations; 
+			private readonly List<TransfluentTranslation> dirtyTranslations = new List<TransfluentTranslation>();
+			private List<TransfluentTranslation> _translations;
 			private string knownTexts;
+			public List<TransfluentTranslation> newTranslations = new List<TransfluentTranslation>();
 			private double secondsSinceLastGotAllTexts;
-			public List<TransfluentTranslation> newTranslations = new List<TransfluentTranslation>();  
-
-			private List<TransfluentTranslation> dirtyTranslations = new List<TransfluentTranslation>(); 
 
 			public TextsGUI(TransfluentEditorWindowMediator mediator)
 			{
@@ -93,7 +135,8 @@ namespace transfluent.editor
 				secondsSinceLastGotAllTexts = timeInSecondsSinceUnityStartedUp;
 				InternalRefresh();
 			}
-			void InternalRefresh()
+
+			private void InternalRefresh()
 			{
 				dirtyTranslations.Clear();
 
@@ -102,7 +145,7 @@ namespace transfluent.editor
 				newTranslations.Clear();
 			}
 
-			void displayTranslation(TransfluentTranslation translation)
+			private void displayTranslation(TransfluentTranslation translation)
 			{
 				string textAtStart = translation.text;
 				EditorGUILayout.BeginHorizontal();
@@ -112,12 +155,12 @@ namespace transfluent.editor
 				EditorGUILayout.EndHorizontal();
 				if (textAtStart != textAfterDisplaying)
 				{
-					if(!dirtyTranslations.Contains(translation))
+					if (!dirtyTranslations.Contains(translation))
 						dirtyTranslations.Add(translation);
 				}
 			}
 
-			void displayTranslationAndAllowEntireThingToBeModified(TransfluentTranslation translation)
+			private void displayTranslationAndAllowEntireThingToBeModified(TransfluentTranslation translation)
 			{
 				EditorGUILayout.BeginHorizontal();
 				translation.text_id = EditorGUILayout.TextField("key", translation.text_id);
@@ -128,10 +171,10 @@ namespace transfluent.editor
 
 			public void doGUI()
 			{
-				if(_translations == null) Refresh();
+				if (_translations == null) Refresh();
 				if (_translations == null) return;
-				
-				foreach(TransfluentTranslation translation in _translations)
+
+				foreach (TransfluentTranslation translation in _translations)
 				{
 					if (newTranslations.Contains(translation))
 					{
@@ -148,7 +191,7 @@ namespace transfluent.editor
 				EditorGUILayout.BeginHorizontal();
 				if (GUILayout.Button("Create New Translation"))
 				{
-					var newTranslation = new TransfluentTranslation()
+					var newTranslation = new TransfluentTranslation
 					{
 						language = _mediator.GetCurrentLanguage()
 					};
@@ -167,53 +210,6 @@ namespace transfluent.editor
 				EditorGUILayout.EndHorizontal();
 				//EditorGUILayout.TextField("Known keys", knownTexts,GUILayout.ExpandHeight(true));
 			}
-
 		}
-
-		 
-		public class LoginGUI
-		{
-			private readonly TransfluentEditorWindowMediator _mediator;
-			private string currentUsername;
-			private string currentPassword;
-
-			public LoginGUI(TransfluentEditorWindowMediator mediator)
-			{
-				_mediator = mediator;
-				GetCredentialsFromDataStore();
-			}
-
-			public void GetCredentialsFromDataStore()
-			{
-				var usernamePassword = _mediator.getUserNamePassword();
-				currentUsername = usernamePassword.Key;
-				currentPassword = usernamePassword.Value;
-			}
-			public void doGUI()
-			{
-				EditorGUILayout.BeginHorizontal();
-				currentUsername = EditorGUILayout.TextField("username", currentUsername);
-				currentPassword = EditorGUILayout.TextField("password", currentPassword);
-				EditorGUILayout.EndHorizontal();
-				EditorGUILayout.BeginHorizontal();
-
-				if(GUILayout.Button("save"))
-				{
-					_mediator.setUsernamePassword(currentUsername, currentPassword);
-				}
-				if(GUILayout.Button("authenticate"))
-				{
-					if(_mediator.doAuth(currentUsername, currentPassword))
-					{
-						_mediator.setUsernamePassword(currentUsername, currentPassword);
-					}
-				}
-				EditorGUILayout.EndHorizontal();
-			}
-
-		}
-
 	}
-
-
 }

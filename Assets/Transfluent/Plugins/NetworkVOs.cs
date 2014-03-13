@@ -17,7 +17,7 @@ namespace transfluent
 
 		public override string ToString()
 		{
-			return string.Format("Languages{0} with code{1} name:{2}", id, code, name);
+			return string.Format("Language name {0} with code{1} name:{2}", id, code, name);
 		}
 	}
 

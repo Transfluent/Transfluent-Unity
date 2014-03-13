@@ -36,7 +36,7 @@ namespace transfluent
 			}
 		}
 
-		public static TransfluentUtilityInstance createNewInstance(string destinationLanguageCode = "", string translationGroup = "")
+		public static TransfluentUtilityInstance createNewInstance(string destinationLanguageCode = "", string group = "")
 		{
 			if(_LanguageList == null)
 			{
@@ -51,29 +51,13 @@ namespace transfluent
 
 			TransfluentLanguage dest = _LanguageList.getLangaugeByCode(destinationLanguageCode);
 			var destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destinationLanguageCode);
-			var destLangDBList = destLangDB == null ? new List<TransfluentTranslation>() : destLangDB.allTranslations;
-			bool groupIsEmpty = string.IsNullOrEmpty(translationGroup);
 
-			var keysInLanguageForGroupSpecified = new Dictionary<string, string>();
-			foreach(TransfluentTranslation translation in destLangDBList)
-			{
-				if(groupIsEmpty && string.IsNullOrEmpty(translation.group_id))
-				{
-					keysInLanguageForGroupSpecified.Add(translation.text_id, translation.text);
-				}
-				else
-				{
-					if(translation.group_id == translationGroup)
-					{
-						keysInLanguageForGroupSpecified.Add(translation.text_id, translation.text);
-					}
-				}
-			}
+			var keysInLanguageForGroupSpecified = destLangDB != null ? destLangDB.getKeyValuePairs(group) : new Dictionary<string, string>();
 			return new TransfluentUtilityInstance()
 			{
 				allKnownTranslations = keysInLanguageForGroupSpecified,
 				destinationLanguage = dest,
-				groupBeingShown = translationGroup
+				groupBeingShown = group
 			};
 		}
 

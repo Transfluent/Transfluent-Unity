@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace transfluent
+﻿namespace transfluent
 {
 	[Route("authenticate", RestRequestType.GET, "http://transfluent.com/backend-api/#Authenticate")]
 	public class Login : WebServiceParameters
 	{
-		public Login(string username,string password)
+		public Login(string username, string password)
 		{
 			getParameters.Add("email", username);
 			getParameters.Add("password", password);

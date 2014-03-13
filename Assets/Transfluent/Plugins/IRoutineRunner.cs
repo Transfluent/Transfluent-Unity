@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public interface IRoutineRunner
 {
@@ -8,20 +8,20 @@ public interface IRoutineRunner
 
 public class RoutineRunner : IRoutineRunner
 {
-	private RunnerMonobehaviour runner;
+	private readonly RunnerMonobehaviour runner;
+
 	public RoutineRunner()
 	{
-		runner = GameObject.FindObjectOfType<RunnerMonobehaviour>();
-		if(runner == null)
+		runner = Object.FindObjectOfType<RunnerMonobehaviour>();
+		if (runner == null)
 		{
-			GameObject go = new GameObject("serviceRunner");
+			var go = new GameObject("serviceRunner");
 			runner = go.AddComponent<RunnerMonobehaviour>();
 		}
 	}
+
 	public void runRoutine(IEnumerator routineToRun)
 	{
 		runner.StartCoroutine(routineToRun);
 	}
-
-	
 }

@@ -1,23 +1,25 @@
-﻿using Pathfinding.Serialization.JsonFx;
+﻿using System.Collections;
+using Pathfinding.Serialization.JsonFx;
 using transfluent;
 using UnityEngine;
-using System.Collections;
 
 public class TestCall : MonoBehaviour
 {
-	static RequestAllLanguages langParser = new RequestAllLanguages();
-	static IEnumerator OnStatusDoneStatic(WebServiceReturnStatus status)
+	private static readonly RequestAllLanguages langParser = new RequestAllLanguages();
+
+	private RequestAllLanguages langGetter;
+
+	private static IEnumerator OnStatusDoneStatic(WebServiceReturnStatus status)
 	{
 		Debug.Log("GOT A THING:" + JsonWriter.Serialize(status));
 		Debug.Log("SERIALIZED:" + JsonWriter.Serialize(langParser.Parse(status.text)));
 		yield return null;
 	}
 
-	private RequestAllLanguages langGetter;
 	// Use this for initialization
-	void Start()
+	private void Start()
 	{
-		GameTimeWWW www = new GameTimeWWW();
+		var www = new GameTimeWWW();
 		langGetter = new RequestAllLanguages();
 		www.webRequest(new RequestAllLanguages(), OnStatusDone);
 		TransfluentUtility.getTranslation("HELLO WORLD");
@@ -25,16 +27,16 @@ public class TestCall : MonoBehaviour
 		//www.webRequest(, OnStatusDone);
 	}
 
-	IEnumerator OnStatusDone(WebServiceReturnStatus status)
+	private IEnumerator OnStatusDone(WebServiceReturnStatus status)
 	{
-		Debug.Log("GOT A THING:"+JsonWriter.Serialize(status));
-		Debug.Log(JsonWriter.Serialize(langGetter.Parse(status.text))); ;
+		Debug.Log("GOT A THING:" + JsonWriter.Serialize(status));
+		Debug.Log(JsonWriter.Serialize(langGetter.Parse(status.text)));
+		;
 		yield return null;
 	}
 
 	// Update is called once per frame
-	void Update()
+	private void Update()
 	{
-
 	}
 }

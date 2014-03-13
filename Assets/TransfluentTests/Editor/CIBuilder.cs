@@ -15,9 +15,9 @@ namespace transfluent
 			try
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				foreach(string arg in args)
+				foreach (string arg in args)
 				{
-					if(arg.Contains(buildFlag))
+					if (arg.Contains(buildFlag))
 					{
 						string buildNumber = arg.Replace(buildFlag, "");
 
@@ -25,7 +25,7 @@ namespace transfluent
 					}
 				}
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				Debug.LogError("Error setting bundle number;" + e);
 				throw;
@@ -63,7 +63,7 @@ namespace transfluent
 			public void Build()
 			{
 				string targetBuildPath = projectPath + Path.DirectorySeparatorChar + buildDirectoryPath;
-				if(!Directory.Exists(targetBuildPath))
+				if (!Directory.Exists(targetBuildPath))
 					Directory.CreateDirectory(targetBuildPath);
 				string fileLocation = string.Format("{0}-{1}.unitypackage", targetBuildPath + Path.DirectorySeparatorChar + appName,
 					autoBuildNumber);

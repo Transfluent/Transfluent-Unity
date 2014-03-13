@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace transfluent
@@ -36,8 +35,8 @@ namespace transfluent
 
 		public static GameTranslationSet GetTranslaitonSetFromLanguageCode(string langaugeCode)
 		{
-			string fileName = fileNameFromLanguageCode(langaugeCode).Replace(".asset","");
-			var loaded =  ResourceLoadFacade.LoadResource<GameTranslationSet>(fileName);
+			string fileName = fileNameFromLanguageCode(langaugeCode).Replace(".asset", "");
+			var loaded = ResourceLoadFacade.LoadResource<GameTranslationSet>(fileName);
 			return loaded;
 		}
 
@@ -47,5 +46,4 @@ namespace transfluent
 			return ResourceLoadFacade.LoadResource<GameTranslationSet>(filename);
 		}
 	}
-
 }

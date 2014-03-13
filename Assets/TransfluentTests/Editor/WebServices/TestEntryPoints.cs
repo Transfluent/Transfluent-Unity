@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
-using UnityEngine;
 using transfluent.editor;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace transfluent.tests
@@ -16,21 +16,22 @@ namespace transfluent.tests
 		{
 			OneTimeSetup();
 		}
-		
+
 		public string justCall(WebServiceParameters call)
 		{
-			if(call.getParameters.ContainsKey("token"))
+			if (call.getParameters.ContainsKey("token"))
 				call.getParameters.Remove("token");
 
 			call.getParameters.Add("token", accessToken);
 			var requester = new SyncronousEditorWebRequest();
-			var result = requester.request(call);
-			if(result.httpErrorCode > 0)
+			WebServiceReturnStatus result = requester.request(call);
+			if (result.httpErrorCode > 0)
 			{
 				throw new HttpErrorCode(result.httpErrorCode);
 			}
 			return result.text;
 		}
+
 		//[Test]
 		public void OneTimeSetup()
 		{
@@ -38,14 +39,12 @@ namespace transfluent.tests
 			Assert.False(string.IsNullOrEmpty(credentials.username));
 			Assert.False(string.IsNullOrEmpty(credentials.password));
 			var login = new Login
-			(
-				username : credentials.username,
-				password : credentials.password
-			);
-			var responseText = justCall(login);
+				(credentials.username, credentials.password
+				);
+			string responseText = justCall(login);
 
 			accessToken = login.Parse(responseText).token;
-			if(string.IsNullOrEmpty(accessToken))
+			if (string.IsNullOrEmpty(accessToken))
 			{
 				throw new Exception("was not able to log in!");
 			}
@@ -53,13 +52,13 @@ namespace transfluent.tests
 
 		private const string HELLO_WORLD_TEXT_KEY = "HELLO_WORLD_TEXT_KEY";
 
-		LanguageList getLanguageList()
+		private LanguageList getLanguageList()
 		{
 			var language = new RequestAllLanguages();
 			var requester = new SyncronousEditorWebRequest();
 			WebServiceReturnStatus status = requester.request(language);
 
-			var list = language.Parse(status.text);
+			LanguageList list = language.Parse(status.text);
 			Assert.NotNull(list);
 
 			Assert.IsTrue(list.languages.Count > 0);
@@ -67,16 +66,16 @@ namespace transfluent.tests
 		}
 
 		[Test]
-		[ExpectedException(typeof(ApplicatonLevelException))]
+		[ExpectedException(typeof (ApplicatonLevelException))]
 		public void getKeyThatDoesNotExist()
 		{
 			TransfluentLanguage englishLanguage = getLanguageList().getLangaugeByCode("en-us");
 
 			var testForExistance = new GetTextKey
-			(
-				languageID : englishLanguage.id,
-				text_id    : "THIS_DOES_NOT_EXIST" + Random.value
-			);
+				(
+				languageID: englishLanguage.id,
+				text_id: "THIS_DOES_NOT_EXIST" + Random.value
+				);
 			string rawOutput = justCall(testForExistance);
 			testForExistance.Parse(rawOutput);
 		}
@@ -84,7 +83,7 @@ namespace transfluent.tests
 		[Test]
 		public void testBackwardsLanguage()
 		{
-			var list = getLanguageList();
+			LanguageList list = getLanguageList();
 			Assert.NotNull(list);
 			Assert.IsTrue(list.languages.Count > 0);
 
@@ -96,19 +95,19 @@ namespace transfluent.tests
 			//post text key
 			string textToSave = "this is sample text" + Random.value;
 			var saveOp = new SaveTextKey
-			(
-				language : englishLanguage.id,
-				text     : textToSave,
-				text_id  : HELLO_WORLD_TEXT_KEY
-			);
+				(
+				language: englishLanguage.id,
+				text: textToSave,
+				text_id: HELLO_WORLD_TEXT_KEY
+				);
 			bool saved = saveOp.Parse(justCall(saveOp));
 			Debug.Log("Saved successfullly:" + saved);
 
 			var testForExistance = new GetTextKey
-			(
-				languageID : englishLanguage.id,
-				text_id    : HELLO_WORLD_TEXT_KEY
-			);
+				(
+				languageID: englishLanguage.id,
+				text_id: HELLO_WORLD_TEXT_KEY
+				);
 			string keyFromDB = testForExistance.Parse(justCall(testForExistance));
 			Assert.IsFalse(string.IsNullOrEmpty(keyFromDB));
 			Assert.AreEqual(textToSave, keyFromDB);
@@ -124,10 +123,9 @@ namespace transfluent.tests
 		public void testHello()
 		{
 			var hello = new Hello
-			(
-				name : "world"
-			);
-			var text = hello.Parse(justCall(hello)); 
+				("world"
+				);
+			string text = hello.Parse(justCall(hello));
 
 			Assert.IsNotNull(text);
 			Assert.AreEqual(text.ToLower(), "hello world");
@@ -136,7 +134,7 @@ namespace transfluent.tests
 		[Test]
 		public void testLanguages()
 		{
-			var language = getLanguageList();
+			LanguageList language = getLanguageList();
 
 			Assert.IsNotNull(language);
 			Assert.IsNotNull(language.languages);

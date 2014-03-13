@@ -59,7 +59,6 @@ namespace transfluent
 		}
 	}
 
-	
 
 	public class CommandLineKeyStore : IKeyStore
 	{

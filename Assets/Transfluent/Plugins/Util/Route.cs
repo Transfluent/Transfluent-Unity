@@ -5,11 +5,11 @@ namespace transfluent
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 	public class Route : Attribute
 	{
-		public string route;
-		public RestRequestType requestType;
 		public string helpUrl;
+		public RestRequestType requestType;
+		public string route;
 
-		public Route(string routeIn, RestRequestType reqTypeIn,string helpUrlIn=null)
+		public Route(string routeIn, RestRequestType reqTypeIn, string helpUrlIn = null)
 		{
 			route = routeIn;
 			requestType = reqTypeIn;

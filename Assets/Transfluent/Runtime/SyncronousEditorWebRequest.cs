@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using transfluent;
@@ -7,7 +6,7 @@ using UnityEngine;
 
 public class SyncronousEditorWebRequest : IWebService
 {
-	readonly WWWFacade _getMyWwwFacade = new WWWFacade();
+	private readonly WWWFacade _getMyWwwFacade = new WWWFacade();
 
 	public WebServiceReturnStatus request(string url)
 	{
@@ -24,20 +23,20 @@ public class SyncronousEditorWebRequest : IWebService
 	public WebServiceReturnStatus request(ITransfluentParameters parameters)
 	{
 		WWW www = _getMyWwwFacade.request(parameters);
-		return doWWWCall(www,parameters);
+		return doWWWCall(www, parameters);
 	}
 
 	private WebServiceReturnStatus doWWWCall(WWW www, ITransfluentParameters wsParams = null)
 	{
 		var sw = new Stopwatch();
 		sw.Start();
-		while(true)
+		while (true)
 		{
-			if(www.isDone)
+			if (www.isDone)
 				break;
-			if(www.error != null)
+			if (www.error != null)
 				break;
-			if(sw.Elapsed.TotalSeconds >= 30f)
+			if (sw.Elapsed.TotalSeconds >= 30f)
 				break;
 
 			//EditorApplication.Step();
@@ -49,7 +48,7 @@ public class SyncronousEditorWebRequest : IWebService
 
 	public bool knownTransportError(string input)
 	{
-		if(input.Contains("Could not resolve host"))
+		if (input.Contains("Could not resolve host"))
 		{
 			return true;
 		}

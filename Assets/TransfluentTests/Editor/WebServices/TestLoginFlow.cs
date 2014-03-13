@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
 using transfluent.editor;
@@ -10,13 +8,14 @@ namespace transfluent.tests
 	[TestFixture]
 	public class TestLoginFlow
 	{
-		private const int MAX_MILLISECONDS_TO_WAIT = 20000;
 		[SetUp]
 		[TearDown]
 		public void notUsedRightNow()
 		{
 			service = new SyncronousEditorWebRequest();
 		}
+
+		private const int MAX_MILLISECONDS_TO_WAIT = 20000;
 
 		public static string baseServiceUrl = "https://transfluent.com/v2/";
 		public static string requestedService = "authenticate";
@@ -56,7 +55,7 @@ namespace transfluent.tests
 
 		[Test]
 		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
-		[ExpectedException(typeof(ApplicatonLevelException))]
+		[ExpectedException(typeof (ApplicatonLevelException))]
 		public void emptyLoginPasswordPost()
 		{
 			service.request(loginUrl, new Dictionary<string, string>
@@ -64,16 +63,6 @@ namespace transfluent.tests
 				{"email", ""},
 				{"password", ""}
 			});
-		}
-		[Test]
-		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
-		public void makeSureApplicationLevelExceptionIsACallException()
-		{
-			Assert.Catch<CallException>(()=>service.request(loginUrl, new Dictionary<string, string>
-			{
-				{"email", ""},
-				{"password", ""}
-			}));
 		}
 
 		[Test]
@@ -86,7 +75,18 @@ namespace transfluent.tests
 
 		[Test]
 		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
-		[ExpectedException(typeof(ApplicatonLevelException))]
+		public void makeSureApplicationLevelExceptionIsACallException()
+		{
+			Assert.Catch<CallException>(() => service.request(loginUrl, new Dictionary<string, string>
+			{
+				{"email", ""},
+				{"password", ""}
+			}));
+		}
+
+		[Test]
+		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
+		[ExpectedException(typeof (ApplicatonLevelException))]
 		public void noPostLogin()
 		{
 			service.request(loginUrl); //no password params!
@@ -94,7 +94,7 @@ namespace transfluent.tests
 
 		[Test]
 		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
-		[ExpectedException(typeof(ApplicatonLevelException))]
+		[ExpectedException(typeof (ApplicatonLevelException))]
 		public void wrongPasswordLogin()
 		{
 			service.request(loginUrl, new Dictionary<string, string>

@@ -5,10 +5,7 @@ namespace transfluent
 	[Route("texts/orders", RestRequestType.GET, "http://transfluent.com/backend-api/#TextsOrders")]
 	public class GetAllOrders : WebServiceParameters
 	{
-		[Inject(NamedInjections.API_TOKEN)]
-		public string authToken { get; set; }
-
-		public GetAllOrders(string group_id=null,int offset=0,int limit=0)
+		public GetAllOrders(string group_id = null, int offset = 0, int limit = 0)
 		{
 			if (!string.IsNullOrEmpty(group_id))
 			{
@@ -23,6 +20,9 @@ namespace transfluent
 				getParameters.Add("offset", offset.ToString());
 			}
 		}
+
+		[Inject(NamedInjections.API_TOKEN)]
+		public string authToken { get; set; }
 
 		public List<TransfluentOrder> Parse(string text)
 		{

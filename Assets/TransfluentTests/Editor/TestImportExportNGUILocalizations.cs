@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace transfluent.tests
 {
@@ -11,13 +11,12 @@ namespace transfluent.tests
 		public void testExport()
 		{
 			var exporter = new ImportExportNGUILocalization.NGUICSVExporter(new List<TransfluentLanguage>
-					{
-						//new TransfluentLanguage {code = "fo-br", id = 1, name = "foobar"},
-						new TransfluentLanguage {code = "en-us", id = 148, name = "English (United States)"}
-					}
+			{
+				new TransfluentLanguage {code = "en-us", id = 148, name = "English (United States)"}
+			}
 				);
-			Assert.NotNull( exporter.getCSV() );
-			UnityEngine.Debug.Log(exporter.getCSV());
+			Assert.NotNull(exporter.getCSV());
+			Debug.Log(exporter.getCSV());
 		}
 
 		[Test]
@@ -38,20 +37,20 @@ Stop,HammerTime,Fries
 		public void testImportExport()
 		{
 			string fakeImportString =
-					@"KEYS,English,Français
+				@"KEYS,English,Français
 Language,English,Français
 Medina,Funky,Cold
 Stop,HammerTime,Fries
 ";
 			var importer = new ImportExportNGUILocalization.NGUILocalizationCSVImporter(fakeImportString);
-			Dictionary<string, Dictionary<string, string>> map = importer.getMapOfLanguagesToKeyValueTranslations();	
+			Dictionary<string, Dictionary<string, string>> map = importer.getMapOfLanguagesToKeyValueTranslations();
 			Assert.NotNull(map);
 			Assert.IsTrue(map.ContainsKey("English"));
 			Assert.IsTrue(map.ContainsKey("Français"));
 
 			var exporter = new ImportExportNGUILocalization.NGUICSVExporter(map);
 			string resultCSV = exporter.getCSV();
-			Assert.AreEqual(fakeImportString.Replace("\r\n","\n"),resultCSV);
+			Assert.AreEqual(fakeImportString.Replace("\r\n", "\n"), resultCSV);
 		}
 	}
 }

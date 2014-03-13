@@ -32,12 +32,13 @@ namespace transfluent.tests
 		{
 			public string myString { get; set; }
 		}
+
 		public class TestInjectionTarget1
 		{
 			[Inject]
 			public string testString { get; set; }
-
 		}
+
 		public class TestInjectionTarget
 		{
 			[Inject]
@@ -53,7 +54,7 @@ namespace transfluent.tests
 		}
 
 		[Test]
-		[ExpectedException(typeof(UnboundInjectionException))]
+		[ExpectedException(typeof (UnboundInjectionException))]
 		public void CreateContextAndFail()
 		{
 			var context = new InjectionContext();

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace transfluent
+﻿namespace transfluent
 {
 	[Route("text", RestRequestType.POST, "http://transfluent.com/backend-api/#Text")]
 	public class SaveTextKey : WebServiceParameters
 	{
 		//URL: https://transfluent.com/v2/text/ ( HTTPS only)
 		//Parameters: text_id, group_id, language, text, invalidate_translations [=1], is_draft, token
-		[Inject(NamedInjections.API_TOKEN)]
-		public string authToken { get; set; }
 
 		public SaveTextKey(string text_id, int language, string text, string group_id = null)
 		{
@@ -23,10 +18,12 @@ namespace transfluent
 			}
 		}
 
+		[Inject(NamedInjections.API_TOKEN)]
+		public string authToken { get; set; }
+
 		public bool Parse(string text)
 		{
 			return GetResponse<bool>(text);
 		}
 	}
-
 }

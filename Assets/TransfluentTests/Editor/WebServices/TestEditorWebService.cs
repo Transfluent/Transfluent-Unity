@@ -11,12 +11,32 @@ namespace transfluent.tests
 	public class TestEditorWebService
 	{
 		[Test]
+		public void testDebugSyncronousWebService()
+		{
+			IWebService service = new DebugSyncronousEditorWebRequest();
+			WebServiceReturnStatus result = service.request("https://transfluent.com/v2/hello/world");
+			Assert.AreEqual(result.httpErrorCode, 0);
+			Assert.NotNull(result.text);
+			Assert.Greater(result.text.Length, 0);
+		}
+
+		[Test]
+		public void testSyncronousWebService()
+		{
+			IWebService service = new SyncronousEditorWebRequest();
+			WebServiceReturnStatus result = service.request("https://transfluent.com/v2/hello/world");
+			Assert.AreEqual(result.httpErrorCode, 0);
+			Assert.NotNull(result.text);
+			Assert.Greater(result.text.Length, 0);
+		}
+
+		[Test]
 		public void testWWWCallWithStep()
 		{
 			var sw = new Stopwatch();
 			sw.Start();
 			var testWww = new WWW("https://transfluent.com/v2/hello/world");
-			while(testWww.isDone == false && sw.Elapsed.Seconds < 20f)
+			while (testWww.isDone == false && sw.Elapsed.Seconds < 20f)
 			{
 				EditorApplication.Step();
 				Thread.Sleep(100);
@@ -31,33 +51,12 @@ namespace transfluent.tests
 			var sw = new Stopwatch();
 			sw.Start();
 			var testWww = new WWW("https://transfluent.com/v2/hello/world");
-			while(testWww.isDone == false && sw.Elapsed.Seconds < 20f)
+			while (testWww.isDone == false && sw.Elapsed.Seconds < 20f)
 			{
 				Thread.Sleep(100);
 			}
 			Debug.Log("time elapsed running test:" + sw.Elapsed);
 			Assert.IsTrue(testWww.isDone);
 		}
-
-		[Test]
-		public void testSyncronousWebService()
-		{
-			IWebService service = new SyncronousEditorWebRequest();
-			var result = service.request("https://transfluent.com/v2/hello/world");
-			Assert.AreEqual(result.httpErrorCode, 0);
-			Assert.NotNull(result.text);
-			Assert.Greater(result.text.Length,0);
-		}
-
-		[Test]
-		public void testDebugSyncronousWebService()
-		{
-			IWebService service = new DebugSyncronousEditorWebRequest();
-			var result = service.request("https://transfluent.com/v2/hello/world");
-			Assert.AreEqual(result.httpErrorCode, 0);
-			Assert.NotNull(result.text);
-			Assert.Greater(result.text.Length, 0);
-		}
 	}
-
 }

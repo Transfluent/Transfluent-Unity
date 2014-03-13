@@ -10,7 +10,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36b78a28da3d648a29fac727c8d4a5f2, type: 3}
   m_Name: AutoDownloaded-fr-fr
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp:transfluent:GameTranslationSet
   allTranslations:
   - text_id: TEST_CREATION_OF_A_KEY
     group_id: 

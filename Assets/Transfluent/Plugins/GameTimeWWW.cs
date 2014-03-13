@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Diagnostics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace transfluent
 {
 	public class GameTimeWWW
 	{
+		public delegate IEnumerator GotstatusUpdate(WebServiceReturnStatus status);
+
 		public IRoutineRunner runner = new RoutineRunner();
-		
+
 		public void startRoutine(IEnumerator routine)
 		{
 			runner.runRoutine(routine);
@@ -19,31 +20,29 @@ namespace transfluent
 		{
 			runner.runRoutine(doWebRequest(call, onStatusDone));
 		}
-		public delegate IEnumerator GotstatusUpdate(WebServiceReturnStatus status);
 
-		IEnumerator doWebRequest(ITransfluentParameters call, GotstatusUpdate onStatusDone)
+		private IEnumerator doWebRequest(ITransfluentParameters call, GotstatusUpdate onStatusDone)
 		{
-			WWWFacade facade = new WWWFacade();
-			Stopwatch sw = new Stopwatch();
+			var facade = new WWWFacade();
+			var sw = new Stopwatch();
 			sw.Start();
 			WWW www = facade.request(call);
 
 			yield return www;
-			WebServiceReturnStatus status = new WebServiceReturnStatus() {serviceParams = call};
+			var status = new WebServiceReturnStatus {serviceParams = call};
 			try
 			{
-				status = facade.getStatusFromFinishedWWW(www, sw,call);
+				status = facade.getStatusFromFinishedWWW(www, sw, call);
 			}
 			catch (CallException e)
 			{
-				UnityEngine.Debug.Log("Exception:" + e.Message);
+				Debug.Log("Exception:" + e.Message);
 			}
-			
+
 			if (onStatusDone != null)
 			{
 				runner.runRoutine(onStatusDone(status));
 			}
 		}
 	}
-
 }

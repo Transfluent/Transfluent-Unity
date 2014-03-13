@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace transfluent
 {
@@ -29,9 +30,9 @@ namespace transfluent
 
 		public WWW request(ITransfluentParameters call)
 		{
-			Route route = RestUrl.GetRouteAttribute(call);
+			Route route = RestUrl.GetRouteAttribute(call.GetType());
 			string url = RestUrl.GetURL(call);
-			
+
 			string urlWithGetParams = url + encodeGETParams(call.getParameters);
 			if (route.requestType == RestRequestType.GET)
 			{
@@ -62,9 +63,12 @@ namespace transfluent
 		}
 
 		//throws TransportException,ApplicatonLevelException,HttpErrorCode
-		public WebServiceReturnStatus getStatusFromFinishedWWW(WWW www, Stopwatch sw, ITransfluentParameters originalCallParams)
+		public WebServiceReturnStatus getStatusFromFinishedWWW(WWW www, Stopwatch sw,
+			ITransfluentParameters originalCallParams)
 		{
-			var status = new WebServiceReturnStatus()
+			Debug.Log("WWW:" + www.url);
+
+			var status = new WebServiceReturnStatus
 			{
 				serviceParams = originalCallParams
 			};
@@ -92,7 +96,7 @@ namespace transfluent
 
 				if (firstSpaceIndex > 0)
 				{
-					www.Dispose(); 
+					www.Dispose();
 
 					int.TryParse(error.Substring(0, firstSpaceIndex), out status.httpErrorCode);
 					//there has to be a better way to get error codes.  

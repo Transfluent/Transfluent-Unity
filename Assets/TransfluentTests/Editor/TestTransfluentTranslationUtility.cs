@@ -14,6 +14,38 @@ public class TestTransfluentTranslationUtility
 	{
 	}
 
+
+	[Test]
+	public void testInstance()
+	{
+		var destinationLanguage = new TransfluentLanguage {code = "fo-o", id = 501, name = "foo"};
+
+		var instance = new TransfluentUtilityInstance
+		{
+			destinationLanguage = destinationLanguage,
+			allKnownTranslations = new Dictionary<string, string>
+			{
+				{"hello world", "world hello"},
+				{"formatted {0} text", "formatted text"}
+			},
+		};
+
+		string toTranslateDoesNotExist = "THIS DOES NOT EXIST";
+		Assert.AreEqual(instance.getTranslation(toTranslateDoesNotExist), toTranslateDoesNotExist);
+
+		string toTranslateDoesNotExist2 = "THIS DOES NOT EXIST formattted {0}";
+		Assert.AreEqual(instance.getFormattedTranslation(toTranslateDoesNotExist2, "nope"),
+			string.Format(toTranslateDoesNotExist2, "nope"));
+
+
+		string formattedStringThatExists = "formatted {0} text";
+		Assert.AreEqual(instance.getFormattedTranslation(formattedStringThatExists, "success"), "formatted success text");
+
+		string toTranslateAndExists = "hello world";
+		string translationResult = "world hello";
+		Assert.AreEqual(translationResult, instance.getTranslation(toTranslateAndExists));
+	}
+
 	[Test]
 	public void testLanguageListGetterWithNoList()
 	{
@@ -23,7 +55,7 @@ public class TestTransfluentTranslationUtility
 		AssetDatabase.DeleteAsset(languageListPath);
 		IWebService service = new SyncronousEditorWebRequest();
 		var request = new RequestAllLanguages();
-		var status = service.request(request);
+		WebServiceReturnStatus status = service.request(request);
 		LanguageList list = request.Parse(status.text);
 		Assert.NotNull(list);
 		Assert.NotNull(list.languages);
@@ -32,48 +64,18 @@ public class TestTransfluentTranslationUtility
 		var so = ResourceCreator.CreateSO<LanguageListSO>("LanguageList");
 		so.list = list;
 		EditorUtility.SetDirty(so);
-		
-		LanguageList newList = ResourceLoadFacade.getLanguageList(); //NOTE: THIS IS THE RUNTIME VERSION... not the editor time version
+
+		LanguageList newList = ResourceLoadFacade.getLanguageList();
+			//NOTE: THIS IS THE RUNTIME VERSION... not the editor time version
 
 		AssetDatabase.SaveAssets();
 		//manual load
 
-		LanguageListSO fromDisk = AssetDatabase.LoadAssetAtPath(languageListPath, typeof (LanguageListSO)) as LanguageListSO;
+		var fromDisk = AssetDatabase.LoadAssetAtPath(languageListPath, typeof (LanguageListSO)) as LanguageListSO;
 		Assert.NotNull(fromDisk);
 		Assert.NotNull(fromDisk.list);
 		Assert.NotNull(fromDisk.list.languages);
 		Assert.Greater(fromDisk.list.languages.Count, 0);
-		Debug.Log("newlist:"+JsonWriter.Serialize(newList));
-	}
-
-
-	[Test]
-	public void testInstance()
-	{
-		var destinationLanguage = new TransfluentLanguage() {code = "fo-o", id = 501, name = "foo"};
-
-		TransfluentUtilityInstance instance = new TransfluentUtilityInstance()
-		{
-			destinationLanguage = destinationLanguage,
-			allKnownTranslations = new Dictionary<string,string>
-			{
-				{"hello world","world hello"},
-				{"formatted {0} text","formatted text"}
-			},
-		};
-
-		string toTranslateDoesNotExist = "THIS DOES NOT EXIST";
-		Assert.AreEqual(instance.getTranslation(toTranslateDoesNotExist), toTranslateDoesNotExist);
-
-		string toTranslateDoesNotExist2 = "THIS DOES NOT EXIST formattted {0}";
-		Assert.AreEqual(instance.getFormattedTranslation(toTranslateDoesNotExist2, "nope"), string.Format(toTranslateDoesNotExist2, "nope"));
-		
-
-		string formattedStringThatExists = "formatted {0} text";
-		Assert.AreEqual(instance.getFormattedTranslation(formattedStringThatExists,"success"),"formatted success text");
-
-		string toTranslateAndExists = "hello world";
-		string translationResult = "world hello";
-		Assert.AreEqual(translationResult,instance.getTranslation(toTranslateAndExists));
+		Debug.Log("newlist:" + JsonWriter.Serialize(newList));
 	}
 }

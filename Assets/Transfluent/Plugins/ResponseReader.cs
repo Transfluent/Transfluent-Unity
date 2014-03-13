@@ -1,5 +1,4 @@
-﻿using System;
-using Pathfinding.Serialization.JsonFx;
+﻿using Pathfinding.Serialization.JsonFx;
 
 namespace transfluent
 {
@@ -15,6 +14,4 @@ namespace transfluent
 			return JsonReader.Deserialize<T>(text);
 		}
 	}
-	
-
 }

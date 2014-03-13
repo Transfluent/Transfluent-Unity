@@ -7,53 +7,52 @@ namespace transfluent
 	{
 		//TODO: keep sets of language/group and allow for explict load/unload statements
 		//the implication of that is that any ongui/other client would need to declare set groups for their activiites in some way
-		static TransfluentUtilityInstance _instance = new TransfluentUtilityInstance(); 
-		
+		private static TransfluentUtilityInstance _instance = new TransfluentUtilityInstance();
+
 		private static LanguageList _LanguageList;
-		
+
+		private TransfluentUtility()
+		{
+			changeStaticInstanceConfig(); //load default translation group info
+		}
+
 		public static TransfluentUtilityInstance getUtilityInstanceForDebugging()
 		{
 			return _instance;
 		}
 
-		TransfluentUtility()
+		//convert into a factory?
+		public static bool changeStaticInstanceConfig(string destinationLanguageCode = "", string translationGroup = "")
 		{
-			changeStaticInstanceConfig(); //load default translation group info
-		}
-
-		//todo: convert into a factory
-		public static bool changeStaticInstanceConfig(string destinationLanguageCode="", string translationGroup="")
-		{
-			var tmpInstance = createNewInstance(destinationLanguageCode, translationGroup);
+			TransfluentUtilityInstance tmpInstance = createNewInstance(destinationLanguageCode, translationGroup);
 			if (tmpInstance != null)
 			{
 				_instance = tmpInstance;
 				return true;
 			}
-			else
-			{
-				return false;
-			}
+			return false;
 		}
 
 		public static TransfluentUtilityInstance createNewInstance(string destinationLanguageCode = "", string group = "")
 		{
-			if(_LanguageList == null)
+			if (_LanguageList == null)
 			{
 				_LanguageList = ResourceLoadFacade.getLanguageList();
 			}
 
-			if(_LanguageList == null)
+			if (_LanguageList == null)
 			{
 				Debug.LogError("Could not load new language list");
 				return null;
 			}
 
 			TransfluentLanguage dest = _LanguageList.getLangaugeByCode(destinationLanguageCode);
-			var destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destinationLanguageCode);
+			GameTranslationSet destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destinationLanguageCode);
 
-			var keysInLanguageForGroupSpecified = destLangDB != null ? destLangDB.getKeyValuePairs(group) : new Dictionary<string, string>();
-			return new TransfluentUtilityInstance()
+			Dictionary<string, string> keysInLanguageForGroupSpecified = destLangDB != null
+				? destLangDB.getKeyValuePairs(group)
+				: new Dictionary<string, string>();
+			return new TransfluentUtilityInstance
 			{
 				allKnownTranslations = keysInLanguageForGroupSpecified,
 				destinationLanguage = dest,
@@ -70,9 +69,8 @@ namespace transfluent
 		//ie "Hi, my name is {0}" instead of "Hi, my name is $NAME" or some other scheme
 		public static string getFormattedTranslation(string sourceText, params object[] formatStrings)
 		{
-			return _instance.getFormattedTranslation(sourceText,formatStrings);
+			return _instance.getFormattedTranslation(sourceText, formatStrings);
 		}
-		
 	}
 
 	//an interface for handling translaitons
@@ -82,7 +80,7 @@ namespace transfluent
 		public TransfluentLanguage destinationLanguage { get; set; }
 		public string groupBeingShown { get; set; }
 
-		public void setNewDestinationLanguage(Dictionary<string,string> transaltionsInSet)
+		public void setNewDestinationLanguage(Dictionary<string, string> transaltionsInSet)
 		{
 			allKnownTranslations.Clear();
 		}
@@ -105,6 +103,4 @@ namespace transfluent
 			return sourceText;
 		}
 	}
-
-	
 }

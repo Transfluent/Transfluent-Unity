@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using UnityEngine;
 
 namespace transfluent
 {
@@ -19,8 +18,12 @@ namespace transfluent
 		private readonly Dictionary<string, string> _postParameters = new Dictionary<string, string>();
 
 		//[Inject]
-		 IResponseReader _responseReader = new ResponseReader(); //{ get; set; }
-		public IResponseReader responseReader {get { return _responseReader; }}
+		private readonly IResponseReader _responseReader = new ResponseReader(); //{ get; set; }
+
+		public IResponseReader responseReader
+		{
+			get { return _responseReader; }
+		}
 
 		public Dictionary<string, string> getParameters
 		{
@@ -48,17 +51,17 @@ namespace transfluent
 			var responseFullyParse = responseReader.deserialize<ResponseContainer<T>>(text);
 			return responseFullyParse.response;
 		}
-		
+
 		public override string ToString()
 		{
-			StringBuilder sb = new StringBuilder();
+			var sb = new StringBuilder();
 			sb.Append("getparams:");
-			foreach (KeyValuePair<string, string> kvp in getParameters)
+			foreach (var kvp in getParameters)
 			{
 				sb.Append(string.Format("key:{0} value{1}", kvp.Key, kvp.Value));
 			}
 			sb.Append("Postparams:");
-			foreach(KeyValuePair<string, string> kvp in postParameters)
+			foreach (var kvp in postParameters)
 			{
 				sb.Append(string.Format("key:{0} value{1}", kvp.Key, kvp.Value));
 			}
@@ -70,11 +73,13 @@ namespace transfluent
 	public class ApplicatonLevelException : CallException
 	{
 		public Error details;
+
 		public ApplicatonLevelException(string message, int httpStatusCode)
 			: base(message)
 		{
-			details = new Error() {message = "HTTP ERROR CODE:" + httpStatusCode,type=httpStatusCode.ToString()};
+			details = new Error {message = "HTTP ERROR CODE:" + httpStatusCode, type = httpStatusCode.ToString()};
 		}
+
 		public ApplicatonLevelException(string message, Error error)
 			: base(message)
 		{

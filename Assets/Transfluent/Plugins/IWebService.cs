@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Threading;
 using Pathfinding.Serialization.JsonFx;
-using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 namespace transfluent
 {
@@ -14,13 +9,13 @@ namespace transfluent
 		WebServiceReturnStatus request(string url);
 		WebServiceReturnStatus request(string url, Dictionary<string, string> postParams);
 		WebServiceReturnStatus request(ITransfluentParameters parameters);
-	}	
+	}
 
 	public struct WebServiceReturnStatus
 	{
-		public ITransfluentParameters serviceParams;
 		public int httpErrorCode;
 		public TimeSpan requestTimeTaken;
+		public ITransfluentParameters serviceParams;
 
 		public string text; //if text is the  requested thing
 

@@ -8,7 +8,6 @@ namespace transfluent
 	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
 	public class Inject : Attribute
 	{
-		public bool isNamed { get; private set; }
 		public NamedInjections name;
 
 		public Inject()
@@ -20,6 +19,8 @@ namespace transfluent
 			isNamed = true;
 			name = injectionName;
 		}
+
+		public bool isNamed { get; private set; }
 	}
 
 	public class UnboundInjectionException : Exception
@@ -55,14 +56,14 @@ namespace transfluent
 		{
 			if (!namedInjectionMap.ContainsKey(name))
 				namedInjectionMap.Add(name, new Dictionary<Type, object>());
-			namedInjectionMap[name].Add(typeof(T), valueToPutIn);
+			namedInjectionMap[name].Add(typeof (T), valueToPutIn);
 		}
 
 		public void removeNamedMapping<T>(NamedInjections namedInjection)
 		{
 			string name = namedInjection.ToString();
-			
-			if(!namedInjectionMap.ContainsKey(name))
+
+			if (!namedInjectionMap.ContainsKey(name))
 				namedInjectionMap.Add(name, new Dictionary<Type, object>());
 			if (namedInjectionMap[name].ContainsKey(typeof (T)))
 			{

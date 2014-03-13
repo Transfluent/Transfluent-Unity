@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace transfluent
 {
@@ -15,8 +14,8 @@ namespace transfluent
 			{
 				return null;
 			}
-			
 		}
+
 		public static string TranslationConfigurationSOFileNameFromGroupID(string groupid)
 		{
 			return "TranslationConfigurationSO_" + groupid;
@@ -27,11 +26,9 @@ namespace transfluent
 			return LoadResource<TranslationConfigurationSO>(TranslationConfigurationSOFileNameFromGroupID(configGroup));
 		}
 
-		public static T LoadResource<T>(string path) where T : UnityEngine.Object
+		public static T LoadResource<T>(string path) where T : Object
 		{
 			return Resources.Load<T>(path);
 		}
-
 	}
 }
-

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace transfluent
+﻿namespace transfluent
 {
 	[Route("hello", RestRequestType.GET, "http://transfluent.com/backend-api/#Hello")]
 	public class CreateAccount : WebServiceParameters
@@ -19,5 +16,4 @@ namespace transfluent
 			return GetResponse<AccountCreationResult>(text);
 		}
 	}
-
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using transfluent;
 using UnityEditor;
 using UnityEngine;
@@ -125,10 +126,8 @@ public class ImportExportNGUILocalization
 
 	public class NGUICSVExporter
 	{
-		public NGUICSVExporter(Dictionary<TransfluentLanguage, Dictionary<string, string> > languageToAllTranslationsMap)
-		{
-			
-		}
+		private Dictionary<string, List<string>> _keysMappedToListOfLangaugesIndexedByLanguageIndex;
+		private string csvString;
 		//NOTE: it appears as if groupid maps roughly to KEY.  But most of the time KEY is the language in those files... so I'm not sure I should take that for granted
 		public NGUICSVExporter(List<TransfluentLanguage> languagesToExportTo,string groupid="")
 		{
@@ -160,14 +159,36 @@ public class ImportExportNGUILocalization
 				languageList.Add(nativeLanguageName);
 			}
 
-			var allKnownKeysMappedToAListIndexedByLanguageName = new Dictionary<string, List<string>>();
+			_keysMappedToListOfLangaugesIndexedByLanguageIndex = new Dictionary<string, List<string>>();
 			foreach (TransfluentLanguage lang in languagesToExportTo)
 			{
 				Dictionary<string, string> keyValuesInLanguage = allTranslationsIndexedByLanguage[lang];
 				int indexToAddAt = keyList.IndexOf(takeLanguageCodeAndTurnItIntoNativeName(lang.code));
-
-
+				string nativeName = takeLanguageCodeAndTurnItIntoNativeName(lang.code);
+				foreach (KeyValuePair<string, string> kvp in keyValuesInLanguage)
+				{
+					if(_keysMappedToListOfLangaugesIndexedByLanguageIndex.ContainsKey(kvp.Key))
+						_keysMappedToListOfLangaugesIndexedByLanguageIndex.Add(kvp.Key, new List<string>(languagesToExportTo.Count));
+					_keysMappedToListOfLangaugesIndexedByLanguageIndex[kvp.Key].Insert(indexToAddAt, kvp.Value);
+				}
 			}
+
+			StringBuilder allLinesSB = new StringBuilder();
+			allLinesSB.Append(string.Join(",", keyList.ToArray()));
+			allLinesSB.Append(string.Join(",", languageList.ToArray()));
+			foreach(KeyValuePair<string,List<string>> keyToItems in _keysMappedToListOfLangaugesIndexedByLanguageIndex)
+			{
+				var tmpList = new List<string>();
+				tmpList.Add(keyToItems.Key);
+				tmpList.AddRange(keyToItems.Value);
+				allLinesSB.Append(string.Join(",", tmpList.ToArray()));
+			}
+			csvString = allLinesSB.ToString();
+		}
+
+		public string getCSV()
+		{
+			return csvString;
 		}
 
 	}

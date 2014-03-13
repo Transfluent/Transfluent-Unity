@@ -8,10 +8,6 @@ public class ShowAllKnownTextAtSameTime : MonoBehaviour
 {
 	private readonly List<string> knownStrings = new List<string>();
 
-	//[SerializeField]
-	//private TransfluentTranslation translation = new TransfluentTranslation();
-
-	// Use this for initialization
 	private void Start()
 	{
 		knownStrings.Clear();

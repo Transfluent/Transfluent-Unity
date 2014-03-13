@@ -31,11 +31,8 @@ namespace transfluent.editor
 					List<TransfluentTranslation> translations = mediator.knownTextEntries();
 					if(translations.Count > 0)
 					{
-						GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode);
-						if (set == null)
-						{
-							set = ResourceCreator.CreateSO<GameTranslationSet>(GameTranslationGetter.fileNameFromLanguageCode(languageCode));
-						}
+						GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode) ??
+						                         ResourceCreator.CreateSO<GameTranslationSet>(GameTranslationGetter.fileNameFromLanguageCode(languageCode));
 
 						//GameTranslationSet set = GameTranslationsCreator.GetTranslaitonSet(languageCode);
 						set.allTranslations = translations;

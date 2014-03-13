@@ -31,11 +31,6 @@ public class InternationalTextDisplay : MonoBehaviour
 		}
 	}
 
-	public GameTranslationSet translationSetFromLanguage(TransfluentLanguage language)
-	{
-		return GameTranslationGetter.GetTranslaitonSetFromLanguageCode(language.code);
-	}
-
 	private TransfluentUtilityInstance translationHelper;
 	private Vector2 scrollPosition;
 	private void OnGUI()

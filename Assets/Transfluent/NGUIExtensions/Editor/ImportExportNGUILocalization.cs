@@ -145,48 +145,56 @@ public class ImportExportNGUILocalization
 	public class NGUICSVExporter
 	{
 		private string csvString;
-		//NOTE: it appears as if groupid maps roughly to KEY.  But most of the time KEY is the language in those files... so I'm not sure I should take that for granted
-		public NGUICSVExporter(List<TransfluentLanguage> languagesToExportTo,string groupid="")
-		{
-			var allTranslationsIndexedByLanguage = new Dictionary<TransfluentLanguage, Dictionary<string, string>>();
-			//var destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destinationLanguageCode);
-			foreach(TransfluentLanguage lang in languagesToExportTo)
-			{
-				GameTranslationSet destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(lang.code);
-				if(destLangDB == null || destLangDB.allTranslations == null)
-				{
-					Debug.LogWarning("could not find any information for language:"+lang);
-					continue;
-				}
-				Dictionary<string,string> translations = destLangDB.getKeyValuePairs(groupid);
-				allTranslationsIndexedByLanguage.Add(lang, translations);
-			}
 
-			List<string> keyList = new List<string>() { "KEYS" };
-			List<string> languageList = new List<string>() { "Language" };
+		//NOTE: it appears as if groupid maps roughly to KEY.  But most of the time KEY is the language in those files... so I'm not sure I should take that for granted
+		public NGUICSVExporter(List<TransfluentLanguage> languagesToExportTo, string groupid = "")
+		{
+			var allTranslationsIndexedByLanguage = new Dictionary<string, Dictionary<string, string>>();
 			foreach (TransfluentLanguage lang in languagesToExportTo)
 			{
-				if (!allTranslationsIndexedByLanguage.ContainsKey(lang))
+				GameTranslationSet destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(lang.code);
+				if (destLangDB == null || destLangDB.allTranslations == null)
 				{
-					Debug.LogWarning("Desired output language is not being exported, as there are no translation entries:"+ lang);
+					Debug.LogWarning("could not find any information for language:" + lang);
 					continue;
 				}
-				string nativeLanguageName = takeLanguageCodeAndTurnItIntoNativeName(lang.code);
+				Dictionary<string, string> translations = destLangDB.getKeyValuePairs(groupid);
+				string languageNameInNativeLanguage = takeLanguageCodeAndTurnItIntoNativeName(lang.code);
+				allTranslationsIndexedByLanguage.Add(languageNameInNativeLanguage, translations);
+			}
+			Init(allTranslationsIndexedByLanguage);
+		}
+
+		public NGUICSVExporter(Dictionary<string, Dictionary<string, string>> allTranslationsIndexedByLanguage)
+		{
+			Init(allTranslationsIndexedByLanguage);	
+		}
+
+		void Init(Dictionary<string, Dictionary<string, string>> allTranslationsIndexedByLanguage)
+		{
+			List<string> keyList = new List<string>() { "KEYS" };
+			List<string> languageList = new List<string>() { "Language" };
+			foreach(KeyValuePair<string, Dictionary<string, string>> kvp in allTranslationsIndexedByLanguage)
+			{
+				string nativeLanguageName = kvp.Key;
 				keyList.Add(nativeLanguageName); //I have to think that this is meant as groupid, but I'm not sure how people end up using this
 				languageList.Add(nativeLanguageName);
 			}
 
 			var _keysMappedToListOfLangaugesIndexedByLanguageIndex = new Dictionary<string, string[]>();
 
-			foreach (TransfluentLanguage lang in languagesToExportTo)
+			foreach(KeyValuePair<string, Dictionary<string, string>> langToDictionary in allTranslationsIndexedByLanguage)
 			{
-				Dictionary<string, string> keyValuesInLanguage = allTranslationsIndexedByLanguage[lang];
-				int indexToAddAt = keyList.IndexOf(takeLanguageCodeAndTurnItIntoNativeName(lang.code));
-				string nativeName = takeLanguageCodeAndTurnItIntoNativeName(lang.code);
+				string nativeName = langToDictionary.Key;
+				Dictionary<string, string> keyValuesInLanguage = langToDictionary.Value;
+				int indexToAddAt = keyList.IndexOf(nativeName)-1;
+
 				foreach (KeyValuePair<string, string> kvp in keyValuesInLanguage)
 				{
+					if (keysThatMustExistFirst.Contains(kvp.Key)) //skip KEYS and Language
+						continue;
 					if(!_keysMappedToListOfLangaugesIndexedByLanguageIndex.ContainsKey(kvp.Key))
-						_keysMappedToListOfLangaugesIndexedByLanguageIndex[kvp.Key] = new string[languagesToExportTo.Count+1];
+						_keysMappedToListOfLangaugesIndexedByLanguageIndex[kvp.Key] = new string[languageList.Count-1];
 					_keysMappedToListOfLangaugesIndexedByLanguageIndex[kvp.Key][indexToAddAt] = kvp.Value;
 				}
 			}

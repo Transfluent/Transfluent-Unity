@@ -34,6 +34,7 @@ Stop,HammerTime,Fries
 			Assert.NotNull(map);
 		}
 
+		[Test]
 		public void testImportExport()
 		{
 			string fakeImportString =
@@ -44,7 +45,13 @@ Stop,HammerTime,Fries
 ";
 			var importer = new ImportExportNGUILocalization.NGUILocalizationCSVImporter(fakeImportString);
 			Dictionary<string, Dictionary<string, string>> map = importer.getMapOfLanguagesToKeyValueTranslations();	
+			Assert.NotNull(map);
+			Assert.IsTrue(map.ContainsKey("English"));
+			Assert.IsTrue(map.ContainsKey("Français"));
 
+			var exporter = new ImportExportNGUILocalization.NGUICSVExporter(map);
+			string resultCSV = exporter.getCSV();
+			Assert.AreEqual(fakeImportString.Replace("\r\n","\n"),resultCSV);
 		}
 	}
 }

@@ -11,16 +11,18 @@ namespace transfluent
 		{
 			var dictionary = new Dictionary<string, string>();
 			if (allTranslations == null) return dictionary;
-			foreach (TransfluentTranslation translation in allTranslations)
-			{
-				dictionary.Add(translation.text_id, translation.text);
-			}
+			
 			bool groupIsEmpty = string.IsNullOrEmpty(group);
 
 			foreach(TransfluentTranslation translation in allTranslations)
 			{
 				if(groupIsEmpty && string.IsNullOrEmpty(translation.group_id))
 				{
+					if (dictionary.ContainsKey(translation.text_id))
+					{
+						Debug.LogError("Dictionary already contains key:"+ translation.text_id);
+						continue;
+					}
 					dictionary.Add(translation.text_id, translation.text);
 				}
 				else

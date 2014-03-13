@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace transfluent
@@ -22,6 +23,17 @@ namespace transfluent
 				destinationLanguageID);
 			return missingSetList;
 		}
+
+		public static List<GameTranslationSet> GetTranslationSet(List<string> languageCodes)
+		{
+			var list = new List<GameTranslationSet>();
+			foreach (string code in languageCodes)
+			{
+				list.Add(GetTranslaitonSetFromLanguageCode(code));
+			}
+			return list;
+		}
+
 		public static GameTranslationSet GetTranslaitonSetFromLanguageCode(string langaugeCode)
 		{
 			string fileName = fileNameFromLanguageCode(langaugeCode).Replace(".asset","");

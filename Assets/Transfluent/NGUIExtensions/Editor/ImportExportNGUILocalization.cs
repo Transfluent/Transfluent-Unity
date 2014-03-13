@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using transfluent;
+using transfluent.tests;
 using UnityEditor;
 using UnityEngine;
 using System.Collections;
@@ -15,14 +16,29 @@ public class ImportExportNGUILocalization
 	//write tests.  lots of tests.  This has to work *perfectly* for the keying to map well.  Other people use different language identifiers than transfluent
 	protected static string takeLanguageNameAndTurnItIntoAKnownLanguageCode(string languageNameInItsOwnLanguage)
 	{
-		var languageCode = "en-us";
-		return languageCode;
+		foreach (KeyValuePair<string, string> kvp in languageCodeToCommonName)
+		{
+			if (kvp.Value.ToLower() == languageNameInItsOwnLanguage.ToLower())
+			{
+				return kvp.Key;
+			}
+		}
+		return languageNameInItsOwnLanguage; //we don't know
 	}
+
+	private static Dictionary<string, string> languageCodeToCommonName = new Dictionary<string, string>()
+	{
+		{"en-us", "English"},
+		{"fr-fr", "Français"}
+	};
 
 	protected static string takeLanguageCodeAndTurnItIntoNativeName(string languageCode)
 	{
-		string languageNameInItsOwnLanguage = "en-us";
-		return languageNameInItsOwnLanguage;
+		if (languageCodeToCommonName.ContainsKey(languageCode))
+		{
+			return languageCodeToCommonName[languageCode];
+		}
+		return languageCode;  //we have no idea
 	}
 
 	//NOTE: this belongs elsewhere
@@ -51,9 +67,10 @@ public class ImportExportNGUILocalization
 			}
 			for(int j=0;j<keysThatMustExistFirst.Count;j++)
 			{
-				if (individualLines[j].StartsWith(keysThatMustExistFirst[j]))
+				if (!individualLines[j].StartsWith(keysThatMustExistFirst[j]))
 				{
 					Debug.LogError("invalid csv file, expected to have the key start the csv file:"+keysThatMustExistFirst[j] + " at position:"+j);
+					Debug.Log("vs individual line number:" + j + " with value:" + individualLines[j]);
 					return;
 				}
 			}
@@ -68,6 +85,7 @@ public class ImportExportNGUILocalization
 					continue;
 				}
 				string key = csvStrings[0];
+				Debug.Log("Processing key:"+key);
 				if(string.IsNullOrEmpty(key))
 				{
 					Debug.LogError("invalid csv line, empty key for csv line:" + line);
@@ -126,7 +144,6 @@ public class ImportExportNGUILocalization
 
 	public class NGUICSVExporter
 	{
-		private Dictionary<string, List<string>> _keysMappedToListOfLangaugesIndexedByLanguageIndex;
 		private string csvString;
 		//NOTE: it appears as if groupid maps roughly to KEY.  But most of the time KEY is the language in those files... so I'm not sure I should take that for granted
 		public NGUICSVExporter(List<TransfluentLanguage> languagesToExportTo,string groupid="")
@@ -145,8 +162,8 @@ public class ImportExportNGUILocalization
 				allTranslationsIndexedByLanguage.Add(lang, translations);
 			}
 
-			List<string> keyList = new List<string>();
-			List<string> languageList = new List<string>();
+			List<string> keyList = new List<string>() { "KEYS" };
+			List<string> languageList = new List<string>() { "Language" };
 			foreach (TransfluentLanguage lang in languagesToExportTo)
 			{
 				if (!allTranslationsIndexedByLanguage.ContainsKey(lang))
@@ -159,7 +176,8 @@ public class ImportExportNGUILocalization
 				languageList.Add(nativeLanguageName);
 			}
 
-			_keysMappedToListOfLangaugesIndexedByLanguageIndex = new Dictionary<string, List<string>>();
+			var _keysMappedToListOfLangaugesIndexedByLanguageIndex = new Dictionary<string, string[]>();
+
 			foreach (TransfluentLanguage lang in languagesToExportTo)
 			{
 				Dictionary<string, string> keyValuesInLanguage = allTranslationsIndexedByLanguage[lang];
@@ -167,21 +185,21 @@ public class ImportExportNGUILocalization
 				string nativeName = takeLanguageCodeAndTurnItIntoNativeName(lang.code);
 				foreach (KeyValuePair<string, string> kvp in keyValuesInLanguage)
 				{
-					if(_keysMappedToListOfLangaugesIndexedByLanguageIndex.ContainsKey(kvp.Key))
-						_keysMappedToListOfLangaugesIndexedByLanguageIndex.Add(kvp.Key, new List<string>(languagesToExportTo.Count));
-					_keysMappedToListOfLangaugesIndexedByLanguageIndex[kvp.Key].Insert(indexToAddAt, kvp.Value);
+					if(!_keysMappedToListOfLangaugesIndexedByLanguageIndex.ContainsKey(kvp.Key))
+						_keysMappedToListOfLangaugesIndexedByLanguageIndex[kvp.Key] = new string[languagesToExportTo.Count+1];
+					_keysMappedToListOfLangaugesIndexedByLanguageIndex[kvp.Key][indexToAddAt] = kvp.Value;
 				}
 			}
 
 			StringBuilder allLinesSB = new StringBuilder();
-			allLinesSB.Append(string.Join(",", keyList.ToArray()));
-			allLinesSB.Append(string.Join(",", languageList.ToArray()));
-			foreach(KeyValuePair<string,List<string>> keyToItems in _keysMappedToListOfLangaugesIndexedByLanguageIndex)
+			allLinesSB.AppendLine(string.Join(",", keyList.ToArray()));
+			allLinesSB.AppendLine(string.Join(",", languageList.ToArray()));
+			foreach(KeyValuePair<string,string[]> keyToItems in _keysMappedToListOfLangaugesIndexedByLanguageIndex)
 			{
 				var tmpList = new List<string>();
 				tmpList.Add(keyToItems.Key);
 				tmpList.AddRange(keyToItems.Value);
-				allLinesSB.Append(string.Join(",", tmpList.ToArray()));
+				allLinesSB.AppendLine(string.Join(",", tmpList.ToArray()));
 			}
 			csvString = allLinesSB.ToString();
 		}

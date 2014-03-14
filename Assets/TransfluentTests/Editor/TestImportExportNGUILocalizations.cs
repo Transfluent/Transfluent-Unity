@@ -9,6 +9,13 @@ namespace transfluent.tests
 	[TestFixture]
 	public class TestImportExportNGUILocalizations
 	{
+		string fakeImportString =
+				@"KEYS,English,Français
+Language,English,Français
+Medina,Funky,Cold
+Stop,HammerTime,Fries
+escapedTex,""foobar foo bar monkey potatoe, lots of dandruff,"""" if a quiz is quizzical, what's a test"",not escaped at all.  I'm still trying to break out
+";
 		[Test]
 		public void testExport()
 		{
@@ -24,13 +31,7 @@ namespace transfluent.tests
 		[Test]
 		public void testImport()
 		{
-			string fakeImportString =
-				@"KEYS,English,Français
-Language,English,Français
-Medina,Funky,Cold
-Stop,HammerTime,Fries
-escapedTex,""foobar foo bar monkey potatoe, lots of dandruff,"""" if a quiz is quizzical, what's a test"",not escaped at all.  I'm still trying to break out
-";
+			
 			var importer = new ImportExportNGUILocalization.NGUILocalizationCSVImporter(fakeImportString);
 			Dictionary<string, Dictionary<string, string>> map = importer.getMapOfLanguagesToKeyValueTranslations();
 			Assert.NotNull(map);
@@ -39,13 +40,6 @@ escapedTex,""foobar foo bar monkey potatoe, lots of dandruff,"""" if a quiz is q
 		[Test]
 		public void testImportExport()
 		{
-			string fakeImportString =
-				@"KEYS,English,Français
-Language,English,Français
-Medina,Funky,Cold
-Stop,HammerTime,Fries
-escapedTex,""foobar foo bar monkey potatoe, lots of dandruff,"" if a quiz is quizzical, what's a test"",not escaped at all.  I'm still trying to break out
-";
 			//escapedTex,""foobar foo bar monkey potatoe, lots of dandruff,"""" if a quiz is quizzical, what's a test"",not escaped at all.  I'm still trying to break out
 
 			var importer = new ImportExportNGUILocalization.NGUILocalizationCSVImporter(fakeImportString);
@@ -57,7 +51,7 @@ escapedTex,""foobar foo bar monkey potatoe, lots of dandruff,"" if a quiz is qui
 			var exporter = new ImportExportNGUILocalization.NGUICSVExporter(map);
 			string resultCSV = exporter.getCSV();
 			string cleanInput = fakeImportString.Replace("\r\n", "\n");
-			Debug.Log(resultCSV);
+			Debug.Log(resultCSV); Debug.Log(cleanInput);
 			Assert.AreEqual(cleanInput, resultCSV);
 		}
 

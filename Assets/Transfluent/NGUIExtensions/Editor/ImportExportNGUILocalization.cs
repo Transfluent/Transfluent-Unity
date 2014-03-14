@@ -21,7 +21,6 @@ public class ImportExportNGUILocalization
 		string nguiLocalization = ResourceLoadFacade.LoadResource<TextAsset>("Localization").text;
 		var importer = new NGUILocalizationCSVImporter(nguiLocalization);
 		var map = importer.getMapOfLanguagesToKeyValueTranslations();
-		List<TransfluentLanguage> languages = new List<TransfluentLanguage>();
 		foreach (KeyValuePair<string, Dictionary<string, string>> languageCommonNameToKeyValues in map)
 		{
 			string commonName = languageCommonNameToKeyValues.Key;
@@ -183,10 +182,8 @@ public class ImportExportNGUILocalization
 
 				foreach (var kvp in keyValuesInLanguage)
 				{
-					Debug.Log("KV in language:"+kvp.Key);
 					if (keysThatMustExistFirst.Contains(kvp.Key)) //skip KEYS and Language
 						continue;
-					Debug.Log("adding:" + kvp.Key);
 					if (!_keysMappedToListOfLangaugesIndexedByLanguageIndex.ContainsKey(kvp.Key))
 						_keysMappedToListOfLangaugesIndexedByLanguageIndex[kvp.Key] = new string[languageList.Count - 1];
 					_keysMappedToListOfLangaugesIndexedByLanguageIndex[kvp.Key][indexToAddAt] = kvp.Value;
@@ -228,7 +225,8 @@ public class ImportExportNGUILocalization
 			currentString = currentString.Replace("\n", "\\n");
 			if(unescapedCSVString.Contains(","))
 			{
-				currentString = "\"" + currentString.Replace("\"", "\"\"") + "\"";
+				currentString = currentString.Replace("\"", "\"\"");
+				currentString = "\"" + currentString + "\"";
 			}
 			//currentString.Replace("\"", "\"\"");
 			return currentString;
@@ -263,12 +261,20 @@ public class ImportExportNGUILocalization
 					}
 					else
 					{
-						entry += cur;
+						entry += "," + cur;
 					}
 				}
 				else
 				{
-					realList.Add(unescapeCSVString(cur));
+					if (!waitingForClosingParen)
+					{
+						realList.Add(unescapeCSVString(cur));
+					}
+					else
+					{
+						entry += "," + cur;
+					}
+					
 				}
 
 				//not an 'escaped' quote, but ending with a real quote
@@ -321,7 +327,6 @@ public class ImportExportNGUILocalization
 					continue;
 				}
 				string key = csvStrings[0];
-				Debug.Log("Processing key:" + key);
 				if (string.IsNullOrEmpty(key))
 				{
 					Debug.LogError("invalid csv line, empty key for csv line:" + line);
@@ -342,7 +347,6 @@ public class ImportExportNGUILocalization
 		public Dictionary<string, Dictionary<string, string>> getMapOfLanguagesToKeyValueTranslations()
 		{
 			var langaugeNameToKeyValuePairMap = new Dictionary<string, Dictionary<string, string>>();
-			Debug.Log("KVP :" + JsonWriter.Serialize(keyNameToValueListIndexedByLanguage));
 			List<string> languageNamesFromFile = keyNameToValueListIndexedByLanguage["Language"];
 			foreach (string languageName in languageNamesFromFile)
 			{

@@ -9,8 +9,8 @@ using UnityEngine;
 //editor time utility to get ngui serialization into and out of ngui's format
 public class ImportExportNGUILocalization
 {
-	private static readonly List<string> keysThatMustExistFirst = new List<string> {"KEYS", "Language"};
-
+	private static readonly List<string> keysThatMustExistFirst = new List<string> { "KEYS", "Language" };
+	 d
 	private static readonly Dictionary<string, string> languageCodeToCommonName = new Dictionary<string, string>
 	{
 		{"en-us", "English"},
@@ -70,7 +70,7 @@ public class ImportExportNGUILocalization
 		string nguiLocalization = ResourceLoadFacade.LoadResource<TextAsset>("Localization").text;
 		var importer = new NGUILocalizationCSVImporter(nguiLocalization);
 		Dictionary<string, Dictionary<string, string>> map = importer.getMapOfLanguagesToKeyValueTranslations();
-		foreach (var languageCommonNameToKeyValues in map)
+		foreach(var languageCommonNameToKeyValues in map)
 		{
 			string commonName = languageCommonNameToKeyValues.Key;
 			Dictionary<string, string> keyValues = languageCommonNameToKeyValues.Value;
@@ -80,6 +80,7 @@ public class ImportExportNGUILocalization
 			saveSet(language, keyValues, "NGUI"); //groupid -- NGUI
 		}
 	}
+
 	[MenuItem("asink/Export all translfuent data to ngui")]
 	public static void ExportAllNGUILocalizations()
 	{
@@ -95,9 +96,9 @@ public class ImportExportNGUILocalization
 
 	protected static string takeLanguageNameAndTurnItIntoAKnownLanguageCode(string languageNameInItsOwnLanguage)
 	{
-		foreach (var kvp in languageCodeToCommonName)
+		foreach(var kvp in languageCodeToCommonName)
 		{
-			if (kvp.Value.ToLower() == languageNameInItsOwnLanguage.ToLower())
+			if(kvp.Value.ToLower() == languageNameInItsOwnLanguage.ToLower())
 			{
 				return kvp.Key;
 			}
@@ -107,7 +108,7 @@ public class ImportExportNGUILocalization
 
 	protected static string takeLanguageCodeAndTurnItIntoNativeName(string languageCode)
 	{
-		if (languageCodeToCommonName.ContainsKey(languageCode))
+		if(languageCodeToCommonName.ContainsKey(languageCode))
 		{
 			return languageCodeToCommonName[languageCode];
 		}
@@ -134,10 +135,10 @@ public class ImportExportNGUILocalization
 		public NGUICSVExporter(List<TransfluentLanguage> languagesToExportTo, string groupid = "")
 		{
 			var allTranslationsIndexedByLanguage = new Dictionary<string, Dictionary<string, string>>();
-			foreach (TransfluentLanguage lang in languagesToExportTo)
+			foreach(TransfluentLanguage lang in languagesToExportTo)
 			{
 				GameTranslationSet destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(lang.code);
-				if (destLangDB == null || destLangDB.allTranslations == null)
+				if(destLangDB == null || destLangDB.allTranslations == null)
 				{
 					Debug.LogWarning("could not find any information for language:" + lang);
 					continue;
@@ -156,9 +157,9 @@ public class ImportExportNGUILocalization
 
 		private void Init(Dictionary<string, Dictionary<string, string>> allTranslationsIndexedByLanguage)
 		{
-			var keyList = new List<string> {"KEYS"};
-			var languageList = new List<string> {"Language"};
-			foreach (var kvp in allTranslationsIndexedByLanguage)
+			var keyList = new List<string> { "KEYS" };
+			var languageList = new List<string> { "Language" };
+			foreach(var kvp in allTranslationsIndexedByLanguage)
 			{
 				string nativeLanguageName = kvp.Key;
 				keyList.Add(nativeLanguageName);
@@ -168,17 +169,17 @@ public class ImportExportNGUILocalization
 
 			var _keysMappedToListOfLangaugesIndexedByLanguageIndex = new Dictionary<string, string[]>();
 
-			foreach (var langToDictionary in allTranslationsIndexedByLanguage)
+			foreach(var langToDictionary in allTranslationsIndexedByLanguage)
 			{
 				string nativeName = langToDictionary.Key;
 				Dictionary<string, string> keyValuesInLanguage = langToDictionary.Value;
 				int indexToAddAt = keyList.IndexOf(nativeName) - 1;
 
-				foreach (var kvp in keyValuesInLanguage)
+				foreach(var kvp in keyValuesInLanguage)
 				{
-					if (keysThatMustExistFirst.Contains(kvp.Key)) //skip KEYS and Language
+					if(keysThatMustExistFirst.Contains(kvp.Key)) //skip KEYS and Language
 						continue;
-					if (!_keysMappedToListOfLangaugesIndexedByLanguageIndex.ContainsKey(kvp.Key))
+					if(!_keysMappedToListOfLangaugesIndexedByLanguageIndex.ContainsKey(kvp.Key))
 						_keysMappedToListOfLangaugesIndexedByLanguageIndex[kvp.Key] = new string[languageList.Count - 1];
 					_keysMappedToListOfLangaugesIndexedByLanguageIndex[kvp.Key][indexToAddAt] = kvp.Value;
 				}
@@ -187,12 +188,12 @@ public class ImportExportNGUILocalization
 			var allLinesSB = new StringBuilder();
 			allLinesSB.AppendLine(string.Join(",", keyList.ToArray()));
 			allLinesSB.AppendLine(string.Join(",", languageList.ToArray()));
-			foreach (var keyToItems in _keysMappedToListOfLangaugesIndexedByLanguageIndex)
+			foreach(var keyToItems in _keysMappedToListOfLangaugesIndexedByLanguageIndex)
 			{
 				var tmpList = new List<string>();
 				tmpList.Add(keyToItems.Key);
 				tmpList.AddRange(keyToItems.Value);
-				for (int i = 0; i < tmpList.Count; i++)
+				for(int i = 0; i < tmpList.Count; i++)
 				{
 					tmpList[i] = _util.escapeCSVString(tmpList[i]);
 				}
@@ -213,7 +214,7 @@ public class ImportExportNGUILocalization
 		{
 			string currentString = unescapedCSVString;
 			currentString = currentString.Replace("\n", "\\n");
-			if (unescapedCSVString.Contains(","))
+			if(unescapedCSVString.Contains(","))
 			{
 				currentString = currentString.Replace("\"", "\"\"");
 				currentString = "\"" + currentString + "\"";
@@ -226,7 +227,7 @@ public class ImportExportNGUILocalization
 		{
 			string currentString = escapedCSVString;
 			currentString = currentString.Replace("\\n", "\n");
-			if (currentString.StartsWith("\""))
+			if(currentString.StartsWith("\""))
 			{
 				currentString = currentString.Replace("\"\"", "\"");
 				currentString = currentString.Substring(1, currentString.Length - 2);
@@ -240,13 +241,13 @@ public class ImportExportNGUILocalization
 			var realList = new List<string>();
 			bool waitingForClosingParen = false;
 			string entry = "";
-			for (int i = 0; i < justCommasRaw.Length; i++)
+			for(int i = 0; i < justCommasRaw.Length; i++)
 			{
 				string cur = justCommasRaw[i];
 
-				if (cur.StartsWith("\"") && !cur.StartsWith("\"\""))
+				if(cur.StartsWith("\"") && !cur.StartsWith("\"\""))
 				{
-					if (waitingForClosingParen == false)
+					if(waitingForClosingParen == false)
 					{
 						waitingForClosingParen = true;
 						entry = cur;
@@ -258,7 +259,7 @@ public class ImportExportNGUILocalization
 				}
 				else
 				{
-					if (!waitingForClosingParen)
+					if(!waitingForClosingParen)
 					{
 						realList.Add(unescapeCSVString(cur));
 					}
@@ -269,7 +270,7 @@ public class ImportExportNGUILocalization
 				}
 
 				//not an 'escaped' quote, but ending with a real quote
-				if (cur.EndsWith("\"") && !cur.EndsWith("\"\"") && waitingForClosingParen)
+				if(cur.EndsWith("\"") && !cur.EndsWith("\"\"") && waitingForClosingParen)
 				{
 					waitingForClosingParen = false;
 					realList.Add(unescapeCSVString(entry));
@@ -289,42 +290,42 @@ public class ImportExportNGUILocalization
 
 		public NGUILocalizationCSVImporter(string nguiLocalizationCSVText)
 		{
-			string[] individualLines = nguiLocalizationCSVText.Split(new[] {'\r', '\n'},
+			string[] individualLines = nguiLocalizationCSVText.Split(new[] { '\r', '\n' },
 				StringSplitOptions.RemoveEmptyEntries);
-			if (individualLines.Length < keysThatMustExistFirst.Count)
+			if(individualLines.Length < keysThatMustExistFirst.Count)
 			{
 				Debug.LogError("not enough lines to be a valid csv file, must at least have this many entries:" +
-				               keysThatMustExistFirst.Count + "  vs inidvidualLines:" + individualLines.Length);
+							   keysThatMustExistFirst.Count + "  vs inidvidualLines:" + individualLines.Length);
 				return;
 			}
-			for (int j = 0; j < keysThatMustExistFirst.Count; j++)
+			for(int j = 0; j < keysThatMustExistFirst.Count; j++)
 			{
-				if (!individualLines[j].StartsWith(keysThatMustExistFirst[j]))
+				if(!individualLines[j].StartsWith(keysThatMustExistFirst[j]))
 				{
 					Debug.LogError("invalid csv file, expected to have the key start the csv file:" + keysThatMustExistFirst[j] +
-					               " at position:" + j);
+								   " at position:" + j);
 					Debug.Log(nguiLocalizationCSVText);
 					Debug.Log("vs individual line number:" + j + " with value:" + individualLines[j]);
 					return;
 				}
 			}
 
-			for (int i = 0; i < individualLines.Length; i++)
+			for(int i = 0; i < individualLines.Length; i++)
 			{
 				string line = individualLines[i];
 				List<string> csvStrings = _util.getEntriesFromALine(line); // line.Split(new[] {','});
-				if (csvStrings.Count < 1)
+				if(csvStrings.Count < 1)
 				{
 					Debug.LogError("invalid csv line, no keys found on it:" + line);
 					continue;
 				}
 				string key = csvStrings[0];
-				if (string.IsNullOrEmpty(key))
+				if(string.IsNullOrEmpty(key))
 				{
 					Debug.LogError("invalid csv line, empty key for csv line:" + line);
 					continue;
 				}
-				if (keyNameToValueListIndexedByLanguage.ContainsKey(key))
+				if(keyNameToValueListIndexedByLanguage.ContainsKey(key))
 				{
 					Debug.LogError("invalid csv line, duplicate key in csv:" + key);
 					continue;
@@ -340,28 +341,28 @@ public class ImportExportNGUILocalization
 		{
 			var langaugeNameToKeyValuePairMap = new Dictionary<string, Dictionary<string, string>>();
 			List<string> languageNamesFromFile = keyNameToValueListIndexedByLanguage["Language"];
-			foreach (string languageName in languageNamesFromFile)
+			foreach(string languageName in languageNamesFromFile)
 			{
 				langaugeNameToKeyValuePairMap.Add(languageName, new Dictionary<string, string>());
 			}
 			//we are re-ordering the csv text into a format that can be consumed per-language instead of per-key
 			//the csv comes in with KEYNAME,valueIndexedBylanguage1,valueIndexedBylanguage2,etc and we want to use it as store[languageName][key] instead
-			foreach (var kvp in keyNameToValueListIndexedByLanguage)
+			foreach(var kvp in keyNameToValueListIndexedByLanguage)
 			{
-				if (kvp.Value.Count > languageNamesFromFile.Count) //NOTE: maybe let the user know if they are not *exactly* equal?
+				if(kvp.Value.Count > languageNamesFromFile.Count) //NOTE: maybe let the user know if they are not *exactly* equal?
 				{
 					Debug.LogWarning(
 						"CSV entry has more lines than there are languages, dropping the data from the extra lines for key:" + kvp.Key);
 				}
-				if (kvp.Value.Count > languageNamesFromFile.Count)
+				if(kvp.Value.Count > languageNamesFromFile.Count)
 				{
 					Debug.LogWarning(
 						"CSV entry has fewer entries than there are langauges, you will not have translations for entries that are unmapped");
 				}
 				string key = kvp.Key;
-				for (int i = 0; i < kvp.Value.Count; i++)
+				for(int i = 0; i < kvp.Value.Count; i++)
 				{
-					if (i >= languageNamesFromFile.Count)
+					if(i >= languageNamesFromFile.Count)
 						continue; //dropping extra commas and the data in them, as they map to no known language
 					string toInsert = kvp.Value[i];
 					string languageName = languageNamesFromFile[i]; //all of the items are implicitly mapped from the language name

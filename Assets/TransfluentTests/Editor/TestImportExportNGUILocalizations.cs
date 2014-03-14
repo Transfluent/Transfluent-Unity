@@ -9,11 +9,11 @@ namespace transfluent.tests
 	public class TestImportExportNGUILocalizations
 	{
 		private string fakeImportString =
-			@"KEYS,English,Français
+			@"KEY,English,Français
 Language,English,Français
 Medina,Funky,Cold
 Stop,HammerTime,Fries
-escapedTex,""foobar foo bar monkey potatoe, lots of dandruff,"""" if a quiz is quizzical, what's a test"",not escaped at all.  I'm still trying to break out
+escapedTex,""foobar foo bar monkey potatoe, lots of dandruff,"""" if a tree falls in a forest, how much do I care?"",not escaped at all.  I'm still trying to break out
 ";
 
 		[Test]

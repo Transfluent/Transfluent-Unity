@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using transfluent;
 using transfluent.editor;
@@ -9,7 +10,7 @@ using UnityEngine;
 //editor time utility to get ngui serialization into and out of ngui's format
 public class ImportExportNGUILocalization
 {
-	private static readonly List<string> keysThatMustExistFirst = new List<string> { "KEYS", "Language" };
+	private static readonly List<string> keysThatMustExistFirst = new List<string> { "KEY", "Language" };
 	
 	private static readonly Dictionary<string, string> languageCodeToCommonName = new Dictionary<string, string>
 	{
@@ -63,7 +64,7 @@ public class ImportExportNGUILocalization
 		}
 	}
 
-	[MenuItem("asink/Import all NGUI data into transfluent local cache")]
+	[MenuItem("Transfluent/ngui/Import all NGUI data into transfluent local cache")]
 	public static void ImportAllNGUILocalizations()
 	{
 		LanguageList list = ResourceLoadFacade.getLanguageList();
@@ -81,9 +82,50 @@ public class ImportExportNGUILocalization
 		}
 	}
 
-	[MenuItem("asink/Export all translfuent data to ngui")]
+	public static string getLocalizationPath()
+	{
+		string existingLocalizationPath =
+			AssetDatabase.GetAssetPath(ResourceLoadFacade.LoadResource<TextAsset>("Localization"));
+
+		if(string.IsNullOrEmpty(existingLocalizationPath))
+		{
+			existingLocalizationPath = "Assets/Resources/Localization.txt";
+			if(!Directory.Exists("Assets/Resources"))
+			{
+				AssetDatabase.CreateFolder("Assets", "Resources");
+			}
+			TextAsset ta = new TextAsset();
+			AssetDatabase.CreateAsset(ta, existingLocalizationPath);
+		}
+		string projectBasePath =
+			Path.GetFullPath(Application.dataPath + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar);
+		return projectBasePath + existingLocalizationPath;
+	}
+
+	[MenuItem("Transfluent/ngui/Export all translfuent data to ngui")]
 	public static void ExportAllNGUILocalizations()
 	{
+		string assetPath = getLocalizationPath();
+
+		GameTranslationSet[] allTranslations = Resources.LoadAll<GameTranslationSet>("");
+		const string groupid = "NGUI"; //TODO: allow for a group selector with NGUI as the default
+
+		var nativeLanguageNameToKnownTranslationGroups = new Dictionary<string, Dictionary<string, string>>();
+		foreach (GameTranslationSet set in allTranslations)
+		{
+			if (set.allTranslations.Count == 0)
+			{
+				continue;
+			}
+			TransfluentLanguage firstLanguage = set.allTranslations[0].language;
+			var allPairs = set.getKeyValuePairs(groupid);
+			string nativeLanguageName = takeLanguageCodeAndTurnItIntoNativeName(firstLanguage.code);
+			nativeLanguageNameToKnownTranslationGroups.Add(nativeLanguageName,allPairs);
+		}
+
+		var exporter = new NGUICSVExporter(nativeLanguageNameToKnownTranslationGroups);
+		string csv = exporter.getCSV();
+		File.WriteAllText(assetPath,csv);
 	}
 
 	//write tests.  lots of tests.  This has to work *perfectly* for the keying to map well.  Other people use different language identifiers than transfluent
@@ -157,7 +199,7 @@ public class ImportExportNGUILocalization
 
 		private void Init(Dictionary<string, Dictionary<string, string>> allTranslationsIndexedByLanguage)
 		{
-			var keyList = new List<string> { "KEYS" };
+			var keyList = new List<string> { "KEY" };
 			var languageList = new List<string> { "Language" };
 			foreach(var kvp in allTranslationsIndexedByLanguage)
 			{

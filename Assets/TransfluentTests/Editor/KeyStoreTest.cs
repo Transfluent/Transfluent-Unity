@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Castle.Core.Internal;
+using NUnit.Framework;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Castle.Core.Internal;
-using NUnit.Framework;
 using transfluent.editor;
 using UnityEngine;
 
@@ -23,7 +23,7 @@ namespace transfluent.tests
 			keys = new List<string>();
 			values = new List<string>();
 
-			foreach (var kvp in dictionary)
+			foreach(var kvp in dictionary)
 			{
 				keys.Add(kvp.Key);
 				values.Add(kvp.Value);
@@ -49,12 +49,12 @@ namespace transfluent.tests
 
 		private void standardCheck(IKeyStore store, Dictionary<string, string> keyValueMap)
 		{
-			foreach (var kvp in keyValueMap)
+			foreach(var kvp in keyValueMap)
 			{
 				store.set(kvp.Key, kvp.Value);
 			}
 			//make sure that it wasn't just giving you the last result put in by iterating over the entire dictionary again
-			foreach (var kvp in keyValueMap)
+			foreach(var kvp in keyValueMap)
 			{
 				Assert.AreEqual(store.get(kvp.Key), keyValueMap[kvp.Key]);
 			}
@@ -98,7 +98,7 @@ namespace transfluent.tests
 			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(editor));
 			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(fileProvider));
 
-			foreach (var kvp in randomvalues)
+			foreach(var kvp in randomvalues)
 			{
 				Debug.Log("Setting kvp:" + kvp.Key + " val" + kvp.Value);
 				inMemory.set(kvp.Key, kvp.Value);
@@ -110,7 +110,6 @@ namespace transfluent.tests
 			standardCheck(playerprefs, dictionary);
 			standardCheck(editor, dictionary);
 			standardCheck(fileProvider, dictionary);
-
 
 			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(inMemory));
 			Assert.IsTrue(inMemory.otherDictionaryIsEqualOrASuperset(playerprefs));
@@ -129,7 +128,7 @@ namespace transfluent.tests
 			StreamReader reader = getMemoryStream(valueStringNewlineDelimited);
 
 			var store = new FileLineBasedKeyStore(reader, keys);
-			foreach (var kvp in dictionary)
+			foreach(var kvp in dictionary)
 			{
 				Assert.AreEqual(store.get(kvp.Key), dictionary[kvp.Key]);
 			}

@@ -7,15 +7,15 @@ namespace transfluent
 	{
 		public GetAllOrders(string group_id = null, int offset = 0, int limit = 0)
 		{
-			if (!string.IsNullOrEmpty(group_id))
+			if(!string.IsNullOrEmpty(group_id))
 			{
 				getParameters.Add("groupid", group_id);
 			}
-			if (limit > 0)
+			if(limit > 0)
 			{
 				getParameters.Add("limit", limit.ToString());
 			}
-			if (offset > 0)
+			if(offset > 0)
 			{
 				getParameters.Add("offset", offset.ToString());
 			}

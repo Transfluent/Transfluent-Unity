@@ -64,7 +64,7 @@ namespace transfluent.editor
 			sw.Start();
 			int ticks = 0;
 			//while(maxticks >0)
-			while (ticks < 100) //sw.Elapsed < maxTime)
+			while(ticks < 100) //sw.Elapsed < maxTime)
 			{
 				ticks++;
 				Debug.Log("MAXticks:" + ticks + " time:" + sw.Elapsed);
@@ -78,13 +78,13 @@ namespace transfluent.editor
 		private void doCoroutine()
 		{
 			Debug.Log("DO COROTUINE");
-			if (sw.Elapsed < maxTime)
+			if(sw.Elapsed < maxTime)
 			{
 				//if routineHandl e.Current == waitforseconds... wait for that many seconds before checking or moving forward again
-				if (_routineHandle != null)
+				if(_routineHandle != null)
 				{
 					//kill the reference if we no longer move forward
-					if (!_routineHandle.MoveNext())
+					if(!_routineHandle.MoveNext())
 					{
 						Debug.LogWarning("KILLING SELF as otherCoroutine ended:" + sw.Elapsed);
 						_routineHandle = null;
@@ -141,13 +141,12 @@ namespace transfluent.editor
 			//new AsyncTester();
 		}
 
-
 		public IEnumerator testRoutine()
 		{
 			int maxticks = 100;
 			Debug.Log(counter + "MAXticks:" + maxticks);
 			//while(maxticks >0)
-			while (sw.Elapsed < maxTime)
+			while(sw.Elapsed < maxTime)
 			{
 				maxticks--;
 				//UnityEngine.Debug.Log("MAXticks:" + maxticks + " time:" + sw.Elapsed);
@@ -161,13 +160,13 @@ namespace transfluent.editor
 		private void doCoroutine()
 		{
 			//Debug.Log(counter + "coroutine:" );
-			if (sw.Elapsed < maxTime) //if(true) also works.
+			if(sw.Elapsed < maxTime) //if(true) also works.
 			{
 				//if routineHandl e.Current == waitforseconds... wait for that many seconds before checking or moving forward again
-				if (routineHandle != null)
+				if(routineHandle != null)
 				{
 					//kill the reference if we no longer move forward
-					if (!routineHandle.MoveNext())
+					if(!routineHandle.MoveNext())
 					{
 						Debug.LogWarning(counter + "KILLING SELF as otherCoroutine ended:" + sw.Elapsed);
 						routineHandle = null;

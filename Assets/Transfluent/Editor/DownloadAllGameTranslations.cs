@@ -15,12 +15,12 @@ namespace transfluent.editor
 		{
 			var mediator = getAuthenticatedMediator();
 			if(mediator == null) return;
-			
+
 			List<string> allLanguageCodes = mediator.getAllLanguageCodes();
 			downloadTranslationSetsFromLanguageCodeList(allLanguageCodes);
 		}
 
-		static TransfluentEditorWindowMediator getAuthenticatedMediator()
+		private static TransfluentEditorWindowMediator getAuthenticatedMediator()
 		{
 			var mediator = new TransfluentEditorWindowMediator();
 			KeyValuePair<string, string> usernamePassword = mediator.getUserNamePassword();
@@ -34,6 +34,7 @@ namespace transfluent.editor
 			mediator.doAuth(usernamePassword.Key, usernamePassword.Value);
 			return mediator;
 		}
+
 		public static void downloadTranslationSetsFromLanguageCodeList(List<string> languageCodes, string groupid = null)
 		{
 			var mediator = getAuthenticatedMediator();
@@ -50,7 +51,6 @@ namespace transfluent.editor
 						GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode) ??
 												 ResourceCreator.CreateSO<GameTranslationSet>(
 													 GameTranslationGetter.fileNameFromLanguageCode(languageCode));
-
 
 						set.mergeInNewListOfTranslations(translations);
 

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 
@@ -30,19 +30,18 @@ namespace transfluent.tests
 			addToDicitonary(new GetTextKey("TESTKEY", 1));
 			addToDicitonary(new Hello("world"));
 			addToDicitonary(new Login("lll", "lll"));
-			addToDicitonary(new OrderTranslation(1, new[] {500}, new[] {"NONE"}));
+			addToDicitonary(new OrderTranslation(1, new[] { 500 }, new[] { "NONE" }));
 			addToDicitonary(new RequestAllLanguages());
 			addToDicitonary(new SaveTextKey("DOES_NOT_EXIST", 1, "BLAH"));
 			addToDicitonary(new TextStatus(1, "TEST"));
 
-
-			Type parentClassOfWebservices = typeof (WebServiceParameters);
+			Type parentClassOfWebservices = typeof(WebServiceParameters);
 			IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies()
 				.SelectMany(s => s.GetTypes())
 				.Where(p => parentClassOfWebservices.IsAssignableFrom(p));
-			foreach (Type type1 in types)
+			foreach(Type type1 in types)
 			{
-				if (type1 == parentClassOfWebservices)
+				if(type1 == parentClassOfWebservices)
 					continue;
 				Assert.Contains(type1, allParsers.Keys);
 			}
@@ -60,19 +59,19 @@ namespace transfluent.tests
 		private string getTestFile(string filename)
 		{
 			string jsonFileBasePath = "Assets/TransfluentTests/Editor/Data/JsonResponses/";
-			var textAsset = AssetDatabase.LoadAssetAtPath(jsonFileBasePath + filename + ".txt", typeof (TextAsset)) as TextAsset;
+			var textAsset = AssetDatabase.LoadAssetAtPath(jsonFileBasePath + filename + ".txt", typeof(TextAsset)) as TextAsset;
 			return textAsset.text;
 		}
 
 		private T getType<T>() where T : class
 		{
-			return allParsers[typeof (T)] as T;
+			return allParsers[typeof(T)] as T;
 		}
 
 		//should I wrap JsonTypeCoercionException with an app-specific exception?
 		//In theory, the parse()
 		[Test]
-		[ExpectedException(typeof (ApplicatonLevelException))]
+		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void TestAuthenticateFailure()
 		{
 			var login = getType<Login>();
@@ -82,7 +81,7 @@ namespace transfluent.tests
 				login.Parse(file);
 				//AuthenticationResponse result = login.Parse(file);
 			}
-			catch (ApplicatonLevelException e)
+			catch(ApplicatonLevelException e)
 			{
 				Assert.NotNull(e.details);
 				Assert.AreEqual(e.details.type, "EBackendSecurityViolation");

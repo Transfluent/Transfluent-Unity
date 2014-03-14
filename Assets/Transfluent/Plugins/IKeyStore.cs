@@ -7,6 +7,7 @@ namespace transfluent
 	public interface IKeyStore
 	{
 		string get(string key);
+
 		void set(string key, string value);
 	}
 
@@ -21,7 +22,7 @@ namespace transfluent
 
 		public void set(string key, string value)
 		{
-			if (!store.ContainsKey(key))
+			if(!store.ContainsKey(key))
 			{
 				store.Add(key, value);
 			}
@@ -34,10 +35,10 @@ namespace transfluent
 		//we can't currently verify that the other set has more values than me, but that's ok for all current uses
 		public bool otherDictionaryIsEqualOrASuperset(IKeyStore other)
 		{
-			if (other == null) return false;
-			foreach (var kvp in store)
+			if(other == null) return false;
+			foreach(var kvp in store)
 			{
-				if (other.get(kvp.Key) != kvp.Value)
+				if(other.get(kvp.Key) != kvp.Value)
 				{
 					return false;
 				}
@@ -59,7 +60,6 @@ namespace transfluent
 		}
 	}
 
-
 	public class CommandLineKeyStore : IKeyStore
 	{
 		public string get(string key)
@@ -77,9 +77,9 @@ namespace transfluent
 			try
 			{
 				string[] args = Environment.GetCommandLineArgs();
-				foreach (string arg in args)
+				foreach(string arg in args)
 				{
-					if (arg.Contains(buildFlag))
+					if(arg.Contains(buildFlag))
 					{
 						string buildFlagValue = arg.Replace(buildFlag, "");
 
@@ -87,7 +87,7 @@ namespace transfluent
 					}
 				}
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Debug.LogError("Error getting build flag value from command line;" + e);
 				throw;

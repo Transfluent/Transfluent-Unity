@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
+using System.Collections.Generic;
 using transfluent.editor;
 
 namespace transfluent.tests
@@ -55,7 +55,7 @@ namespace transfluent.tests
 
 		[Test]
 		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
-		[ExpectedException(typeof (ApplicatonLevelException))]
+		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void emptyLoginPasswordPost()
 		{
 			service.request(loginUrl, new Dictionary<string, string>
@@ -86,7 +86,7 @@ namespace transfluent.tests
 
 		[Test]
 		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
-		[ExpectedException(typeof (ApplicatonLevelException))]
+		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void noPostLogin()
 		{
 			service.request(loginUrl); //no password params!
@@ -94,7 +94,7 @@ namespace transfluent.tests
 
 		[Test]
 		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
-		[ExpectedException(typeof (ApplicatonLevelException))]
+		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void wrongPasswordLogin()
 		{
 			service.request(loginUrl, new Dictionary<string, string>

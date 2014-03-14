@@ -22,7 +22,7 @@ namespace transfluent.editor
 
 		public void OnGUI()
 		{
-			if (!_mediator.authIsDone())
+			if(!_mediator.authIsDone())
 			{
 				loginScreen.doGUI();
 				return;
@@ -30,7 +30,7 @@ namespace transfluent.editor
 			EditorGUILayout.BeginHorizontal();
 			showCurrentLanguage();
 
-			if (_mediator.GetCurrentLanguage() == null)
+			if(_mediator.GetCurrentLanguage() == null)
 			{
 				return;
 			}
@@ -42,10 +42,10 @@ namespace transfluent.editor
 			List<string> languageNames = _mediator.getAllLanguageCodes();
 			TransfluentLanguage currentLanguage = _mediator.GetCurrentLanguage();
 			int currentLanguageIndex = 0;
-			if (currentLanguage != null)
+			if(currentLanguage != null)
 				currentLanguageIndex = languageNames.IndexOf(currentLanguage.code);
 			int newLanguageIndex = EditorGUILayout.Popup("Current language", currentLanguageIndex, languageNames.ToArray());
-			if (currentLanguageIndex != newLanguageIndex)
+			if(currentLanguageIndex != newLanguageIndex)
 			{
 				_mediator.setCurrentLanguageFromLanguageCode(languageNames[newLanguageIndex]);
 				return true;

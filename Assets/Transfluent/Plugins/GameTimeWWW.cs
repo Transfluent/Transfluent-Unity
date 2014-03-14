@@ -29,17 +29,17 @@ namespace transfluent
 			WWW www = facade.request(call);
 
 			yield return www;
-			var status = new WebServiceReturnStatus {serviceParams = call};
+			var status = new WebServiceReturnStatus { serviceParams = call };
 			try
 			{
 				status = facade.getStatusFromFinishedWWW(www, sw, call);
 			}
-			catch (CallException e)
+			catch(CallException e)
 			{
 				Debug.Log("Exception:" + e.Message);
 			}
 
-			if (onStatusDone != null)
+			if(onStatusDone != null)
 			{
 				runner.runRoutine(onStatusDone(status));
 			}

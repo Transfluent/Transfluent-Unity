@@ -25,7 +25,7 @@ namespace transfluent
 		public static bool changeStaticInstanceConfig(string destinationLanguageCode = "", string translationGroup = "")
 		{
 			TransfluentUtilityInstance tmpInstance = createNewInstance(destinationLanguageCode, translationGroup);
-			if (tmpInstance != null)
+			if(tmpInstance != null)
 			{
 				_instance = tmpInstance;
 				return true;
@@ -35,12 +35,12 @@ namespace transfluent
 
 		public static TransfluentUtilityInstance createNewInstance(string destinationLanguageCode = "", string group = "")
 		{
-			if (_LanguageList == null)
+			if(_LanguageList == null)
 			{
 				_LanguageList = ResourceLoadFacade.getLanguageList();
 			}
 
-			if (_LanguageList == null)
+			if(_LanguageList == null)
 			{
 				Debug.LogError("Could not load new language list");
 				return null;
@@ -77,7 +77,9 @@ namespace transfluent
 	public class TransfluentUtilityInstance
 	{
 		public Dictionary<string, string> allKnownTranslations;
+
 		public TransfluentLanguage destinationLanguage { get; set; }
+
 		public string groupBeingShown { get; set; }
 
 		public void setNewDestinationLanguage(Dictionary<string, string> transaltionsInSet)
@@ -96,7 +98,7 @@ namespace transfluent
 
 		public string getTranslation(string sourceText)
 		{
-			if (allKnownTranslations != null && allKnownTranslations.ContainsKey(sourceText))
+			if(allKnownTranslations != null && allKnownTranslations.ContainsKey(sourceText))
 			{
 				return allKnownTranslations[sourceText];
 			}

@@ -12,9 +12,9 @@ public class ShowAllKnownTextAtSameTime : MonoBehaviour
 		GameTranslationSet[] list = Resources.LoadAll<GameTranslationSet>("");
 		//this is *not* Assets/Transfluent/Resources, since all resources get put in the "resources" folder
 		//Debug.Log("Number of translation sets:" + list.Length);
-		foreach (GameTranslationSet set in list)
+		foreach(GameTranslationSet set in list)
 		{
-			foreach (TransfluentTranslation trans in set.allTranslations)
+			foreach(TransfluentTranslation trans in set.allTranslations)
 			{
 				knownStrings.Add(trans.text);
 			}
@@ -23,7 +23,7 @@ public class ShowAllKnownTextAtSameTime : MonoBehaviour
 
 	private void OnGUI()
 	{
-		foreach (string knownString in knownStrings)
+		foreach(string knownString in knownStrings)
 		{
 			GUILayout.Label(knownString);
 		}

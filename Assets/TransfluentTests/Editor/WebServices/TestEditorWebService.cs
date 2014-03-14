@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
+﻿using NUnit.Framework;
+using System.Diagnostics;
 using System.Threading;
-using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -36,7 +36,7 @@ namespace transfluent.tests
 			var sw = new Stopwatch();
 			sw.Start();
 			var testWww = new WWW("https://transfluent.com/v2/hello/world");
-			while (testWww.isDone == false && sw.Elapsed.Seconds < 20f)
+			while(testWww.isDone == false && sw.Elapsed.Seconds < 20f)
 			{
 				EditorApplication.Step();
 				Thread.Sleep(100);
@@ -51,7 +51,7 @@ namespace transfluent.tests
 			var sw = new Stopwatch();
 			sw.Start();
 			var testWww = new WWW("https://transfluent.com/v2/hello/world");
-			while (testWww.isDone == false && sw.Elapsed.Seconds < 20f)
+			while(testWww.isDone == false && sw.Elapsed.Seconds < 20f)
 			{
 				Thread.Sleep(100);
 			}

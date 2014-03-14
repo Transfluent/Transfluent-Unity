@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using Pathfinding.Serialization.JsonFx;
+﻿using Pathfinding.Serialization.JsonFx;
+using System.Collections;
 using transfluent;
 using UnityEngine;
 

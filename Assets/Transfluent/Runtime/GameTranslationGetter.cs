@@ -26,7 +26,7 @@ namespace transfluent
 		public static List<GameTranslationSet> GetTranslationSet(List<string> languageCodes)
 		{
 			var list = new List<GameTranslationSet>();
-			foreach (string code in languageCodes)
+			foreach(string code in languageCodes)
 			{
 				list.Add(GetTranslaitonSetFromLanguageCode(code));
 			}

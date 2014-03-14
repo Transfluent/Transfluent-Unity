@@ -7,7 +7,7 @@
 		{
 			getParameters.Add("text_id", text_id);
 			getParameters.Add("language", language_id.ToString());
-			if (!string.IsNullOrEmpty(group_id))
+			if(!string.IsNullOrEmpty(group_id))
 				getParameters.Add("group_id", group_id);
 		}
 

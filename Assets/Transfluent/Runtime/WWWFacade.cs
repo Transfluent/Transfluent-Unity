@@ -12,11 +12,11 @@ namespace transfluent
 		public WWW request(string url, Dictionary<string, string> postParams)
 		{
 			var form = new WWWForm();
-			if (postParams != null)
+			if(postParams != null)
 			{
-				foreach (var param in postParams)
+				foreach(var param in postParams)
 				{
-					if (param.Value == null)
+					if(param.Value == null)
 					{
 						throw new Exception("NULL PARAMATER PASSED TO WEB REQUEST:" + param.Key);
 					}
@@ -34,7 +34,7 @@ namespace transfluent
 			string url = RestUrl.GetURL(call);
 
 			string urlWithGetParams = url + encodeGETParams(call.getParameters);
-			if (route.requestType == RestRequestType.GET)
+			if(route.requestType == RestRequestType.GET)
 			{
 				return request(urlWithGetParams);
 			}
@@ -50,12 +50,12 @@ namespace transfluent
 		{
 			var sb = new StringBuilder();
 			sb.Append("?");
-			foreach (var kvp in getParams)
+			foreach(var kvp in getParams)
 			{
 				sb.Append(WWW.EscapeURL(kvp.Key) + "=" + WWW.EscapeURL(kvp.Value) + "&");
 			}
 			string fullUrl = sb.ToString();
-			if (fullUrl.EndsWith("&"))
+			if(fullUrl.EndsWith("&"))
 			{
 				fullUrl = fullUrl.Substring(0, fullUrl.LastIndexOf("&"));
 			}
@@ -75,18 +75,18 @@ namespace transfluent
 			sw.Stop();
 			status.requestTimeTaken = sw.Elapsed;
 
-			if (!www.isDone && www.error == null)
+			if(!www.isDone && www.error == null)
 			{
 				throw new TransportException("Timeout total time taken:");
 			}
-			if (www.error == null)
+			if(www.error == null)
 			{
 				status.text = www.text;
 			}
 			else
 			{
 				string error = www.error;
-				if (knownTransportError(error))
+				if(knownTransportError(error))
 				{
 					www.Dispose();
 					throw new TransportException(error);
@@ -94,17 +94,17 @@ namespace transfluent
 				status.httpErrorCode = -1;
 				int firstSpaceIndex = error.IndexOf(" ");
 
-				if (firstSpaceIndex > 0)
+				if(firstSpaceIndex > 0)
 				{
 					www.Dispose();
 
 					int.TryParse(error.Substring(0, firstSpaceIndex), out status.httpErrorCode);
-					//there has to be a better way to get error codes.  
-					if (status.httpErrorCode == 0)
+					//there has to be a better way to get error codes.
+					if(status.httpErrorCode == 0)
 					{
 						throw new Exception("UNHANDLED ERROR CODE FORMAT:(" + error + ")");
 					}
-					if (status.httpErrorCode >= 400 && status.httpErrorCode <= 499)
+					if(status.httpErrorCode >= 400 && status.httpErrorCode <= 499)
 					{
 						throw new ApplicatonLevelException("HTTP Error code, applicatin level:" + status.httpErrorCode,
 							status.httpErrorCode);
@@ -119,7 +119,7 @@ namespace transfluent
 
 		public bool knownTransportError(string input)
 		{
-			if (input.Contains("Could not resolve host"))
+			if(input.Contains("Could not resolve host"))
 			{
 				return true;
 			}

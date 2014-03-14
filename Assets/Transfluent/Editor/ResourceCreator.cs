@@ -17,7 +17,7 @@ namespace transfluent.editor
 		private static string getPathFromFileName(string fileName)
 		{
 			string path;
-			if (!fileName.Contains(basePath))
+			if(!fileName.Contains(basePath))
 			{
 				path = basePath + fileName;
 			}
@@ -25,7 +25,7 @@ namespace transfluent.editor
 			{
 				path = fileName;
 			}
-			if (!path.ToLower().EndsWith(".asset"))
+			if(!path.ToLower().EndsWith(".asset"))
 			{
 				path += ".asset";
 			}
@@ -35,9 +35,9 @@ namespace transfluent.editor
 		public static T CreateSO<T>(string fileName) where T : ScriptableObject
 		{
 			var resource = ScriptableObject.CreateInstance<T>();
-			if (resource == null)
+			if(resource == null)
 			{
-				throw new Exception("Cannot create SO of type:" + typeof (T));
+				throw new Exception("Cannot create SO of type:" + typeof(T));
 			}
 			string path = getPathFromFileName(fileName);
 

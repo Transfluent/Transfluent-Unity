@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 using Object = System.Object;
 
 namespace transfluent
@@ -13,7 +12,9 @@ namespace transfluent
 		public string code;
 		public int id;
 
-		public TransfluentLanguage() { }
+		public TransfluentLanguage()
+		{
+		}
 
 		public override string ToString()
 		{
@@ -21,12 +22,13 @@ namespace transfluent
 		}
 	}
 
-	 // for /v2/texts
+	// for /v2/texts
 	[Serializable]
 	public class TransfluentSaveTextsResult
 	{
 		//"word_count":2,"saved_texts_count":2,"not_changed_count":0,"failed_count":0,"failed_keys":""
 		public int word_count;
+
 		public int saved_texts_count;
 		public int not_changed_count;
 		public int failed_count;
@@ -34,7 +36,7 @@ namespace transfluent
 	}
 
 	[Serializable]
-	public class TransfluentOrder 
+	public class TransfluentOrder
 	{
 		[Serializable]
 		public class Text
@@ -48,8 +50,10 @@ namespace transfluent
 		public string status;
 		public int source_language;
 		public int target_language;
+
 		//public Nullable<int> group_id; //it is null if there was not one set
 		public string key;
+
 		public string key_id;
 		public Text text;
 	}
@@ -60,6 +64,7 @@ namespace transfluent
 		public string token;
 		public string password;
 	}
+
 	[Serializable]
 	public class TransfluentTranslation : Object
 	{
@@ -78,20 +83,27 @@ namespace transfluent
 	[Serializable]
 	public class Error
 	{
-		public Error() { }
+		public Error()
+		{
+		}
+
 		public String type;
 		public String message;
 	}
+
 	[Serializable]
 	public class EmptyResponseContainer
 	{
-		public EmptyResponseContainer() { }
+		public EmptyResponseContainer()
+		{
+		}
 
 		public enum ResponseStatus
 		{
 			OK,
 			ERROR
 		}
+
 		public string status;
 		public Error error;
 		public object result;
@@ -106,13 +118,16 @@ namespace transfluent
 	[Serializable]
 	public class ResponseContainer<T>
 	{
-		public ResponseContainer() { }
+		public ResponseContainer()
+		{
+		}
 
 		public enum ResponseStatus
 		{
 			OK,
 			ERROR
 		}
+
 		public string status;
 		public Error error;
 		public T response;
@@ -125,7 +140,7 @@ namespace transfluent
 
 		public override string ToString()
 		{
-			return string.Format("status:{0} error:{1} response:{2}",status,error,response);
+			return string.Format("status:{0} error:{1} response:{2}", status, error, response);
 		}
 	}
 

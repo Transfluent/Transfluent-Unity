@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
+using System.Collections.Generic;
 using transfluent;
 using transfluent.editor;
 using UnityEditor;
@@ -14,11 +14,10 @@ public class TestTransfluentTranslationUtility
 	{
 	}
 
-
 	[Test]
 	public void testInstance()
 	{
-		var destinationLanguage = new TransfluentLanguage {code = "fo-o", id = 501, name = "foo"};
+		var destinationLanguage = new TransfluentLanguage { code = "fo-o", id = 501, name = "foo" };
 
 		var instance = new TransfluentUtilityInstance
 		{
@@ -36,7 +35,6 @@ public class TestTransfluentTranslationUtility
 		string toTranslateDoesNotExist2 = "THIS DOES NOT EXIST formattted {0}";
 		Assert.AreEqual(instance.getFormattedTranslation(toTranslateDoesNotExist2, "nope"),
 			string.Format(toTranslateDoesNotExist2, "nope"));
-
 
 		string formattedStringThatExists = "formatted {0} text";
 		Assert.AreEqual(instance.getFormattedTranslation(formattedStringThatExists, "success"), "formatted success text");
@@ -66,12 +64,12 @@ public class TestTransfluentTranslationUtility
 		EditorUtility.SetDirty(so);
 
 		LanguageList newList = ResourceLoadFacade.getLanguageList();
-			//NOTE: THIS IS THE RUNTIME VERSION... not the editor time version
+		//NOTE: THIS IS THE RUNTIME VERSION... not the editor time version
 
 		AssetDatabase.SaveAssets();
 		//manual load
 
-		var fromDisk = AssetDatabase.LoadAssetAtPath(languageListPath, typeof (LanguageListSO)) as LanguageListSO;
+		var fromDisk = AssetDatabase.LoadAssetAtPath(languageListPath, typeof(LanguageListSO)) as LanguageListSO;
 		Assert.NotNull(fromDisk);
 		Assert.NotNull(fromDisk.list);
 		Assert.NotNull(fromDisk.list.languages);

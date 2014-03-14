@@ -13,7 +13,7 @@ public class RoutineRunner : IRoutineRunner
 	public RoutineRunner()
 	{
 		runner = Object.FindObjectOfType<RunnerMonobehaviour>();
-		if (runner == null)
+		if(runner == null)
 		{
 			var go = new GameObject("serviceRunner");
 			runner = go.AddComponent<RunnerMonobehaviour>();

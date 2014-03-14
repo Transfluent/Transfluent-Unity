@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Pathfinding.Serialization.JsonFx;
+using System;
 using System.Collections.Generic;
-using Pathfinding.Serialization.JsonFx;
 
 namespace transfluent
 {
 	public interface IWebService
 	{
 		WebServiceReturnStatus request(string url);
+
 		WebServiceReturnStatus request(string url, Dictionary<string, string> postParams);
+
 		WebServiceReturnStatus request(ITransfluentParameters parameters);
 	}
 

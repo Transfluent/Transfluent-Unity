@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.CSharp;
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.CSharp;
 using UnityEditor;
 using UnityEngine;
 
@@ -46,7 +46,9 @@ namespace transfluent
 	public class DLLBuilder
 	{
 		public string sourcePath { get; set; }
+
 		public string targetName { get; set; }
+
 		public string targetPath { get; set; }
 
 		public List<string> linkedAssemblies { get; set; }
@@ -76,19 +78,19 @@ namespace transfluent
 			//actual interface with the compiler
 			CompilerParameters options = compileParams(dllPath, pathsOfLinkedDLLs);
 
-			var compileOptions = new Dictionary<string, string> {{"CompilerVersion", "v3.0"}};
+			var compileOptions = new Dictionary<string, string> { { "CompilerVersion", "v3.0" } };
 			var cSharpCodeProvider = new CSharpCodeProvider(compileOptions);
 
 			CompilerResults compilerResults = cSharpCodeProvider.CompileAssemblyFromFile(options, allSourceCSFiles.ToArray());
 
-			if (compilerResults.Errors.HasErrors)
+			if(compilerResults.Errors.HasErrors)
 			{
-				foreach (CompilerError error in compilerResults.Errors)
+				foreach(CompilerError error in compilerResults.Errors)
 				{
-					if (!error.IsWarning)
+					if(!error.IsWarning)
 					{
 						Debug.LogError("Error compiling dll:" + error);
-						if (error.ToString().Contains("SystemException: Error running gmcs: Cannot find the specified file"))
+						if(error.ToString().Contains("SystemException: Error running gmcs: Cannot find the specified file"))
 						{
 							throw new Exception(
 								"YOU MUST INSTALL MONO RUNTIME TO BUILD THE DLL: www.go-mono.com/mono-downloads/download.html");
@@ -114,11 +116,11 @@ namespace transfluent
 
 		public void getAllFilesWithPatternInDir(string directory, List<string> listToAddTo, string searchPattern)
 		{
-			foreach (string file in Directory.GetFiles(directory, searchPattern))
+			foreach(string file in Directory.GetFiles(directory, searchPattern))
 			{
 				listToAddTo.Add(file);
 			}
-			foreach (string dir in Directory.GetDirectories(directory))
+			foreach(string dir in Directory.GetDirectories(directory))
 			{
 				getAllFilesWithPatternInDir(dir, listToAddTo, searchPattern);
 			}

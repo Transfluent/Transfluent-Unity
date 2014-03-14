@@ -1,5 +1,5 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using System;
 using transfluent.editor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -19,13 +19,13 @@ namespace transfluent.tests
 
 		public string justCall(WebServiceParameters call)
 		{
-			if (call.getParameters.ContainsKey("token"))
+			if(call.getParameters.ContainsKey("token"))
 				call.getParameters.Remove("token");
 
 			call.getParameters.Add("token", accessToken);
 			var requester = new SyncronousEditorWebRequest();
 			WebServiceReturnStatus result = requester.request(call);
-			if (result.httpErrorCode > 0)
+			if(result.httpErrorCode > 0)
 			{
 				throw new HttpErrorCode(result.httpErrorCode);
 			}
@@ -44,7 +44,7 @@ namespace transfluent.tests
 			string responseText = justCall(login);
 
 			accessToken = login.Parse(responseText).token;
-			if (string.IsNullOrEmpty(accessToken))
+			if(string.IsNullOrEmpty(accessToken))
 			{
 				throw new Exception("was not able to log in!");
 			}
@@ -66,7 +66,7 @@ namespace transfluent.tests
 		}
 
 		[Test]
-		[ExpectedException(typeof (ApplicatonLevelException))]
+		[ExpectedException(typeof(ApplicatonLevelException))]
 		public void getKeyThatDoesNotExist()
 		{
 			TransfluentLanguage englishLanguage = getLanguageList().getLangaugeByCode("en-us");

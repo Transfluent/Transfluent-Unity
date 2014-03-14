@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
+using System;
+using System.Collections.Generic;
 using transfluent.editor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -34,12 +34,12 @@ namespace transfluent.tests
 
 			AuthenticationResponse response = login.Parse(request.request(login).text);
 			accessToken = response.token;
-			if (string.IsNullOrEmpty(accessToken))
+			if(string.IsNullOrEmpty(accessToken))
 			{
 				throw new Exception("was not able to log in!");
 			}
 			getLanguages();
-			SaveRetrieveKey(TRANSLATION_KEY,englishLanguage);
+			SaveRetrieveKey(TRANSLATION_KEY, englishLanguage);
 		}
 
 		public void getLanguages()
@@ -57,7 +57,7 @@ namespace transfluent.tests
 			Assert.NotNull(backwardsLanguage);
 		}
 
-		public void SaveRetrieveKey(string keyToSaveAndThenGet,TransfluentLanguage language)
+		public void SaveRetrieveKey(string keyToSaveAndThenGet, TransfluentLanguage language)
 		{
 			//post text key
 			string textToSave = textToSetTestTokenTo + Random.value;
@@ -97,13 +97,13 @@ namespace transfluent.tests
 
 		public string justCall(WebServiceParameters call)
 		{
-			if (call.getParameters.ContainsKey("token"))
+			if(call.getParameters.ContainsKey("token"))
 				call.getParameters.Remove("token");
 
 			call.getParameters.Add("token", accessToken);
 			var requester = new SyncronousEditorWebRequest();
 			WebServiceReturnStatus result = requester.request(call);
-			if (result.httpErrorCode > 0)
+			if(result.httpErrorCode > 0)
 			{
 				throw new HttpErrorCode(result.httpErrorCode);
 			}
@@ -217,7 +217,6 @@ namespace transfluent.tests
 				language_id: englishLanguage.id
 				);
 
-
 			Assert.Catch<ApplicatonLevelException>(
 				() => englishTranslationOfEnglishKey.Parse(justCall(englishTranslationOfEnglishKey)));
 
@@ -234,9 +233,9 @@ namespace transfluent.tests
 		public void testStatusOfNotOrderedTranslations()
 		{
 			int nonExistantTranslationKey = -1;
-			foreach (TransfluentLanguage lang in languageCache.languages)
+			foreach(TransfluentLanguage lang in languageCache.languages)
 			{
-				if (lang.id != englishLanguage.id && lang.id != backwardsLanguage.id)
+				if(lang.id != englishLanguage.id && lang.id != backwardsLanguage.id)
 				{
 					nonExistantTranslationKey = lang.id;
 					break;
@@ -257,7 +256,7 @@ namespace transfluent.tests
 		public void testTranslation()
 		{
 			var translateRequest = new OrderTranslation
-				(englishLanguage.id, new[] {backwardsLanguage.id}, new[] {TRANSLATION_KEY}
+				(englishLanguage.id, new[] { backwardsLanguage.id }, new[] { TRANSLATION_KEY }
 				);
 			OrderTranslation.TextsTranslateResult translationResult = translateRequest.Parse(justCall(translateRequest));
 			var requester = new SyncronousEditorWebRequest();

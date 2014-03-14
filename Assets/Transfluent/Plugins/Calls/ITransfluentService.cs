@@ -5,10 +5,11 @@ using System.Text;
 namespace transfluent
 {
 	public interface ITransfluentParameters
-
 	{
 		Dictionary<string, string> getParameters { get; }
+
 		Dictionary<string, string> postParameters { get; }
+
 		IResponseReader responseReader { get; }
 	}
 
@@ -44,7 +45,7 @@ namespace transfluent
 		{
 			EmptyResponseContainer responseContainer = getResponseContainer(text);
 
-			if (!responseContainer.isOK())
+			if(!responseContainer.isOK())
 			{
 				throw new ApplicatonLevelException("Response indicated an error:" + responseContainer, responseContainer.error);
 			}
@@ -56,12 +57,12 @@ namespace transfluent
 		{
 			var sb = new StringBuilder();
 			sb.Append("getparams:");
-			foreach (var kvp in getParameters)
+			foreach(var kvp in getParameters)
 			{
 				sb.Append(string.Format("key:{0} value{1}", kvp.Key, kvp.Value));
 			}
 			sb.Append("Postparams:");
-			foreach (var kvp in postParameters)
+			foreach(var kvp in postParameters)
 			{
 				sb.Append(string.Format("key:{0} value{1}", kvp.Key, kvp.Value));
 			}
@@ -77,7 +78,7 @@ namespace transfluent
 		public ApplicatonLevelException(string message, int httpStatusCode)
 			: base(message)
 		{
-			details = new Error {message = "HTTP ERROR CODE:" + httpStatusCode, type = httpStatusCode.ToString()};
+			details = new Error { message = "HTTP ERROR CODE:" + httpStatusCode, type = httpStatusCode.ToString() };
 		}
 
 		public ApplicatonLevelException(string message, Error error)
@@ -87,19 +88,21 @@ namespace transfluent
 		}
 	}
 
-	//base class for handling known exceptions 
+	//base class for handling known exceptions
 	public abstract class CallException : Exception
 	{
 		public CallException()
 		{
 		}
 
-		public CallException(string message) : base(message)
+		public CallException(string message)
+			: base(message)
 		{
 		}
 
 		//use this constructor for other exceptions that we want to wrap
-		public CallException(string message, Exception innerException) : base(message, innerException)
+		public CallException(string message, Exception innerException)
+			: base(message, innerException)
 		{
 		}
 	}
@@ -118,7 +121,8 @@ namespace transfluent
 	//Other unknown transport exception
 	public class TransportException : CallException
 	{
-		public TransportException(string message) : base(message)
+		public TransportException(string message)
+			: base(message)
 		{
 		}
 	}

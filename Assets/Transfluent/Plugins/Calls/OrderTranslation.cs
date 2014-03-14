@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Pathfinding.Serialization.JsonFx;
+using System;
 using System.Collections.Generic;
-using Pathfinding.Serialization.JsonFx;
 
 namespace transfluent
 {
@@ -16,12 +16,11 @@ namespace transfluent
 
 		//group_id, source_language, target_languages, texts, comment, callback_url, max_words [=1000], level [=2], token
 
-
 		public OrderTranslation(int source_language, int[] target_languages, string[] texts, string comment = null,
 			int max_words = 1000, TranslationQuality level = TranslationQuality.PROFESSIONAL_TRANSLATOR, string group_id = null)
 		{
 			var containerOfTextIDsToUse = new List<TextIDToTranslateContainer>();
-			foreach (string toTranslate in texts)
+			foreach(string toTranslate in texts)
 			{
 				containerOfTextIDsToUse.Add(new TextIDToTranslateContainer
 				{
@@ -33,19 +32,19 @@ namespace transfluent
 			getParameters.Add("target_languages", JsonWriter.Serialize(target_languages));
 			getParameters.Add("texts", JsonWriter.Serialize(containerOfTextIDsToUse));
 
-			if (level != 0)
+			if(level != 0)
 			{
-				getParameters.Add("level", ((int) level).ToString());
+				getParameters.Add("level", ((int)level).ToString());
 			}
-			if (group_id != null)
+			if(group_id != null)
 			{
 				getParameters.Add("group_id", group_id);
 			}
-			if (!string.IsNullOrEmpty(comment))
+			if(!string.IsNullOrEmpty(comment))
 			{
 				getParameters.Add("comment", comment);
 			}
-			if (max_words > 0)
+			if(max_words > 0)
 			{
 				getParameters.Add("max_words", max_words.ToString());
 			}

@@ -25,7 +25,7 @@ public class LanguageList
 	public List<string> getListOfIdentifiersFromLanguageList()
 	{
 		var list = new List<string>();
-		foreach (TransfluentLanguage lang in languages)
+		foreach(TransfluentLanguage lang in languages)
 		{
 			list.Add(lang.name);
 		}

@@ -12,7 +12,7 @@
 			postParameters.Add("language", language.ToString());
 			postParameters.Add("text", text);
 
-			if (group_id != null)
+			if(group_id != null)
 			{
 				postParameters.Add("group_id", group_id);
 			}

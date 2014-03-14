@@ -1,5 +1,5 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using System;
 
 namespace transfluent.tests
 {
@@ -9,6 +9,7 @@ namespace transfluent.tests
 		public interface ITestInjectionTarget
 		{
 			string testString { get; set; }
+
 			string specialString { get; set; }
 		}
 
@@ -54,7 +55,7 @@ namespace transfluent.tests
 		}
 
 		[Test]
-		[ExpectedException(typeof (UnboundInjectionException))]
+		[ExpectedException(typeof(UnboundInjectionException))]
 		public void CreateContextAndFail()
 		{
 			var context = new InjectionContext();

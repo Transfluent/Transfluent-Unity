@@ -13,6 +13,7 @@
 		}
 
 		public string username { get; protected set; }
+
 		public string password { get; protected set; }
 
 		public void save(string newUsername, string newPassword)

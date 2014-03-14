@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using System.Collections.Generic;
 using transfluent.editor;
 
 namespace transfluent.tests
@@ -42,7 +42,6 @@ namespace transfluent.tests
 			List<TransfluentTranslation> textEntries = mediator.knownTextEntries();
 
 			Assert.NotNull(textEntries);
-
 
 			Assert.Greater(textEntries.Count, 0);
 		}

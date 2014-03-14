@@ -30,13 +30,13 @@ public class SyncronousEditorWebRequest : IWebService
 	{
 		var sw = new Stopwatch();
 		sw.Start();
-		while (true)
+		while(true)
 		{
-			if (www.isDone)
+			if(www.isDone)
 				break;
-			if (www.error != null)
+			if(www.error != null)
 				break;
-			if (sw.Elapsed.TotalSeconds >= 30f)
+			if(sw.Elapsed.TotalSeconds >= 30f)
 				break;
 
 			//EditorApplication.Step();
@@ -48,7 +48,7 @@ public class SyncronousEditorWebRequest : IWebService
 
 	public bool knownTransportError(string input)
 	{
-		if (input.Contains("Could not resolve host"))
+		if(input.Contains("Could not resolve host"))
 		{
 			return true;
 		}

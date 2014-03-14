@@ -8,7 +8,7 @@ namespace transfluent
 	{
 		public Type expectedReturnType
 		{
-			get { return typeof (LanguageList); }
+			get { return typeof(LanguageList); }
 		}
 
 		public LanguageList Parse(string text)
@@ -20,9 +20,9 @@ namespace transfluent
 		public LanguageList GetLanguageListFromRawReturn(List<Dictionary<string, TransfluentLanguage>> rawReturn)
 		{
 			var languages = new List<TransfluentLanguage>();
-			foreach (var listitem in rawReturn)
+			foreach(var listitem in rawReturn)
 			{
-				foreach (var kvp in listitem)
+				foreach(var kvp in listitem)
 				{
 					languages.Add(kvp.Value);
 				}

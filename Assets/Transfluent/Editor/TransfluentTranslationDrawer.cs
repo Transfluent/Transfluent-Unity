@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace transfluent
 {
-	[CustomPropertyDrawer(typeof (TransfluentTranslation))]
+	[CustomPropertyDrawer(typeof(TransfluentTranslation))]
 	public class TransfluentTranslationDrawer : PropertyDrawer
 	{
 		private Rect originalRect;
@@ -29,7 +29,7 @@ namespace transfluent
 
 		private void printThing(SerializedProperty prop)
 		{
-			if (prop == null)
+			if(prop == null)
 			{
 				EditorGUI.LabelField(currentRect, " NULL FIELD");
 				return;
@@ -48,7 +48,7 @@ namespace transfluent
 
 		private void printEditableField(SerializedProperty prop)
 		{
-			if (prop == null)
+			if(prop == null)
 			{
 				EditorGUI.LabelField(currentRect, " NULL FIELD");
 				return;
@@ -60,17 +60,20 @@ namespace transfluent
 			string newValue = EditorGUI.TextField(singleHighRect, getStringValue(prop));
 			try
 			{
-				switch (prop.propertyType)
+				switch(prop.propertyType)
 				{
 					case SerializedPropertyType.Integer:
 						prop.intValue = int.Parse(newValue);
 						break;
+
 					case SerializedPropertyType.Boolean:
 						prop.boolValue = bool.Parse(newValue);
 						break;
+
 					case SerializedPropertyType.Float:
 						prop.floatValue = float.Parse(newValue);
 						break;
+
 					case SerializedPropertyType.String:
 						prop.stringValue = newValue;
 						break;
@@ -84,24 +87,26 @@ namespace transfluent
 
 		public string getStringValue(SerializedProperty prop)
 		{
-			switch (prop.propertyType)
+			switch(prop.propertyType)
 			{
 				case SerializedPropertyType.Integer:
 					return prop.intValue.ToString();
+
 				case SerializedPropertyType.Boolean:
 					return prop.boolValue.ToString();
+
 				case SerializedPropertyType.Float:
 					return prop.floatValue.ToString();
+
 				case SerializedPropertyType.String:
 					return prop.stringValue;
 			}
 			throw new Exception("unhandled prop type" + prop.propertyType);
 		}
 
-
 		public override void OnGUI(Rect pos, SerializedProperty prop, GUIContent label)
 		{
-			if (prop == null)
+			if(prop == null)
 				return;
 			originalRect = pos;
 			ypos = 0;
@@ -119,7 +124,7 @@ namespace transfluent
 
 			//reflection over members?
 			/*
-			 * 
+			 *
 			 * SerializedProperty textID = prop.FindPropertyRelative("text_id");
 			SerializedProperty groupID = prop.FindPropertyRelative("group_id");
 			SerializedProperty language = prop.FindPropertyRelative("language");

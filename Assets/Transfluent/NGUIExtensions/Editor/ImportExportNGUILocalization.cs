@@ -10,7 +10,7 @@ using UnityEngine;
 public class ImportExportNGUILocalization
 {
 	private static readonly List<string> keysThatMustExistFirst = new List<string> { "KEYS", "Language" };
-	 d
+	
 	private static readonly Dictionary<string, string> languageCodeToCommonName = new Dictionary<string, string>
 	{
 		{"en-us", "English"},

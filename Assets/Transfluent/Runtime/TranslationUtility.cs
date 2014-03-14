@@ -91,8 +91,6 @@ namespace transfluent
 		//ie "Hi, my name is {0}" instead of "Hi, my name is $NAME" or some other scheme
 		public string getFormattedTranslation(string sourceText, params object[] formatStrings)
 		{
-			//TODO: add notes to formatted strings for translators to not change *exact* format
-			//or alternatively... take them out and put them back in
 			return string.Format(getTranslation(sourceText), formatStrings);
 		}
 

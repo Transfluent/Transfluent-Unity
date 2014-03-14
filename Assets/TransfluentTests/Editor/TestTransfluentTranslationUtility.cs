@@ -36,12 +36,26 @@ public class TestTransfluentTranslationUtility
 		Assert.AreEqual(instance.getFormattedTranslation(toTranslateDoesNotExist2, "nope"),
 			string.Format(toTranslateDoesNotExist2, "nope"));
 
-		string formattedStringThatExists = "formatted {0} text";
-		Assert.AreEqual(instance.getFormattedTranslation(formattedStringThatExists, "success"), "formatted success text");
+		string formattedStringThatExists = "formatted {0} text blah blah blah";
+		Assert.AreEqual(instance.getFormattedTranslation(formattedStringThatExists, "success"),
+						string.Format(formattedStringThatExists, "success"));
 
 		string toTranslateAndExists = "hello world";
 		string translationResult = "world hello";
 		Assert.AreEqual(translationResult, instance.getTranslation(toTranslateAndExists));
+	}
+
+	[Test]
+	public void testParamsPassthrough()
+	{
+		string formattedStringThatExists = "formatted {0} text";
+		Assert.AreEqual(stringFormatPassthrough(formattedStringThatExists,"success"),
+			string.Format(formattedStringThatExists, "success"));
+	}
+
+	public string stringFormatPassthrough(string formatString, params object[] passthrough)
+	{
+		return string.Format(formatString, passthrough);
 	}
 
 	[Test]

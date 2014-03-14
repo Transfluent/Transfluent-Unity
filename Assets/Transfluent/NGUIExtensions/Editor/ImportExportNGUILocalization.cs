@@ -84,22 +84,27 @@ public class ImportExportNGUILocalization
 
 	public static string getLocalizationPath()
 	{
-		string existingLocalizationPath =
+		string localizationPath =
 			AssetDatabase.GetAssetPath(ResourceLoadFacade.LoadResource<TextAsset>("Localization"));
+		string projectBasePath =
+			Path.GetFullPath(Application.dataPath + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar);
 
-		if(string.IsNullOrEmpty(existingLocalizationPath))
+		if(string.IsNullOrEmpty(localizationPath))
 		{
-			existingLocalizationPath = "Assets/Resources/Localization.txt";
+			localizationPath = "Assets/Resources/Localization.txt";
 			if(!Directory.Exists("Assets/Resources"))
 			{
 				AssetDatabase.CreateFolder("Assets", "Resources");
 			}
-			TextAsset ta = new TextAsset();
-			AssetDatabase.CreateAsset(ta, existingLocalizationPath);
+			File.WriteAllText(projectBasePath + localizationPath,"");
+			
+			//TextAsset ta = new TextAsset();
+			//AssetDatabase.CreateAsset(ta, localizationPath);
+			AssetDatabase.ImportAsset(localizationPath,ImportAssetOptions.ForceSynchronousImport);
+			
 		}
-		string projectBasePath =
-			Path.GetFullPath(Application.dataPath + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar);
-		return projectBasePath + existingLocalizationPath;
+		
+		return projectBasePath + localizationPath;
 	}
 
 	[MenuItem("Transfluent/ngui/Export all translfuent data to ngui")]
@@ -126,6 +131,7 @@ public class ImportExportNGUILocalization
 		var exporter = new NGUICSVExporter(nativeLanguageNameToKnownTranslationGroups);
 		string csv = exporter.getCSV();
 		File.WriteAllText(assetPath,csv);
+		AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceSynchronousImport);
 	}
 
 	//write tests.  lots of tests.  This has to work *perfectly* for the keying to map well.  Other people use different language identifiers than transfluent
@@ -237,7 +243,15 @@ public class ImportExportNGUILocalization
 				tmpList.AddRange(keyToItems.Value);
 				for(int i = 0; i < tmpList.Count; i++)
 				{
-					tmpList[i] = _util.escapeCSVString(tmpList[i]);
+					if (tmpList[i] != null)
+					{
+						tmpList[i] = _util.escapeCSVString(tmpList[i]);
+					}
+					else
+					{
+						tmpList[i] = "";
+					}
+					
 				}
 				allLinesSB.AppendLine(string.Join(",", tmpList.ToArray()));
 			}
@@ -255,6 +269,7 @@ public class ImportExportNGUILocalization
 		public string escapeCSVString(string unescapedCSVString)
 		{
 			string currentString = unescapedCSVString;
+			
 			currentString = currentString.Replace("\n", "\\n");
 			if(unescapedCSVString.Contains(","))
 			{

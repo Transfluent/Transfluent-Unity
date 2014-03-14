@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Mono.Cecil;
+using Pathfinding.Serialization.JsonFx;
 using transfluent;
+using transfluent.editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,8 +14,54 @@ public class ImportExportNGUILocalization
 {
 	private static readonly List<string> keysThatMustExistFirst = new List<string> {"KEYS", "Language"};
 
-	//write tests.  lots of tests.  This has to work *perfectly* for the keying to map well.  Other people use different language identifiers than transfluent
+	[MenuItem("asink/Import all NGUI data into transfluent local cache")]
+	public static void ImportAllNGUILocalizations()
+	{
+		LanguageList list = ResourceLoadFacade.getLanguageList();
+		string nguiLocalization = ResourceLoadFacade.LoadResource<TextAsset>("Localization").text;
+		var importer = new NGUILocalizationCSVImporter(nguiLocalization);
+		var map = importer.getMapOfLanguagesToKeyValueTranslations();
+		List<TransfluentLanguage> languages = new List<TransfluentLanguage>();
+		foreach (KeyValuePair<string, Dictionary<string, string>> languageCommonNameToKeyValues in map)
+		{
+			string commonName = languageCommonNameToKeyValues.Key;
+			Dictionary<string, string> keyValues = languageCommonNameToKeyValues.Value;
+			string languageCode = takeLanguageNameAndTurnItIntoAKnownLanguageCode(commonName);
 
+			var language = list.getLangaugeByCode(languageCode);
+			saveSet(language,keyValues,"NGUI");  //groupid -- NGUI?
+		}
+	}
+
+	static void saveSet(TransfluentLanguage language, Dictionary<string, string> pairs,string groupid=null)
+	{
+		try
+		{
+			string languageCode = language.code;
+						GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode) ??
+												 ResourceCreator.CreateSO<GameTranslationSet>(
+													 GameTranslationGetter.fileNameFromLanguageCode(languageCode));
+
+
+						set.mergeInNewListOfTranslations(pairs, groupid,language);
+
+						EditorUtility.SetDirty(set);
+						AssetDatabase.SaveAssets();
+				}
+				catch(Exception e)
+				{
+					Debug.LogError("error while saving imported translations:" + e.Message + " stack:" + e.StackTrace);
+				}
+	}
+
+	[MenuItem("asink/Export all translfuent data to ngui")]
+	public static void ExportAllNGUILocalizations()
+	{
+
+	}
+
+	//write tests.  lots of tests.  This has to work *perfectly* for the keying to map well.  Other people use different language identifiers than transfluent
+	
 
 	//Handle the mapping of language code to a language name in it's own language to a language
 	//Not meant to be a complete list, but a start of one
@@ -133,8 +183,10 @@ public class ImportExportNGUILocalization
 
 				foreach (var kvp in keyValuesInLanguage)
 				{
+					Debug.Log("KV in language:"+kvp.Key);
 					if (keysThatMustExistFirst.Contains(kvp.Key)) //skip KEYS and Language
 						continue;
+					Debug.Log("adding:" + kvp.Key);
 					if (!_keysMappedToListOfLangaugesIndexedByLanguageIndex.ContainsKey(kvp.Key))
 						_keysMappedToListOfLangaugesIndexedByLanguageIndex[kvp.Key] = new string[languageList.Count - 1];
 					_keysMappedToListOfLangaugesIndexedByLanguageIndex[kvp.Key][indexToAddAt] = kvp.Value;
@@ -149,14 +201,85 @@ public class ImportExportNGUILocalization
 				var tmpList = new List<string>();
 				tmpList.Add(keyToItems.Key);
 				tmpList.AddRange(keyToItems.Value);
+				for (int i = 0; i < tmpList.Count; i++)
+				{
+					tmpList[i] = _util.escapeCSVString(tmpList[i]);
+				}
 				allLinesSB.AppendLine(string.Join(",", tmpList.ToArray()));
 			}
 			csvString = allLinesSB.ToString();
 		}
 
+
+
+
+		private NGUICSVUtil _util = new NGUICSVUtil();
 		public string getCSV()
 		{
 			return csvString;
+		}
+	}
+
+	public class NGUICSVUtil
+	{
+		public string escapeCSVString(string unescapedCSVString)
+		{
+			string currentString = unescapedCSVString;
+			currentString = currentString.Replace("\n", "\\n");
+			if(unescapedCSVString.Contains(","))
+			{
+				currentString = "\"" + currentString.Replace("\"", "\"\"") + "\"";
+			}
+			//currentString.Replace("\"", "\"\"");
+			return currentString;
+		}
+		public string unescapeCSVString(string escapedCSVString)
+		{
+			string currentString = escapedCSVString;
+			currentString = currentString.Replace("\\n", "\n");
+			if(currentString.StartsWith("\""))
+			{
+				currentString = currentString.Replace("\"\"", "\"");
+				currentString = currentString.Substring(1, currentString.Length - 2);
+			}
+			return currentString;
+		}
+		public List<string> getEntriesFromALine(string line)
+		{
+			string[] justCommasRaw = line.Split(',');
+			List<string> realList = new List<string>();
+			bool waitingForClosingParen = false;
+			string entry = "";
+			for(int i = 0; i < justCommasRaw.Length; i++)
+			{
+				string cur = justCommasRaw[i];
+
+				if(cur.StartsWith("\"") && !cur.StartsWith("\"\""))
+				{
+					if(waitingForClosingParen == false)
+					{
+						waitingForClosingParen = true;
+						entry = cur;
+					}
+					else
+					{
+						entry += cur;
+					}
+				}
+				else
+				{
+					realList.Add(unescapeCSVString(cur));
+				}
+
+				//not an 'escaped' quote, but ending with a real quote
+				if(cur.EndsWith("\"") && !cur.EndsWith("\"\"") && waitingForClosingParen)
+				{
+					waitingForClosingParen = false;
+					realList.Add(unescapeCSVString(entry));
+					entry = "";
+				}
+			}
+			return realList;
 		}
 	}
 
@@ -164,6 +287,7 @@ public class ImportExportNGUILocalization
 	{
 		private readonly Dictionary<string, List<string>> keyNameToValueListIndexedByLanguage =
 			new Dictionary<string, List<string>>();
+		private NGUICSVUtil _util = new NGUICSVUtil();
 
 		public NGUILocalizationCSVImporter(string nguiLocalizationCSVText)
 		{
@@ -172,7 +296,7 @@ public class ImportExportNGUILocalization
 			if (individualLines.Length < keysThatMustExistFirst.Count)
 			{
 				Debug.LogError("not enough lines to be a valid csv file, must at least have this many entries:" +
-				               keysThatMustExistFirst.Count);
+							   keysThatMustExistFirst.Count + "  vs inidvidualLines:" + individualLines.Length);
 				return;
 			}
 			for (int j = 0; j < keysThatMustExistFirst.Count; j++)
@@ -181,6 +305,7 @@ public class ImportExportNGUILocalization
 				{
 					Debug.LogError("invalid csv file, expected to have the key start the csv file:" + keysThatMustExistFirst[j] +
 					               " at position:" + j);
+					Debug.Log(nguiLocalizationCSVText);
 					Debug.Log("vs individual line number:" + j + " with value:" + individualLines[j]);
 					return;
 				}
@@ -189,8 +314,8 @@ public class ImportExportNGUILocalization
 			for (int i = 0; i < individualLines.Length; i++)
 			{
 				string line = individualLines[i];
-				string[] csvStrings = line.Split(new[] {','});
-				if (csvStrings.Length < 1)
+				List<string> csvStrings = _util.getEntriesFromALine(line);// line.Split(new[] {','});
+				if (csvStrings.Count < 1)
 				{
 					Debug.LogError("invalid csv line, no keys found on it:" + line);
 					continue;
@@ -213,11 +338,11 @@ public class ImportExportNGUILocalization
 				keyNameToValueListIndexedByLanguage.Add(key, values);
 			}
 		}
-
+		
 		public Dictionary<string, Dictionary<string, string>> getMapOfLanguagesToKeyValueTranslations()
 		{
 			var langaugeNameToKeyValuePairMap = new Dictionary<string, Dictionary<string, string>>();
-
+			Debug.Log("KVP :" + JsonWriter.Serialize(keyNameToValueListIndexedByLanguage));
 			List<string> languageNamesFromFile = keyNameToValueListIndexedByLanguage["Language"];
 			foreach (string languageName in languageNamesFromFile)
 			{
@@ -229,7 +354,7 @@ public class ImportExportNGUILocalization
 			{
 				if (kvp.Value.Count > languageNamesFromFile.Count) //NOTE: maybe let the user know if they are not *exactly* equal?
 				{
-					Debug.LogWarning("CSV entry has more lines than there are languages, dropping the data from the extra lines");
+					Debug.LogWarning("CSV entry has more lines than there are languages, dropping the data from the extra lines for key:"+kvp.Key);
 				}
 				if (kvp.Value.Count > languageNamesFromFile.Count)
 				{

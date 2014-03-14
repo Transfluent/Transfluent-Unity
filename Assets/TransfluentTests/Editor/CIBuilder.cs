@@ -40,6 +40,12 @@ namespace transfluent
 			build.autoBuildNumber = GetBuildNumberFromCommandLine();
 			build.RunTests();
 			build.Build();
+			string basePath = Path.GetFullPath(Application.dataPath + ".." + Path.DirectorySeparatorChar);
+			string docsPath = basePath + Path.DirectorySeparatorChar + "docs";
+			if(Directory.Exists(docsPath))
+			{
+				Directory.CreateDirectory(docsPath);
+			}
 		}
 
 		public class BuilderInstance

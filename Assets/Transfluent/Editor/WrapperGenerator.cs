@@ -6,7 +6,7 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Transfluent
+namespace transfluent.editor
 {
 	internal class WrapperGenerator
 	{

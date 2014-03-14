@@ -243,15 +243,15 @@ public class ImportExportNGUILocalization
 				tmpList.AddRange(keyToItems.Value);
 				for(int i = 0; i < tmpList.Count; i++)
 				{
-					if (tmpList[i] != null)
-					{
-						tmpList[i] = _util.escapeCSVString(tmpList[i]);
-					}
-					else
+					string cur = tmpList[i];
+					if (string.IsNullOrEmpty(cur))
 					{
 						tmpList[i] = "";
 					}
-					
+					else
+					{
+						tmpList[i] = _util.escapeCSVString(cur);
+					}
 				}
 				allLinesSB.AppendLine(string.Join(",", tmpList.ToArray()));
 			}

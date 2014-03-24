@@ -10,7 +10,7 @@ namespace transfluent.editor
 		// I don't know if I am going to expose this, but it is something to do
 		//maybe as sub-functionality on the scriptableobject?  push/pull on the object itself?
 
-		[MenuItem("Window/Download All Transfluent data")]
+		[MenuItem("Transfluent/Download All Transfluent data")]
 		public static void doDownload()
 		{
 			var mediator = getAuthenticatedMediator();

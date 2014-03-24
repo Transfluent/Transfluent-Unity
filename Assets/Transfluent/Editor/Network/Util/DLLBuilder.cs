@@ -23,7 +23,8 @@ namespace transfluent
 		public static readonly string UnityEngineDll = unityLibraryPathRootFolder + "UnityEngine.dll";
 		public static readonly string UnityEditorDll = unityLibraryPathRootFolder + "UnityEditor.dll";
 
-		[MenuItem("Window/build dll")]
+		//currently not working due to dramatic changes in the way things are built
+		//[MenuItem("Transfluent/test/build dll")]
 		public static void buildDLL()
 		{
 			string baseProjectPath = Path.GetFullPath(Application.dataPath + Path.DirectorySeparatorChar + "..");

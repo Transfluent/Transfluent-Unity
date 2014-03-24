@@ -1,2 +1,18 @@
-find script location, and use that as a basis for where the other files are — master script configuration?
+game translation configuration -- edit to include downloading all translations, uploading all translations
 
+auto-build documentation
+check in documentation
+
+manual documentation start
+
+
+2d toolkit
+
+
+handle plurality better 
+internationalize the editor script itself
+
+request access to docs subfolder
+start documentation
+
+.resx and .po/.mo file outputs -- resx

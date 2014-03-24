@@ -18,7 +18,7 @@ namespace transfluent.editor
 			textGui = new TextsGUI(_mediator);
 		}
 
-		[MenuItem("Window/Transfluent Helper")]
+		[MenuItem("Transfluent/View My Transfluent Account")]
 		public static void Init()
 		{
 			GetWindow<TransfluentEditorWindow>();

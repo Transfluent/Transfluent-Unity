@@ -10,6 +10,15 @@ namespace transfluent.editor
 {
 	internal class WrapperGenerator
 	{
+		//[MenuItem("Window/Test Generating GUI file")]
+		public static void test()
+		{
+			generateSourceFromType("Assets/Transfluent/GUI.cs", typeof(GUI));
+			generateSourceFromType("Assets/Transfluent/GUILayout.cs", typeof(GUILayout));
+			generateSourceFromType("Assets/Transfluent/Editor/EditorGUI.cs", typeof(EditorGUI));
+			generateSourceFromType("Assets/Transfluent/Editor/EditorGUILayout.cs", typeof(EditorGUILayout));
+		}
+
 		private const string headerFormat = @"using UnityEngine;
 using System;
 //wrapper around unity's gui, except to grab text as quickly as possbile and spit it into an internal db
@@ -36,12 +45,6 @@ namespace transfluent.guiwrapper
 		};
 
 		public bool debug = false;
-
-		[MenuItem("Window/TypeTest")]
-		public static void typeTest()
-		{
-			Debug.Log(typeof(bool));
-		}
 
 		//The primitive types are Boolean, Byte, SByte, Int16, UInt16, Int32, UInt32, Int64, UInt64, IntPtr, UIntPtr, Char, Double, and Single.
 
@@ -91,15 +94,6 @@ namespace transfluent.guiwrapper
 			fullFile = fullFile.Replace("System.Single&", "float"); //ugh
 			fullFile = fullFile.Replace("System.Void", "void");
 			return fullFile.Replace("\r\n", "\n"); //could do the other way around, but just want the line endings to be the same
-		}
-
-		[MenuItem("Window/Test Generating GUI file")]
-		public static void test()
-		{
-			generateSourceFromType("Assets/Transfluent/GUI.cs", typeof(GUI));
-			generateSourceFromType("Assets/Transfluent/GUILayout.cs", typeof(GUILayout));
-			generateSourceFromType("Assets/Transfluent/Editor/EditorGUI.cs", typeof(EditorGUI));
-			generateSourceFromType("Assets/Transfluent/Editor/EditorGUILayout.cs", typeof(EditorGUILayout));
 		}
 
 		private static void generateSourceFromType(string file, Type type)

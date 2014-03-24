@@ -21,17 +21,10 @@ public class SetupTranslationConfiguration : EditorWindow
 		_mediator = new TransfluentEditorWindowMediator();
 	}
 
-	[MenuItem("Window/SetupTranslationConfiguration2")]
+	[MenuItem("Transfluent/Game Configuration")]
 	public static void Init()
 	{
 		GetWindow<SetupTranslationConfiguration>();
-	}
-
-	[MenuItem("Window/makeConfig")]
-	public static void makeMenuItem()
-	{
-		getOrCreateGameTranslationConfig("");
-		getOrCreateGameTranslationConfig("testGroup");
 	}
 
 	private void Initialize()

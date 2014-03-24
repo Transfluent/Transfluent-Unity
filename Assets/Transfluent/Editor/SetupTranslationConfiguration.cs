@@ -12,7 +12,7 @@ public class SetupTranslationConfiguration : EditorWindow
 	private string groupidDisplayed = "";
 	private bool initialized;
 	private int newDestinationLanguageIndex;
-	private int newSourceLanguageIndex;
+	
 	private TranslationConfigurationSO selectedConfig;
 	private string sourceLanguageCode;
 
@@ -95,13 +95,15 @@ public class SetupTranslationConfiguration : EditorWindow
 	private void DisplaySelectedTranslationConfiguration(TranslationConfigurationSO so)
 	{
 		List<string> knownLanguageDisplayNames = _languages.getListOfIdentifiersFromLanguageList();
+		int sourceLanguageIndex = knownLanguageDisplayNames.IndexOf(so.sourceLanguage.name);
 
 		EditorGUILayout.LabelField("group identifier:" + so.translation_set_group);
 		EditorGUILayout.LabelField("source language:" + so.sourceLanguage.name);
-		newSourceLanguageIndex = EditorGUILayout.Popup(newSourceLanguageIndex, knownLanguageDisplayNames.ToArray());
-		if(GUILayout.Button("SET Source to this language" + knownLanguageDisplayNames[newSourceLanguageIndex]))
+
+		sourceLanguageIndex = EditorGUILayout.Popup(sourceLanguageIndex, knownLanguageDisplayNames.ToArray());
+		if(GUILayout.Button("SET Source to this language" + knownLanguageDisplayNames[sourceLanguageIndex]))
 		{
-			so.sourceLanguage = _languages.getLangaugeByName(knownLanguageDisplayNames[newSourceLanguageIndex]);
+			so.sourceLanguage = _languages.getLangaugeByName(knownLanguageDisplayNames[sourceLanguageIndex]);
 		}
 
 		EditorGUILayout.LabelField("destination language(s):");
@@ -109,8 +111,9 @@ public class SetupTranslationConfiguration : EditorWindow
 
 		foreach(TransfluentLanguage lang in so.destinationLanguages)
 		{
+			GUILayout.Space(10);
 			EditorGUILayout.LabelField("destination language:" + lang.name);
-			if(GUILayout.Button("Remove"))
+			if(GUILayout.Button("Remove",GUILayout.Width(100)))
 			{
 				removeThisLang = lang;
 			}
@@ -120,6 +123,8 @@ public class SetupTranslationConfiguration : EditorWindow
 			so.destinationLanguages.Remove(removeThisLang);
 			saveCurrentConfig();
 		}
+
+		GUILayout.Space(30);
 
 		newDestinationLanguageIndex = EditorGUILayout.Popup(newDestinationLanguageIndex, knownLanguageDisplayNames.ToArray());
 
@@ -147,13 +152,14 @@ public class SetupTranslationConfiguration : EditorWindow
 	{
 		EditorGUILayout.LabelField("Select a config");
 		var knownConfigNames = new List<string>();
-		int selectedIndex = 0;
+		int selectedIndex = _allKnownConfigurations.Count > 0 ? 1 : 0;
 		knownConfigNames.Add("No Config");
 
 		foreach(TranslationConfigurationSO so in _allKnownConfigurations)
 		{
 			knownConfigNames.Add("Group:" + so.translation_set_group);
 		}
+		
 		if(selectedConfig != null)
 		{
 			selectedIndex = knownConfigNames.IndexOf("Group:" + selectedConfig.translation_set_group);
@@ -210,4 +216,10 @@ public class SetupTranslationConfiguration : EditorWindow
 		list.AddRange(Resources.LoadAll<TranslationConfigurationSO>(""));
 		return list;
 	}
+
+	public class GetTranslationEstimate
+	{
+		
+	}
 }
+

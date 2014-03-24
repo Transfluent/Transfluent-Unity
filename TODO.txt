@@ -4,7 +4,7 @@ auto-build documentation
 check in documentation
 
 manual documentation start
-
+screenshots sent to translators
 
 2d toolkit
 
@@ -16,3 +16,5 @@ request access to docs subfolder
 start documentation
 
 .resx and .po/.mo file outputs -- resx
+
+look at other translation solutions

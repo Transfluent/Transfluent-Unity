@@ -60,14 +60,14 @@ namespace transfluent
 			};
 		}
 
-		public static string getTranslation(string sourceText)
+		public static string get(string sourceText)
 		{
 			return _instance.getTranslation(sourceText);
 		}
 
 		//same format as string.format for now, not tokenized
 		//ie "Hi, my name is {0}" instead of "Hi, my name is $NAME" or some other scheme
-		public static string getFormattedTranslation(string sourceText, params object[] formatStrings)
+		public static string getFormatted(string sourceText, params object[] formatStrings)
 		{
 			return _instance.getFormattedTranslation(sourceText, formatStrings);
 		}

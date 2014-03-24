@@ -22,7 +22,7 @@ public class TestCall : MonoBehaviour
 		var www = new GameTimeWWW();
 		langGetter = new RequestAllLanguages();
 		www.webRequest(new RequestAllLanguages(), OnStatusDone);
-		TransfluentUtility.getTranslation("HELLO WORLD");
+		TransfluentUtility.get("HELLO WORLD");
 		//Action<> <WebServiceReturnStatus>
 		//www.webRequest(, OnStatusDone);
 	}
@@ -31,7 +31,7 @@ public class TestCall : MonoBehaviour
 	{
 		Debug.Log("GOT A THING:" + JsonWriter.Serialize(status));
 		Debug.Log(JsonWriter.Serialize(langGetter.Parse(status.text)));
-		;
+		
 		yield return null;
 	}
 

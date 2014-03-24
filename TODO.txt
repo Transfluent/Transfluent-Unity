@@ -36,3 +36,11 @@ start documentation
 
 look at other translation solutions
 TODO: try not connected and make sure the errors work as expected
+
+NGUI---
+help you move between different UI toolkits
+
+search all prefabs, scenees, add UILocalization if there is not one
+export all transalations to 
+
+SHOW_REPORT functionality across all toolkits

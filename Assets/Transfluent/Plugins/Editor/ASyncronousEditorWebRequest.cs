@@ -12,7 +12,7 @@ namespace transfluent.editor
 	{
 		private GameTimeWWW www;
 
-		[MenuItem("asink/test asink hijack")]
+		//[MenuItem("asink/test asink hijack")]
 		public static void MakeRequests()
 		{
 			var hijack = new AsyncEditorWebRequester();
@@ -51,7 +51,7 @@ namespace transfluent.editor
 			doCoroutine();
 		}
 
-		[MenuItem("asink/testme2")]
+		//[MenuItem("asink/testme2")]
 		public static void testMe()
 		{
 			var runner = new AsyncRunner();
@@ -133,7 +133,7 @@ namespace transfluent.editor
 			throw new NotImplementedException();
 		}
 
-		[MenuItem("asink/testme")]
+		//[MenuItem("asink/testme")]
 		public static void testMe()
 		{
 			new AsyncTester();

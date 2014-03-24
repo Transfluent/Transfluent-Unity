@@ -1,7 +1,5 @@
 ﻿//handles interaction with core code, allowing hte editor window to focus on presentation.  Also has the nice side effect of avoiding issues in editor files (massive bugginess with optional arguments, etc)
 //seperatoion of logic, and
-
-using Castle.Core.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -200,7 +198,10 @@ namespace transfluent.editor
 			try
 			{
 				Dictionary<string, TransfluentTranslation> dictionaryOfKeys = getAllKeys.Parse(makeCall(getAllKeys));
-				dictionaryOfKeys.ForEach((KeyValuePair<string, TransfluentTranslation> pair) => { list.Add(pair.Value); });
+				foreach (KeyValuePair<string, TransfluentTranslation> transfluentTranslation in dictionaryOfKeys)
+				{
+					list.Add(transfluentTranslation.Value);
+				}
 			}
 			catch(ApplicatonLevelException errorcode)
 			{

@@ -1,13 +1,30 @@
-game translation configuration -- edit to include downloading all translations, uploading all translations
+workflow documentation with screenshots -- will be a *great* first run
+ongui documentation
 
+
+sample game
+
+
+add
+
+game translation configuration -- edit to include downloading all translations, uploading all translations(was--a button on configuration itself)
+
+CI machine to be authority on package building
+--test to make sure package imported has no compile errors
+add build number to package output
 auto-build documentation
 check in documentation
+auto-publish tests inside of build machine (nunit plugin) -- there may be an issue with test running?
 
 manual documentation start
+
+csv import/export
+
 screenshots sent to translators
 
 2d toolkit
 
+sample integration -- dialoger?
 
 handle plurality better 
 internationalize the editor script itself
@@ -18,3 +35,4 @@ start documentation
 .resx and .po/.mo file outputs -- resx
 
 look at other translation solutions
+TODO: try not connected and make sure the errors work as expected

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Pathfinding.Serialization.JsonFx;
 using transfluent;
 using transfluent.editor;
 using UnityEditor;
@@ -62,6 +64,32 @@ public class SetupTranslationConfiguration : EditorWindow
 			return;
 		}
 		DisplaySelectedTranslationConfiguration(selectedConfig);
+
+		DoTranslation();
+	}
+
+	private void DoTranslation()
+	{
+		//TODO: estimate all remaining text cost
+		GUILayout.Space(30);
+		GUILayout.Label("Translate all things:");
+		if (GUILayout.Button("TEST TRANSLATE"))
+		{
+			var translate = new EstimateTranslationCost("hello", 1, 4);
+			SyncronousEditorWebRequest req = new SyncronousEditorWebRequest();
+			try
+			{
+				var result = req.request(translate);
+				var estimate = translate.Parse(result.text);
+				Debug.Log("Estimate:" + JsonWriter.Serialize(estimate));
+
+			}
+			catch (HttpErrorCode code)
+			{
+				Debug.Log(code.code + " http error");
+				throw code;
+			}
+		}
 	}
 
 	private void createANewConfig()
@@ -217,9 +245,5 @@ public class SetupTranslationConfiguration : EditorWindow
 		return list;
 	}
 
-	public class GetTranslationEstimate
-	{
-		
-	}
 }
 

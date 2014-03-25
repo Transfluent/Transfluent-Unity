@@ -9,6 +9,25 @@ public class GameTranslationSet : ScriptableObject
 {
 	public List<TransfluentTranslation> allTranslations = new List<TransfluentTranslation>();
 
+	/*
+	public void setPair(string key, string value, string groupid = "")
+	{
+		bool groupIsEmpty = string.IsNullOrEmpty(groupid);
+		if (groupIsEmpty)
+		{
+		}
+		else
+		{
+			
+		}
+	}
+	*/
+
+	public int getWordCount(string group = "")
+	{
+		return getListOfTranslationsInGroup(group).Count;
+	}
+
 	public Dictionary<string, string> getKeyValuePairs(string group = "")
 	{
 		var dictionary = new Dictionary<string, string>();
@@ -94,7 +113,7 @@ public class GameTranslationSet : ScriptableObject
 		if(langauge == null)
 		{
 			if(allTranslations.Count == 0) throw new Exception("Cannot infer language of inserted translations, please insert at least one with the language parameter");
-			langauge = allTranslations[0].language;
+			langauge = allTranslations[0].language;	
 		}
 		//modify existing entries first
 		List<TransfluentTranslation> existingTranslations = getListOfTranslationsInGroup(groupid);

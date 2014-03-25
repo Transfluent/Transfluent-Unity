@@ -106,7 +106,7 @@ namespace transfluent
 					}
 					if(status.httpErrorCode >= 400 && status.httpErrorCode <= 499)
 					{
-						throw new ApplicatonLevelException("HTTP Error code, applicatin level:" + status.httpErrorCode,
+						throw new ApplicatonLevelException("HTTP Error code, application level:" + status.httpErrorCode,
 							status.httpErrorCode);
 					}
 					throw new HttpErrorCode(status.httpErrorCode);

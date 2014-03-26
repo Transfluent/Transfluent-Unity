@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using transfluent;
 using UnityEngine;
 
 public class ShowAllKnownTextAtSameTime : MonoBehaviour
@@ -14,9 +13,9 @@ public class ShowAllKnownTextAtSameTime : MonoBehaviour
 		//Debug.Log("Number of translation sets:" + list.Length);
 		foreach(GameTranslationSet set in list)
 		{
-			foreach(TransfluentTranslation trans in set.allTranslations)
+			foreach(string value in set.getAllValues())
 			{
-				knownStrings.Add(trans.text);
+				knownStrings.Add(value);
 			}
 		}
 	}

@@ -15,7 +15,7 @@ namespace transfluent
 		{
 			getParameters.Add("free_text", textToEstimate);
 			getParameters.Add("source_language", sourceLanguageId.ToString());
-			getParameters.Add("targetLanguage", targetLanguage.ToString());
+			getParameters.Add("target_language", targetLanguage.ToString());
 			getParameters.Add("currency_code", currency_code);
 
 			if (quality != OrderTranslation.TranslationQuality.PAIR_OF_TRANSLATORS)
@@ -37,7 +37,7 @@ namespace transfluent
 	{
 		public string count;
 		public string unit; //ie Word
-
+		public Price price;
 		public class Price
 		{
 			public string amount; //"0.27"

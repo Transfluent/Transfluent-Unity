@@ -52,8 +52,9 @@ public class ImportExportNGUILocalization
 			GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode) ??
 									 ResourceCreator.CreateSO<GameTranslationSet>(
 										 GameTranslationGetter.fileNameFromLanguageCode(languageCode));
+			if (set.langaugeThatTranslationsAreIn == null) set.langaugeThatTranslationsAreIn = language;
 
-			set.mergeInNewListOfTranslations(pairs, groupid, language);
+			set.mergeInNewListOfTranslations(pairs, groupid);
 
 			EditorUtility.SetDirty(set);
 			AssetDatabase.SaveAssets();
@@ -118,11 +119,11 @@ public class ImportExportNGUILocalization
 		var nativeLanguageNameToKnownTranslationGroups = new Dictionary<string, Dictionary<string, string>>();
 		foreach (GameTranslationSet set in allTranslations)
 		{
-			if (set.allTranslations.Count == 0)
+			if (set.getAllKeys().Count == 0)
 			{
 				continue;
 			}
-			TransfluentLanguage firstLanguage = set.allTranslations[0].language;
+			TransfluentLanguage firstLanguage = set.langaugeThatTranslationsAreIn;
 			var allPairs = set.getKeyValuePairs(groupid);
 			string nativeLanguageName = takeLanguageCodeAndTurnItIntoNativeName(firstLanguage.code);
 			nativeLanguageNameToKnownTranslationGroups.Add(nativeLanguageName,allPairs);
@@ -186,7 +187,7 @@ public class ImportExportNGUILocalization
 			foreach(TransfluentLanguage lang in languagesToExportTo)
 			{
 				GameTranslationSet destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(lang.code);
-				if(destLangDB == null || destLangDB.allTranslations == null)
+				if(destLangDB == null)
 				{
 					Debug.LogWarning("could not find any information for language:" + lang);
 					continue;

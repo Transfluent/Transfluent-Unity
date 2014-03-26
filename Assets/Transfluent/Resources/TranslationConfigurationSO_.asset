@@ -11,10 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fafeb2470ca3483f86b1ea6a32029c9, type: 3}
   m_Name: TranslationConfigurationSO_
   m_EditorClassIdentifier: 
-  sourceLanguage:
-    name: English (United States)
-    code: en-us
-    id: 148
   destinationLanguages:
   - name: French (France)
     code: fr-fr
@@ -25,4 +21,9 @@ MonoBehaviour:
   - name: Pseudo language
     code: xx-xx
     id: 500
+  sourceLanguage:
+    name: English (United States)
+    code: en-us
+    id: 148
   translation_set_group: 
+  QualityToRequest: 2

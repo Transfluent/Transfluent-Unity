@@ -3,145 +3,126 @@ using System.Collections.Generic;
 using transfluent;
 using UnityEngine;
 
-//NOTE: last time I had the transfluent namespace enabled for this, the script dissapeared
-//this is almost certainly due to the optional parameters in the function definitoins
-//namespace transfluent
-//{
 public class GameTranslationSet : ScriptableObject
 {
-	public Dictionary<string, Dictionary<string, string>> groupToDictionary =
-		new Dictionary<string, Dictionary<string, string>>();
-
-	public TransfluentLanguage langaugeThatTranslationsAreIn;
-
-	private Dictionary<string, string> getSubDictionary(string groupid = "")
+	[SerializeField]
+	List<GroupOfTranslations> allTranslations = new List<GroupOfTranslations>();
+	public TransfluentLanguage language = new TransfluentLanguage();
+	public List<string> allGroups()
 	{
-		if (groupid == null) groupid = "";
-		if (!groupToDictionary.ContainsKey(groupid)) groupToDictionary.Add(groupid, new Dictionary<string, string>());
-		return groupToDictionary[groupid];
-	}
-
-	public void setPair(string key, string value, string groupid = "")
-	{
-		Dictionary<string, string> groupDictionary = getSubDictionary(groupid);
-		groupDictionary.Add(key, value);
-	}
-
-	//cleanup stepafter merging or performing any large comparisons
-	private void cullEmptyDictionaries()
-	{
-		var toRemove = new List<string>();
-
-		foreach (var keyValuePair in groupToDictionary)
+		var list = new List<string>();
+		foreach(GroupOfTranslations group in allTranslations)
 		{
-			Dictionary<string, string> subDictionary = keyValuePair.Value;
-			if (subDictionary.Keys.Count == 0) //if there's nothing in it
+			list.Add(group.groupid);
+		}
+		return list;
+	}
+
+	public GroupOfTranslations getGroup(string groupid = "")
+	{
+		GroupOfTranslations targetGroup = null;
+		foreach(GroupOfTranslations group in allTranslations)
+		{
+			if(group.groupid == groupid)
 			{
-				toRemove.Add(keyValuePair.Key);
+				targetGroup = group;
+				break;
 			}
 		}
-		toRemove.ForEach((string keyToRemove) => { groupToDictionary.Remove(keyToRemove); });
+		if(targetGroup == null)
+		{
+			targetGroup = new GroupOfTranslations()
+			{
+				groupid = groupid
+			};
+			allTranslations.Add(targetGroup);
+			//TODO: set editor
+		}
+		return targetGroup;
 	}
 
-	public List<string> getAllKeys()
+	public void mergeInSet(string groupID, Dictionary<string, string> toMerge)
 	{
-		var strings = new List<string>();
-		foreach (var groupToDic in groupToDictionary)
+		var group = getGroup(groupID);
+		group.addTranslations(toMerge);
+	}
+
+	public int wordCountOfGroup(string groupid)
+	{
+		int wc = 0;
+		var allGroups = this.allGroups();
+		if(!allGroups.Contains(groupid)) return wc;
+		var group = getGroup(groupid);
+		return group.getDictionaryCopy().Keys.Count;
+	}
+
+	[Serializable]
+	public class GroupOfTranslations
+	{
+		public string groupid = "";
+		public List<Translation> translations = new List<Translation>();
+
+		public Dictionary<string, string> getDictionaryCopy()
 		{
-			foreach (var kvp in groupToDic.Value)
+			var dic = new Dictionary<string, string>();
+			foreach(Translation translation in translations)
 			{
-				strings.Add(kvp.Key);
+				dic.Add(translation.key, translation.value);
+			}
+			return dic;
+		}
+
+		//add/merge in all translations in set
+		public void addTranslations(Dictionary<string, string> toAdd)
+		{
+			var dictionaryOfExistingKeys = getDictionaryCopy();
+			foreach(KeyValuePair<string, string> kvp in toAdd)
+			{
+				if(dictionaryOfExistingKeys.ContainsKey(kvp.Key))
+				{
+					foreach(Translation translation in translations)
+					{
+						if(translation.key == kvp.Key)
+						{
+							translation.value = kvp.Value;
+						}
+					}
+				}
+				else
+				{
+					translations.Add(new Translation(kvp));
+				}
 			}
 		}
-		return strings;
-	}
 
-	public List<string> getAllValues()
-	{
-		var strings = new List<string>();
-		foreach (var groupToDic in groupToDictionary)
+		[Serializable]
+		public class Translation
 		{
-			foreach (var kvp in groupToDic.Value)
+			public string key;
+			public string value;
+
+			public Translation()
 			{
-				strings.Add(kvp.Value);
+			}
+
+			public Translation(KeyValuePair<string, string> kvp)
+			{
+				key = kvp.Key;
+				value = kvp.Value;
 			}
 		}
-		return strings;
-	}
-
-	public long getWordCount(string group = "")
-	{
-		Dictionary<string, string> dic = getSubDictionary(group);
-
-		long wordCount = 0;
-		foreach (var kvp in dic)
-		{
-			wordCount += kvp.Value.Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries).Length;
-		}
-		return wordCount;
-	}
-
-	public List<string> getPretranslatedKeys(List<string> keysToIgnoreProbablyAlreadyTranslated, string group = "")
-	{
-		var keysUntranslated = new List<string>();
-		Dictionary<string, string> dic = getSubDictionary(group);
-
-		foreach (var kvp in dic)
-		{
-			if (!keysToIgnoreProbablyAlreadyTranslated.Contains(kvp.Key))
-				keysUntranslated.Add(kvp.Value);
-		}
-		return keysUntranslated;
-	}
-
-	public Dictionary<string, string> getKeyValuePairs(string group = "")
-	{
-		Dictionary<string, string> groupDictionary = getSubDictionary(group);
-
-		var dictionaryCopy = new Dictionary<string, string>(groupDictionary);
-
-		return dictionaryCopy;
-	}
-
-	//assumes same language and same groupid
-	public void mergeInNewListOfTranslations(List<TransfluentTranslation> translations)
-	{
-		if (translations == null || translations.Count == 0) return;
-
-		var translationGroupidPairsToSetup = new Dictionary<KeyValuePair<string, int>, Dictionary<string, string>>();
-		var handledLanguages = new List<TransfluentLanguage>();
-		foreach (TransfluentTranslation translation in translations)
-		{
-			var set = new KeyValuePair<string, int>(translation.group_id, translation.language.id);
-			if (!translationGroupidPairsToSetup.ContainsKey(set))
-			{
-				handledLanguages.Add(translation.language);
-				//Debug.Log("Adding new set:" + translation.group_id + " and" + language.id);
-				translationGroupidPairsToSetup.Add(set, new Dictionary<string, string>());
-			}
-			Dictionary<string, string> dictionaryToInsertInto = translationGroupidPairsToSetup[set];
-
-			dictionaryToInsertInto.Add(translation.text_id, translation.text);
-		}
-
-		foreach (var kvp in translationGroupidPairsToSetup)
-		{
-			int langaugeId = kvp.Key.Value; //oof... review this
-			if (langaugeId != langaugeThatTranslationsAreIn.id) continue; //warn here?
-
-			mergeInNewListOfTranslations(kvp.Value, kvp.Key.Key);
-		}
-	}
-
-	public void mergeInNewListOfTranslations(Dictionary<string, string> newTranslations, string groupid = null)
-	{
-		//actually add the new translations
-		foreach (var kvp in newTranslations)
-		{
-			setPair(kvp.Key, kvp.Value, groupid);
-		}
-		cullEmptyDictionaries();
 	}
 }
 
-//}
+public class RuntimeTranslationSet
+{
+	private string groupid = "";
+	Dictionary<string, string> translations = new Dictionary<string, string>();
+
+	public RuntimeTranslationSet(GameTranslationSet.GroupOfTranslations serializedGroup)
+	{
+		groupid = serializedGroup.groupid;
+		translations = serializedGroup.getDictionaryCopy();
+	}
+
+}

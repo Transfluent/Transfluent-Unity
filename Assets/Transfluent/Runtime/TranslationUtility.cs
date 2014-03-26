@@ -25,7 +25,7 @@ namespace transfluent
 		public static bool changeStaticInstanceConfig(string destinationLanguageCode = "", string translationGroup = "")
 		{
 			TransfluentUtilityInstance tmpInstance = createNewInstance(destinationLanguageCode, translationGroup);
-			if(tmpInstance != null)
+			if (tmpInstance != null)
 			{
 				_instance = tmpInstance;
 				return true;
@@ -35,12 +35,12 @@ namespace transfluent
 
 		public static TransfluentUtilityInstance createNewInstance(string destinationLanguageCode = "", string group = "")
 		{
-			if(_LanguageList == null)
+			if (_LanguageList == null)
 			{
 				_LanguageList = ResourceLoadFacade.getLanguageList();
 			}
 
-			if(_LanguageList == null)
+			if (_LanguageList == null)
 			{
 				Debug.LogError("Could not load new language list");
 				return null;
@@ -48,9 +48,8 @@ namespace transfluent
 
 			TransfluentLanguage dest = _LanguageList.getLangaugeByCode(destinationLanguageCode);
 			GameTranslationSet destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destinationLanguageCode);
-
 			Dictionary<string, string> keysInLanguageForGroupSpecified = destLangDB != null
-				? destLangDB.getKeyValuePairs(group)
+				? destLangDB.getGroup(group).getDictionaryCopy()
 				: new Dictionary<string, string>();
 			return new TransfluentUtilityInstance
 			{
@@ -97,7 +96,7 @@ namespace transfluent
 
 		public string getTranslation(string sourceText)
 		{
-			if(allKnownTranslations != null && allKnownTranslations.ContainsKey(sourceText))
+			if (allKnownTranslations != null && allKnownTranslations.ContainsKey(sourceText))
 			{
 				return allKnownTranslations[sourceText];
 			}

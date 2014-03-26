@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Mono.Cecil;
 using Pathfinding.Serialization.JsonFx;
 using transfluent;
 using transfluent.editor;
@@ -105,22 +106,36 @@ public class SetupTranslationConfiguration : EditorWindow
 				}
 
 			}
-			var sourceSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(selectedConfig.translation_set_group);
-			long wordsToTranslate = sourceSet.getWordCount(selectedConfig.translation_set_group);
-			//var knownKeys = sourceSet.getPretranslatedKeys(sourceSet.getAllKeys(), selectedConfig.translation_set_group);
+			string group = selectedConfig.translation_set_group;
 
+			var sourceSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(selectedConfig.sourceLanguage.code);
+			
+			long wordsToTranslate = sourceSet.wordCountOfGroup(group);
+			//var knownKeys = sourceSet.getPretranslatedKeys(sourceSet.getAllKeys(), selectedConfig.translation_set_group);
+			var sourceDictionary = sourceSet.getGroup().getDictionaryCopy();
 			var langToWordsToTranslateCount = new Dictionary<TransfluentLanguage, long>();
 			foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
 			{
 				var set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(lang.code);
-				sourceSet.getUntranslatedKeys(sourceSet.getAllKeys(), selectedConfig.translation_set_group);
-				langToWordsToTranslateCount.Add(lang,);
-				if(set)
-				ResourceLoadFacade.LoadConfigGroup()
+
+				var destinationKeys = set.wordCountOfGroup(group);
+
+				long wordCount = wordsToTranslate - destinationKeys;
+
+				langToWordsToTranslateCount.Add(lang,wordCount);
 			}
-			Debug.Log(simpleEstimateString);
-			if(EditorUtility.DisplayDialog("Estimates","Estimated cost:\n"+simpleEstimateString,"OK","Cancel"))
+			
+			if(EditorUtility.DisplayDialog("Estimates","Estimated cost(only additions counted in estimate):\n"+simpleEstimateString,"OK","Cancel"))
 			{
+				foreach (TransfluentLanguage lang in selectedConfig.destinationLanguages)
+				{
+					var oneWordPrice = languageEstimates[lang];
+					float cost = float.Parse(oneWordPrice.amount);
+					long totalNumberOfWords = langToWordsToTranslateCount[lang];
+					float totalCost = cost * totalNumberOfWords;
+
+					Debug.Log("Lang cost:" + totalCost + " total number of words:" + totalNumberOfWords + " per word cost:" + oneWordPrice.amount);
+				}
 				Debug.Log("GOT THING");
 			}
 		}

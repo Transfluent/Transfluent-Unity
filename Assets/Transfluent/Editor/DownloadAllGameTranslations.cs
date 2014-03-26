@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace transfluent.editor
 {
+	//TODO: remove static funcitons
 	public class DownloadAllGameTranslations
 	{
 		// I don't know if I am going to expose this, but it is something to do
@@ -46,18 +47,23 @@ namespace transfluent.editor
 				{
 					mediator.setCurrentLanguageFromLanguageCode(languageCode);
 					TransfluentLanguage currentlanguage = mediator.GetCurrentLanguage();
+					
 					List<TransfluentTranslation> translations = mediator.knownTextEntries(groupid);
+					//Debug.Log("CURRENT LANGUAGE:" + currentlanguage.code + " translation count:" + translations.Count);
 					if (translations.Count > 0)
 					{
 						GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode) ??
 						                         ResourceCreator.CreateSO<GameTranslationSet>(
 							                         GameTranslationGetter.fileNameFromLanguageCode(languageCode));
-						if (set.langaugeThatTranslationsAreIn == null)
+						
+						set.language = currentlanguage;
+						var groupToTranslationMap = groupidToDictionaryMap(translations);
+						foreach (KeyValuePair<string, Dictionary<string, string>> kvp in groupToTranslationMap)
 						{
-							set.langaugeThatTranslationsAreIn = currentlanguage;
+							set.mergeInSet(kvp.Key,kvp.Value);	
 						}
-						set.mergeInNewListOfTranslations(translations);
 
+						
 						EditorUtility.SetDirty(set);
 						AssetDatabase.SaveAssets();
 					}
@@ -67,6 +73,23 @@ namespace transfluent.editor
 					Debug.LogError("error while downloading translations:" + e.Message + " stack:" + e.StackTrace);
 				}
 			}
+		}
+
+		public static Dictionary<string, Dictionary<string, string>> groupidToDictionaryMap(List<TransfluentTranslation> translations)
+		{
+			var map = new Dictionary<string, Dictionary<string, string>>();
+			foreach (TransfluentTranslation translation in translations)
+			{
+				string group = translation.group_id ?? "";
+				if (!map.ContainsKey(group))
+				{
+					map.Add(group, new Dictionary<string, string>());
+				}
+
+				var dic = map[group];
+				dic.Add(translation.text_id,translation.text);
+			}
+			return map;
 		}
 	}
 }

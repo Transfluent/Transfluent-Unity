@@ -22,9 +22,10 @@ public class TranslationConfigurationSOInspector : Editor
 			{
 				var languageCodeList = new List<string>();
 				languageCodeList.Add(so.sourceLanguage.code);
-				so.destinationLanguages.ForEach((TransfluentLanguage lang) => { languageCodeList.Add(lang.code); });
+				//so.destinationLanguages.ForEach((TransfluentLanguage lang) => { languageCodeList.Add(lang.code); });
 				DownloadAllGameTranslations.downloadTranslationSetsFromLanguageCodeList(languageCodeList, so.translation_set_group);
 			}
 		}
+
 	}
 }

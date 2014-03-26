@@ -13,9 +13,10 @@ public class ShowAllKnownTextAtSameTime : MonoBehaviour
 		//Debug.Log("Number of translation sets:" + list.Length);
 		foreach(GameTranslationSet set in list)
 		{
-			foreach(string value in set.getAllValues())
+			foreach(string groupid in set.allGroups())
 			{
-				knownStrings.Add(value);
+				var group = set.getGroup(groupid);
+				knownStrings.AddRange(group.getDictionaryCopy().Values);
 			}
 		}
 	}

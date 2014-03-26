@@ -11,67 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b78a28da3d648a29fac727c8d4a5f2, type: 3}
   m_Name: AutoDownloaded-fr-fr
   m_EditorClassIdentifier: 
-  allTranslations:
-  - text_id: TEST_CREATION_OF_A_KEY
-    group_id: 
-    language:
-      name: French (France)
-      code: fr-fr
-      id: 2
-    text: test create from editor
-  - text_id: TEST_CREATION_OF_A_KEY2
-    group_id: 
-    language:
-      name: French (France)
-      code: fr-fr
-      id: 2
-    text: this was also created
-  - text_id: TEST_TEXT
-    group_id: 
-    language:
-      name: French (France)
-      code: fr-fr
-      id: 2
-    text: HELLO WORLD
-  - text_id: THIS IS FROM THE EDITOR
-    group_id: 
-    language:
-      name: French (France)
-      code: fr-fr
-      id: 2
-    text: hi there
-  - text_id: hello world
-    group_id: 
-    language:
-      name: French (France)
-      code: fr-fr
-      id: 2
-    text: stuff
-  - text_id: 1
-    group_id: 
-    language:
-      name: French (France)
-      code: fr-fr
-      id: 2
-    text: un
-  - text_id: 2
-    group_id: 
-    language:
-      name: French (France)
-      code: fr-fr
-      id: 2
-    text: deux
-  - text_id: 3
-    group_id: 
-    language:
-      name: French (France)
-      code: fr-fr
-      id: 2
-    text: trois
-  - text_id: 4
-    group_id: 
-    language:
-      name: French (France)
-      code: fr-fr
-      id: 2
-    text: quatre
+  langaugeThatTranslationsAreIn:
+    name: French (France)
+    code: fr-fr
+    id: 2

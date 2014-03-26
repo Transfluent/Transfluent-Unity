@@ -52,9 +52,8 @@ public class ImportExportNGUILocalization
 			GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode) ??
 									 ResourceCreator.CreateSO<GameTranslationSet>(
 										 GameTranslationGetter.fileNameFromLanguageCode(languageCode));
-			if (set.langaugeThatTranslationsAreIn == null) set.langaugeThatTranslationsAreIn = language;
-
-			set.mergeInNewListOfTranslations(pairs, groupid);
+			if(set.language == null) set.language = language;
+			set.mergeInSet(groupid,pairs);
 
 			EditorUtility.SetDirty(set);
 			AssetDatabase.SaveAssets();
@@ -102,7 +101,6 @@ public class ImportExportNGUILocalization
 			//TextAsset ta = new TextAsset();
 			//AssetDatabase.CreateAsset(ta, localizationPath);
 			AssetDatabase.ImportAsset(localizationPath,ImportAssetOptions.ForceSynchronousImport);
-			
 		}
 		
 		return projectBasePath + localizationPath;
@@ -119,12 +117,13 @@ public class ImportExportNGUILocalization
 		var nativeLanguageNameToKnownTranslationGroups = new Dictionary<string, Dictionary<string, string>>();
 		foreach (GameTranslationSet set in allTranslations)
 		{
-			if (set.getAllKeys().Count == 0)
+			var allPairs = set.getGroup(groupid).getDictionaryCopy();
+			if(allPairs.Count == 0)
 			{
 				continue;
 			}
-			TransfluentLanguage firstLanguage = set.langaugeThatTranslationsAreIn;
-			var allPairs = set.getKeyValuePairs(groupid);
+			TransfluentLanguage firstLanguage = set.language;
+			
 			string nativeLanguageName = takeLanguageCodeAndTurnItIntoNativeName(firstLanguage.code);
 			nativeLanguageNameToKnownTranslationGroups.Add(nativeLanguageName,allPairs);
 		}
@@ -192,7 +191,7 @@ public class ImportExportNGUILocalization
 					Debug.LogWarning("could not find any information for language:" + lang);
 					continue;
 				}
-				Dictionary<string, string> translations = destLangDB.getKeyValuePairs(groupid);
+				Dictionary<string, string> translations = destLangDB.getGroup(groupid).getDictionaryCopy();
 				string languageNameInNativeLanguage = takeLanguageCodeAndTurnItIntoNativeName(lang.code);
 				allTranslationsIndexedByLanguage.Add(languageNameInNativeLanguage, translations);
 			}

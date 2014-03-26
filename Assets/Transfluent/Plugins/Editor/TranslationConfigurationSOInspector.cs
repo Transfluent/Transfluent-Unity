@@ -20,9 +20,8 @@ public class TranslationConfigurationSOInspector : Editor
 		{
 			if(EditorUtility.DisplayDialog("Downloading", "Downloading will overwrite any local changes to existing keys do you want to proceed?", "OK", "Cancel / Let me upload first"))
 			{
-				var languageCodeList = new List<string>();
-				languageCodeList.Add(so.sourceLanguage.code);
-				//so.destinationLanguages.ForEach((TransfluentLanguage lang) => { languageCodeList.Add(lang.code); });
+				var languageCodeList = new List<string> {so.sourceLanguage.code};
+				so.destinationLanguages.ForEach((TransfluentLanguage lang) => { languageCodeList.Add(lang.code); });
 				DownloadAllGameTranslations.downloadTranslationSetsFromLanguageCodeList(languageCodeList, so.translation_set_group);
 			}
 		}

@@ -8,10 +8,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36b78a28da3d648a29fac727c8d4a5f2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
   m_Name: AutoDownloaded-fr-fr
   m_EditorClassIdentifier: 
-  langaugeThatTranslationsAreIn:
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: TEST_CREATION_OF_A_KEY
+      value: test create from editor
+    - key: TEST_CREATION_OF_A_KEY2
+      value: this was also created
+    - key: TEST_TEXT
+      value: HELLO WORLD
+    - key: THIS IS FROM THE EDITOR
+      value: hi there
+    - key: hello world
+      value: stuff
+    - key: 1
+      value: un
+    - key: 2
+      value: deux
+    - key: 3
+      value: trois
+    - key: 4
+      value: quatre
+  language:
     name: French (France)
     code: fr-fr
     id: 2

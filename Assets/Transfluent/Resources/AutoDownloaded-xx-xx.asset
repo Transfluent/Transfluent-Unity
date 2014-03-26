@@ -8,10 +8,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36b78a28da3d648a29fac727c8d4a5f2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
   m_Name: AutoDownloaded-xx-xx
   m_EditorClassIdentifier: 
-  langaugeThatTranslationsAreIn:
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: 1262211.0txet elpmas si siht
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: txet tset si siht
+    - key: TEST_CREATION_OF_A_KEY
+      value: rotide morf etaerc tset
+    - key: TEST_CREATION_OF_A_KEY2
+      value: detaerc osla saw siht
+    - key: TEST_TEXT
+      value: DLROW OLLEH
+    - key: THIS IS FROM THE EDITOR
+      value: ereht ih
+    - key: hello world
+      value: ffuts
+    - key: TEST_KEY_2
+      value: txet tset si siht
+    - key: 1
+      value: nu
+    - key: 2
+      value: xued
+    - key: 3
+      value: siort
+    - key: 4
+      value: ertauq
+  - groupid: TEST
+    translations:
+    - key: sprechen sie deutsch
+      value: ?gniyas uoy era tahW
+  language:
     name: Pseudo language
     code: xx-xx
     id: 500

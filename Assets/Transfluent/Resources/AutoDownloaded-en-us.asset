@@ -11,6 +11,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
   m_Name: AutoDownloaded-en-us
   m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: this is sample text0.1122621
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: this is test text
+    - key: 1
+      value: One
+    - key: 2
+      value: __2__
+    - key: 3
+      value: Three
+    - key: 4
+      value: 4
   language:
     name: English (United States)
     code: en-us

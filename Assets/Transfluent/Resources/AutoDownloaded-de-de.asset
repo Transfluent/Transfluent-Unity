@@ -8,10 +8,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36b78a28da3d648a29fac727c8d4a5f2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
   m_Name: AutoDownloaded-de-de
   m_EditorClassIdentifier: 
-  langaugeThatTranslationsAreIn:
+  allTranslations:
+  - groupid: TEST
+    translations:
+    - key: sprechen sie deutsch
+      value: What are you saying?
+  - groupid: 
+    translations:
+    - key: TEST_KEY_2
+      value: this is test text
+    - key: 1
+      value: "\u4E00"
+    - key: 2
+      value: "\u4E8C"
+    - key: 3
+      value: "\u4E09"
+    - key: 4
+      value: "\u56DB"
+  language:
     name: German
     code: de-de
     id: 3

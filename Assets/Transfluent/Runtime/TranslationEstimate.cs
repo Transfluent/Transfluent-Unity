@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using transfluent;
 using UnityEditor;
 using UnityEngine;
-using System.Collections;
 
 public class TranslationEstimate
 {
@@ -76,6 +74,7 @@ public class TranslationEstimate
 			}
 		}
 	}
+
 	private WebServiceReturnStatus doCall(WebServiceParameters call)
 	{
 		var req = new SyncronousEditorWebRequest();
@@ -89,5 +88,20 @@ public class TranslationEstimate
 			Debug.Log(code.code + " http error");
 			throw;
 		}
+	}
+
+	public void doTranslation(TranslationConfigurationSO selectedConfig)
+	{
+		List<int> destLanguageIDs = new List<int>();
+		GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(selectedConfig.sourceLanguage.code);
+		List<string> textsToTranslate = new List<string>(set.getGroup(selectedConfig.translation_set_group).getDictionaryCopy().Keys); 
+
+		selectedConfig.destinationLanguages.ForEach((TransfluentLanguage lang)=>{destLanguageIDs.Add(lang.id);});
+		OrderTranslation translate = new OrderTranslation(selectedConfig.sourceLanguage.id,
+				target_languages: destLanguageIDs.ToArray(),
+				texts: textsToTranslate.ToArray(),
+				level:selectedConfig.QualityToRequest,
+				group_id:selectedConfig.translation_set_group
+				);
 	}
 }

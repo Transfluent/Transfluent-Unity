@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using transfluent;
 using UnityEditor;
@@ -43,19 +44,20 @@ public class TranslationEstimate
 			string group = selectedConfig.translation_set_group;
 
 			var sourceSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(selectedConfig.sourceLanguage.code);
-
-			long wordsToTranslate = sourceSet.wordCountOfGroup(group);
+			var toTranslate = sourceSet.getGroup(group).getDictionaryCopy();
 			//var knownKeys = sourceSet.getPretranslatedKeys(sourceSet.getAllKeys(), selectedConfig.translation_set_group);
 			//var sourceDictionary = sourceSet.getGroup().getDictionaryCopy();
 			var langToWordsToTranslateCount = new Dictionary<TransfluentLanguage, long>();
 			foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
 			{
 				var set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(lang.code);
-
-				var destinationKeys = set.wordCountOfGroup(group);
-
-				long wordCount = wordsToTranslate - destinationKeys;
-
+				var destKeys = set.getGroup(group).getDictionaryCopy();
+				long wordCount = 0;
+				foreach (KeyValuePair<string,string> kvp in toTranslate)
+				{
+					if(!destKeys.ContainsKey(kvp.Key))
+						wordCount += kvp.Value.Split(' ').Length;
+				}
 				langToWordsToTranslateCount.Add(lang, wordCount);
 			}
 

@@ -221,7 +221,23 @@ public class SetupTranslationConfiguration : EditorWindow
 			}
 
 			so.destinationLanguages.Add(lang);
+
+			GUILayout.Space(10);
+			
 			saveCurrentConfig();
+		}
+		GUILayout.Space(10);
+		var translationQualityStrings = new List<string>()
+			{
+				OrderTranslation.TranslationQuality.NATIVE_SPEAKER.ToString(),
+				OrderTranslation.TranslationQuality.PROFESSIONAL_TRANSLATOR.ToString(),
+				OrderTranslation.TranslationQuality.PAIR_OF_TRANSLATORS.ToString(),
+			};
+		int currentIndex = translationQualityStrings.IndexOf(so.QualityToRequest.ToString());
+		int newIndex = EditorGUILayout.Popup("Desired Translation Quality:", currentIndex, translationQualityStrings.ToArray());
+		if(newIndex != currentIndex)
+		{
+			so.QualityToRequest = (OrderTranslation.TranslationQuality)newIndex+1;
 		}
 	}
 

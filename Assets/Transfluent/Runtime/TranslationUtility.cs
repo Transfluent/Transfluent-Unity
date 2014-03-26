@@ -85,6 +85,7 @@ namespace transfluent
 		public void setNewDestinationLanguage(Dictionary<string, string> transaltionsInSet)
 		{
 			allKnownTranslations.Clear();
+			allKnownTranslations = transaltionsInSet;
 		}
 
 		//same format as string.format for now, not tokenized

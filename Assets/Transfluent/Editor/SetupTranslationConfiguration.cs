@@ -112,7 +112,7 @@ public class SetupTranslationConfiguration : EditorWindow
 			
 			long wordsToTranslate = sourceSet.wordCountOfGroup(group);
 			//var knownKeys = sourceSet.getPretranslatedKeys(sourceSet.getAllKeys(), selectedConfig.translation_set_group);
-			var sourceDictionary = sourceSet.getGroup().getDictionaryCopy();
+			//var sourceDictionary = sourceSet.getGroup().getDictionaryCopy();
 			var langToWordsToTranslateCount = new Dictionary<TransfluentLanguage, long>();
 			foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
 			{

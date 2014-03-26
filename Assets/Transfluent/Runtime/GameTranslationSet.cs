@@ -113,7 +113,7 @@ public class GameTranslationSet : ScriptableObject
 		}
 	}
 }
-
+#if false
 public class RuntimeTranslationSet
 {
 	private string groupid = "";
@@ -126,3 +126,4 @@ public class RuntimeTranslationSet
 	}
 
 }
+#endif

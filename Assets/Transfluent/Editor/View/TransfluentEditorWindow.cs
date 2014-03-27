@@ -168,11 +168,12 @@ namespace transfluent.editor
 				EditorGUILayout.EndHorizontal();
 			}
 
+			private Vector2 translationScrollPosition = Vector2.zero;
 			public void doGUI()
 			{
 				if(_translations == null) Refresh();
 				if(_translations == null) return;
-
+				translationScrollPosition = EditorGUILayout.BeginScrollView(translationScrollPosition);
 				foreach(TransfluentTranslation translation in _translations)
 				{
 					if(newTranslations.Contains(translation))
@@ -186,6 +187,7 @@ namespace transfluent.editor
 						EditorGUILayout.EndHorizontal();
 					}
 				}
+				EditorGUILayout.EndScrollView();
 
 				EditorGUILayout.BeginHorizontal();
 				if(GUILayout.Button("Create New Translation"))

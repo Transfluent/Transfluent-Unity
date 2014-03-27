@@ -19,8 +19,8 @@ namespace transfluent
 			getParameters.Add("currency_code", currency_code);
 
 			if (quality != OrderTranslation.TranslationQuality.PAIR_OF_TRANSLATORS)
-				getParameters.Add("quality", quality.ToString());
-
+				getParameters.Add("level", ((int)quality).ToString());
+			UnityEngine.Debug.LogError("level:" + ((int)quality));
 			
 		}
 

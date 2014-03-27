@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 using System.Text;
 using transfluent;
 using UnityEditor;
@@ -7,13 +8,19 @@ using UnityEngine;
 
 public class TranslationEstimate
 {
+	public string token;
+	public TranslationEstimate(string tokenIn)
+	{
+		token = tokenIn;
+	}
+
 	public void testThing(TranslationConfigurationSO selectedConfig)
 	{
 		var languageEstimates = new Dictionary<TransfluentLanguage, EstimateTranslationCostVO.Price>();
 		if(GUILayout.Button("TEST TRANSLATE"))
 		{
 			StringBuilder simpleEstimateString = new StringBuilder();
-
+			
 			foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
 			{
 				try
@@ -71,6 +78,8 @@ public class TranslationEstimate
 					Debug.Log("Lang cost:" + totalCost + " total number of words:" + totalNumberOfWords + " per word cost:" + oneWordPrice.amount);
 				}
 				Debug.Log("GOT THING");
+
+				doTranslation(selectedConfig);
 			}
 		}
 	}
@@ -80,6 +89,8 @@ public class TranslationEstimate
 		var req = new SyncronousEditorWebRequest();
 		try
 		{
+			call.getParameters.Add("token",token);
+
 			WebServiceReturnStatus result = req.request(call);
 			return result;
 		}
@@ -103,5 +114,6 @@ public class TranslationEstimate
 				level:selectedConfig.QualityToRequest,
 				group_id:selectedConfig.translation_set_group
 				);
+		doCall(translate);
 	}
 }

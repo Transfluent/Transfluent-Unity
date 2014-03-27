@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Assets.Transfluent.Plugins.Calls;
 using Debug = UnityEngine.Debug;
 
 namespace transfluent.editor
@@ -41,7 +42,7 @@ namespace transfluent.editor
 				   allLanguagesSupported != null;
 		}
 
-		private string getCurrentAuthToken()
+		public string getCurrentAuthToken()
 		{
 			string retVal = null;
 			try
@@ -113,7 +114,7 @@ namespace transfluent.editor
 			}
 		}
 
-		private bool doAuth()
+		public bool doAuth()
 		{
 			KeyValuePair<string, string> usernamePassword = getUserNamePassword();
 			return doAuth(usernamePassword.Key, usernamePassword.Value);
@@ -168,6 +169,19 @@ namespace transfluent.editor
 			var service = context.manualGetMapping<IWebService>();
 
 			return service.request(call).text;
+		}
+
+		public void SaveGroupToServer(GameTranslationSet.GroupOfTranslations groupOfTranslations, TransfluentLanguage language)
+		{
+			var saveText = new SaveSetOfKeys(language.id, groupOfTranslations.getDictionaryCopy(), groupOfTranslations.groupid);
+			try
+			{
+				makeCall(saveText);
+			}
+			catch(CallException exception)
+			{
+				Debug.LogError("error making setText call:" + exception.Message);
+			}
 		}
 
 		public void SetText(string textKey, string textValue, string groupKey = null)

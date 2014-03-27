@@ -26,6 +26,14 @@ MonoBehaviour:
       value: Three
     - key: 4
       value: 4
+    - key: cows
+      value: cows
+    - key: goat simulator
+      value: goat simulator
+    - key: potions aquired
+      value: potions aquired
+    - key: options
+      value: options
   language:
     name: English (United States)
     code: en-us

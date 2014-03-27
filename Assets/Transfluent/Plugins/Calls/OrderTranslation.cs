@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace transfluent
 {
-	[Route("texts/translate", RestRequestType.GET, "http://transfluent.com/backend-api/#TextsTranslate")]
+	[Route("texts/translate", RestRequestType.POST, "http://transfluent.com/backend-api/#TextsTranslate")]
 	public class OrderTranslation : WebServiceParameters
 	{
 		public enum TranslationQuality
@@ -30,13 +30,13 @@ namespace transfluent
 
 			getParameters.Add("source_language", source_language.ToString());
 			getParameters.Add("target_languages", JsonWriter.Serialize(target_languages));
-			getParameters.Add("texts", JsonWriter.Serialize(containerOfTextIDsToUse));
+			postParameters.Add("texts", JsonWriter.Serialize(containerOfTextIDsToUse));
 
 			if(level != 0)
 			{
 				getParameters.Add("level", ((int)level).ToString());
 			}
-			if(group_id != null)
+			if(!string.IsNullOrEmpty(group_id))
 			{
 				getParameters.Add("group_id", group_id);
 			}
@@ -44,7 +44,7 @@ namespace transfluent
 			{
 				getParameters.Add("comment", comment);
 			}
-			if(max_words > 0)
+			if(max_words > 0 && max_words != 1000)
 			{
 				getParameters.Add("max_words", max_words.ToString());
 			}

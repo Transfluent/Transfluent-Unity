@@ -36,6 +36,29 @@ namespace transfluent.editor
 			return mediator;
 		}
 
+		public static void uploadTranslationSet(List<string> languageCodes, string groupid)
+		{
+			TransfluentEditorWindowMediator mediator = getAuthenticatedMediator();
+			if (mediator == null) return;
+
+			foreach (string languageCode in languageCodes)
+			{
+				try
+				{
+					GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode);
+					var groupData = set.getGroup(groupid);
+					var lang =ResourceLoadFacade.getLanguageList().getLangaugeByCode(languageCode);
+					if (groupData.translations.Count > 0)
+					{
+						mediator.SaveGroupToServer(groupData, lang);
+					}
+				}
+				catch
+				{
+				}
+			}
+		}
+
 		public static void downloadTranslationSetsFromLanguageCodeList(List<string> languageCodes, string groupid = null)
 		{
 			TransfluentEditorWindowMediator mediator = getAuthenticatedMediator();

@@ -15,6 +15,10 @@ public class TranslationConfigurationSOInspector : Editor
 		DrawDefaultInspector();
 		if(GUILayout.Button("Upload current set")) //TODO: order translations
 		{
+			var languageCodeList = new List<string> { so.sourceLanguage.code };
+			so.destinationLanguages.ForEach((TransfluentLanguage lang) => { languageCodeList.Add(lang.code); });
+
+			DownloadAllGameTranslations.uploadTranslationSet(languageCodeList,so.translation_set_group);
 		}
 		if(GUILayout.Button("Download known translations"))
 		{

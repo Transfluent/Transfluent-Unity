@@ -75,8 +75,11 @@ public class SetupTranslationConfiguration : EditorWindow
 		//TODO: estimate all remaining text cost
 		GUILayout.Space(30);
 		GUILayout.Label("Translate all things:");
-
-		var estimator = new TranslationEstimate();
+		_mediator.doAuth();
+		string authToken = _mediator.getCurrentAuthToken();
+		if(string.IsNullOrEmpty(authToken))
+			throw new Exception("Auth token is null");
+		var estimator = new TranslationEstimate(authToken);
 		estimator.testThing(selectedConfig);
 	}
 

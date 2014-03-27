@@ -13,12 +13,14 @@ public class LanguageList
 		languages.ForEach((TransfluentLanguage lang) => { languageCodes.Add(lang.name); });
 		return languageCodes;
 	}
+
 	public List<string> allLanguageCodes()
 	{
 		var languageCodes = new List<string>();
 		languages.ForEach((TransfluentLanguage lang) => { languageCodes.Add(lang.code); });
 		return languageCodes;
 	}
+
 	public TransfluentLanguage getLangaugeByID(int id)
 	{
 		return languages.Find((TransfluentLanguage lang) => { return lang.id == id; });

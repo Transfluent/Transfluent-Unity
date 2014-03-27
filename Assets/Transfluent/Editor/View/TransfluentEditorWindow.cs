@@ -172,6 +172,7 @@ namespace transfluent.editor
 			}
 
 			private Vector2 translationScrollPosition = Vector2.zero;
+
 			public void doGUI()
 			{
 				if(_translations == null) Refresh();

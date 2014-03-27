@@ -18,10 +18,9 @@ namespace transfluent
 			getParameters.Add("target_language", targetLanguage.ToString());
 			getParameters.Add("currency_code", currency_code);
 
-			if (quality != OrderTranslation.TranslationQuality.PAIR_OF_TRANSLATORS)
+			if(quality != OrderTranslation.TranslationQuality.PAIR_OF_TRANSLATORS)
 				getParameters.Add("level", ((int)quality).ToString());
 			UnityEngine.Debug.LogError("level:" + ((int)quality));
-			
 		}
 
 		//https://transfluent.com/v2/free/text/word/count/?source_language=1&target_language=500&free_text=hello
@@ -38,6 +37,7 @@ namespace transfluent
 		public string count;
 		public string unit; //ie Word
 		public Price price;
+
 		public class Price
 		{
 			public string amount; //"0.27"

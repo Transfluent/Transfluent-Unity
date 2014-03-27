@@ -1,9 +1,10 @@
-﻿//handles interaction with core code, allowing hte editor window to focus on presentation.  Also has the nice side effect of avoiding issues in editor files (massive bugginess with optional arguments, etc)
+﻿using Assets.Transfluent.Plugins.Calls;
+
+//handles interaction with core code, allowing hte editor window to focus on presentation.  Also has the nice side effect of avoiding issues in editor files (massive bugginess with optional arguments, etc)
 //seperatoion of logic, and
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Assets.Transfluent.Plugins.Calls;
 using Debug = UnityEngine.Debug;
 
 namespace transfluent.editor
@@ -119,6 +120,7 @@ namespace transfluent.editor
 			KeyValuePair<string, string> usernamePassword = getUserNamePassword();
 			return doAuth(usernamePassword.Key, usernamePassword.Value);
 		}
+
 		public List<string> getAllLanguageNames()
 		{
 			if(getLanguageList() == null)
@@ -129,6 +131,7 @@ namespace transfluent.editor
 			allLanguagesSupported.languages.ForEach((TransfluentLanguage lang) => { languageCodes.Add(lang.code); });
 			return languageCodes;
 		}
+
 		public List<string> getAllLanguageCodes()
 		{
 			if(getLanguageList() == null)
@@ -221,7 +224,7 @@ namespace transfluent.editor
 			try
 			{
 				Dictionary<string, TransfluentTranslation> dictionaryOfKeys = getAllKeys.Parse(makeCall(getAllKeys));
-				foreach (KeyValuePair<string, TransfluentTranslation> transfluentTranslation in dictionaryOfKeys)
+				foreach(KeyValuePair<string, TransfluentTranslation> transfluentTranslation in dictionaryOfKeys)
 				{
 					list.Add(transfluentTranslation.Value);
 				}
@@ -242,6 +245,7 @@ namespace transfluent.editor
 			_keyStore.set("CURRENT_LANGUAGE", lang.code);
 			currentLanguage = lang;
 		}
+
 		public void setCurrentLanguageFromLanguageCode(string languageCode)
 		{
 			_keyStore.set("CURRENT_LANGUAGE", languageCode);

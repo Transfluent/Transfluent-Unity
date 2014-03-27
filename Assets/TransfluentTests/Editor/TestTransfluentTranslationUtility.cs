@@ -49,7 +49,7 @@ public class TestTransfluentTranslationUtility
 	public void testParamsPassthrough()
 	{
 		string formattedStringThatExists = "formatted {0} text";
-		Assert.AreEqual(stringFormatPassthrough(formattedStringThatExists,"success"),
+		Assert.AreEqual(stringFormatPassthrough(formattedStringThatExists, "success"),
 			string.Format(formattedStringThatExists, "success"));
 	}
 

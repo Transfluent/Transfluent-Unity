@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Assets.Transfluent.Plugins.Calls;
+using System;
 using System.Collections.Generic;
-using System.Security.Principal;
 using System.Text;
-using Assets.Transfluent.Plugins.Calls;
 using transfluent;
 using UnityEditor;
 using UnityEngine;
@@ -10,6 +9,7 @@ using UnityEngine;
 public class TranslationEstimate
 {
 	public string token;
+
 	public TranslationEstimate(string tokenIn)
 	{
 		token = tokenIn;
@@ -21,7 +21,7 @@ public class TranslationEstimate
 		if(GUILayout.Button("TEST TRANSLATE"))
 		{
 			StringBuilder simpleEstimateString = new StringBuilder();
-			
+
 			foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
 			{
 				try
@@ -45,7 +45,6 @@ public class TranslationEstimate
 					});
 					Debug.LogError("Error estimating prices");
 				}
-
 			}
 			string group = selectedConfig.translation_set_group;
 
@@ -59,7 +58,7 @@ public class TranslationEstimate
 				var set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(lang.code);
 				var destKeys = set.getGroup(group).getDictionaryCopy();
 				long wordCount = 0;
-				foreach (KeyValuePair<string,string> kvp in toTranslate)
+				foreach(KeyValuePair<string, string> kvp in toTranslate)
 				{
 					if(!destKeys.ContainsKey(kvp.Key))
 						wordCount += kvp.Value.Split(' ').Length;
@@ -90,7 +89,7 @@ public class TranslationEstimate
 		var req = new SyncronousEditorWebRequest();
 		try
 		{
-			call.getParameters.Add("token",token);
+			call.getParameters.Add("token", token);
 
 			WebServiceReturnStatus result = req.request(call);
 			return result;
@@ -104,8 +103,6 @@ public class TranslationEstimate
 
 	public void doTranslation(TranslationConfigurationSO selectedConfig)
 	{
-
-
 		List<int> destLanguageIDs = new List<int>();
 		GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(selectedConfig.sourceLanguage.code);
 		var keysToTranslate = set.getGroup(selectedConfig.translation_set_group).getDictionaryCopy();
@@ -118,12 +115,12 @@ public class TranslationEstimate
 			);
 		doCall(uploadAll);
 
-		selectedConfig.destinationLanguages.ForEach((TransfluentLanguage lang)=>{destLanguageIDs.Add(lang.id);});
+		selectedConfig.destinationLanguages.ForEach((TransfluentLanguage lang) => { destLanguageIDs.Add(lang.id); });
 		var translate = new OrderTranslation(selectedConfig.sourceLanguage.id,
 				target_languages: destLanguageIDs.ToArray(),
 				texts: textsToTranslate.ToArray(),
-				level:selectedConfig.QualityToRequest,
-				group_id:selectedConfig.translation_set_group
+				level: selectedConfig.QualityToRequest,
+				group_id: selectedConfig.translation_set_group
 				);
 		doCall(translate);
 	}

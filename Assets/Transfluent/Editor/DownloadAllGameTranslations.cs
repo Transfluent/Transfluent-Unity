@@ -15,7 +15,7 @@ namespace transfluent.editor
 		public static void doDownload()
 		{
 			TransfluentEditorWindowMediator mediator = getAuthenticatedMediator();
-			if (mediator == null) return;
+			if(mediator == null) return;
 
 			List<string> allLanguageCodes = mediator.getAllLanguageCodes();
 			downloadTranslationSetsFromLanguageCodeList(allLanguageCodes);
@@ -25,7 +25,7 @@ namespace transfluent.editor
 		{
 			var mediator = new TransfluentEditorWindowMediator();
 			KeyValuePair<string, string> usernamePassword = mediator.getUserNamePassword();
-			if (String.IsNullOrEmpty(usernamePassword.Key) || String.IsNullOrEmpty(usernamePassword.Value))
+			if(String.IsNullOrEmpty(usernamePassword.Key) || String.IsNullOrEmpty(usernamePassword.Value))
 			{
 				EditorUtility.DisplayDialog("Login please",
 					"Please login using editor window before trying to use this functionality", "ok");
@@ -39,16 +39,16 @@ namespace transfluent.editor
 		public static void uploadTranslationSet(List<string> languageCodes, string groupid)
 		{
 			TransfluentEditorWindowMediator mediator = getAuthenticatedMediator();
-			if (mediator == null) return;
+			if(mediator == null) return;
 
-			foreach (string languageCode in languageCodes)
+			foreach(string languageCode in languageCodes)
 			{
 				try
 				{
 					GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode);
 					var groupData = set.getGroup(groupid);
-					var lang =ResourceLoadFacade.getLanguageList().getLangaugeByCode(languageCode);
-					if (groupData.translations.Count > 0)
+					var lang = ResourceLoadFacade.getLanguageList().getLangaugeByCode(languageCode);
+					if(groupData.translations.Count > 0)
 					{
 						mediator.SaveGroupToServer(groupData, lang);
 					}
@@ -62,36 +62,35 @@ namespace transfluent.editor
 		public static void downloadTranslationSetsFromLanguageCodeList(List<string> languageCodes, string groupid = null)
 		{
 			TransfluentEditorWindowMediator mediator = getAuthenticatedMediator();
-			if (mediator == null) return;
+			if(mediator == null) return;
 
-			foreach (string languageCode in languageCodes)
+			foreach(string languageCode in languageCodes)
 			{
 				try
 				{
 					mediator.setCurrentLanguageFromLanguageCode(languageCode);
 					TransfluentLanguage currentlanguage = mediator.GetCurrentLanguage();
-					
+
 					List<TransfluentTranslation> translations = mediator.knownTextEntries(groupid);
 					//Debug.Log("CURRENT LANGUAGE:" + currentlanguage.code + " translation count:" + translations.Count);
-					if (translations.Count > 0)
+					if(translations.Count > 0)
 					{
 						GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode) ??
-						                         ResourceCreator.CreateSO<GameTranslationSet>(
-							                         GameTranslationGetter.fileNameFromLanguageCode(languageCode));
-						
+												 ResourceCreator.CreateSO<GameTranslationSet>(
+													 GameTranslationGetter.fileNameFromLanguageCode(languageCode));
+
 						set.language = currentlanguage;
 						var groupToTranslationMap = groupidToDictionaryMap(translations);
-						foreach (KeyValuePair<string, Dictionary<string, string>> kvp in groupToTranslationMap)
+						foreach(KeyValuePair<string, Dictionary<string, string>> kvp in groupToTranslationMap)
 						{
-							set.mergeInSet(kvp.Key,kvp.Value);	
+							set.mergeInSet(kvp.Key, kvp.Value);
 						}
 
-						
 						EditorUtility.SetDirty(set);
 						AssetDatabase.SaveAssets();
 					}
 				}
-				catch (Exception e)
+				catch(Exception e)
 				{
 					Debug.LogError("error while downloading translations:" + e.Message + " stack:" + e.StackTrace);
 				}
@@ -101,16 +100,16 @@ namespace transfluent.editor
 		public static Dictionary<string, Dictionary<string, string>> groupidToDictionaryMap(List<TransfluentTranslation> translations)
 		{
 			var map = new Dictionary<string, Dictionary<string, string>>();
-			foreach (TransfluentTranslation translation in translations)
+			foreach(TransfluentTranslation translation in translations)
 			{
 				string group = translation.group_id ?? "";
-				if (!map.ContainsKey(group))
+				if(!map.ContainsKey(group))
 				{
 					map.Add(group, new Dictionary<string, string>());
 				}
 
 				var dic = map[group];
-				dic.Add(translation.text_id,translation.text);
+				dic.Add(translation.text_id, translation.text);
 			}
 			return map;
 		}

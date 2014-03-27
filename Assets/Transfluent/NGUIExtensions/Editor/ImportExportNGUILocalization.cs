@@ -11,7 +11,7 @@ using UnityEngine;
 public class ImportExportNGUILocalization
 {
 	private static readonly List<string> keysThatMustExistFirst = new List<string> { "KEY", "Language" };
-	
+
 	private static readonly Dictionary<string, string> languageCodeToCommonName = new Dictionary<string, string>
 	{
 		{"en-us", "English"},
@@ -53,7 +53,7 @@ public class ImportExportNGUILocalization
 									 ResourceCreator.CreateSO<GameTranslationSet>(
 										 GameTranslationGetter.fileNameFromLanguageCode(languageCode));
 			if(set.language == null) set.language = language;
-			set.mergeInSet(groupid,pairs);
+			set.mergeInSet(groupid, pairs);
 
 			EditorUtility.SetDirty(set);
 			AssetDatabase.SaveAssets();
@@ -96,13 +96,13 @@ public class ImportExportNGUILocalization
 			{
 				AssetDatabase.CreateFolder("Assets", "Resources");
 			}
-			File.WriteAllText(projectBasePath + localizationPath,"");
-			
+			File.WriteAllText(projectBasePath + localizationPath, "");
+
 			//TextAsset ta = new TextAsset();
 			//AssetDatabase.CreateAsset(ta, localizationPath);
-			AssetDatabase.ImportAsset(localizationPath,ImportAssetOptions.ForceSynchronousImport);
+			AssetDatabase.ImportAsset(localizationPath, ImportAssetOptions.ForceSynchronousImport);
 		}
-		
+
 		return projectBasePath + localizationPath;
 	}
 
@@ -115,7 +115,7 @@ public class ImportExportNGUILocalization
 		const string groupid = "NGUI"; //TODO: allow for a group selector with NGUI as the default
 
 		var nativeLanguageNameToKnownTranslationGroups = new Dictionary<string, Dictionary<string, string>>();
-		foreach (GameTranslationSet set in allTranslations)
+		foreach(GameTranslationSet set in allTranslations)
 		{
 			var allPairs = set.getGroup(groupid).getDictionaryCopy();
 			if(allPairs.Count == 0)
@@ -123,14 +123,14 @@ public class ImportExportNGUILocalization
 				continue;
 			}
 			TransfluentLanguage firstLanguage = set.language;
-			
+
 			string nativeLanguageName = takeLanguageCodeAndTurnItIntoNativeName(firstLanguage.code);
-			nativeLanguageNameToKnownTranslationGroups.Add(nativeLanguageName,allPairs);
+			nativeLanguageNameToKnownTranslationGroups.Add(nativeLanguageName, allPairs);
 		}
 
 		var exporter = new NGUICSVExporter(nativeLanguageNameToKnownTranslationGroups);
 		string csv = exporter.getCSV();
-		File.WriteAllText(assetPath,csv);
+		File.WriteAllText(assetPath, csv);
 		AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceSynchronousImport);
 	}
 
@@ -244,7 +244,7 @@ public class ImportExportNGUILocalization
 				for(int i = 0; i < tmpList.Count; i++)
 				{
 					string cur = tmpList[i];
-					if (string.IsNullOrEmpty(cur))
+					if(string.IsNullOrEmpty(cur))
 					{
 						tmpList[i] = "";
 					}
@@ -269,7 +269,7 @@ public class ImportExportNGUILocalization
 		public string escapeCSVString(string unescapedCSVString)
 		{
 			string currentString = unescapedCSVString;
-			
+
 			currentString = currentString.Replace("\n", "\\n");
 			if(unescapedCSVString.Contains(","))
 			{

@@ -31,7 +31,7 @@ public class TestCall : MonoBehaviour
 	{
 		Debug.Log("GOT A THING:" + JsonWriter.Serialize(status));
 		Debug.Log(JsonWriter.Serialize(langGetter.Parse(status.text)));
-		
+
 		yield return null;
 	}
 

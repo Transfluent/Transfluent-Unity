@@ -46,7 +46,6 @@ namespace transfluent
 			{
 				Directory.CreateDirectory(docsPath);
 			}
-
 		}
 
 		public class BuilderInstance

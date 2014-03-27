@@ -6,8 +6,10 @@ using UnityEngine;
 public class GameTranslationSet : ScriptableObject
 {
 	[SerializeField]
-	List<GroupOfTranslations> allTranslations = new List<GroupOfTranslations>();
+	private List<GroupOfTranslations> allTranslations = new List<GroupOfTranslations>();
+
 	public TransfluentLanguage language = new TransfluentLanguage();
+
 	public List<string> allGroups()
 	{
 		var list = new List<string>();
@@ -113,6 +115,7 @@ public class GameTranslationSet : ScriptableObject
 		}
 	}
 }
+
 #if false
 public class RuntimeTranslationSet
 {
@@ -124,6 +127,5 @@ public class RuntimeTranslationSet
 		groupid = serializedGroup.groupid;
 		translations = serializedGroup.getDictionaryCopy();
 	}
-
 }
 #endif

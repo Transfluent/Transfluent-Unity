@@ -253,6 +253,7 @@ namespace transfluent.tests
 			Assert.False(result.is_translated);
 		}
 
+		[Ignore("Requires auth token and costs money")]
 		[Test]
 		public void testTranslation()
 		{

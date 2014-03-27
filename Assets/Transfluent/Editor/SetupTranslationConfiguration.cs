@@ -113,6 +113,7 @@ public class SetupTranslationConfiguration : EditorWindow
 		List<string> knownLanguageDisplayNames = _languages.getListOfIdentifiersFromLanguageList();
 		int sourceLanguageIndex = knownLanguageDisplayNames.IndexOf(so.sourceLanguage.name);
 
+		if (sourceLanguageIndex < 0) sourceLanguageIndex = 0;
 		EditorGUILayout.LabelField("group identifier:" + so.translation_set_group);
 		EditorGUILayout.LabelField("source language:" + so.sourceLanguage.name);
 

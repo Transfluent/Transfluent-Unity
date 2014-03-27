@@ -18,7 +18,7 @@ public class TranslationEstimate
 	public void testThing(TranslationConfigurationSO selectedConfig)
 	{
 		var languageEstimates = new Dictionary<TransfluentLanguage, EstimateTranslationCostVO.Price>();
-		if(GUILayout.Button("TEST TRANSLATE"))
+		if(GUILayout.Button("Translate"))
 		{
 			string group = selectedConfig.translation_set_group;
 			var sourceSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(selectedConfig.sourceLanguage.code);
@@ -39,9 +39,9 @@ public class TranslationEstimate
 														lang.id, quality: selectedConfig.QualityToRequest);
 					var callResult = doCall(call);
 					EstimateTranslationCostVO estimate = call.Parse(callResult.text);
-					string printedEstimate = string.Format("Language:{0} cost: {1} {2}\n", lang.name, estimate.price.amount, estimate.price.currency);
+					string printedEstimate = string.Format("Language:{0} cost per word: {1} {2}\n", lang.name, estimate.price.amount, estimate.price.currency);
 					languageEstimates.Add(lang, estimate.price);
-					simpleEstimateString.Append(printedEstimate);
+					//simpleEstimateString.Append(printedEstimate);
 					//Debug.Log("Estimate:" + JsonWriter.Serialize(estimate));
 				}
 				catch(Exception e)
@@ -72,19 +72,20 @@ public class TranslationEstimate
 				}
 				langToWordsToTranslateCount.Add(lang, wordCount);
 			}
-
+			foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
+			{
+				var oneWordPrice = languageEstimates[lang];
+				float costPerWord = float.Parse(oneWordPrice.amount);
+				long totalNumberOfWords = langToWordsToTranslateCount[lang];
+				float totalCost = costPerWord * totalNumberOfWords;
+				simpleEstimateString.AppendFormat("language name: {0} total cost: {1} {2} Cost per word:{3} total words:{4} ", 
+					lang.name,totalCost,oneWordPrice.currency, costPerWord,totalNumberOfWords);
+				//Debug.Log("Lang cost:" + totalCost + " total number of words:" + totalNumberOfWords + " per word cost:" + oneWordPrice.amount);
+			}
+			Debug.Log("GOT THING");
 			if(EditorUtility.DisplayDialog("Estimates", "Estimated cost(only additions counted in estimate):\n" + simpleEstimateString, "OK", "Cancel"))
 			{
-				foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
-				{
-					var oneWordPrice = languageEstimates[lang];
-					float cost = float.Parse(oneWordPrice.amount);
-					long totalNumberOfWords = langToWordsToTranslateCount[lang];
-					float totalCost = cost * totalNumberOfWords;
-
-					Debug.Log("Lang cost:" + totalCost + " total number of words:" + totalNumberOfWords + " per word cost:" + oneWordPrice.amount);
-				}
-				Debug.Log("GOT THING");
+				
 
 				doTranslation(selectedConfig);
 			}

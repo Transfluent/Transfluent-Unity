@@ -20,6 +20,14 @@ public class TranslationEstimate
 		var languageEstimates = new Dictionary<TransfluentLanguage, EstimateTranslationCostVO.Price>();
 		if(GUILayout.Button("TEST TRANSLATE"))
 		{
+			string group = selectedConfig.translation_set_group;
+			var sourceSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(selectedConfig.sourceLanguage.code);
+			if(sourceSet == null || sourceSet.getGroup(group) == null)
+			{
+				EditorUtility.DisplayDialog("ERROR", "No messages in group", "OK");
+				return;
+			}
+
 			StringBuilder simpleEstimateString = new StringBuilder();
 
 			foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
@@ -46,9 +54,8 @@ public class TranslationEstimate
 					Debug.LogError("Error estimating prices");
 				}
 			}
-			string group = selectedConfig.translation_set_group;
 
-			var sourceSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(selectedConfig.sourceLanguage.code);
+			
 			var toTranslate = sourceSet.getGroup(group).getDictionaryCopy();
 			//var knownKeys = sourceSet.getPretranslatedKeys(sourceSet.getAllKeys(), selectedConfig.translation_set_group);
 			//var sourceDictionary = sourceSet.getGroup().getDictionaryCopy();

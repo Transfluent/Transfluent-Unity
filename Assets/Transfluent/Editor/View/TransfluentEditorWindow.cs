@@ -53,15 +53,18 @@ namespace transfluent.editor
 
 		public bool showCurrentLanguage()
 		{
-			List<string> languageNames = _mediator.getAllLanguageCodes();
+			var languageList = _mediator.getLanguageList();
+			var languageNames = languageList.allLanguageNames();
+
 			TransfluentLanguage currentLanguage = _mediator.GetCurrentLanguage();
-			int currentLanguageIndex = 0;
+			int currentLanguageIndex = -1;
 			if(currentLanguage != null)
-				currentLanguageIndex = languageNames.IndexOf(currentLanguage.code);
+				currentLanguageIndex = languageNames.IndexOf(currentLanguage.name);
 			int newLanguageIndex = EditorGUILayout.Popup("Current language", currentLanguageIndex, languageNames.ToArray());
 			if(currentLanguageIndex != newLanguageIndex)
 			{
-				_mediator.setCurrentLanguageFromLanguageCode(languageNames[newLanguageIndex]);
+				currentLanguage = languageList.getLangaugeByName(languageNames[newLanguageIndex]);
+				_mediator.setCurrentLanguage(currentLanguage);
 				return true;
 			}
 			return false;
@@ -148,9 +151,9 @@ namespace transfluent.editor
 			{
 				string textAtStart = translation.text;
 				EditorGUILayout.BeginHorizontal();
-				EditorGUILayout.TextField("key", translation.text_id);
-				EditorGUILayout.TextField("groupid", translation.group_id);
+				EditorGUILayout.LabelField("key:", translation.text_id);
 				string textAfterDisplaying = EditorGUILayout.TextField("value", textAtStart);
+				EditorGUILayout.TextField("groupid", translation.group_id);
 				EditorGUILayout.EndHorizontal();
 				if(textAtStart != textAfterDisplaying)
 				{
@@ -163,8 +166,8 @@ namespace transfluent.editor
 			{
 				EditorGUILayout.BeginHorizontal();
 				translation.text_id = EditorGUILayout.TextField("key", translation.text_id);
-				translation.group_id = EditorGUILayout.TextField("groupid", translation.group_id);
 				translation.text = EditorGUILayout.TextField("value", translation.text);
+				translation.group_id = EditorGUILayout.TextField("groupid", translation.group_id);
 				EditorGUILayout.EndHorizontal();
 			}
 

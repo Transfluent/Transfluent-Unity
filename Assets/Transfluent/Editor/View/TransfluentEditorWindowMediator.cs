@@ -119,7 +119,16 @@ namespace transfluent.editor
 			KeyValuePair<string, string> usernamePassword = getUserNamePassword();
 			return doAuth(usernamePassword.Key, usernamePassword.Value);
 		}
-
+		public List<string> getAllLanguageNames()
+		{
+			if(getLanguageList() == null)
+			{
+				throw new Exception("Cannot login");
+			}
+			var languageCodes = new List<string>();
+			allLanguagesSupported.languages.ForEach((TransfluentLanguage lang) => { languageCodes.Add(lang.code); });
+			return languageCodes;
+		}
 		public List<string> getAllLanguageCodes()
 		{
 			if(getLanguageList() == null)
@@ -228,6 +237,11 @@ namespace transfluent.editor
 			return list;
 		}
 
+		public void setCurrentLanguage(TransfluentLanguage lang)
+		{
+			_keyStore.set("CURRENT_LANGUAGE", lang.code);
+			currentLanguage = lang;
+		}
 		public void setCurrentLanguageFromLanguageCode(string languageCode)
 		{
 			_keyStore.set("CURRENT_LANGUAGE", languageCode);

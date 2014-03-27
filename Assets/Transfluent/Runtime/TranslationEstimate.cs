@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Principal;
 using System.Text;
+using Assets.Transfluent.Plugins.Calls;
 using transfluent;
 using UnityEditor;
 using UnityEngine;
@@ -103,12 +104,22 @@ public class TranslationEstimate
 
 	public void doTranslation(TranslationConfigurationSO selectedConfig)
 	{
+
+
 		List<int> destLanguageIDs = new List<int>();
 		GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(selectedConfig.sourceLanguage.code);
-		List<string> textsToTranslate = new List<string>(set.getGroup(selectedConfig.translation_set_group).getDictionaryCopy().Keys); 
+		var keysToTranslate = set.getGroup(selectedConfig.translation_set_group).getDictionaryCopy();
+		List<string> textsToTranslate = new List<string>(keysToTranslate.Keys);
+
+		//save all of our keys before requesting to transalate them, otherwise we can get errors
+		var uploadAll = new SaveSetOfKeys(selectedConfig.sourceLanguage.id,
+			keysToTranslate,
+			selectedConfig.translation_set_group
+			);
+		doCall(uploadAll);
 
 		selectedConfig.destinationLanguages.ForEach((TransfluentLanguage lang)=>{destLanguageIDs.Add(lang.id);});
-		OrderTranslation translate = new OrderTranslation(selectedConfig.sourceLanguage.id,
+		var translate = new OrderTranslation(selectedConfig.sourceLanguage.id,
 				target_languages: destLanguageIDs.ToArray(),
 				texts: textsToTranslate.ToArray(),
 				level:selectedConfig.QualityToRequest,

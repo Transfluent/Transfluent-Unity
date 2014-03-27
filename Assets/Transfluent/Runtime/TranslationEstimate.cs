@@ -78,7 +78,7 @@ public class TranslationEstimate
 				float costPerWord = float.Parse(oneWordPrice.amount);
 				long totalNumberOfWords = langToWordsToTranslateCount[lang];
 				float totalCost = costPerWord * totalNumberOfWords;
-				simpleEstimateString.AppendFormat("language name: {0} total cost: {1} {2} Cost per word:{3} total words:{4} ", 
+				simpleEstimateString.AppendFormat("language name: {0} total cost: {1} {2} \n\tCost per word:{3} total words:{4} ", 
 					lang.name,totalCost,oneWordPrice.currency, costPerWord,totalNumberOfWords);
 				//Debug.Log("Lang cost:" + totalCost + " total number of words:" + totalNumberOfWords + " per word cost:" + oneWordPrice.amount);
 			}

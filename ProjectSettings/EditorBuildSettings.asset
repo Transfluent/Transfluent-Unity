@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Transfluent/Examples/SimpleRuntime.unity
+    path: Assets/Transfluent/Examples/Sample2_FormattedText.unity
   - enabled: 1
-    path: Assets/Transfluent/Examples/InternationalOnGuiText.unity
+    path: Assets/Transfluent/Examples/Sample1_InternationalOnGuiText_FullProgramatic.unity

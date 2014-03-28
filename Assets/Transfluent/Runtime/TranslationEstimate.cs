@@ -71,22 +71,18 @@ public class TranslationEstimate
 						wordCount += kvp.Value.Split(' ').Length;
 				}
 				langToWordsToTranslateCount.Add(lang, wordCount);
-			}
-			foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
-			{
+
 				var oneWordPrice = languageEstimates[lang];
 				float costPerWord = float.Parse(oneWordPrice.amount);
-				long totalNumberOfWords = langToWordsToTranslateCount[lang];
-				float totalCost = costPerWord * totalNumberOfWords;
-				simpleEstimateString.AppendFormat("language name: {0} total cost: {1} {2} \n\tCost per word:{3} total words:{4} ", 
-					lang.name,totalCost,oneWordPrice.currency, costPerWord,totalNumberOfWords);
-				//Debug.Log("Lang cost:" + totalCost + " total number of words:" + totalNumberOfWords + " per word cost:" + oneWordPrice.amount);
+				float totalCost = costPerWord * wordCount;
+				simpleEstimateString.AppendFormat("language name: {0} total cost: {1} {2} \n\tCost per word:{3} total words:{4} ",
+					lang.name, totalCost, oneWordPrice.currency, costPerWord, wordCount);
+
 			}
 			Debug.Log("GOT THING");
 			if(EditorUtility.DisplayDialog("Estimates", "Estimated cost(only additions counted in estimate):\n" + simpleEstimateString, "OK", "Cancel"))
 			{
 				
-
 				doTranslation(selectedConfig);
 			}
 		}

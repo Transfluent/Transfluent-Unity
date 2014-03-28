@@ -39,7 +39,7 @@ public class TranslationEstimate
 														lang.id, quality: selectedConfig.QualityToRequest);
 					var callResult = doCall(call);
 					EstimateTranslationCostVO estimate = call.Parse(callResult.text);
-					string printedEstimate = string.Format("Language:{0} cost per word: {1} {2}\n", lang.name, estimate.price.amount, estimate.price.currency);
+					//string printedEstimate = string.Format("Language:{0} cost per word: {1} {2}\n", lang.name, estimate.price.amount, estimate.price.currency);
 					languageEstimates.Add(lang, estimate.price);
 					//simpleEstimateString.Append(printedEstimate);
 					//Debug.Log("Estimate:" + JsonWriter.Serialize(estimate));

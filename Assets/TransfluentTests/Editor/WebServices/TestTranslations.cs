@@ -167,17 +167,13 @@ namespace transfluent.tests
 		[Test]
 		public void testListAllTranslations()
 		{
-			var getAllKeys = new GetAllExistingTranslationKeys
-				(englishLanguage.id
-				);
+			var getAllKeys = new GetAllExistingTranslationKeys(englishLanguage.id);
 
 			Dictionary<string, TransfluentTranslation> translations = getAllKeys.Parse(justCall(getAllKeys));
 			Assert.IsNotNull(translations);
 			Assert.Greater(translations.Count, 0);
 
-			getAllKeys = new GetAllExistingTranslationKeys
-				(backwardsLanguage.id
-				);
+			getAllKeys = new GetAllExistingTranslationKeys(backwardsLanguage.id);
 			Dictionary<string, TransfluentTranslation> backwardsTranslations = getAllKeys.Parse(justCall(getAllKeys));
 			Assert.IsNotNull(backwardsTranslations);
 			Assert.Greater(backwardsTranslations.Count, 0);
@@ -257,9 +253,7 @@ namespace transfluent.tests
 		[Test]
 		public void testTranslation()
 		{
-			var translateRequest = new OrderTranslation
-				(englishLanguage.id, new[] { backwardsLanguage.id }, new[] { TRANSLATION_KEY }
-				);
+			var translateRequest = new OrderTranslation(englishLanguage.id, new[] { backwardsLanguage.id }, new[] { TRANSLATION_KEY } );
 			OrderTranslation.TextsTranslateResult translationResult = translateRequest.Parse(justCall(translateRequest));
 			var requester = new SyncronousEditorWebRequest();
 			WebServiceReturnStatus result = requester.request(translateRequest);

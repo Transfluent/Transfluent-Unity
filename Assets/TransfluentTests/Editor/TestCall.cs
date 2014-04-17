@@ -22,7 +22,7 @@ public class TestCall : MonoBehaviour
 		var www = new GameTimeWWW();
 		langGetter = new RequestAllLanguages();
 		www.webRequest(new RequestAllLanguages(), OnStatusDone);
-		TransfluentUtility.get("HELLO WORLD");
+		TranslationUtility.get("HELLO WORLD");
 		//Action<> <WebServiceReturnStatus>
 		//www.webRequest(, OnStatusDone);
 	}

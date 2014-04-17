@@ -11,7 +11,7 @@ public class FindTextMeshReferences : MonoBehaviour
 		"XXXX",
 	};
 
-	private static void setKeyInDefaultLanguageDB(string key, string value, string groupid = "")
+	public static void setKeyInDefaultLanguageDB(string key, string value, string groupid = "")
 	{
 		//Debug.LogWarning("Make sure to set language to game source language before saving a new translation key");
 		Dictionary<string, string> translationDictionary =
@@ -38,33 +38,7 @@ public class FindTextMeshReferences : MonoBehaviour
 	{
 		//ignore all textmeshes referenced by all ButtonView components
 		var listToIngore = new List<TextMesh>();
-
-		//custom references -- TODO: replace with a reflection based solution
-		//find gameobjects with [SerializeField] private or public vars and also define an OnLocalize
-
-		var allButtons = new List<ButtonView>();
-		if (inPrefab == null)
-		{
-			allButtons.AddRange(FindObjectsOfType<ButtonView>());
-		}
-		else
-		{
-			allButtons.AddRange(inPrefab.GetComponentsInChildren<ButtonView>(true));
-		}
-		allButtons.ForEach((ButtonView button) =>
-		{
-			if (button != null && button.labelMesh != null)
-			{
-				listToIngore.Add(button.labelMesh);
-				string newKey = button.label;
-				button.labelData.globalizationKey = newKey;
-
-				setKeyInDefaultLanguageDB(newKey, newKey);
-
-				//TODO: ensure that this is set to the source language of the game config before adding
-				EditorUtility.SetDirty(button);
-			}
-		});
+		GamespecificMigration.toExplicitlyIgnore(listToIngore, inPrefab);
 
 		var allMeshesInSource = new List<TextMesh>();
 		if (inPrefab == null)

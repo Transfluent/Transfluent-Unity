@@ -12,7 +12,7 @@ public class ImportExportNGUILocalization
 {
 	private static readonly List<string> keysThatMustExistFirst = new List<string> { "KEY", "Language" };
 
-	private static readonly Dictionary<string, string> languageCodeToCommonName = new Dictionary<string, string>
+	public static readonly Dictionary<string, string> languageCodeToCommonName = new Dictionary<string, string>
 	{
 		{"en-us", "English"},
 		{"fr-fr", "Français"},

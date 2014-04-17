@@ -20,14 +20,14 @@ public class SimpleTranslatedTextDisplay : MonoBehaviour
 
 	private void Start()
 	{
-		TransfluentUtility.changeStaticInstanceConfig("en-us");
+		TranslationUtility.changeStaticInstanceConfig("en-us");
 	}
 
 	private void OnGUI()
 	{
 		int secondToDisplay = Mathf.FloorToInt(Time.timeSinceLevelLoad) % 4 + 1;
-		string secondToken = TransfluentUtility.get(secondToDisplay.ToString());
-		string textToDisplay = TransfluentUtility.getFormatted(textFormat, secondToken);
+		string secondToken = TranslationUtility.get(secondToDisplay.ToString());
+		string textToDisplay = TranslationUtility.getFormatted(textFormat, secondToken);
 		GUILayout.Label(textToDisplay);
 		textMesh.text = textToDisplay;
 
@@ -35,7 +35,7 @@ public class SimpleTranslatedTextDisplay : MonoBehaviour
 		{
 			if(GUILayout.Button("Translate to language:" + languageCode))
 			{
-				TransfluentUtility.changeStaticInstanceConfig(languageCode);
+				TranslationUtility.changeStaticInstanceConfig(languageCode);
 			}
 		}
 	}

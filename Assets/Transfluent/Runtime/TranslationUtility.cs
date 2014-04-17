@@ -68,11 +68,20 @@ namespace transfluent
 		public static void testHelpfind()
 		{
 			//GetComponentsInChildren( typeof(Transform), true );
+			var gos = GameObject.FindSceneObjectsOfType(typeof (GameObject)) as GameObject[];
+			foreach (GameObject go in gos)
+			{
+				if (go.name == "idle_view")
+				{
+					Debug.LogError("FOUND IDLE VIEW");
+				}
+			}
 		}
 
 		[MenuItem("Helpers/Test OnLocalize")]
 		public static void OnLanguageChanged()
 		{
+			
 			GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
 			for (int i=0;i<allObjects.Length;i++)
 			{

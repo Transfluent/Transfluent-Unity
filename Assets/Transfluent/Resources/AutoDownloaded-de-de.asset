@@ -38,6 +38,40 @@ MonoBehaviour:
       value: Optionen
     - key: configuration
       value: Konfiguration
+    - key: power up
+      value: einschalten
+    - key: Start Game
+      value: Spiel beginnen
+    - key: Begin!
+      value: Beginnen!
+    - key: Play Again?
+      value: 'Noch einmal spielen? '
+    - key: Hi there!
+      value: Hallo!
+    - key: Rocks
+      value: 'Felsen '
+    - key: STRANGE
+      value: "MERKW\xDCRDIG"
+    - key: Prepare for level
+      value: 'Auf Level vorbereiten '
+    - key: 'Score:'
+      value: 'Punktestand: '
+    - key: 'Level:'
+      value: 'Level: '
+    - key: Game Over!
+      value: Game over!
+    - key: German
+      value: Deutsch
+    - key: French
+      value: "Franz\xF6sisch"
+    - key: English
+      value: Englisch
+    - key: Backwards
+      value: "R\xFCckw\xE4rts"
+    - key: Return to game
+      value: "Zum Spiel zur\xFCckkehren"
+    - key: Language Select
+      value: Sprachauswahl
   - groupid: TEST
     translations:
     - key: sprechen sie deutsch

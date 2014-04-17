@@ -49,7 +49,39 @@ MonoBehaviour:
     - key: configuration
       value: noitarugifnoc
     - key: power up
-      value: pu rewop
+      value: sunob
+    - key: Start Game
+      value: nennigeb leipS
+    - key: Begin!
+      value: '!nennigeB'
+    - key: Play Again?
+      value: ' ?neleips lamnie hcoN'
+    - key: Hi there!
+      value: '!ollaH'
+    - key: Rocks
+      value: ' nesleF'
+    - key: STRANGE
+      value: "GIDR\xDCWKREM"
+    - key: Prepare for level
+      value: ' netierebrov leveL fuA'
+    - key: 'Score:'
+      value: ' :dnatsetknuP'
+    - key: 'Level:'
+      value: ' :leveL'
+    - key: Game Over!
+      value: '!revo emaG'
+    - key: German
+      value: hcstueD
+    - key: French
+      value: "hcsis\xF6znarF"
+    - key: English
+      value: hcsilgnE
+    - key: Backwards
+      value: "str\xE4wkc\xFCR"
+    - key: Return to game
+      value: "nerhekkc\xFCruz leipS muZ"
+    - key: Language Select
+      value: lhawsuahcarpS
   - groupid: TEST
     translations:
     - key: sprechen sie deutsch

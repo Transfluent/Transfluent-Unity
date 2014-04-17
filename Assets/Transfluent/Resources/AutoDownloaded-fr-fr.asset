@@ -46,6 +46,10 @@ MonoBehaviour:
       value: options
     - key: configuration
       value: configuration
+    - key: Start Game
+      value: startFR
+    - key: power up
+      value: bonus
   language:
     name: French (France)
     code: fr-fr

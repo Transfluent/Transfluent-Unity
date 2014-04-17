@@ -38,6 +38,54 @@ MonoBehaviour:
       value: configuration
     - key: power up
       value: power up
+    - key: Start Game
+      value: Start Game
+    - key: Begin!
+      value: Begin!
+    - key: Play Again?
+      value: Play Again?
+    - key: Hi there!
+      value: Hi there!
+    - key: Rocks
+      value: Rocks
+    - key: STRANGE
+      value: STRANGE
+    - key: Prepare for level
+      value: Prepare for level
+    - key: 'Score:'
+      value: 'Score:'
+    - key: 'Level:'
+      value: 'Level:'
+    - key: Game Over!
+      value: Game Over!
+    - key: German
+      value: German
+    - key: French
+      value: French
+    - key: English
+      value: English
+    - key: Backwards
+      value: Backwards
+    - key: Return to game
+      value: Return to game
+    - key: Language Select
+      value: Language Select
+    - key: 'Last Score: {0}'
+      value: 'Last Score: {0}'
+    - key: Start Level {0}
+      value: Start Level {0}
+    - key: 'Score: {0}'
+      value: 'Score: {0}'
+    - key: 'Lives remaining: {0}'
+      value: 'Lives remaining: {0}'
+    - key: 'Lives Remaining: {0}'
+      value: 'Lives Remaining: {0}'
+    - key: 'Level: '
+      value: 'Level: '
+    - key: Play Again
+      value: Play Again
+    - key: 'Final Score: {0}'
+      value: 'Final Score: {0}'
   language:
     name: English (United States)
     code: en-us

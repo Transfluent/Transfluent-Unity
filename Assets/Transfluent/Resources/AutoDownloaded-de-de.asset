@@ -12,22 +12,36 @@ MonoBehaviour:
   m_Name: AutoDownloaded-de-de
   m_EditorClassIdentifier: 
   allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: Das ist Beispieltext 0.1122621.
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: Das ist Testtext.
+    - key: TEST_KEY_2
+      value: this is test text
+    - key: 1
+      value: Ein
+    - key: 2
+      value: _2_
+    - key: 3
+      value: Drei
+    - key: 4
+      value: 4
+    - key: cows
+      value: "K\xFChe"
+    - key: goat simulator
+      value: Ziegen-Simulator
+    - key: potions aquired
+      value: "Zaubertr\xE4nke erlangt"
+    - key: options
+      value: Optionen
+    - key: configuration
+      value: Konfiguration
   - groupid: TEST
     translations:
     - key: sprechen sie deutsch
       value: What are you saying?
-  - groupid: 
-    translations:
-    - key: TEST_KEY_2
-      value: this is test text
-    - key: 1
-      value: "\u4E00"
-    - key: 2
-      value: "\u4E8C"
-    - key: 3
-      value: "\u4E09"
-    - key: 4
-      value: "\u56DB"
   language:
     name: German
     code: de-de

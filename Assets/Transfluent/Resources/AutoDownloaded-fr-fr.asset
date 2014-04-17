@@ -14,6 +14,10 @@ MonoBehaviour:
   allTranslations:
   - groupid: 
     translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: voici le texte d'exemple0,1122621
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: ceci est un texte de test
     - key: TEST_CREATION_OF_A_KEY
       value: test create from editor
     - key: TEST_CREATION_OF_A_KEY2
@@ -25,13 +29,23 @@ MonoBehaviour:
     - key: hello world
       value: stuff
     - key: 1
-      value: un
+      value: Un
     - key: 2
-      value: deux
+      value: __2__
     - key: 3
-      value: trois
+      value: Trois
     - key: 4
-      value: quatre
+      value: 4
+    - key: cows
+      value: vaches
+    - key: goat simulator
+      value: "simulateur de ch\xE8vre"
+    - key: potions aquired
+      value: potions obtenues
+    - key: options
+      value: options
+    - key: configuration
+      value: configuration
   language:
     name: French (France)
     code: fr-fr

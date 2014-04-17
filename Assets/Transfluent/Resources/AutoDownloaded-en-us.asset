@@ -34,6 +34,10 @@ MonoBehaviour:
       value: potions aquired
     - key: options
       value: options
+    - key: configuration
+      value: configuration
+    - key: power up
+      value: power up
   language:
     name: English (United States)
     code: en-us

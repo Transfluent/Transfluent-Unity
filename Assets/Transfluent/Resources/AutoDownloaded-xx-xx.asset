@@ -15,9 +15,9 @@ MonoBehaviour:
   - groupid: 
     translations:
     - key: HELLO_WORLD_TEXT_KEY
-      value: 1262211.0txet elpmas si siht
+      value: 1262211,0elpmexe'd etxet el iciov
     - key: UNITY_TEST_TRANSLATION_KEY
-      value: txet tset si siht
+      value: tset ed etxet nu tse icec
     - key: TEST_CREATION_OF_A_KEY
       value: rotide morf etaerc tset
     - key: TEST_CREATION_OF_A_KEY2
@@ -31,17 +31,31 @@ MonoBehaviour:
     - key: TEST_KEY_2
       value: txet tset si siht
     - key: 1
-      value: nu
+      value: nU
     - key: 2
-      value: xued
+      value: __2__
     - key: 3
-      value: siort
+      value: siorT
     - key: 4
-      value: ertauq
+      value: 4
+    - key: cows
+      value: sehcav
+    - key: goat simulator
+      value: "erv\xE8hc ed ruetalumis"
+    - key: potions aquired
+      value: seunetbo snoitop
+    - key: options
+      value: snoitpo
+    - key: configuration
+      value: noitarugifnoc
+    - key: power up
+      value: pu rewop
   - groupid: TEST
     translations:
     - key: sprechen sie deutsch
       value: ?gniyas uoy era tahW
+    - key: manually edited key
+      value: I manually entered this
   language:
     name: Pseudo language
     code: xx-xx

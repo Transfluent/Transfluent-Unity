@@ -124,7 +124,8 @@ public class TranslationEstimate
 				target_languages: destLanguageIDs.ToArray(),
 				texts: textsToTranslate.ToArray(),
 				level: selectedConfig.QualityToRequest,
-				group_id: selectedConfig.translation_set_group
+				group_id: selectedConfig.translation_set_group,
+				comment: "Do not replace any strings that look like {0} or {1} as they are a part of formatted text"
 				);
 		doCall(translate);
 	}

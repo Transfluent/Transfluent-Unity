@@ -62,7 +62,7 @@ namespace transfluent.guiwrapper
 
 		public static void Label(UnityEngine.Rect position, System.String text)
 		{
-			UnityEngine.GUI.Label(position, text);
+			UnityEngine.GUI.Label(position, TranslationUtility.get(text));
 		}
 
 		public static void Label(UnityEngine.Rect position, UnityEngine.Texture image)
@@ -77,7 +77,7 @@ namespace transfluent.guiwrapper
 
 		public static void Label(UnityEngine.Rect position, System.String text, UnityEngine.GUIStyle style)
 		{
-			UnityEngine.GUI.Label(position, text, style);
+			UnityEngine.GUI.Label(position, TranslationUtility.get(text), style);
 		}
 
 		public static void Label(UnityEngine.Rect position, UnityEngine.Texture image, UnityEngine.GUIStyle style)
@@ -122,7 +122,7 @@ namespace transfluent.guiwrapper
 
 		public static void Box(UnityEngine.Rect position, System.String text)
 		{
-			UnityEngine.GUI.Box(position, text);
+			UnityEngine.GUI.Box(position, TranslationUtility.get(text));
 		}
 
 		public static void Box(UnityEngine.Rect position, UnityEngine.Texture image)
@@ -152,7 +152,7 @@ namespace transfluent.guiwrapper
 
 		public static bool Button(UnityEngine.Rect position, System.String text)
 		{
-			return UnityEngine.GUI.Button(position, text);
+			return UnityEngine.GUI.Button(position, TranslationUtility.get(text));
 		}
 
 		public static bool Button(UnityEngine.Rect position, UnityEngine.Texture image)
@@ -182,7 +182,7 @@ namespace transfluent.guiwrapper
 
 		public static bool RepeatButton(UnityEngine.Rect position, System.String text)
 		{
-			return UnityEngine.GUI.RepeatButton(position, text);
+			return UnityEngine.GUI.RepeatButton(position, TranslationUtility.get(text));
 		}
 
 		public static bool RepeatButton(UnityEngine.Rect position, UnityEngine.Texture image)
@@ -197,7 +197,7 @@ namespace transfluent.guiwrapper
 
 		public static bool RepeatButton(UnityEngine.Rect position, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEngine.GUI.RepeatButton(position, text, style);
+			return UnityEngine.GUI.RepeatButton(position, TranslationUtility.get(text), style);
 		}
 
 		public static bool RepeatButton(UnityEngine.Rect position, UnityEngine.Texture image, UnityEngine.GUIStyle style)
@@ -212,22 +212,22 @@ namespace transfluent.guiwrapper
 
 		public static System.String TextField(UnityEngine.Rect position, System.String text)
 		{
-			return UnityEngine.GUI.TextField(position, text);
+			return UnityEngine.GUI.TextField(position, TranslationUtility.get(text));
 		}
 
 		public static System.String TextField(UnityEngine.Rect position, System.String text, int maxLength)
 		{
-			return UnityEngine.GUI.TextField(position, text, maxLength);
+			return UnityEngine.GUI.TextField(position, TranslationUtility.get(text), maxLength);
 		}
 
 		public static System.String TextField(UnityEngine.Rect position, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEngine.GUI.TextField(position, text, style);
+			return UnityEngine.GUI.TextField(position, TranslationUtility.get(text), style);
 		}
 
 		public static System.String TextField(UnityEngine.Rect position, System.String text, int maxLength, UnityEngine.GUIStyle style)
 		{
-			return UnityEngine.GUI.TextField(position, text, maxLength, style);
+			return UnityEngine.GUI.TextField(position, TranslationUtility.get(text), maxLength, style);
 		}
 
 		public static System.String PasswordField(UnityEngine.Rect position, System.String password, char maskChar)
@@ -252,22 +252,22 @@ namespace transfluent.guiwrapper
 
 		public static System.String TextArea(UnityEngine.Rect position, System.String text)
 		{
-			return UnityEngine.GUI.TextArea(position, text);
+			return UnityEngine.GUI.TextArea(position, TranslationUtility.get(text));
 		}
 
 		public static System.String TextArea(UnityEngine.Rect position, System.String text, int maxLength)
 		{
-			return UnityEngine.GUI.TextArea(position, text, maxLength);
+			return UnityEngine.GUI.TextArea(position, TranslationUtility.get(text), maxLength);
 		}
 
 		public static System.String TextArea(UnityEngine.Rect position, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEngine.GUI.TextArea(position, text, style);
+			return UnityEngine.GUI.TextArea(position, TranslationUtility.get(text), style);
 		}
 
 		public static System.String TextArea(UnityEngine.Rect position, System.String text, int maxLength, UnityEngine.GUIStyle style)
 		{
-			return UnityEngine.GUI.TextArea(position, text, maxLength, style);
+			return UnityEngine.GUI.TextArea(position, TranslationUtility.get(text), maxLength, style);
 		}
 
 		public static void SetNextControlName(System.String name)
@@ -287,7 +287,7 @@ namespace transfluent.guiwrapper
 
 		public static bool Toggle(UnityEngine.Rect position, bool value, System.String text)
 		{
-			return UnityEngine.GUI.Toggle(position, value, text);
+			return UnityEngine.GUI.Toggle(position, value, TranslationUtility.get(text));
 		}
 
 		public static bool Toggle(UnityEngine.Rect position, bool value, UnityEngine.Texture image)
@@ -302,7 +302,7 @@ namespace transfluent.guiwrapper
 
 		public static bool Toggle(UnityEngine.Rect position, bool value, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEngine.GUI.Toggle(position, value, text, style);
+			return UnityEngine.GUI.Toggle(position, value, TranslationUtility.get(text), style);
 		}
 
 		public static bool Toggle(UnityEngine.Rect position, bool value, UnityEngine.Texture image, UnityEngine.GUIStyle style)
@@ -314,7 +314,7 @@ namespace transfluent.guiwrapper
 		{
 			return UnityEngine.GUI.Toggle(position, value, content, style);
 		}
-
+		//NOTE: *NOT* translated
 		public static int Toolbar(UnityEngine.Rect position, int selected, System.String[] texts)
 		{
 			return UnityEngine.GUI.Toolbar(position, selected, texts);
@@ -427,7 +427,7 @@ namespace transfluent.guiwrapper
 
 		public static void BeginGroup(UnityEngine.Rect position, System.String text)
 		{
-			UnityEngine.GUI.BeginGroup(position, text);
+			UnityEngine.GUI.BeginGroup(position, TranslationUtility.get(text));
 		}
 
 		public static void BeginGroup(UnityEngine.Rect position, UnityEngine.Texture image)
@@ -447,7 +447,7 @@ namespace transfluent.guiwrapper
 
 		public static void BeginGroup(UnityEngine.Rect position, System.String text, UnityEngine.GUIStyle style)
 		{
-			UnityEngine.GUI.BeginGroup(position, text, style);
+			UnityEngine.GUI.BeginGroup(position, TranslationUtility.get(text), style);
 		}
 
 		public static void BeginGroup(UnityEngine.Rect position, UnityEngine.Texture image, UnityEngine.GUIStyle style)
@@ -507,7 +507,7 @@ namespace transfluent.guiwrapper
 
 		public static UnityEngine.Rect Window(int id, UnityEngine.Rect clientRect, UnityEngine.GUI.WindowFunction func, System.String text)
 		{
-			return UnityEngine.GUI.Window(id, clientRect, func, text);
+			return UnityEngine.GUI.Window(id, clientRect, func, TranslationUtility.get(text));
 		}
 
 		public static UnityEngine.Rect Window(int id, UnityEngine.Rect clientRect, UnityEngine.GUI.WindowFunction func, UnityEngine.Texture image)
@@ -522,7 +522,7 @@ namespace transfluent.guiwrapper
 
 		public static UnityEngine.Rect Window(int id, UnityEngine.Rect clientRect, UnityEngine.GUI.WindowFunction func, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEngine.GUI.Window(id, clientRect, func, text, style);
+			return UnityEngine.GUI.Window(id, clientRect, func, TranslationUtility.get(text), style);
 		}
 
 		public static UnityEngine.Rect Window(int id, UnityEngine.Rect clientRect, UnityEngine.GUI.WindowFunction func, UnityEngine.Texture image, UnityEngine.GUIStyle style)
@@ -552,7 +552,7 @@ namespace transfluent.guiwrapper
 
 		public static UnityEngine.Rect ModalWindow(int id, UnityEngine.Rect clientRect, UnityEngine.GUI.WindowFunction func, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEngine.GUI.ModalWindow(id, clientRect, func, text, style);
+			return UnityEngine.GUI.ModalWindow(id, clientRect, func, TranslationUtility.get(text), style);
 		}
 
 		public static UnityEngine.Rect ModalWindow(int id, UnityEngine.Rect clientRect, UnityEngine.GUI.WindowFunction func, UnityEngine.Texture image, UnityEngine.GUIStyle style)

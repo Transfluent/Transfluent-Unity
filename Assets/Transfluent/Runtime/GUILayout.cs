@@ -26,7 +26,7 @@ namespace transfluent.guiwrapper
 
 		public static void Label(System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			UnityEngine.GUILayout.Label(text, style, options);
+			UnityEngine.GUILayout.Label(TranslationUtility.get(text), style, options);
 		}
 
 		public static void Label(UnityEngine.GUIContent content, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
@@ -41,7 +41,7 @@ namespace transfluent.guiwrapper
 
 		public static void Box(System.String text, params UnityEngine.GUILayoutOption[] options)
 		{
-			UnityEngine.GUILayout.Box(text, options);
+			UnityEngine.GUILayout.Box(TranslationUtility.get(text), options);
 		}
 
 		public static void Box(UnityEngine.GUIContent content, params UnityEngine.GUILayoutOption[] options)
@@ -56,7 +56,7 @@ namespace transfluent.guiwrapper
 
 		public static void Box(System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			UnityEngine.GUILayout.Box(text, style, options);
+			UnityEngine.GUILayout.Box(TranslationUtility.get(text), style, options);
 		}
 
 		public static void Box(UnityEngine.GUIContent content, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
@@ -86,7 +86,7 @@ namespace transfluent.guiwrapper
 
 		public static bool Button(System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.Button(text, style, options);
+			return UnityEngine.GUILayout.Button(TranslationUtility.get(text), style, options);
 		}
 
 		public static bool Button(UnityEngine.GUIContent content, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
@@ -101,7 +101,7 @@ namespace transfluent.guiwrapper
 
 		public static bool RepeatButton(System.String text, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.RepeatButton(text, options);
+			return UnityEngine.GUILayout.RepeatButton(TranslationUtility.get(text), options);
 		}
 
 		public static bool RepeatButton(UnityEngine.GUIContent content, params UnityEngine.GUILayoutOption[] options)
@@ -116,7 +116,7 @@ namespace transfluent.guiwrapper
 
 		public static bool RepeatButton(System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.RepeatButton(text, style, options);
+			return UnityEngine.GUILayout.RepeatButton(TranslationUtility.get(text), style, options);
 		}
 
 		public static bool RepeatButton(UnityEngine.GUIContent content, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
@@ -131,17 +131,17 @@ namespace transfluent.guiwrapper
 
 		public static System.String TextField(System.String text, int maxLength, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.TextField(text, maxLength, options);
+			return UnityEngine.GUILayout.TextField(TranslationUtility.get(text), maxLength, options);
 		}
 
 		public static System.String TextField(System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.TextField(text, style, options);
+			return UnityEngine.GUILayout.TextField(TranslationUtility.get(text), style, options);
 		}
 
 		public static System.String TextField(System.String text, int maxLength, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.TextField(text, maxLength, style, options);
+			return UnityEngine.GUILayout.TextField(TranslationUtility.get(text), maxLength, style, options);
 		}
 
 		public static System.String PasswordField(System.String password, char maskChar, params UnityEngine.GUILayoutOption[] options)
@@ -166,22 +166,22 @@ namespace transfluent.guiwrapper
 
 		public static System.String TextArea(System.String text, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.TextArea(text, options);
+			return UnityEngine.GUILayout.TextArea(TranslationUtility.get(text), options);
 		}
 
 		public static System.String TextArea(System.String text, int maxLength, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.TextArea(text, maxLength, options);
+			return UnityEngine.GUILayout.TextArea(TranslationUtility.get(text), maxLength, options);
 		}
 
 		public static System.String TextArea(System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.TextArea(text, style, options);
+			return UnityEngine.GUILayout.TextArea(TranslationUtility.get(text), style, options);
 		}
 
 		public static System.String TextArea(System.String text, int maxLength, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.TextArea(text, maxLength, style, options);
+			return UnityEngine.GUILayout.TextArea(TranslationUtility.get(text), maxLength, style, options);
 		}
 
 		public static bool Toggle(bool value, UnityEngine.Texture image, params UnityEngine.GUILayoutOption[] options)
@@ -191,7 +191,7 @@ namespace transfluent.guiwrapper
 
 		public static bool Toggle(bool value, System.String text, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.Toggle(value, text, options);
+			return UnityEngine.GUILayout.Toggle(value, TranslationUtility.get(text), options);
 		}
 
 		public static bool Toggle(bool value, UnityEngine.GUIContent content, params UnityEngine.GUILayoutOption[] options)
@@ -206,7 +206,7 @@ namespace transfluent.guiwrapper
 
 		public static bool Toggle(bool value, System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.Toggle(value, text, style, options);
+			return UnityEngine.GUILayout.Toggle(value, TranslationUtility.get(text), style, options);
 		}
 
 		public static bool Toggle(bool value, UnityEngine.GUIContent content, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
@@ -336,7 +336,7 @@ namespace transfluent.guiwrapper
 
 		public static void BeginHorizontal(System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			UnityEngine.GUILayout.BeginHorizontal(text, style, options);
+			UnityEngine.GUILayout.BeginHorizontal(TranslationUtility.get(text), style, options);
 		}
 
 		public static void BeginHorizontal(UnityEngine.Texture image, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
@@ -366,7 +366,7 @@ namespace transfluent.guiwrapper
 
 		public static void BeginVertical(System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			UnityEngine.GUILayout.BeginVertical(text, style, options);
+			UnityEngine.GUILayout.BeginVertical(TranslationUtility.get(text), style, options);
 		}
 
 		public static void BeginVertical(UnityEngine.Texture image, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
@@ -391,7 +391,7 @@ namespace transfluent.guiwrapper
 
 		public static void BeginArea(UnityEngine.Rect screenRect, System.String text)
 		{
-			UnityEngine.GUILayout.BeginArea(screenRect, text);
+			UnityEngine.GUILayout.BeginArea(screenRect, TranslationUtility.get(text));
 		}
 
 		public static void BeginArea(UnityEngine.Rect screenRect, UnityEngine.Texture image)
@@ -411,7 +411,7 @@ namespace transfluent.guiwrapper
 
 		public static void BeginArea(UnityEngine.Rect screenRect, System.String text, UnityEngine.GUIStyle style)
 		{
-			UnityEngine.GUILayout.BeginArea(screenRect, text, style);
+			UnityEngine.GUILayout.BeginArea(screenRect, TranslationUtility.get(text), style);
 		}
 
 		public static void BeginArea(UnityEngine.Rect screenRect, UnityEngine.Texture image, UnityEngine.GUIStyle style)
@@ -471,7 +471,7 @@ namespace transfluent.guiwrapper
 
 		public static UnityEngine.Rect Window(int id, UnityEngine.Rect screenRect, UnityEngine.GUI.WindowFunction func, System.String text, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.Window(id, screenRect, func, text, options);
+			return UnityEngine.GUILayout.Window(id, screenRect, func, TranslationUtility.get(text), options);
 		}
 
 		public static UnityEngine.Rect Window(int id, UnityEngine.Rect screenRect, UnityEngine.GUI.WindowFunction func, UnityEngine.Texture image, params UnityEngine.GUILayoutOption[] options)
@@ -486,7 +486,7 @@ namespace transfluent.guiwrapper
 
 		public static UnityEngine.Rect Window(int id, UnityEngine.Rect screenRect, UnityEngine.GUI.WindowFunction func, System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.Window(id, screenRect, func, text, style, options);
+			return UnityEngine.GUILayout.Window(id, screenRect, func, TranslationUtility.get(text), style, options);
 		}
 
 		public static UnityEngine.Rect Window(int id, UnityEngine.Rect screenRect, UnityEngine.GUI.WindowFunction func, UnityEngine.Texture image, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)

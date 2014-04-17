@@ -28,7 +28,7 @@ public class InternationalTextDisplayWithTransfluent : MonoBehaviour
 	{
 		config = ResourceLoadFacade.LoadConfigGroup("");
 		populateKnownTranslationsInGroup();
-		TransfluentUtility.changeStaticInstanceConfig("xx-xx");
+		TranslationUtility.changeStaticInstanceConfig("xx-xx");
 	}
 
 	private void populateKnownTranslationsInGroup()
@@ -55,8 +55,8 @@ public class InternationalTextDisplayWithTransfluent : MonoBehaviour
 			//TODO: show groups available
 			if(GUILayout.Button(language.name))
 			{
-				TransfluentUtility.changeStaticInstanceConfig(language.code);
-				translationHelper = TransfluentUtility.getUtilityInstanceForDebugging();
+				TranslationUtility.changeStaticInstanceConfig(language.code);
+				translationHelper = TranslationUtility.getUtilityInstanceForDebugging();
 
 				foreach(var trans in translationHelper.allKnownTranslations)
 				{

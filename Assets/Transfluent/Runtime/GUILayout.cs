@@ -11,7 +11,7 @@ namespace transfluent.guiwrapper
 
 		public static void Label(System.String text, params UnityEngine.GUILayoutOption[] options)
 		{
-			UnityEngine.GUILayout.Label(TransfluentUtility.get(text), options);
+			UnityEngine.GUILayout.Label(TranslationUtility.get(text), options);
 		}
 
 		public static void Label(UnityEngine.GUIContent content, params UnityEngine.GUILayoutOption[] options)
@@ -71,7 +71,7 @@ namespace transfluent.guiwrapper
 
 		public static bool Button(System.String text, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.Button(TransfluentUtility.get(text), options);
+			return UnityEngine.GUILayout.Button(TranslationUtility.get(text), options);
 		}
 
 		public static bool Button(UnityEngine.GUIContent content, params UnityEngine.GUILayoutOption[] options)
@@ -126,7 +126,7 @@ namespace transfluent.guiwrapper
 
 		public static System.String TextField(System.String text, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.TextField(TransfluentUtility.get(text), options);
+			return UnityEngine.GUILayout.TextField(TranslationUtility.get(text), options);
 		}
 
 		public static System.String TextField(System.String text, int maxLength, params UnityEngine.GUILayoutOption[] options)

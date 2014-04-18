@@ -20,7 +20,6 @@ namespace transfluent
 
 			if(quality != OrderTranslation.TranslationQuality.PAIR_OF_TRANSLATORS)
 				getParameters.Add("level", ((int)quality).ToString());
-			UnityEngine.Debug.LogError("level:" + ((int)quality));
 		}
 
 		//https://transfluent.com/v2/free/text/word/count/?source_language=1&target_language=500&free_text=hello

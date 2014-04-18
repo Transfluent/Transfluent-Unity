@@ -13,6 +13,22 @@ This is a tool used for translating textual assets within Unity 3D, integrating 
 ### Configure the game - source and destination languages
 Select the menu "Transfluent/Game Configuration".  Set your source language, and add/remove any destination languages.
 
+#Example translated project: https://github.com/hardcoded2/strangerocks
+This is a tech demo project that has text embedded in OnGUI scripts, prefabs, and in scene files.  
+###Script-based migration (get all the text out of your game objects and into the translation db)
+By altering the GameSpecificMigration file to handle managed code, you can handle the migration process scripts that set values on start or awake.  This will also let the rest of the migration process know not to touch those managed text fields.  
+###Alter OnGUI Scripts and other formatted text fields
+If you're using OnGUI to display text in your app, make sure to add these two lines to the top of your file:
+using GUILayout = transfluent.guiwrapper.GUILayout; 
+using GUI = transfluent.guiwrapper.GUI; 
+
+This will automatically translate the *literal* text sent to GUI and GUILabel.  If you have text fields that combine strings (ie "Hello {0}, how are you today?"), then you will want to use the TranslationUtility.getFormatted("Hello {0}, how are you today?",adventurerName); so that the utility knows how to format that string for future translations.(also so we're not saving the literal text "Hello Alex, how are you today")
+
+For custom managed scripts, make sure to change over text fields to use TranslationUtility.get() and that they support the OnLocalize() field so that they get the text as expected (See sample project for an example)
+
+Great!  Now you're ready for capture mode.  You can manually copy all your source text fields over to the file Transfluent/Resources/AutoDownloaded-<MY_LANGUAGE_CODE> or you can use capture mode to capture translated text
+
+#Programmatic APIs
 ### Example script(OnGUI):
 
 ~~~~~~~~

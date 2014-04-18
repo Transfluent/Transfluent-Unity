@@ -38,7 +38,7 @@ public class FindTextMeshReferences : MonoBehaviour
 	{
 		//ignore all textmeshes referenced by all ButtonView components
 		var listToIngore = new List<TextMesh>();
-		GamespecificMigration.toExplicitlyIgnore(listToIngore, inPrefab);
+		GameSpecificMigration.toExplicitlyIgnore(listToIngore, inPrefab);
 
 		var allMeshesInSource = new List<TextMesh>();
 		if (inPrefab == null)

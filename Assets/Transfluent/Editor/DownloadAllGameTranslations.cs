@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
@@ -41,17 +42,15 @@ namespace transfluent.editor
 			TransfluentEditorWindowMediator mediator = getAuthenticatedMediator();
 			if(mediator == null) return;
 
-			foreach(string languageCode in languageCodes)
+			foreach (string languageCode in languageCodes)
 			{
 				try
 				{
 					GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode);
-					var groupData = set.getGroup(groupid);
-					var lang = ResourceLoadFacade.getLanguageList().getLangaugeByCode(languageCode);
+					GameTranslationSet.GroupOfTranslations groupData = set.getGroup(groupid);
+					TransfluentLanguage lang = ResourceLoadFacade.getLanguageList().getLangaugeByCode(languageCode);
 					if(groupData.translations.Count > 0)
-					{
 						mediator.SaveGroupToServer(groupData, lang);
-					}
 				}
 				catch
 				{
@@ -64,7 +63,7 @@ namespace transfluent.editor
 			TransfluentEditorWindowMediator mediator = getAuthenticatedMediator();
 			if(mediator == null) return;
 
-			foreach(string languageCode in languageCodes)
+			foreach (string languageCode in languageCodes)
 			{
 				try
 				{
@@ -76,39 +75,66 @@ namespace transfluent.editor
 					if(translations.Count > 0)
 					{
 						GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(languageCode) ??
-												 ResourceCreator.CreateSO<GameTranslationSet>(
-													 GameTranslationGetter.fileNameFromLanguageCode(languageCode));
+												ResourceCreator.CreateSO<GameTranslationSet>(GameTranslationGetter.fileNameFromLanguageCode(languageCode));
 
 						set.language = currentlanguage;
-						var groupToTranslationMap = groupidToDictionaryMap(translations);
-						foreach(KeyValuePair<string, Dictionary<string, string>> kvp in groupToTranslationMap)
+						Dictionary<string, Dictionary<string, string>> groupToTranslationMap = groupidToDictionaryMap(translations);
+						foreach (var kvp in groupToTranslationMap)
 						{
-							set.mergeInSet(kvp.Key, kvp.Value);
+							Dictionary<string, string> dictionaryOfStrings = kvp.Value;
+							if(languageCode.Equals("xx-xx")) //backwards string
+								dictionaryOfStrings = cleanBackwardsLanguageStringDictionary(dictionaryOfStrings);
+							set.mergeInSet(kvp.Key, dictionaryOfStrings);
 						}
 
 						EditorUtility.SetDirty(set);
 						AssetDatabase.SaveAssets();
 					}
 				}
-				catch(Exception e)
+				catch (Exception e)
 				{
 					Debug.LogError("error while downloading translations:" + e.Message + " stack:" + e.StackTrace);
 				}
 			}
 		}
 
-		public static Dictionary<string, Dictionary<string, string>> groupidToDictionaryMap(List<TransfluentTranslation> translations)
+		public static Dictionary<string, string> cleanBackwardsLanguageStringDictionary(Dictionary<string, string> dic)
+		{
+			var copy = new Dictionary<string, string>(dic);
+			foreach (var kvp in dic)
+			{
+				copy[kvp.Key] = cleanBackwardsLanguageString(kvp.Value);
+			}
+			return copy;
+		}
+
+		//so that formatted text fields still work, as it will change format tokens from {0} to }0{
+		public static string cleanBackwardsLanguageString(string inputString)
+		{
+			string pattern = @"(}(?<formatNumber>\d+){)";
+			var rx = new Regex(pattern, RegexOptions.Multiline);
+			string result = rx.Replace(inputString, "{$2}");
+			return result;
+		}
+
+		[MenuItem("Transfluent/fixJumbed format string")]
+		public static void TestRegex()
+		{
+			string jumbledThing = "hello }0{, how are you?";
+			Debug.Log(cleanBackwardsLanguageString(jumbledThing));
+		}
+
+		public static Dictionary<string, Dictionary<string, string>> groupidToDictionaryMap(
+			List<TransfluentTranslation> translations)
 		{
 			var map = new Dictionary<string, Dictionary<string, string>>();
-			foreach(TransfluentTranslation translation in translations)
+			foreach (TransfluentTranslation translation in translations)
 			{
 				string group = translation.group_id ?? "";
 				if(!map.ContainsKey(group))
-				{
 					map.Add(group, new Dictionary<string, string>());
-				}
 
-				var dic = map[group];
+				Dictionary<string, string> dic = map[group];
 				dic.Add(translation.text_id, translation.text);
 			}
 			return map;

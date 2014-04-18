@@ -34,6 +34,7 @@ namespace transfluent
 			changeStaticInstanceConfig(config.sourceLanguage.code, group);
 		}
 
+		
 		//convert into a factory?
 		public static bool changeStaticInstanceConfig(string destinationLanguageCode = "", string translationGroup = "")
 		{
@@ -189,7 +190,7 @@ namespace transfluent
 		}
 		static void setCaptureMode(bool toCapture)
 		{
-			EditorPrefs.SetBool("CAPTURE_MODE",true);
+			EditorPrefs.SetBool("CAPTURE_MODE", toCapture);
 		}
 	}
 

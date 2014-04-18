@@ -1,9 +1,3 @@
-Transfluent-Unity
-=================
-
-Transfluent's Unity-plugin.
-
-
 # Transfluent Unity Plugin
 This is a tool used for translating textual assets within Unity 3D, integrating into various UI frameworks, and getting translations for game text.
 

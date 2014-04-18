@@ -55,7 +55,7 @@ MonoBehaviour:
     - key: 'Score:'
       value: 'Score:'
     - key: 'Level:'
-      value: 'Level:'
+      value: 'Level: '
     - key: Game Over!
       value: Game Over!
     - key: German
@@ -77,7 +77,7 @@ MonoBehaviour:
     - key: 'Score: {0}'
       value: 'Score: {0}'
     - key: 'Lives remaining: {0}'
-      value: 'Lives remaining: {0}'
+      value: 'Lives Remaining: {0}'
     - key: 'Lives Remaining: {0}'
       value: 'Lives Remaining: {0}'
     - key: 'Level: '

@@ -51,13 +51,13 @@ MonoBehaviour:
     - key: power up
       value: sunob
     - key: Start Game
-      value: nennigeb leipS
+      value: "uej el rerram\xE9D"
     - key: Begin!
-      value: '!nennigeB'
+      value: "!\_recnemmoC"
     - key: Play Again?
-      value: ' ?neleips lamnie hcoN'
+      value: "?\_reuojeR"
     - key: Hi there!
-      value: '!ollaH'
+      value: "!\_ruojnoB"
     - key: Rocks
       value: ' nesleF'
     - key: STRANGE
@@ -67,21 +67,33 @@ MonoBehaviour:
     - key: 'Score:'
       value: ' :dnatsetknuP'
     - key: 'Level:'
-      value: ' :leveL'
+      value: ': uaeviN'
     - key: Game Over!
       value: '!revo emaG'
     - key: German
-      value: hcstueD
+      value: dnamellA
     - key: French
-      value: "hcsis\xF6znarF"
+      value: "sia\xE7narF"
     - key: English
-      value: hcsilgnE
+      value: sialgnA
     - key: Backwards
-      value: "str\xE4wkc\xFCR"
+      value: "srevne'l \xC0"
     - key: Return to game
-      value: "nerhekkc\xFCruz leipS muZ"
+      value: uej ua ruoteR
     - key: Language Select
-      value: lhawsuahcarpS
+      value: eugnal al ed xiohC
+    - key: 'Last Score: {0}'
+      value: '{0} : erocs reinreD'
+    - key: Start Level {0}
+      value: "{0} uaevin el rerram\xE9D"
+    - key: 'Score: {0}'
+      value: '{0} : erocS'
+    - key: 'Lives remaining: {0}'
+      value: '{0} : setnatser seiV'
+    - key: Play Again
+      value: reuojeR
+    - key: 'Final Score: {0}'
+      value: '{0} : lanif erocS'
   - groupid: TEST
     translations:
     - key: sprechen sie deutsch

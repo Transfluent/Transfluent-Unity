@@ -47,9 +47,41 @@ MonoBehaviour:
     - key: configuration
       value: configuration
     - key: Start Game
-      value: startFR
+      value: "D\xE9marrer le jeu"
     - key: power up
       value: bonus
+    - key: Begin!
+      value: "Commencer\_!"
+    - key: Play Again?
+      value: "Rejouer\_?"
+    - key: Hi there!
+      value: "Bonjour\_!"
+    - key: 'Level:'
+      value: 'Niveau :'
+    - key: German
+      value: Allemand
+    - key: French
+      value: "Fran\xE7ais"
+    - key: English
+      value: Anglais
+    - key: Backwards
+      value: "\xC0 l'envers"
+    - key: Return to game
+      value: Retour au jeu
+    - key: Language Select
+      value: Choix de la langue
+    - key: 'Last Score: {0}'
+      value: 'Dernier score : {0}'
+    - key: Start Level {0}
+      value: "D\xE9marrer le niveau {0}"
+    - key: 'Score: {0}'
+      value: 'Score : {0}'
+    - key: 'Lives remaining: {0}'
+      value: 'Vies restantes : {0}'
+    - key: Play Again
+      value: Rejouer
+    - key: 'Final Score: {0}'
+      value: 'Score final : {0}'
   language:
     name: French (France)
     code: fr-fr

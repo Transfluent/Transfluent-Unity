@@ -125,7 +125,7 @@ public class TranslationEstimate
 				texts: textsToTranslate.ToArray(),
 				level: selectedConfig.QualityToRequest,
 				group_id: selectedConfig.translation_set_group,
-				comment: "Do not replace any strings that look like {0} or {1} as they are a part of formatted text"
+				comment: "Do not replace any strings that look like {0} or {1} as they are a part of formatted text -- ie Hello {0} will turn into Hello Alex or some other string "
 				);
 		doCall(translate);
 	}

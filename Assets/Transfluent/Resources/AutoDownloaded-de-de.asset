@@ -57,7 +57,7 @@ MonoBehaviour:
     - key: 'Score:'
       value: 'Punktestand: '
     - key: 'Level:'
-      value: 'Level: '
+      value: 'Level:'
     - key: Game Over!
       value: Game over!
     - key: German
@@ -72,6 +72,18 @@ MonoBehaviour:
       value: "Zum Spiel zur\xFCckkehren"
     - key: Language Select
       value: Sprachauswahl
+    - key: 'Last Score: {0}'
+      value: 'Letzte Punktzahl: {0}'
+    - key: Start Level {0}
+      value: Starte Level {0}
+    - key: 'Score: {0}'
+      value: 'Punktzahl: {0}'
+    - key: 'Lives remaining: {0}'
+      value: 'Verbleibende Leben: {0}'
+    - key: Play Again
+      value: Nochmal spielen
+    - key: 'Final Score: {0}'
+      value: 'Endpunktzahl: {0}'
   - groupid: TEST
     translations:
     - key: sprechen sie deutsch

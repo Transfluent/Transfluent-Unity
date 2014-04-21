@@ -261,6 +261,13 @@ namespace transfluent.tests
 			Assert.IsTrue(translationResult.word_count > 0);
 		}
 
+		[Test]
+		public void TestFixBackwardsLanguage()
+		{
+			string jumbledThing = "hello }0{, how are you?";
+			Debug.Log(DownloadAllGameTranslations.cleanBackwardsLanguageString(jumbledThing));
+		}
+
 		//NOTE: keys are not immediately translated
 		[Ignore("Need to investigate why this does not work")]
 		[Test]

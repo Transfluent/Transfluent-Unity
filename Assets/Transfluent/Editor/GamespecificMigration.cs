@@ -11,6 +11,11 @@ namespace transfluent
 {
 	public class GameSpecificMigration : MonoBehaviour
 	{
+		public static readonly List<string> blacklistStringsContaining = new List<string>
+		{
+			"XXXX",
+		};
+
 		//ignore all textmeshes referenced by all ButtonView components
 		public static void toExplicitlyIgnore(List<TextMesh> toIgnore,GameObject inPrefab = null)
 		{

@@ -71,7 +71,7 @@ public class SetupTranslationConfiguration : EditorWindow
 	{
 		//TODO: estimate all remaining text cost
 		GUILayout.Space(30);
-		GUILayout.Label("Translate all things:");
+		GUILayout.Label("Translate all known language from source to destination languages:");
 		_mediator.doAuth();
 		string authToken = _mediator.getCurrentAuthToken();
 		if(string.IsNullOrEmpty(authToken))

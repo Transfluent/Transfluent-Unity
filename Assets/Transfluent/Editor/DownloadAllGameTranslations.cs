@@ -117,7 +117,7 @@ namespace transfluent.editor
 			return result;
 		}
 
-		[MenuItem("Transfluent/fixJumbed format string")]
+		//[MenuItem("Transfluent/fixJumbed format string")]
 		public static void TestRegex()
 		{
 			string jumbledThing = "hello }0{, how are you?";

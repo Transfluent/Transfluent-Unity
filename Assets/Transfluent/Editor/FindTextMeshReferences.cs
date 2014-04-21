@@ -6,10 +6,7 @@ using UnityEngine;
 
 public class FindTextMeshReferences : MonoBehaviour
 {
-	private static readonly List<string> blacklistStringsContaining = new List<string>
-	{
-		"XXXX",
-	};
+	
 
 	public static void setKeyInDefaultLanguageDB(string key, string value, string groupid = "")
 	{
@@ -60,7 +57,7 @@ public class FindTextMeshReferences : MonoBehaviour
 		return listToIngore;
 	}
 
-	[MenuItem("Helpers/Test known key")]
+	//[MenuItem("Transfluent/Helpers/Test known key")]
 	public static void TestKnownKey()
 	{
 		Debug.Log(TranslationUtility.get("Start Game"));
@@ -68,7 +65,7 @@ public class FindTextMeshReferences : MonoBehaviour
 
 	private static bool shouldGlobalizeText(string textIn)
 	{
-		foreach (string blacklist in blacklistStringsContaining)
+		foreach (string blacklist in GameSpecificMigration.blacklistStringsContaining)
 		{
 			if (textIn.Contains(blacklist))
 				return false;
@@ -76,7 +73,7 @@ public class FindTextMeshReferences : MonoBehaviour
 		return true;
 	}
 
-	[MenuItem("Helpers/All of the above")]
+	[MenuItem("Transfluent/Helpers/Full migration")]
 	public static void UpdateReferences()
 	{
 		GetTextMeshReferencesFromPrefabs();
@@ -86,7 +83,7 @@ public class FindTextMeshReferences : MonoBehaviour
 	}
 
 	//NOTE you *must* be in the source language for this to not cause corruption issues!
-	[MenuItem("Helpers/TestMesh In Current Scene")]
+	[MenuItem("Transfluent/Helpers/TestMesh In Current Scene")]
 	public static TextMesh[] GetTextMeshReferences()
 	{
 		var meshes = FindObjectsOfType(typeof (TextMesh)) as TextMesh[];
@@ -101,7 +98,7 @@ public class FindTextMeshReferences : MonoBehaviour
 		return meshes;
 	}
 
-	[MenuItem("Helpers/TestMesh In All Scene map")]
+	//[MenuItem("Transfluent/Helpers/TestMesh In All Scene map")]
 	public static void GetTextMeshReferencesInScenes()
 	{
 		var scenePathToReferenceList = new Dictionary<string, TextMesh[]>();
@@ -152,7 +149,7 @@ public class FindTextMeshReferences : MonoBehaviour
 		return retList;
 	}
 
-	[MenuItem("Helpers/Textmeshes in prefabs")]
+	//[MenuItem("Transfluent/Helpers/Textmeshes in prefabs")]
 	public static void GetTextMeshReferencesFromPrefabs()
 	{
 		//var assets = AssetDatabase.LoadAllAssetsAtPath("Assets") as Object[];

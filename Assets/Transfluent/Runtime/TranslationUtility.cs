@@ -53,19 +53,19 @@ namespace transfluent
 			return false;
 		}
 
-		[MenuItem("Helpers/Test Change to EN-US")]
+		//[MenuItem("Transfluent/Helpers/Test Change to EN-US")]
 		public static void ChangeStaticConfigToUS()
 		{
 			changeStaticInstanceConfig("en-us");
 		}
 
-		[MenuItem("Helpers/Test Change to FR-FR")]
+		//[MenuItem("Transfluent/Helpers/Test Change to FR-FR")]
 		public static void ChangeStaticConfigToFRFR()
 		{
 			changeStaticInstanceConfig("fr-fr");
 		}
 
-		[MenuItem("Helpers/Test find")]
+		[MenuItem("Transfluent/Helpers/Test find")]
 		public static void testHelpfind()
 		{
 			//GetComponentsInChildren( typeof(Transform), true );
@@ -79,7 +79,7 @@ namespace transfluent
 			}
 		}
 
-		[MenuItem("Helpers/Test OnLocalize")]
+		//[MenuItem("Transfluent/Helpers/Test OnLocalize")]
 		public static void OnLanguageChanged()
 		{
 			
@@ -170,14 +170,14 @@ namespace transfluent
 		{
 			return _instance.getFormattedTranslation(sourceText, formatStrings);
 		}
-		[MenuItem("Helpers/Enable Capture Mode")]
+		[MenuItem("Transfluent/Helpers/Enable Capture Mode")]
 		static void EnableCaptureMode()
 		{
 			setCaptureMode(true);
 			_instance = createNewInstance();
 		}
 
-		[MenuItem("Helpers/Disable Capture Mode")]
+		[MenuItem("Transfluent/Helpers/Disable Capture Mode")]
 		static void DisableCaptureMode()
 		{
 			setCaptureMode(false);

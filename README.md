@@ -61,6 +61,11 @@ using GUILayout = transfluent.guiwrapper.GUILayout;
 ~~~~~~~~
 And the rest of your GUILayout and GUI function calls will automatically use the transfluent API to translate text.
 
+note: not handled by translated code due to technical restraints:
+Toolbar - array of texts is too much
+SelectionGrid
+
+
 ## Files in package:
 * Transfluent:
   * Editor -- editor tools - editor windows, custom inspectors, and other utilities to perform operations only relevant to initial setup
@@ -69,3 +74,7 @@ And the rest of your GUILayout and GUI function calls will automatically use the
   * Plugins - Code shared by both runtime and editor time scripts - serialization, web service interfaces
   * Resources - Data related to the configuration of your game (ie Source language: english, destination languages: Korean, Chinese, Japanese), and listings of individual translations.
   * Runtime - Interfaces to game code live in this folder -- these are the things you will be using directly
+  
+  
+  
+ 

@@ -83,7 +83,7 @@ public class FindTextMeshReferences : MonoBehaviour
 	}
 
 	//NOTE you *must* be in the source language for this to not cause corruption issues!
-	[MenuItem("Transfluent/Helpers/TestMesh In Current Scene")]
+	//[MenuItem("Transfluent/Helpers/TestMesh In Current Scene")]
 	public static TextMesh[] GetTextMeshReferences()
 	{
 		var meshes = FindObjectsOfType(typeof (TextMesh)) as TextMesh[];

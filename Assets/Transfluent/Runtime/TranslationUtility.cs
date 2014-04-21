@@ -65,7 +65,7 @@ namespace transfluent
 			changeStaticInstanceConfig("fr-fr");
 		}
 
-		[MenuItem("Transfluent/Helpers/Test find")]
+		//[MenuItem("Transfluent/Helpers/Test find")]
 		public static void testHelpfind()
 		{
 			//GetComponentsInChildren( typeof(Transform), true );

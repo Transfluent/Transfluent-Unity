@@ -1,6 +1,4 @@
-﻿using Assets.Transfluent.Plugins.Calls;
-
-//handles interaction with core code, allowing hte editor window to focus on presentation.  Also has the nice side effect of avoiding issues in editor files (massive bugginess with optional arguments, etc)
+﻿//handles interaction with core code, allowing hte editor window to focus on presentation.  Also has the nice side effect of avoiding issues in editor files (massive bugginess with optional arguments, etc)
 //seperatoion of logic, and
 using System;
 using System.Collections.Generic;

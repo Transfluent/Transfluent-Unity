@@ -1,9 +1,8 @@
 ﻿using Pathfinding.Serialization.JsonFx;
 using System;
 using System.Collections.Generic;
-using transfluent;
 
-namespace Assets.Transfluent.Plugins.Calls
+namespace transfluent
 {
 	[Route("texts", RestRequestType.POST, "http://transfluent.com/backend-api/#Texts")] //expected return type?
 	public class SaveSetOfKeys : WebServiceParameters

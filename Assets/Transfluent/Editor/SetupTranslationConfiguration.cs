@@ -77,9 +77,24 @@ public class SetupTranslationConfiguration : EditorWindow
 		if(string.IsNullOrEmpty(authToken))
 			throw new Exception("Auth token is null");
 		var estimator = new TranslationEstimate(authToken);
-		estimator.testThing(selectedConfig);
-	}
 
+		uploadAllLocalDestinationLanguageTranslations(selectedConfig,authToken);
+
+		estimator.presentEstimateAndMakeOrder(selectedConfig);
+	}
+	//uploads source config, and all destination configs (in case I have done some translations locally)
+	public void uploadAllLocalDestinationLanguageTranslations(TranslationConfigurationSO config,string authToken)
+	{
+		foreach (TransfluentLanguage language in config.destinationLanguages)
+		{
+			string group = config.translation_set_group;
+			var sourceSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(language.code);
+
+			var call = new SaveSetOfKeys(language.id, dictionaryToSave: sourceSet.getGroup(group).getDictionaryCopy(), group_id: group);
+			call.getParameters.Add("token", authToken);
+			
+		}
+	}
 	private void createANewConfig()
 	{
 		GUILayout.Label("Group Id:");

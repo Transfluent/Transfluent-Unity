@@ -1,5 +1,4 @@
-﻿using Assets.Transfluent.Plugins.Calls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using transfluent;
@@ -15,7 +14,7 @@ public class TranslationEstimate
 		token = tokenIn;
 	}
 
-	public void testThing(TranslationConfigurationSO selectedConfig)
+	public void presentEstimateAndMakeOrder(TranslationConfigurationSO selectedConfig)
 	{
 		var languageEstimates = new Dictionary<TransfluentLanguage, EstimateTranslationCostVO.Price>();
 		if(GUILayout.Button("Translate"))
@@ -79,7 +78,9 @@ public class TranslationEstimate
 					lang.name, totalCost, oneWordPrice.currency, costPerWord, wordCount);
 
 			}
-			Debug.Log("GOT THING");
+
+
+			Debug.Log("Estimated prices");
 			if(EditorUtility.DisplayDialog("Estimates", "Estimated cost(only additions counted in estimate):\n" + simpleEstimateString, "OK", "Cancel"))
 			{
 				
@@ -116,7 +117,7 @@ public class TranslationEstimate
 		var uploadAll = new SaveSetOfKeys(selectedConfig.sourceLanguage.id,
 			keysToTranslate,
 			selectedConfig.translation_set_group
-			);
+			);	
 		doCall(uploadAll);
 
 		selectedConfig.destinationLanguages.ForEach((TransfluentLanguage lang) => { destLanguageIDs.Add(lang.id); });

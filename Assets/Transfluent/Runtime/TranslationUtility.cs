@@ -63,20 +63,7 @@ namespace transfluent
 			changeStaticInstanceConfig("fr-fr");
 		}
 
-		//[MenuItem("Transfluent/Helpers/Test find")]
-		public static void testHelpfind()
-		{
-			//GetComponentsInChildren( typeof(Transform), true );
-			var gos = GameObject.FindObjectsOfType<GameObject>();
-			foreach (GameObject go in gos)
-			{
-				if (go.name == "idle_view")
-				{
-					Debug.LogError("FOUND IDLE VIEW");
-				}
-			}
-		}
-
+		
 		//[MenuItem("Transfluent/Helpers/Test OnLocalize")]
 		public static void OnLanguageChanged()
 		{

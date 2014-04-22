@@ -5,7 +5,6 @@ using System;
 namespace transfluent.guiwrapper
 {
 #pragma warning disable 618
-
 	public partial class EditorGUI
 	{
 		public static System.Boolean showMixedValue
@@ -57,7 +56,7 @@ namespace transfluent.guiwrapper
 
 		public static void DropShadowLabel(UnityEngine.Rect position, System.String text)
 		{
-			UnityEditor.EditorGUI.DropShadowLabel(position, text);
+			UnityEditor.EditorGUI.DropShadowLabel(position, TranslationUtility.get(text));
 		}
 
 		public static void DropShadowLabel(UnityEngine.Rect position, UnityEngine.GUIContent content)
@@ -67,7 +66,7 @@ namespace transfluent.guiwrapper
 
 		public static void DropShadowLabel(UnityEngine.Rect position, System.String text, UnityEngine.GUIStyle style)
 		{
-			UnityEditor.EditorGUI.DropShadowLabel(position, text, style);
+			UnityEditor.EditorGUI.DropShadowLabel(position, TranslationUtility.get(text), style);
 		}
 
 		public static void DropShadowLabel(UnityEngine.Rect position, UnityEngine.GUIContent content, UnityEngine.GUIStyle style)
@@ -77,12 +76,12 @@ namespace transfluent.guiwrapper
 
 		public static void LabelField(UnityEngine.Rect position, System.String label)
 		{
-			UnityEditor.EditorGUI.LabelField(position, label);
+			UnityEditor.EditorGUI.LabelField(position, TranslationUtility.get(label));
 		}
 
 		public static void LabelField(UnityEngine.Rect position, System.String label, UnityEngine.GUIStyle style)
 		{
-			UnityEditor.EditorGUI.LabelField(position, label, style);
+			UnityEditor.EditorGUI.LabelField(position, TranslationUtility.get(label), style);
 		}
 
 		public static void LabelField(UnityEngine.Rect position, UnityEngine.GUIContent label)
@@ -97,12 +96,12 @@ namespace transfluent.guiwrapper
 
 		public static void LabelField(UnityEngine.Rect position, System.String label, System.String label2)
 		{
-			UnityEditor.EditorGUI.LabelField(position, label, label2);
+			UnityEditor.EditorGUI.LabelField(position, TranslationUtility.get(label), TranslationUtility.get(label2));
 		}
 
 		public static void LabelField(UnityEngine.Rect position, System.String label, System.String label2, UnityEngine.GUIStyle style)
 		{
-			UnityEditor.EditorGUI.LabelField(position, label, label2, style);
+			UnityEditor.EditorGUI.LabelField(position, TranslationUtility.get(label), TranslationUtility.get(label), style);
 		}
 
 		public static void LabelField(UnityEngine.Rect position, UnityEngine.GUIContent label, UnityEngine.GUIContent label2)
@@ -122,7 +121,7 @@ namespace transfluent.guiwrapper
 
 		public static bool Toggle(UnityEngine.Rect position, System.String label, bool value)
 		{
-			return UnityEditor.EditorGUI.Toggle(position, label, value);
+			return UnityEditor.EditorGUI.Toggle(position, TranslationUtility.get(label), value);
 		}
 
 		public static bool Toggle(UnityEngine.Rect position, bool value, UnityEngine.GUIStyle style)
@@ -132,7 +131,7 @@ namespace transfluent.guiwrapper
 
 		public static bool Toggle(UnityEngine.Rect position, System.String label, bool value, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.Toggle(position, label, value, style);
+			return UnityEditor.EditorGUI.Toggle(position, TranslationUtility.get(label), value, style);
 		}
 
 		public static bool Toggle(UnityEngine.Rect position, UnityEngine.GUIContent label, bool value)
@@ -147,12 +146,12 @@ namespace transfluent.guiwrapper
 
 		public static bool ToggleLeft(UnityEngine.Rect position, System.String label, bool value)
 		{
-			return UnityEditor.EditorGUI.ToggleLeft(position, label, value);
+			return UnityEditor.EditorGUI.ToggleLeft(position, TranslationUtility.get(label), value);
 		}
 
 		public static bool ToggleLeft(UnityEngine.Rect position, System.String label, bool value, UnityEngine.GUIStyle labelStyle)
 		{
-			return UnityEditor.EditorGUI.ToggleLeft(position, label, value, labelStyle);
+			return UnityEditor.EditorGUI.ToggleLeft(position, TranslationUtility.get(label), value, labelStyle);
 		}
 
 		public static bool ToggleLeft(UnityEngine.Rect position, UnityEngine.GUIContent label, bool value)
@@ -167,52 +166,52 @@ namespace transfluent.guiwrapper
 
 		public static System.String TextField(UnityEngine.Rect position, System.String text)
 		{
-			return UnityEditor.EditorGUI.TextField(position, text);
+			return UnityEditor.EditorGUI.TextField(position, TranslationUtility.get(text));
 		}
 
 		public static System.String TextField(UnityEngine.Rect position, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.TextField(position, text, style);
+			return UnityEditor.EditorGUI.TextField(position, TranslationUtility.get(text), style);
 		}
 
 		public static System.String TextField(UnityEngine.Rect position, System.String label, System.String text)
 		{
-			return UnityEditor.EditorGUI.TextField(position, label, text);
+			return UnityEditor.EditorGUI.TextField(position, TranslationUtility.get(label), TranslationUtility.get(text));
 		}
 
 		public static System.String TextField(UnityEngine.Rect position, System.String label, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.TextField(position, label, text, style);
+			return UnityEditor.EditorGUI.TextField(position, TranslationUtility.get(label), TranslationUtility.get(text), style);
 		}
 
 		public static System.String TextField(UnityEngine.Rect position, UnityEngine.GUIContent label, System.String text)
 		{
-			return UnityEditor.EditorGUI.TextField(position, label, text);
+			return UnityEditor.EditorGUI.TextField(position, label, TranslationUtility.get(text));
 		}
 
 		public static System.String TextField(UnityEngine.Rect position, UnityEngine.GUIContent label, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.TextField(position, label, text, style);
+			return UnityEditor.EditorGUI.TextField(position, label, TranslationUtility.get(text), style);
 		}
 
 		public static System.String TextArea(UnityEngine.Rect position, System.String text)
 		{
-			return UnityEditor.EditorGUI.TextArea(position, text);
+			return UnityEditor.EditorGUI.TextArea(position, TranslationUtility.get(text));
 		}
 
 		public static System.String TextArea(UnityEngine.Rect position, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.TextArea(position, text, style);
+			return UnityEditor.EditorGUI.TextArea(position, TranslationUtility.get(text), style);
 		}
 
 		public static void SelectableLabel(UnityEngine.Rect position, System.String text)
 		{
-			UnityEditor.EditorGUI.SelectableLabel(position, text);
+			UnityEditor.EditorGUI.SelectableLabel(position, TranslationUtility.get(text));
 		}
 
 		public static void SelectableLabel(UnityEngine.Rect position, System.String text, UnityEngine.GUIStyle style)
 		{
-			UnityEditor.EditorGUI.SelectableLabel(position, text, style);
+			UnityEditor.EditorGUI.SelectableLabel(position, TranslationUtility.get(text), style);
 		}
 
 		public static System.String DoPasswordField(int id, UnityEngine.Rect position, System.String password, UnityEngine.GUIStyle style)
@@ -237,12 +236,12 @@ namespace transfluent.guiwrapper
 
 		public static System.String PasswordField(UnityEngine.Rect position, System.String label, System.String password)
 		{
-			return UnityEditor.EditorGUI.PasswordField(position, label, password);
+			return UnityEditor.EditorGUI.PasswordField(position, TranslationUtility.get(label), password);
 		}
 
 		public static System.String PasswordField(UnityEngine.Rect position, System.String label, System.String password, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.PasswordField(position, label, password, style);
+			return UnityEditor.EditorGUI.PasswordField(position, TranslationUtility.get(label), password, style);
 		}
 
 		public static System.String PasswordField(UnityEngine.Rect position, UnityEngine.GUIContent label, System.String password)
@@ -267,12 +266,12 @@ namespace transfluent.guiwrapper
 
 		public static float FloatField(UnityEngine.Rect position, System.String label, float value)
 		{
-			return UnityEditor.EditorGUI.FloatField(position, label, value);
+			return UnityEditor.EditorGUI.FloatField(position, TranslationUtility.get(label), value);
 		}
 
 		public static float FloatField(UnityEngine.Rect position, System.String label, float value, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.FloatField(position, label, value, style);
+			return UnityEditor.EditorGUI.FloatField(position, TranslationUtility.get(label), value, style);
 		}
 
 		public static float FloatField(UnityEngine.Rect position, UnityEngine.GUIContent label, float value)
@@ -297,12 +296,12 @@ namespace transfluent.guiwrapper
 
 		public static int IntField(UnityEngine.Rect position, System.String label, int value)
 		{
-			return UnityEditor.EditorGUI.IntField(position, label, value);
+			return UnityEditor.EditorGUI.IntField(position, TranslationUtility.get(label), value);
 		}
 
 		public static int IntField(UnityEngine.Rect position, System.String label, int value, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.IntField(position, label, value, style);
+			return UnityEditor.EditorGUI.IntField(position, TranslationUtility.get(label), value, style);
 		}
 
 		public static int IntField(UnityEngine.Rect position, UnityEngine.GUIContent label, int value)
@@ -322,7 +321,7 @@ namespace transfluent.guiwrapper
 
 		public static float Slider(UnityEngine.Rect position, System.String label, float value, float leftValue, float rightValue)
 		{
-			return UnityEditor.EditorGUI.Slider(position, label, value, leftValue, rightValue);
+			return UnityEditor.EditorGUI.Slider(position, TranslationUtility.get(label), value, leftValue, rightValue);
 		}
 
 		public static float Slider(UnityEngine.Rect position, UnityEngine.GUIContent label, float value, float leftValue, float rightValue)
@@ -337,7 +336,7 @@ namespace transfluent.guiwrapper
 
 		public static void Slider(UnityEngine.Rect position, UnityEditor.SerializedProperty property, float leftValue, float rightValue, System.String label)
 		{
-			UnityEditor.EditorGUI.Slider(position, property, leftValue, rightValue, label);
+			UnityEditor.EditorGUI.Slider(position, property, leftValue, rightValue, TranslationUtility.get(label));
 		}
 
 		public static void Slider(UnityEngine.Rect position, UnityEditor.SerializedProperty property, float leftValue, float rightValue, UnityEngine.GUIContent label)
@@ -352,7 +351,7 @@ namespace transfluent.guiwrapper
 
 		public static int IntSlider(UnityEngine.Rect position, System.String label, int value, int leftValue, int rightValue)
 		{
-			return UnityEditor.EditorGUI.IntSlider(position, label, value, leftValue, rightValue);
+			return UnityEditor.EditorGUI.IntSlider(position, TranslationUtility.get(label), value, leftValue, rightValue);
 		}
 
 		public static int IntSlider(UnityEngine.Rect position, UnityEngine.GUIContent label, int value, int leftValue, int rightValue)
@@ -367,7 +366,7 @@ namespace transfluent.guiwrapper
 
 		public static void IntSlider(UnityEngine.Rect position, UnityEditor.SerializedProperty property, int leftValue, int rightValue, System.String label)
 		{
-			UnityEditor.EditorGUI.IntSlider(position, property, leftValue, rightValue, label);
+			UnityEditor.EditorGUI.IntSlider(position, property, leftValue, rightValue, TranslationUtility.get(label));
 		}
 
 		public static void IntSlider(UnityEngine.Rect position, UnityEditor.SerializedProperty property, int leftValue, int rightValue, UnityEngine.GUIContent label)
@@ -387,12 +386,12 @@ namespace transfluent.guiwrapper
 
 		public static int Popup(UnityEngine.Rect position, int selectedIndex, System.String[] displayedOptions)
 		{
-			return UnityEditor.EditorGUI.Popup(position, selectedIndex, displayedOptions);
+			return UnityEditor.EditorGUI.Popup(position, selectedIndex, TranslationUtility.get(displayedOptions));
 		}
 
 		public static int Popup(UnityEngine.Rect position, int selectedIndex, System.String[] displayedOptions, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.Popup(position, selectedIndex, displayedOptions, style);
+			return UnityEditor.EditorGUI.Popup(position, selectedIndex, TranslationUtility.get(displayedOptions), style);
 		}
 
 		public static int Popup(UnityEngine.Rect position, int selectedIndex, UnityEngine.GUIContent[] displayedOptions)
@@ -407,12 +406,12 @@ namespace transfluent.guiwrapper
 
 		public static int Popup(UnityEngine.Rect position, System.String label, int selectedIndex, System.String[] displayedOptions)
 		{
-			return UnityEditor.EditorGUI.Popup(position, label, selectedIndex, displayedOptions);
+			return UnityEditor.EditorGUI.Popup(position, TranslationUtility.get(label), selectedIndex, TranslationUtility.get(displayedOptions));
 		}
 
 		public static int Popup(UnityEngine.Rect position, System.String label, int selectedIndex, System.String[] displayedOptions, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.Popup(position, label, selectedIndex, displayedOptions, style);
+			return UnityEditor.EditorGUI.Popup(position, TranslationUtility.get(label), selectedIndex, TranslationUtility.get(displayedOptions), style);
 		}
 
 		public static int Popup(UnityEngine.Rect position, UnityEngine.GUIContent label, int selectedIndex, UnityEngine.GUIContent[] displayedOptions)
@@ -437,12 +436,12 @@ namespace transfluent.guiwrapper
 
 		public static System.Enum EnumPopup(UnityEngine.Rect position, System.String label, System.Enum selected)
 		{
-			return UnityEditor.EditorGUI.EnumPopup(position, label, selected);
+			return UnityEditor.EditorGUI.EnumPopup(position, TranslationUtility.get(label), selected);
 		}
 
 		public static System.Enum EnumPopup(UnityEngine.Rect position, System.String label, System.Enum selected, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.EnumPopup(position, label, selected, style);
+			return UnityEditor.EditorGUI.EnumPopup(position, TranslationUtility.get(label), selected, style);
 		}
 
 		public static System.Enum EnumPopup(UnityEngine.Rect position, UnityEngine.GUIContent label, System.Enum selected)
@@ -457,12 +456,12 @@ namespace transfluent.guiwrapper
 
 		public static int IntPopup(UnityEngine.Rect position, int selectedValue, System.String[] displayedOptions, System.Int32[] optionValues)
 		{
-			return UnityEditor.EditorGUI.IntPopup(position, selectedValue, displayedOptions, optionValues);
+			return UnityEditor.EditorGUI.IntPopup(position, selectedValue, TranslationUtility.get(displayedOptions), optionValues);
 		}
 
 		public static int IntPopup(UnityEngine.Rect position, int selectedValue, System.String[] displayedOptions, System.Int32[] optionValues, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.IntPopup(position, selectedValue, displayedOptions, optionValues, style);
+			return UnityEditor.EditorGUI.IntPopup(position, selectedValue, TranslationUtility.get(displayedOptions), optionValues, style);
 		}
 
 		public static int IntPopup(UnityEngine.Rect position, int selectedValue, UnityEngine.GUIContent[] displayedOptions, System.Int32[] optionValues)
@@ -497,12 +496,12 @@ namespace transfluent.guiwrapper
 
 		public static int IntPopup(UnityEngine.Rect position, System.String label, int selectedValue, System.String[] displayedOptions, System.Int32[] optionValues)
 		{
-			return UnityEditor.EditorGUI.IntPopup(position, label, selectedValue, displayedOptions, optionValues);
+			return UnityEditor.EditorGUI.IntPopup(position, TranslationUtility.get(label), selectedValue, TranslationUtility.get(displayedOptions), optionValues);
 		}
 
 		public static int IntPopup(UnityEngine.Rect position, System.String label, int selectedValue, System.String[] displayedOptions, System.Int32[] optionValues, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.IntPopup(position, label, selectedValue, displayedOptions, optionValues, style);
+			return UnityEditor.EditorGUI.IntPopup(position, TranslationUtility.get(label), selectedValue, TranslationUtility.get(displayedOptions), optionValues, style);
 		}
 
 		public static System.String TagField(UnityEngine.Rect position, System.String tag)
@@ -517,12 +516,12 @@ namespace transfluent.guiwrapper
 
 		public static System.String TagField(UnityEngine.Rect position, System.String label, System.String tag)
 		{
-			return UnityEditor.EditorGUI.TagField(position, label, tag);
+			return UnityEditor.EditorGUI.TagField(position, TranslationUtility.get(label), tag);
 		}
 
 		public static System.String TagField(UnityEngine.Rect position, System.String label, System.String tag, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.TagField(position, label, tag, style);
+			return UnityEditor.EditorGUI.TagField(position, TranslationUtility.get(label), tag, style);
 		}
 
 		public static System.String TagField(UnityEngine.Rect position, UnityEngine.GUIContent label, System.String tag)
@@ -547,12 +546,12 @@ namespace transfluent.guiwrapper
 
 		public static int LayerField(UnityEngine.Rect position, System.String label, int layer)
 		{
-			return UnityEditor.EditorGUI.LayerField(position, label, layer);
+			return UnityEditor.EditorGUI.LayerField(position, TranslationUtility.get(label), layer);
 		}
 
 		public static int LayerField(UnityEngine.Rect position, System.String label, int layer, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.LayerField(position, label, layer, style);
+			return UnityEditor.EditorGUI.LayerField(position, TranslationUtility.get(label), layer, style);
 		}
 
 		public static int LayerField(UnityEngine.Rect position, UnityEngine.GUIContent label, int layer)
@@ -567,32 +566,32 @@ namespace transfluent.guiwrapper
 
 		public static int MaskField(UnityEngine.Rect position, UnityEngine.GUIContent label, int mask, System.String[] displayedOptions)
 		{
-			return UnityEditor.EditorGUI.MaskField(position, label, mask, displayedOptions);
+			return UnityEditor.EditorGUI.MaskField(position, label, mask, TranslationUtility.get(displayedOptions));
 		}
 
 		public static int MaskField(UnityEngine.Rect position, UnityEngine.GUIContent label, int mask, System.String[] displayedOptions, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.MaskField(position, label, mask, displayedOptions, style);
+			return UnityEditor.EditorGUI.MaskField(position, label, mask, TranslationUtility.get(displayedOptions), style);
 		}
 
 		public static int MaskField(UnityEngine.Rect position, System.String label, int mask, System.String[] displayedOptions)
 		{
-			return UnityEditor.EditorGUI.MaskField(position, label, mask, displayedOptions);
+			return UnityEditor.EditorGUI.MaskField(position, TranslationUtility.get(label), mask, TranslationUtility.get(displayedOptions));
 		}
 
 		public static int MaskField(UnityEngine.Rect position, System.String label, int mask, System.String[] displayedOptions, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.MaskField(position, label, mask, displayedOptions, style);
+			return UnityEditor.EditorGUI.MaskField(position, TranslationUtility.get(label), mask, TranslationUtility.get(displayedOptions), style);
 		}
 
 		public static int MaskField(UnityEngine.Rect position, int mask, System.String[] displayedOptions)
 		{
-			return UnityEditor.EditorGUI.MaskField(position, mask, displayedOptions);
+			return UnityEditor.EditorGUI.MaskField(position, mask, TranslationUtility.get(displayedOptions));
 		}
 
 		public static int MaskField(UnityEngine.Rect position, int mask, System.String[] displayedOptions, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.MaskField(position, mask, displayedOptions, style);
+			return UnityEditor.EditorGUI.MaskField(position, mask, TranslationUtility.get(displayedOptions), style);
 		}
 
 		public static System.Enum EnumMaskField(UnityEngine.Rect position, UnityEngine.GUIContent label, System.Enum enumValue)
@@ -607,12 +606,12 @@ namespace transfluent.guiwrapper
 
 		public static System.Enum EnumMaskField(UnityEngine.Rect position, System.String label, System.Enum enumValue)
 		{
-			return UnityEditor.EditorGUI.EnumMaskField(position, label, enumValue);
+			return UnityEditor.EditorGUI.EnumMaskField(position, TranslationUtility.get(label), enumValue);
 		}
 
 		public static System.Enum EnumMaskField(UnityEngine.Rect position, System.String label, System.Enum enumValue, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.EnumMaskField(position, label, enumValue, style);
+			return UnityEditor.EditorGUI.EnumMaskField(position, TranslationUtility.get(label), enumValue, style);
 		}
 
 		public static System.Enum EnumMaskField(UnityEngine.Rect position, System.Enum enumValue)
@@ -638,13 +637,13 @@ namespace transfluent.guiwrapper
 
 		public static UnityEngine.Object ObjectField(UnityEngine.Rect position, System.String label, UnityEngine.Object obj, System.Type objType, bool allowSceneObjects)
 		{
-			return UnityEditor.EditorGUI.ObjectField(position, label, obj, objType, allowSceneObjects);
+			return UnityEditor.EditorGUI.ObjectField(position, TranslationUtility.get(label), obj, objType, allowSceneObjects);
 		}
 
 		[Obsolete("Check the docs for the usage of the new parameter 'allowSceneObjects'.")]
 		public static UnityEngine.Object ObjectField(UnityEngine.Rect position, System.String label, UnityEngine.Object obj, System.Type objType)
 		{
-			return UnityEditor.EditorGUI.ObjectField(position, label, obj, objType);
+			return UnityEditor.EditorGUI.ObjectField(position, TranslationUtility.get(label), obj, objType);
 		}
 
 		public static UnityEngine.Object ObjectField(UnityEngine.Rect position, UnityEngine.GUIContent label, UnityEngine.Object obj, System.Type objType, bool allowSceneObjects)
@@ -665,7 +664,7 @@ namespace transfluent.guiwrapper
 
 		public static UnityEngine.Vector2 Vector2Field(UnityEngine.Rect position, System.String label, UnityEngine.Vector2 value)
 		{
-			return UnityEditor.EditorGUI.Vector2Field(position, label, value);
+			return UnityEditor.EditorGUI.Vector2Field(position, TranslationUtility.get(label), value);
 		}
 
 		public static UnityEngine.Vector2 Vector2Field(UnityEngine.Rect position, UnityEngine.GUIContent label, UnityEngine.Vector2 value)
@@ -675,7 +674,7 @@ namespace transfluent.guiwrapper
 
 		public static UnityEngine.Vector3 Vector3Field(UnityEngine.Rect position, System.String label, UnityEngine.Vector3 value)
 		{
-			return UnityEditor.EditorGUI.Vector3Field(position, label, value);
+			return UnityEditor.EditorGUI.Vector3Field(position, TranslationUtility.get(label), value);
 		}
 
 		public static UnityEngine.Vector3 Vector3Field(UnityEngine.Rect position, UnityEngine.GUIContent label, UnityEngine.Vector3 value)
@@ -685,7 +684,7 @@ namespace transfluent.guiwrapper
 
 		public static UnityEngine.Vector4 Vector4Field(UnityEngine.Rect position, System.String label, UnityEngine.Vector4 value)
 		{
-			return UnityEditor.EditorGUI.Vector4Field(position, label, value);
+			return UnityEditor.EditorGUI.Vector4Field(position, TranslationUtility.get(label), value);
 		}
 
 		public static UnityEngine.Rect RectField(UnityEngine.Rect position, UnityEngine.Rect value)
@@ -695,7 +694,7 @@ namespace transfluent.guiwrapper
 
 		public static UnityEngine.Rect RectField(UnityEngine.Rect position, System.String label, UnityEngine.Rect value)
 		{
-			return UnityEditor.EditorGUI.RectField(position, label, value);
+			return UnityEditor.EditorGUI.RectField(position, TranslationUtility.get(label), value);
 		}
 
 		public static UnityEngine.Rect RectField(UnityEngine.Rect position, UnityEngine.GUIContent label, UnityEngine.Rect value)
@@ -720,7 +719,7 @@ namespace transfluent.guiwrapper
 
 		public static UnityEngine.Color ColorField(UnityEngine.Rect position, System.String label, UnityEngine.Color value)
 		{
-			return UnityEditor.EditorGUI.ColorField(position, label, value);
+			return UnityEditor.EditorGUI.ColorField(position, TranslationUtility.get(label), value);
 		}
 
 		public static UnityEngine.Color ColorField(UnityEngine.Rect position, UnityEngine.GUIContent label, UnityEngine.Color value)
@@ -735,7 +734,7 @@ namespace transfluent.guiwrapper
 
 		public static UnityEngine.AnimationCurve CurveField(UnityEngine.Rect position, System.String label, UnityEngine.AnimationCurve value)
 		{
-			return UnityEditor.EditorGUI.CurveField(position, label, value);
+			return UnityEditor.EditorGUI.CurveField(position, TranslationUtility.get(label), value);
 		}
 
 		public static UnityEngine.AnimationCurve CurveField(UnityEngine.Rect position, UnityEngine.GUIContent label, UnityEngine.AnimationCurve value)
@@ -750,7 +749,7 @@ namespace transfluent.guiwrapper
 
 		public static UnityEngine.AnimationCurve CurveField(UnityEngine.Rect position, System.String label, UnityEngine.AnimationCurve value, UnityEngine.Color color, UnityEngine.Rect ranges)
 		{
-			return UnityEditor.EditorGUI.CurveField(position, label, value, color, ranges);
+			return UnityEditor.EditorGUI.CurveField(position, TranslationUtility.get(label), value, color, ranges);
 		}
 
 		public static UnityEngine.AnimationCurve CurveField(UnityEngine.Rect position, UnityEngine.GUIContent label, UnityEngine.AnimationCurve value, UnityEngine.Color color, UnityEngine.Rect ranges)
@@ -775,22 +774,22 @@ namespace transfluent.guiwrapper
 
 		public static bool Foldout(UnityEngine.Rect position, bool foldout, System.String content)
 		{
-			return UnityEditor.EditorGUI.Foldout(position, foldout, content);
+			return UnityEditor.EditorGUI.Foldout(position, foldout, TranslationUtility.get(content));
 		}
 
 		public static bool Foldout(UnityEngine.Rect position, bool foldout, System.String content, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.Foldout(position, foldout, content, style);
+			return UnityEditor.EditorGUI.Foldout(position, foldout, TranslationUtility.get(content), style);
 		}
 
 		public static bool Foldout(UnityEngine.Rect position, bool foldout, System.String content, bool toggleOnLabelClick)
 		{
-			return UnityEditor.EditorGUI.Foldout(position, foldout, content, toggleOnLabelClick);
+			return UnityEditor.EditorGUI.Foldout(position, foldout, TranslationUtility.get(content), toggleOnLabelClick);
 		}
 
 		public static bool Foldout(UnityEngine.Rect position, bool foldout, System.String content, bool toggleOnLabelClick, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.Foldout(position, foldout, content, toggleOnLabelClick, style);
+			return UnityEditor.EditorGUI.Foldout(position, foldout, TranslationUtility.get(content), toggleOnLabelClick, style);
 		}
 
 		public static bool Foldout(UnityEngine.Rect position, bool foldout, UnityEngine.GUIContent content)
@@ -815,12 +814,12 @@ namespace transfluent.guiwrapper
 
 		public static void ProgressBar(UnityEngine.Rect position, float value, System.String text)
 		{
-			UnityEditor.EditorGUI.ProgressBar(position, value, text);
+			UnityEditor.EditorGUI.ProgressBar(position, value, TranslationUtility.get(text));
 		}
 
 		public static void HelpBox(UnityEngine.Rect position, System.String message, UnityEditor.MessageType type)
 		{
-			UnityEditor.EditorGUI.HelpBox(position, message, type);
+			UnityEditor.EditorGUI.HelpBox(position, TranslationUtility.get(message), type);
 		}
 
 		public static void HandlePrefixLabel(UnityEngine.Rect totalPosition, UnityEngine.Rect labelPosition, UnityEngine.GUIContent label, int id)

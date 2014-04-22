@@ -19,7 +19,7 @@ public class TestTransfluentTranslationUtility
 	{
 		var destinationLanguage = new TransfluentLanguage { code = "fo-o", id = 501, name = "foo" };
 
-		var instance = new TransfluentUtilityInstance
+		var instance = new TranslationUtilityInstance
 		{
 			destinationLanguage = destinationLanguage,
 			allKnownTranslations = new Dictionary<string, string>

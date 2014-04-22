@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Security.Permissions;
 using UnityEditor;
 #if UNITY_EDITOR
 using UnityEngine;
@@ -7,11 +6,10 @@ using UnityEngine;
 
 namespace transfluent
 {
+	//a simple static class wrapper to provide basic functionality for global access
 	public class TranslationUtility
 	{
-		//TODO: keep sets of language/group and allow for explict load/unload statements
-		//the implication of that is that any ongui/other client would need to declare set groups for their activiites in some way
-		private static ITransfluentUtilityInstance _instance = createNewInstance();
+		private static ITranslationUtilityInstance _instance = createNewInstance();
 
 		private static LanguageList _LanguageList;
 
@@ -20,7 +18,7 @@ namespace transfluent
 			changeStaticInstanceConfigBasedOnTranslationConfigurationGroup(); //load default translation group info
 		}
 
-		public static ITransfluentUtilityInstance getUtilityInstanceForDebugging()
+		public static ITranslationUtilityInstance getUtilityInstanceForDebugging()
 		{
 			changeStaticInstanceConfigBasedOnTranslationConfigurationGroup();
 			return _instance;
@@ -40,7 +38,7 @@ namespace transfluent
 		{
 			//Debug.LogError("LOADING STATIC CONFIG: "+ destinationLanguageCode + " translation group:"+translationGroup);
 
-			ITransfluentUtilityInstance tmpInstance = createNewInstance(destinationLanguageCode, translationGroup);
+			ITranslationUtilityInstance tmpInstance = createNewInstance(destinationLanguageCode, translationGroup);
 			if(tmpInstance != null)
 			{
 				_instance.setNewDestinationLanguage(tmpInstance.allKnownTranslations);
@@ -93,7 +91,7 @@ namespace transfluent
 		}
 		//public static event Action OnLanguageChanged;
 		
-		public static ITransfluentUtilityInstance createNewInstance(string destinationLanguageCode = "", string group = "")
+		public static ITranslationUtilityInstance createNewInstance(string destinationLanguageCode = "", string group = "")
 		{
 			if(_LanguageList == null)
 			{
@@ -139,7 +137,7 @@ namespace transfluent
 			EditorUtility.SetDirty(destLangDB);
 #endif
 			
-			var newTranslfuentUtilityInstance = new TransfluentUtilityInstance
+			var newTranslfuentUtilityInstance = new TranslationUtilityInstance
 			{
 				allKnownTranslations = keysInLanguageForGroupSpecified,
 				destinationLanguage = dest,
@@ -195,7 +193,7 @@ namespace transfluent
 	}
 
 	//an interface for handling translaitons
-	public interface ITransfluentUtilityInstance
+	public interface ITranslationUtilityInstance
 	{
 		void setNewDestinationLanguage(Dictionary<string, string> transaltionsInSet);
 		string getFormattedTranslation(string sourceText, params object[] formatStrings);
@@ -203,7 +201,7 @@ namespace transfluent
 		Dictionary<string, string> allKnownTranslations { get; set; }
 	}
 
-	public class TransfluentUtilityInstance : ITransfluentUtilityInstance
+	public class TranslationUtilityInstance : ITranslationUtilityInstance
 	{
 		public Dictionary<string, string> allKnownTranslations { get; set; }
 
@@ -243,7 +241,7 @@ namespace transfluent
 		}
 	}
 
-	public class AutoCaptureTranslationUtiliityInstance : TransfluentUtilityInstance, ITransfluentUtilityInstance
+	public class AutoCaptureTranslationUtiliityInstance : TranslationUtilityInstance, ITranslationUtilityInstance
 	{
 		public bool doCapture { get; set; }
 		public GameTranslationSet coreTransltionSet { get; set; }

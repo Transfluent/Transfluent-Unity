@@ -21,7 +21,7 @@ public class InternationalTextDisplayWithTransfluent : MonoBehaviour
 	[SerializeField]
 	private string testText;
 
-	private ITransfluentUtilityInstance translationHelper;
+	private ITranslationUtilityInstance translationHelper;
 
 	// Use this for initialization
 	private void Start()
@@ -75,7 +75,7 @@ public class InternationalTextDisplayWithTransfluent : MonoBehaviour
 			foreach(var translation in translationHelper.allKnownTranslations)
 			{
 				GUILayout.Label(string.Format("text id:{0} group id:{1} text:{2}", translation.Key,
-					((TransfluentUtilityInstance)translationHelper).groupBeingShown, translation.Value));
+					((TranslationUtilityInstance)translationHelper).groupBeingShown, translation.Value));
 			}
 		}
 		GUILayout.EndVertical();

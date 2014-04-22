@@ -44,7 +44,6 @@ public class InternationalTextDisplay : MonoBehaviour
 
 		foreach(TransfluentLanguage language in supportedLanguages)
 		{
-			//TODO: show groups available
 			if(GUILayout.Button(language.name))
 			{
 				TranslationUtility.changeStaticInstanceConfig(language.code);

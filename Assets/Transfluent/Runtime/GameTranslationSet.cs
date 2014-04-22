@@ -38,7 +38,6 @@ public class GameTranslationSet : ScriptableObject
 				groupid = groupid
 			};
 			allTranslations.Add(targetGroup);
-			//TODO: set editor
 		}
 		return targetGroup;
 	}

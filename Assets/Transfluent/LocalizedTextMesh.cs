@@ -19,7 +19,7 @@ public class LocalizedTextMesh : MonoBehaviour
 
 	public void OnEnable()
 	{
-		OnLocalize();  //TODO: only call this if the language has changed since last itration
+		OnLocalize();
 	}
 #if UNITY_EDITOR
 	public void OnValidate()
@@ -34,7 +34,7 @@ public class LocalizedTextMesh : MonoBehaviour
 	}
 }
 
-//TODO: Change the name
+//Simple interface for providing the current text and interacting with the localization api
 [Serializable]
 public class LocalizeUtil
 {

@@ -61,7 +61,6 @@ namespace transfluent
 
 			//run tests, export package
 			//TODO: make sure that package compiles without test directory -- build a dll
-			//TODO: export test results
 			public void RunTests()
 			{
 				UnitTestView.RunAllTestsBatch();

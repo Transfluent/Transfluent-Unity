@@ -86,6 +86,8 @@ MonoBehaviour:
       value: Play Again
     - key: 'Final Score: {0}'
       value: 'Final Score: {0}'
+    - key: 'Escape: [[[{0}]]]'
+      value: 'Escape: [[[{0}]]]'
   language:
     name: English (United States)
     code: en-us

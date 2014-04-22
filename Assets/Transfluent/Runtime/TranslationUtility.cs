@@ -285,7 +285,6 @@ namespace transfluent
 				if(doCapture && !allKnownTranslations.ContainsKey(sourceText) && !formattedTextToIgnore.Contains(sourceText))
 				{
 					allKnownTranslations.Add(sourceText, sourceText);
-					//TODO: find a cleaner way to add a better way to manually add a translation here 
 					coreTransltionSet.mergeInSet(groupBeingShown,allKnownTranslations);
 				}
 				if (formattedTextToIgnore.Contains(sourceText))

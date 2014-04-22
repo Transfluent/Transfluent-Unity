@@ -161,7 +161,7 @@ namespace transfluent.tests
 				);
 			List<TransfluentOrder> orders = getAllOrders.Parse(justCall(getAllOrders));
 			Assert.IsNotNull(orders);
-			//Assert.Greater(orders.Count, 0); //TODO: test making an actual order
+			//Assert.Greater(orders.Count, 0);
 		}
 
 		[Test]

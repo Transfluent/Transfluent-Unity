@@ -117,7 +117,6 @@ namespace transfluent
 			//printThing();
 			printThing(prop, "text_id");
 			printThing(prop, "group_id");
-			//printThing(prop, "language");  //TODO: show as an enum popup?
 			printEditableField(prop.FindPropertyRelative("text"));
 
 			//EditorGUI.BeginChangeCheck();

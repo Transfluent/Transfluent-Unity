@@ -127,7 +127,6 @@ namespace transfluent.guiwrapper
 				for(int i = 0; i < myParameters.Length; i++)
 				{
 					ParameterInfo paramInfo = myParameters[i];
-					//TODO: use paramInfo.ParameterType.IsPrimitive to make System.Void be just void
 					var toAdd = new ParamWrapped
 					{
 						defaultValue = paramInfo.DefaultValue.ToString(),
@@ -141,7 +140,6 @@ namespace transfluent.guiwrapper
 
 					parameters.Add(toAdd);
 				}
-				//TODO: ensure default values are handled appropriately
 				functionString = createRealParamString(methodInfo.Name, methodInfo.ReturnType, parameters.ToArray(),
 					obsoleteString(methodInfo));
 			}

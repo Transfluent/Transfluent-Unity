@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace transfluent.editor
 {
-	//TODO: remove static funcitons
 	public class DownloadAllGameTranslations
 	{
 		// I don't know if I am going to expose this, but it is something to do

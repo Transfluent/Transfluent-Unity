@@ -69,7 +69,7 @@ public class SetupTranslationConfiguration : EditorWindow
 
 	private void DoTranslation()
 	{
-		//TODO: estimate all remaining text cost
+		//TODO: review estimation algorithm
 		GUILayout.Space(30);
 		GUILayout.Label("Translate all known language from source to destination languages:");
 		_mediator.doAuth();

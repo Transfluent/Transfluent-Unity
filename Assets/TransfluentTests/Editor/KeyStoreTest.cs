@@ -14,7 +14,6 @@ namespace transfluent.tests
 		[SetUp]
 		public void setup()
 		{
-			//TODO: set up quick file
 			dictionary = new Dictionary<string, string>
 			{
 				{"TEST_KEY_FROM_TESTERVILLE", "username@company.com"},

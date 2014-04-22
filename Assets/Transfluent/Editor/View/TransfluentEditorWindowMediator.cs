@@ -11,7 +11,7 @@ namespace transfluent.editor
 {
 	public class TransfluentEditorWindowMediator
 	{
-		private readonly IKeyStore _keyStore = new EditorKeyStore(); //TODO: inject this, as it will need to be consistent
+		private readonly IKeyStore _keyStore = new EditorKeyStore(); 
 		private readonly InjectionContext context;
 		private LanguageList allLanguagesSupported;
 		private TransfluentLanguage currentLanguage; //put this in a view state?
@@ -175,7 +175,7 @@ namespace transfluent.editor
 			if(!string.IsNullOrEmpty(getCurrentAuthToken()))
 			{
 				context.setMappings(call);
-				call.getParameters.Add("token", getCurrentAuthToken()); //TODO: find another way to do this...
+				call.getParameters.Add("token", getCurrentAuthToken());  //TODO: find best way to handle auth token.  construction param,injection or manual setting
 			}
 
 			var service = context.manualGetMapping<IWebService>();

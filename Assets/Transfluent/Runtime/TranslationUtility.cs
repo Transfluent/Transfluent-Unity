@@ -162,6 +162,18 @@ namespace transfluent
 			return _instance.getTranslation(sourceText);
 		}
 
+		//not reccommended for game-time use, as it allocates memory
+		public static string[] get(string[] sourceTexts)
+		{
+			if(sourceTexts == null) return null;
+			string[] destTexts = new string[sourceTexts.Length];
+			for (int i = 0; i < sourceTexts.Length; i++)
+			{
+				destTexts[i] = get(sourceTexts[i]);
+			}
+			return destTexts;
+		}
+
 		//same format as string.format for now, not tokenized
 		//ie "Hi, my name is {0}" instead of "Hi, my name is $NAME" or some other scheme
 		public static string getFormatted(string sourceText, params object[] formatStrings)

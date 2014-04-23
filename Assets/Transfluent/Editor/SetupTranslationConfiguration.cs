@@ -13,6 +13,7 @@ public class SetupTranslationConfiguration : EditorWindow
 	private string groupidDisplayed = "";
 	private bool initialized;
 	private int newDestinationLanguageIndex;
+	private bool advancedOptions;
 
 	private TranslationConfigurationSO selectedConfig;
 	private string sourceLanguageCode;
@@ -56,8 +57,16 @@ public class SetupTranslationConfiguration : EditorWindow
 			if(_allKnownConfigurations.Count == 0) return;
 		}
 
-		SelectAConfig();
-		createANewConfig();
+		advancedOptions = EditorGUILayout.Toggle("Advanced Options", advancedOptions);
+		if(advancedOptions)
+		{
+			SelectAConfig();
+			createANewConfig();
+		} else
+		{
+			selectedConfig = getOrCreateGameTranslationConfig("");
+		}
+		
 		if(selectedConfig == null)
 		{
 			return;

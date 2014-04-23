@@ -88,6 +88,126 @@ MonoBehaviour:
       value: 'Final Score: {0}'
     - key: 'Escape: [[[{0}]]]'
       value: 'Escape: [[[{0}]]]'
+    - key: this is a new key
+      value: this is a new key
+    - key: Yes
+      value: YES
+    - key: No
+      value: NO
+    - key: Yeah
+      value: Yeah
+    - key: Nope
+      value: Nope
+    - key: Press Start
+      value: Press Start
+    - key: Press Start to continue
+      value: Press Start to continue
+    - key: Press any key
+      value: Press any key
+    - key: Press any key to continue
+      value: Press any key to continue
+    - key: New Game
+      value: New Game
+    - key: Continue
+      value: Continue
+    - key: Continue?
+      value: Continue?
+    - key: Load
+      value: Load
+    - key: Load Game
+      value: Load Game
+    - key: Loading...
+      value: Loading...
+    - key: Please wait...
+      value: Please wait...
+    - key: Save
+      value: Save
+    - key: Save Game
+      value: Save Game
+    - key: Saving...
+      value: Saving...
+    - key: Exit
+      value: Exit
+    - key: Exit?
+      value: Exit?
+    - key: Exit to Desktop
+      value: Exit to Desktop
+    - key: Exit to Desktop?
+      value: Exit to Desktop?
+    - key: Quit
+      value: Quit
+    - key: Quit?
+      value: Quit?
+    - key: Pause
+      value: Pause
+    - key: Are you sure you want to quit?
+      value: Are you sure you want to quit?
+    - key: Return
+      value: Return
+    - key: Main Menu
+      value: Main Menu
+    - key: Return to Main Menu
+      value: Return to Main Menu
+    - key: Return to Main Menu?
+      value: Return to Main Menu?
+    - key: Sound Options
+      value: Sound Options
+    - key: Sound
+      value: Sound
+    - key: Volume
+      value: Volume
+    - key: Graphics Options
+      value: Graphics Options
+    - key: Video Options
+      value: Video Options
+    - key: Quality
+      value: Quality
+    - key: Gameplay Options
+      value: Gameplay Options
+    - key: Network Options
+      value: Network Options
+    - key: Difficulty Options
+      value: Difficulty Options
+    - key: Difficulty
+      value: Difficulty
+    - key: Very Easy
+      value: Very Easy
+    - key: Easy
+      value: Easy
+    - key: Medium
+      value: Medium
+    - key: Hard
+      value: Hard
+    - key: Very Hard
+      value: Very Hard
+    - key: Insane
+      value: Insane
+    - key: Impossible
+      value: Impossible
+    - key: Thank you!
+      value: Thank you!
+    - key: Goodbye!
+      value: Goodbye!
+    - key: Are you sure?
+      value: Are you sure?
+    - key: Single player
+      value: Single player
+    - key: Multiplayer
+      value: Multiplayer
+    - key: Online Multiplayer
+      value: Online Multiplayer
+    - key: Local Multiplayer
+      value: Local Multiplayer
+    - key: Splitscreen
+      value: Splitscreen
+    - key: Co-op
+      value: Co-op
+    - key: Cooperative
+      value: Cooperative
+    - key: Versus
+      value: Versus
+    - key: Backwards (test language)
+      value: Backwards (test language)
   language:
     name: English (United States)
     code: en-us

@@ -59,17 +59,17 @@ MonoBehaviour:
     - key: Hi there!
       value: "!\_ruojnoB"
     - key: Rocks
-      value: ' nesleF'
+      value: serreiP
     - key: STRANGE
-      value: "GIDR\xDCWKREM"
+      value: ERRAZIB
     - key: Prepare for level
-      value: ' netierebrov leveL fuA'
+      value: "uaevin el ruop suov-zerap\xE9rP"
     - key: 'Score:'
-      value: ' :dnatsetknuP'
+      value: ":\_erocS"
     - key: 'Level:'
       value: ': uaeviN'
     - key: Game Over!
-      value: '!revo emaG'
+      value: "!\_e\xE9nimret eitraP"
     - key: German
       value: dnamellA
     - key: French
@@ -94,6 +94,124 @@ MonoBehaviour:
       value: reuojeR
     - key: 'Final Score: {0}'
       value: '{0} : lanif erocS'
+    - key: 'Escape: [[[{0}]]]'
+      value: '{0} :thculF'
+    - key: Yes
+      value: SEY
+    - key: No
+      value: ON
+    - key: Yeah
+      value: haeY
+    - key: Nope
+      value: epoN
+    - key: Press Start
+      value: tratS sserP
+    - key: Press Start to continue
+      value: eunitnoc ot tratS sserP
+    - key: Press any key
+      value: yek yna sserP
+    - key: Press any key to continue
+      value: eunitnoc ot yek yna sserP
+    - key: New Game
+      value: emaG weN
+    - key: Continue
+      value: eunitnoC
+    - key: Continue?
+      value: ?eunitnoC
+    - key: Load
+      value: daoL
+    - key: Load Game
+      value: emaG daoL
+    - key: Loading...
+      value: '...gnidaoL'
+    - key: Please wait...
+      value: '...tiaw esaelP'
+    - key: Save
+      value: evaS
+    - key: Save Game
+      value: emaG evaS
+    - key: Saving...
+      value: '...gnivaS'
+    - key: Exit
+      value: tixE
+    - key: Exit?
+      value: ?tixE
+    - key: Exit to Desktop
+      value: potkseD ot tixE
+    - key: Exit to Desktop?
+      value: ?potkseD ot tixE
+    - key: Quit
+      value: tiuQ
+    - key: Quit?
+      value: ?tiuQ
+    - key: Pause
+      value: esuaP
+    - key: Are you sure you want to quit?
+      value: ?tiuq ot tnaw uoy erus uoy erA
+    - key: Return
+      value: nruteR
+    - key: Main Menu
+      value: uneM niaM
+    - key: Return to Main Menu
+      value: uneM niaM ot nruteR
+    - key: Return to Main Menu?
+      value: ?uneM niaM ot nruteR
+    - key: Sound Options
+      value: snoitpO dnuoS
+    - key: Sound
+      value: dnuoS
+    - key: Volume
+      value: emuloV
+    - key: Graphics Options
+      value: snoitpO scihparG
+    - key: Video Options
+      value: snoitpO oediV
+    - key: Quality
+      value: ytilauQ
+    - key: Gameplay Options
+      value: snoitpO yalpemaG
+    - key: Network Options
+      value: snoitpO krowteN
+    - key: Difficulty Options
+      value: snoitpO ytluciffiD
+    - key: Difficulty
+      value: ytluciffiD
+    - key: Very Easy
+      value: ysaE yreV
+    - key: Easy
+      value: ysaE
+    - key: Medium
+      value: muideM
+    - key: Hard
+      value: draH
+    - key: Very Hard
+      value: draH yreV
+    - key: Insane
+      value: enasnI
+    - key: Impossible
+      value: elbissopmI
+    - key: Thank you!
+      value: '!uoy knahT'
+    - key: Goodbye!
+      value: '!eybdooG'
+    - key: Are you sure?
+      value: ?erus uoy erA
+    - key: Single player
+      value: reyalp elgniS
+    - key: Multiplayer
+      value: reyalpitluM
+    - key: Online Multiplayer
+      value: reyalpitluM enilnO
+    - key: Local Multiplayer
+      value: reyalpitluM lacoL
+    - key: Splitscreen
+      value: neercstilpS
+    - key: Co-op
+      value: po-oC
+    - key: Cooperative
+      value: evitarepooC
+    - key: Versus
+      value: susreV
   - groupid: TEST
     translations:
     - key: sprechen sie deutsch

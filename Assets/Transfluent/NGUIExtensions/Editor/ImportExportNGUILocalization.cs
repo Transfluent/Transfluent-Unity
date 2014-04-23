@@ -64,7 +64,7 @@ public class ImportExportNGUILocalization
 		}
 	}
 
-	[MenuItem("Translation/ngui/Import all NGUI data into transfluent local cache")]
+	[MenuItem("Translation/NGUI/Import all NGUI data into transfluent local cache")]
 	public static void ImportAllNGUILocalizations()
 	{
 		LanguageList list = ResourceLoadFacade.getLanguageList();
@@ -106,7 +106,7 @@ public class ImportExportNGUILocalization
 		return projectBasePath + localizationPath;
 	}
 
-	[MenuItem("Translation/ngui/Export all translfuent data to ngui")]
+	[MenuItem("Translation/NGUI/Export all translfuent data to ngui")]
 	public static void ExportAllNGUILocalizations()
 	{
 		string assetPath = getLocalizationPath();

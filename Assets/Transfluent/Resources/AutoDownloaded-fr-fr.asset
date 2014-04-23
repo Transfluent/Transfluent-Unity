@@ -82,6 +82,16 @@ MonoBehaviour:
       value: Rejouer
     - key: 'Final Score: {0}'
       value: 'Score final : {0}'
+    - key: Rocks
+      value: Pierres
+    - key: STRANGE
+      value: BIZARRE
+    - key: Prepare for level
+      value: "Pr\xE9parez-vous pour le niveau"
+    - key: 'Score:'
+      value: "Score\_:"
+    - key: Game Over!
+      value: "Partie termin\xE9e\_!"
   language:
     name: French (France)
     code: fr-fr

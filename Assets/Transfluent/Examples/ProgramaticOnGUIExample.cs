@@ -1,19 +1,19 @@
-﻿using UnityEngine;
-using transfluent;
+﻿using transfluent;
+using UnityEngine;
 
 public class ProgramaticOnGUIExample : MonoBehaviour
 {
-	public LocalizeUtil managedText;
-	public string programaticallyManagedTextKey;
-	public string programaticallyManagedText;
 	private bool languageSelectToggle;
+	public LocalizeUtil managedText;
+	public string programaticallyManagedText;
+	public string programaticallyManagedTextKey;
 
 	// Use this for initialization
-	void Start () {
-	
+	private void Start()
+	{
 	}
-	
-	void OnGUI()
+
+	private void OnGUI()
 	{
 		//2 different ways of programmatically getting text
 		GUILayout.Label(managedText.current);
@@ -37,6 +37,7 @@ public class ProgramaticOnGUIExample : MonoBehaviour
 	{
 		OnLocalize();
 	}
+
 	public void OnLocalize()
 	{
 		managedText.OnLocalize();

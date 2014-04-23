@@ -2,7 +2,7 @@
 This is a tool used for translating textual assets within Unity 3D, integrating into various UI frameworks, and getting translations for game text.
 
 ## Getting started:
-[Download](https://raw.githubusercontent.com/Transfluent/Transfluent-Unity/master/Release/2.0/TransfluentEditor-2.0.1.unitypackage) the most current unity package (currently 2.0) and double click the package to import the package into your project.
+[Download](https://raw.githubusercontent.com/Transfluent/Transfluent-Unity/master/Release/2.0/TransfluentEditor-2.0.2.unitypackage) the most current unity package (currently 2.0) and double click the package to import the package into your project.
 
 ### Configure the game - source and destination languages
 Select the menu "Transfluent/Game Configuration".  Set your source language, and add/remove any destination languages.

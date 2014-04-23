@@ -1,4 +1,5 @@
-﻿#if TRANSFLUENT_EXAMPLE
+﻿//#define TRANSFLUENT_EXAMPLE
+#if TRANSFLUENT_EXAMPLE
 using strange.examples.strangerocks;
 #endif //!TRANSFLUENT_EXAMPLE
 using System.Collections.Generic;

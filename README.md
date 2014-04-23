@@ -7,7 +7,7 @@ This is a tool used for translating textual assets within Unity 3D, integrating 
 ### Configure the game - source and destination languages
 Select the menu "Transfluent/Game Configuration".  Set your source language, and add/remove any destination languages.
 
-#Example translated project: https://github.com/hardcoded2/strangerocks
+##Example translated project: https://github.com/hardcoded2/strangerocks
 This is a tech demo project that has text embedded in OnGUI scripts, prefabs, and in scene files.  
 ###Script-based migration (get all the text out of your game objects and into the translation db)
 By altering the GameSpecificMigration file to handle managed code, you can handle the migration process scripts that set values on start or awake.  This will also let the rest of the migration process know not to touch those managed text fields.  
@@ -55,10 +55,10 @@ public class ExampleTransfluent : MonoBehaviour
 
 ## GUI, GUILayout wrappers
 * If you are using OnGUI for displaying your text, all you need to do is prefix all files with the lines:
-~~~~~~~~
+```C#
 using GUI = transfluent.guiwrapper.GUI;
 using GUILayout = transfluent.guiwrapper.GUILayout; 
-~~~~~~~~
+````
 And the rest of your GUILayout and GUI function calls will automatically use the transfluent API to translate text.
 
 note: not handled by translated code due to technical restraints:

@@ -73,7 +73,7 @@ public class FindTextMeshReferences : MonoBehaviour
 		return true;
 	}
 
-	[MenuItem("Transfluent/Helpers/Full migration")]
+	[MenuItem("Translation/Helpers/Full migration")]
 	public static void UpdateReferences()
 	{
 		GetTextMeshReferencesFromPrefabs();

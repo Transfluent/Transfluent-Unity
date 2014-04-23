@@ -167,14 +167,14 @@ namespace transfluent
 		{
 			return _instance.getFormattedTranslation(sourceText, formatStrings);
 		}
-		[MenuItem("Transfluent/Helpers/Enable Capture Mode")]
+		[MenuItem("Translation/Helpers/Enable Capture Mode")]
 		static void EnableCaptureMode()
 		{
 			setCaptureMode(true);
 			_instance = createNewInstance();
 		}
 
-		[MenuItem("Transfluent/Helpers/Disable Capture Mode")]
+		[MenuItem("Translation/Helpers/Disable Capture Mode")]
 		static void DisableCaptureMode()
 		{
 			setCaptureMode(false);

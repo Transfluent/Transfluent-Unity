@@ -33,7 +33,7 @@ namespace transfluent
 			return 0; //not from command line
 		}
 
-		[MenuItem("Transfluent/internal/build")]
+		[MenuItem("Translation/internal/build")]
 		public static void manualBuild()
 		{
 			var build = new BuilderInstance();

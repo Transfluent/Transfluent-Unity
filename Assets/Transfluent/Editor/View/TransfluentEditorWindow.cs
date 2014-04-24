@@ -21,7 +21,8 @@ namespace transfluent.editor
 		[MenuItem("Translation/View My Transfluent Account")]
 		public static void Init()
 		{
-			GetWindow<TransfluentEditorWindow>();
+			var window = GetWindow<TransfluentEditorWindow>();
+			window.Show();
 		}
 
 		private void OnGUI()

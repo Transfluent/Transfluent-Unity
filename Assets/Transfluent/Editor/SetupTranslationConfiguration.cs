@@ -26,7 +26,8 @@ public class SetupTranslationConfiguration : EditorWindow
 	[MenuItem("Translation/Game Configuration")]
 	public static void Init()
 	{
-		GetWindow<SetupTranslationConfiguration>();
+		var window = GetWindow<SetupTranslationConfiguration>();
+		window.Show();
 	}
 
 	private void Initialize()

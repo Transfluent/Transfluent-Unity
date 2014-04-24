@@ -130,10 +130,10 @@ public class ExampleTransfluent : MonoBehaviour
 ````
 
 ###Programmatic interface
-####TransfluentUtility 
+####TranslationUtility 
 * changeStaticInstanceConfig(string destinationLanguageCode = "", string translationGroup = "")  
   * Configures the static translation instance to return text in the destination language, and alternatively a separate translation group (think of it like a namespace -- text keys won't clash)   
-* getTranslation(string sourceText)
+* get(string sourceText)
   * Given the original string(or key), the translation tool will return the text for in the language specified by the changeStaticInstanceConfig
 * public static string getFormatted(string sourceText, params object[] formatStrings)
 *  A convenience function for handling text with dynamic elements (player name, number of items, etc). Gets formatted text strings in the form of getFormatted("Hello, {0}",username);

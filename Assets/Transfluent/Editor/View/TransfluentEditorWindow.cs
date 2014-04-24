@@ -98,11 +98,11 @@ namespace transfluent.editor
 				EditorGUILayout.EndHorizontal();
 				EditorGUILayout.BeginHorizontal();
 
-				if(GUILayout.Button("save"))
-				{
-					_mediator.setUsernamePassword(currentUsername, currentPassword);
-				}
-				if(GUILayout.Button("authenticate"))
+				//if(GUILayout.Button("save"))
+				//{
+				//	_mediator.setUsernamePassword(currentUsername, currentPassword);
+				//}
+				if(GUILayout.Button("login"))
 				{
 					if(_mediator.doAuth(currentUsername, currentPassword))
 					{

@@ -75,6 +75,21 @@ public class SetupTranslationConfiguration : EditorWindow
 		}
 		DisplaySelectedTranslationConfiguration(selectedConfig);
 
+		GUILayout.Space(30);
+		GUILayout.Label("Account options:");
+
+		if(!userHasSetCredentials())
+		{
+			GUILayout.Label("Log in to translate your text as well as upload and download your local translations");
+			ShowLoginFields();
+			return;
+		} else
+		{
+			if(GUILayout.Button("LOG OUT OF ACCOUNT"))
+			{
+				new TransfluentEditorWindowMediator().setUsernamePassword("", "");
+			}
+		}
 		ShowUploadDownload();
 
 		DoTranslation();
@@ -210,9 +225,33 @@ public class SetupTranslationConfiguration : EditorWindow
 		}
 	}
 
+	bool userHasSetCredentials()
+	{
+		var mediator = new TransfluentEditorWindowMediator();
+		KeyValuePair<string, string> usernamePassword = mediator.getUserNamePassword();
+
+		return (!string.IsNullOrEmpty(usernamePassword.Key) && !string.IsNullOrEmpty(usernamePassword.Value));
+	}
+
+	private TransfluentEditorWindow.LoginGUI _loginGui;
+	void ShowLoginFields()
+	{
+		if(!userHasSetCredentials())
+		{
+			if(_loginGui == null)
+			{
+				var mediator = new TransfluentEditorWindowMediator();
+				_loginGui = new TransfluentEditorWindow.LoginGUI(mediator);
+			}
+			_loginGui.doGUI();
+		}
+	}
+
 	private void ShowUploadDownload()
 	{
 		var so = selectedConfig;
+
+		GUILayout.Space(30);
 		if(GUILayout.Button("Upload all local text"))
 		{
 			var languageCodeList = new List<string> { so.sourceLanguage.code };

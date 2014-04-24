@@ -274,3 +274,28 @@ MonoBehaviour:
     - name: Pseudo language
       code: xx-xx
       id: 500
+    simplifiedLanguageCodeList:
+    - en-us
+    - fr-fr
+    - es-la
+    - pt-pt
+    - pt-br
+    - it-it
+    - de-de
+    - zh-cn
+    - zh-tw
+    - nl-nl
+    - ja-jp
+    - ko-kr
+    - vi-vn
+    - ru-ru
+    - sv-se
+    - da-dk
+    - fi-fi
+    - no-no
+    - tr-tr
+    - el-gr
+    - id-id
+    - ms-my
+    - th-th
+    - xx-xx

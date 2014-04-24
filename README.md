@@ -107,9 +107,17 @@ For custom managed scripts, make sure to change over text fields to use Translat
 
 Great!  Now you're ready for capture mode.  You can manually copy all your source text fields over to the file Transfluent/Resources/AutoDownloaded-<MY_LANGUAGE_CODE> or you can use capture mode to capture translated text
 
-#Programmatic APIs
-### Example script(OnGUI):
+#API Examples
+There are reference scenes available in Assets/Transfluent/Examples dispalaying the functionality offered by these scripts.  The examples below are simply to provide quick context on what using the api looks like.
 
+### Example script(OnGUI):
+Notice the only thing different than a standard script here is 
+1) using GUILayout = transfluent.guiwrapper.GUILayout;  
+ * This just points any existing calls to GUILayout to an instance of GUILayout that translates text
+2) TranslationUtility.changeStaticInstanceConfig("zh-cn");
+ * This changes the language for any clients using the default api (the static instance) to Chinese (Simplified)
+ 
+This uses the translation wrapper around GUILayout 
 ````C#
 using UnityEngine;
 using System.Collections.Generic;
@@ -129,29 +137,59 @@ public class ExampleTransfluent : MonoBehaviour
 }
 ````
 
-###Programmatic interface
-####TranslationUtility 
-* changeStaticInstanceConfig(string destinationLanguageCode = "", string translationGroup = "")  
-  * Configures the static translation instance to return text in the destination language, and alternatively a separate translation group (think of it like a namespace -- text keys won't clash)   
-* get(string sourceText)
-  * Given the original string(or key), the translation tool will return the text for in the language specified by the changeStaticInstanceConfig
-* public static string getFormatted(string sourceText, params object[] formatStrings)
-*  A convenience function for handling text with dynamic elements (player name, number of items, etc). Gets formatted text strings in the form of getFormatted("Hello, {0}",username);
+### Example Script ( )
+This shows several different ways to handle script-controlled text:
+1. the LocalizeUtil used to manage state of script-controlled text, and responds to changes in the language in onLocalize() by in turn calling the LocalizeUtil's managedText.OnLocalize(); function
+2. Managing your own globalization key (programaticallyManagedTextKey) and it's current value (programaticallyManagedText). This is internally the way that LocalizeUtil works to help simplify your workflow, but sometimes the demands of existing software require manual management of strings.
 
-## GUI, GUILayout wrappers
-* If you are using OnGUI for displaying your text, all you need to do is prefix all files with the lines:
-````C#
-using GUI = transfluent.guiwrapper.GUI;
-using GUILayout = transfluent.guiwrapper.GUILayout; 
+```C#`
+using transfluent;
+using UnityEngine;
+
+public class ProgramaticOnGUIExample : MonoBehaviour
+{
+	private bool languageSelectToggle = true;
+	public LocalizeUtil managedText;
+	public string programaticallyManagedText;
+	public string programaticallyManagedTextKey;
+
+	// Use this for initialization
+	private void Start()
+	{
+	}
+
+	private void OnGUI()
+	{
+		//2 different ways of programmatically getting text
+		GUILayout.Label(managedText.current);
+		GUILayout.Label(programaticallyManagedText);
+		languageSelectToggle = GUILayout.Toggle(languageSelectToggle, "Language Select");
+
+		if(languageSelectToggle)
+		{
+			if(GUILayout.Button("English"))
+				TranslationUtility.changeStaticInstanceConfig("en-us");
+			if(GUILayout.Button("French"))
+				TranslationUtility.changeStaticInstanceConfig("fr-fr");
+			if(GUILayout.Button("German"))
+				TranslationUtility.changeStaticInstanceConfig("de-de");
+			if(GUILayout.Button("Backwards (test language)"))
+				TranslationUtility.changeStaticInstanceConfig("xx-xx");
+		}
+	}
+
+	public void OnEnable()
+	{
+		OnLocalize();
+	}
+
+	public void OnLocalize()
+	{
+		managedText.OnLocalize();
+		programaticallyManagedText = TranslationUtility.get(programaticallyManagedTextKey);
+	}
+}
 ````
-
-And the rest of your GUILayout and GUI function calls will automatically use the transfluent API to translate text.
-
-note: not handled by translated code due to technical restraints:
-Toolbar - array of texts is too much
-SelectionGrid
-
-
 ## Files in package:
 * Transfluent:
   * Editor -- editor tools - editor windows, custom inspectors, and other utilities to perform operations only relevant to initial setup

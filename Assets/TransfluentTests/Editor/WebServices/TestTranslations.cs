@@ -253,7 +253,7 @@ namespace transfluent.tests
 		[Test]
 		public void testTranslation()
 		{
-			var translateRequest = new OrderTranslation(englishLanguage.id, new[] { backwardsLanguage.id }, new[] { TRANSLATION_KEY } );
+			var translateRequest = new OrderTranslation(englishLanguage.id, new[] { backwardsLanguage.id }, new[] { TRANSLATION_KEY });
 			OrderTranslation.TextsTranslateResult translationResult = translateRequest.Parse(justCall(translateRequest));
 			var requester = new SyncronousEditorWebRequest();
 			WebServiceReturnStatus result = requester.request(translateRequest);

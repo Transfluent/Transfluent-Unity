@@ -24,7 +24,7 @@ public class SetupTranslationConfiguration : EditorWindow
 		_mediator = new TransfluentEditorWindowMediator();
 	}
 
-	[MenuItem("Translation/Game Configuration")]
+	[MenuItem("Translation/Game Configuration",false,100)]
 	public static void Init()
 	{
 		var window = GetWindow<SetupTranslationConfiguration>();

@@ -1,5 +1,5 @@
 # Transfluent Unity Plugin
-The purpose of this tool:
+###The purpose of this tool:
 1. Getting text into a format that can be translated
 2. Translating the text
 3. Simple APIs for manual integration ( TranslationUtility.get("MY_KEY");)
@@ -82,20 +82,24 @@ TranslationUtility.changeStaticInstanceConfig("zh-cn");
   * No need to sign deals or with humans or business people, but still proviiding translations from real people leading for quality results at reasonable rates ( https://www.transfluent.com/en/pricing/ ).  Fully automated api integration that gets results from human translators.
 6. Free testing language -- backwards words. 
   * Provide free and instant language "translation" that will help you identify non-translated strings in your app in a form that you can still get through your game
-
 ##HOW TO
-  
+Why is this text not yellow?
+
 ### Configure the game - source and destination languages
 Select the menu "Transfluent/Game Configuration".  Set your source language, and add/remove any destination languages.
 
 ##Example translated project: https://github.com/hardcoded2/strangerocks
 This is a tech demo project that has text embedded in OnGUI scripts, prefabs, and in scene files.  
+
 ###Script-based migration (get all the text out of your game objects and into the translation db)
 By altering the GameSpecificMigration file to handle managed code, you can handle the migration process scripts that set values on start or awake.  This will also let the rest of the migration process know not to touch those managed text fields.  
+
 ###Alter OnGUI Scripts and other formatted text fields
 If you're using OnGUI to display text in your app, make sure to add these two lines to the top of your file:
+````C#
 using GUILayout = transfluent.guiwrapper.GUILayout; 
 using GUI = transfluent.guiwrapper.GUI; 
+````
 
 This will automatically translate the *literal* text sent to GUI and GUILabel.  If you have text fields that combine strings (ie "Hello {0}, how are you today?"), then you will want to use the TranslationUtility.getFormatted("Hello {0}, how are you today?",adventurerName); so that the utility knows how to format that string for future translations.(also so we're not saving the literal text "Hello Alex, how are you today")
 
@@ -106,7 +110,7 @@ Great!  Now you're ready for capture mode.  You can manually copy all your sourc
 #Programmatic APIs
 ### Example script(OnGUI):
 
-```C#
+````C#
 using UnityEngine;
 using System.Collections.Generic;
 using GUILayout = transfluent.guiwrapper.GUILayout; 
@@ -132,14 +136,15 @@ public class ExampleTransfluent : MonoBehaviour
 * getTranslation(string sourceText)
   * Given the original string(or key), the translation tool will return the text for in the language specified by the changeStaticInstanceConfig
 * public static string getFormatted(string sourceText, params object[] formatStrings)
-* *    A convenience function for handling text with dynamic elements (player name, number of items, etc). Gets formatted text strings in the form of getFormatted("Hello, {0}",username);
+*  A convenience function for handling text with dynamic elements (player name, number of items, etc). Gets formatted text strings in the form of getFormatted("Hello, {0}",username);
 
 ## GUI, GUILayout wrappers
 * If you are using OnGUI for displaying your text, all you need to do is prefix all files with the lines:
-```C#
+````C#
 using GUI = transfluent.guiwrapper.GUI;
 using GUILayout = transfluent.guiwrapper.GUILayout; 
 ````
+
 And the rest of your GUILayout and GUI function calls will automatically use the transfluent API to translate text.
 
 note: not handled by translated code due to technical restraints:

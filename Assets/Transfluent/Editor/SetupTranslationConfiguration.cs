@@ -87,7 +87,7 @@ public class SetupTranslationConfiguration : EditorWindow
 		{
 			if(GUILayout.Button("LOG OUT OF ACCOUNT"))
 			{
-				new TransfluentEditorWindowMediator().setUsernamePassword("", "");
+				_mediator.setUsernamePassword("", "");
 			}
 		}
 		ShowUploadDownload();
@@ -227,8 +227,7 @@ public class SetupTranslationConfiguration : EditorWindow
 
 	bool userHasSetCredentials()
 	{
-		var mediator = new TransfluentEditorWindowMediator();
-		KeyValuePair<string, string> usernamePassword = mediator.getUserNamePassword();
+		KeyValuePair<string, string> usernamePassword = _mediator.getUserNamePassword();
 
 		return (!string.IsNullOrEmpty(usernamePassword.Key) && !string.IsNullOrEmpty(usernamePassword.Value));
 	}
@@ -240,8 +239,7 @@ public class SetupTranslationConfiguration : EditorWindow
 		{
 			if(_loginGui == null)
 			{
-				var mediator = new TransfluentEditorWindowMediator();
-				_loginGui = new TransfluentEditorWindow.LoginGUI(mediator);
+				_loginGui = new TransfluentEditorWindow.LoginGUI(_mediator);
 			}
 			_loginGui.doGUI();
 		}

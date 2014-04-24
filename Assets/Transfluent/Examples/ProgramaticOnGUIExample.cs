@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ProgramaticOnGUIExample : MonoBehaviour
 {
-	private bool languageSelectToggle;
+	private bool languageSelectToggle = true;
 	public LocalizeUtil managedText;
 	public string programaticallyManagedText;
 	public string programaticallyManagedTextKey;

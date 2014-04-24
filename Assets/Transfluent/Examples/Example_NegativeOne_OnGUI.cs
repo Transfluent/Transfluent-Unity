@@ -4,7 +4,7 @@ using GUILayout = transfluent.guiwrapper.GUILayout;
 
 public class Example_NegativeOne_OnGUI : MonoBehaviour
 {
-	private bool languageSelectToggle;
+	private bool languageSelectToggle = true;
 
 	public void OnGUI()
 	{

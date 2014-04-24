@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using transfluent;
 
 [Serializable]
@@ -45,4 +46,42 @@ public class LanguageList
 		}
 		return list;
 	}
+
+	public List<string> getSimplifiedListOfIdentifiersFromLanguageList()
+	{
+		var list = new List<string>();
+		foreach (string code in simplifiedLanguageCodeList)
+		{
+			list.Add(getLangaugeByCode(code).name);
+		}
+		return list;
+	}
+	//show the most commonly used languages that game developers will display
+	public List<string> simplifiedLanguageCodeList = new List<string>()
+	{
+		"en-us",//English. US version
+		"fr-fr", //French
+		"es-la", //Spanish, latin american version
+		"pt-pt", //Portuguese (Portugal)
+		"pt-br",//Portuguese (Brazil)
+		"it-it",//Italian
+		"de-de",//German
+		"zh-cn",//Chinese (Mandarin, Simplified) (People's Republic of China)
+		"zh-tw",//Chinese (Traditional) (Taiwan)
+		"nl-nl",//Dutch
+		"ja-jp",//Japanese
+		"ko-kr",//Korean
+		"vi-vn",//Vietnamese
+		"ru-ru",//Russian
+		"sv-se",//Swedish
+		"da-dk",//Danish
+		"fi-fi",//Finnish
+		"no-no",//Norwegian (Bokmal)
+		"tr-tr",//Turkish
+		"el-gr",//Greek
+		"id-id",//Indonesian
+		"ms-my",//Malay
+		"th-th",//Thai
+		"xx-xx", //backwards language, used for testing.  *HIGHLY* reccommended, instant, and free
+	};
 }

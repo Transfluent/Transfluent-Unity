@@ -14,6 +14,7 @@ public class SetupTranslationConfiguration : EditorWindow
 	private bool initialized;
 	private int newDestinationLanguageIndex;
 	private bool advancedOptions;
+	private bool showAllLanguages;
 
 	private TranslationConfigurationSO selectedConfig;
 	private string sourceLanguageCode;
@@ -61,6 +62,7 @@ public class SetupTranslationConfiguration : EditorWindow
 		advancedOptions = EditorGUILayout.Toggle("Advanced Options", advancedOptions);
 		if(advancedOptions)
 		{
+			showAllLanguages = EditorGUILayout.Toggle("Show all langauges, not just simplified list", showAllLanguages);
 			SelectAConfig();
 			createANewConfig();
 		}
@@ -154,7 +156,7 @@ public class SetupTranslationConfiguration : EditorWindow
 
 	private void DisplaySelectedTranslationConfiguration(TranslationConfigurationSO so)
 	{
-		List<string> knownLanguageDisplayNames = _languages.getListOfIdentifiersFromLanguageList();
+		List<string> knownLanguageDisplayNames = showAllLanguages ? _languages.getListOfIdentifiersFromLanguageList() : _languages.getSimplifiedListOfIdentifiersFromLanguageList();
 		int sourceLanguageIndex = knownLanguageDisplayNames.IndexOf(so.sourceLanguage.name);
 
 		if(sourceLanguageIndex < 0) sourceLanguageIndex = 0;

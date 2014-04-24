@@ -62,11 +62,12 @@ public class SetupTranslationConfiguration : EditorWindow
 		{
 			SelectAConfig();
 			createANewConfig();
-		} else
+		}
+		else
 		{
 			selectedConfig = getOrCreateGameTranslationConfig("");
 		}
-		
+
 		if(selectedConfig == null)
 		{
 			return;
@@ -87,23 +88,24 @@ public class SetupTranslationConfiguration : EditorWindow
 			throw new Exception("Auth token is null");
 		var estimator = new TranslationEstimate(authToken);
 
-		uploadAllLocalDestinationLanguageTranslations(selectedConfig,authToken);
+		uploadAllLocalDestinationLanguageTranslations(selectedConfig, authToken);
 
 		estimator.presentEstimateAndMakeOrder(selectedConfig);
 	}
+
 	//uploads source config, and all destination configs (in case I have done some translations locally)
-	public void uploadAllLocalDestinationLanguageTranslations(TranslationConfigurationSO config,string authToken)
+	public void uploadAllLocalDestinationLanguageTranslations(TranslationConfigurationSO config, string authToken)
 	{
-		foreach (TransfluentLanguage language in config.destinationLanguages)
+		foreach(TransfluentLanguage language in config.destinationLanguages)
 		{
 			string group = config.translation_set_group;
 			var sourceSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(language.code);
 
 			var call = new SaveSetOfKeys(language.id, dictionaryToSave: sourceSet.getGroup(group).getDictionaryCopy(), group_id: group);
 			call.getParameters.Add("token", authToken);
-			
 		}
 	}
+
 	private void createANewConfig()
 	{
 		GUILayout.Label("Group Id:");
@@ -137,7 +139,7 @@ public class SetupTranslationConfiguration : EditorWindow
 		List<string> knownLanguageDisplayNames = _languages.getListOfIdentifiersFromLanguageList();
 		int sourceLanguageIndex = knownLanguageDisplayNames.IndexOf(so.sourceLanguage.name);
 
-		if (sourceLanguageIndex < 0) sourceLanguageIndex = 0;
+		if(sourceLanguageIndex < 0) sourceLanguageIndex = 0;
 		EditorGUILayout.LabelField("group identifier:" + so.translation_set_group);
 		EditorGUILayout.LabelField("source language:" + so.sourceLanguage.name);
 

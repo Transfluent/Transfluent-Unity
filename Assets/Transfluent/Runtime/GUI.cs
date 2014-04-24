@@ -314,6 +314,7 @@ namespace transfluent.guiwrapper
 		{
 			return UnityEngine.GUI.Toggle(position, value, content, style);
 		}
+
 		//NOTE: *NOT* translated
 		public static int Toolbar(UnityEngine.Rect position, int selected, System.String[] texts)
 		{

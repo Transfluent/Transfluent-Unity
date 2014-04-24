@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using transfluent;
-using transfluent.editor;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 public class SimpleLineBasedImporter
 {
 	//simple case where key=value for a line based file
 	[MenuItem("Translation/Database/Import Selected Newline based File")]
-	static void ImportFileToDefaultGroupAndSourceLanguageDB() //does not import it to a group
+	private static void ImportFileToDefaultGroupAndSourceLanguageDB() //does not import it to a group
 	{
 		TextAsset ta = Selection.activeObject as TextAsset;
 		if(ta == null)
@@ -21,10 +20,10 @@ public class SimpleLineBasedImporter
 		string[] newKeys = ta.text.Split(toSplit, StringSplitOptions.RemoveEmptyEntries);
 
 		var dic = new Dictionary<string, string>();
-		foreach (string key in newKeys)
+		foreach(string key in newKeys)
 		{
 			if(!dic.ContainsKey(key))
-				dic.Add(key,key);
+				dic.Add(key, key);
 		}
 
 		var translationConfig = ResourceLoadFacade.LoadConfigGroup("");

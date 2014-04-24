@@ -9,7 +9,7 @@ namespace transfluent.editor
 {
 	public class TransfluentEditorWindowMediator
 	{
-		private readonly IKeyStore _keyStore = new EditorKeyStore(); 
+		private readonly IKeyStore _keyStore = new EditorKeyStore();
 		private readonly InjectionContext context;
 		private LanguageList allLanguagesSupported;
 		private TransfluentLanguage currentLanguage; //put this in a view state?

@@ -13,7 +13,7 @@ public class TranslationConfigurationSOInspector : Editor
 	{
 		TranslationConfigurationSO so = (TranslationConfigurationSO)target;
 		DrawDefaultInspector();
-		if(GUILayout.Button("Upload current set")) 
+		if(GUILayout.Button("Upload current set"))
 		{
 			var languageCodeList = new List<string> { so.sourceLanguage.code };
 			so.destinationLanguages.ForEach((TransfluentLanguage lang) => { languageCodeList.Add(lang.code); });

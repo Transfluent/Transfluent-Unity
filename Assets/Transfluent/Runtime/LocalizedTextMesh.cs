@@ -1,6 +1,4 @@
-﻿using System;
-using transfluent;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LocalizedTextMesh : MonoBehaviour
 {
@@ -21,11 +19,14 @@ public class LocalizedTextMesh : MonoBehaviour
 	{
 		OnLocalize();
 	}
+
 #if UNITY_EDITOR
+
 	public void OnValidate()
 	{
 		textmesh.text = localizableText.current;  //make sure to update the textmesh
 	}
+
 #endif
 
 	public void Start()
@@ -33,4 +34,3 @@ public class LocalizedTextMesh : MonoBehaviour
 		textmesh.text = localizableText.current;
 	}
 }
-

@@ -5,6 +5,7 @@ using System;
 namespace transfluent.guiwrapper
 {
 #pragma warning disable 618
+
 	public partial class EditorGUI
 	{
 		public static System.Boolean showMixedValue

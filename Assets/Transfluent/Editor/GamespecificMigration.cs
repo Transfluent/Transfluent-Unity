@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-#endif	
+#endif
 
 namespace transfluent
 {
@@ -18,7 +18,7 @@ namespace transfluent
 		};
 
 		//ignore all textmeshes referenced by all ButtonView components
-		public static void toExplicitlyIgnore(List<TextMesh> toIgnore,GameObject inPrefab = null)
+		public static void toExplicitlyIgnore(List<TextMesh> toIgnore, GameObject inPrefab = null)
 		{
 #if TRANSFLUENT_EXAMPLE
 			//or maybe just find this class with reflection?

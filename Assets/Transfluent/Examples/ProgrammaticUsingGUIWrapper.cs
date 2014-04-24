@@ -6,11 +6,11 @@ public class ProgramaticUsingGUIWrapper : MonoBehaviour
 	public string keyTransformedByWrappers;
 
 	// Use this for initialization
-	void Start () {
-	
+	private void Start()
+	{
 	}
 
-	void OnGUI()
+	private void OnGUI()
 	{
 		GUILayout.Label(keyTransformedByWrappers);
 		GUILayout.Label("Begin!");

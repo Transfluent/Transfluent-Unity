@@ -54,7 +54,6 @@ public class TranslationEstimate
 				}
 			}
 
-			
 			var toTranslate = sourceSet.getGroup(group).getDictionaryCopy();
 			//var knownKeys = sourceSet.getPretranslatedKeys(sourceSet.getAllKeys(), selectedConfig.translation_set_group);
 			//var sourceDictionary = sourceSet.getGroup().getDictionaryCopy();
@@ -76,14 +75,11 @@ public class TranslationEstimate
 				float totalCost = costPerWord * wordCount;
 				simpleEstimateString.AppendFormat("language name: {0} total cost: {1} {2} \n\tCost per word:{3} total words:{4} ",
 					lang.name, totalCost, oneWordPrice.currency, costPerWord, wordCount);
-
 			}
-
 
 			Debug.Log("Estimated prices");
 			if(EditorUtility.DisplayDialog("Estimates", "Estimated cost(only additions counted in estimate):\n" + simpleEstimateString, "OK", "Cancel"))
 			{
-				
 				doTranslation(selectedConfig);
 			}
 		}
@@ -117,7 +113,7 @@ public class TranslationEstimate
 		var uploadAll = new SaveSetOfKeys(selectedConfig.sourceLanguage.id,
 			keysToTranslate,
 			selectedConfig.translation_set_group
-			);	
+			);
 		doCall(uploadAll);
 
 		selectedConfig.destinationLanguages.ForEach((TransfluentLanguage lang) => { destLanguageIDs.Add(lang.id); });

@@ -41,7 +41,7 @@ namespace transfluent.editor
 			TransfluentEditorWindowMediator mediator = getAuthenticatedMediator();
 			if(mediator == null) return;
 
-			foreach (string languageCode in languageCodes)
+			foreach(string languageCode in languageCodes)
 			{
 				try
 				{
@@ -62,7 +62,7 @@ namespace transfluent.editor
 			TransfluentEditorWindowMediator mediator = getAuthenticatedMediator();
 			if(mediator == null) return;
 
-			foreach (string languageCode in languageCodes)
+			foreach(string languageCode in languageCodes)
 			{
 				try
 				{
@@ -78,7 +78,7 @@ namespace transfluent.editor
 
 						set.language = currentlanguage;
 						Dictionary<string, Dictionary<string, string>> groupToTranslationMap = groupidToDictionaryMap(translations);
-						foreach (var kvp in groupToTranslationMap)
+						foreach(var kvp in groupToTranslationMap)
 						{
 							Dictionary<string, string> dictionaryOfStrings = kvp.Value;
 							if(languageCode.Equals("xx-xx")) //backwards string
@@ -90,7 +90,7 @@ namespace transfluent.editor
 						AssetDatabase.SaveAssets();
 					}
 				}
-				catch (Exception e)
+				catch(Exception e)
 				{
 					Debug.LogError("error while downloading translations:" + e.Message + " stack:" + e.StackTrace);
 				}
@@ -100,7 +100,7 @@ namespace transfluent.editor
 		public static Dictionary<string, string> cleanBackwardsLanguageStringDictionary(Dictionary<string, string> dic)
 		{
 			var copy = new Dictionary<string, string>(dic);
-			foreach (var kvp in dic)
+			foreach(var kvp in dic)
 			{
 				copy[kvp.Key] = cleanBackwardsLanguageString(kvp.Value);
 			}
@@ -127,7 +127,7 @@ namespace transfluent.editor
 			List<TransfluentTranslation> translations)
 		{
 			var map = new Dictionary<string, Dictionary<string, string>>();
-			foreach (TransfluentTranslation translation in translations)
+			foreach(TransfluentTranslation translation in translations)
 			{
 				string group = translation.group_id ?? "";
 				if(!map.ContainsKey(group))

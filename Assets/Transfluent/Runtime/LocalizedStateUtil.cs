@@ -7,6 +7,7 @@ public class LocalizeUtil
 {
 	//[SerializeField]
 	private string _current;
+
 	public string globalizationKey;
 
 	public string current

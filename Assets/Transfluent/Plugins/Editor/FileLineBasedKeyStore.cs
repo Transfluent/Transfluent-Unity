@@ -49,7 +49,7 @@ namespace transfluent.editor
 			_keyMap.Add(key);
 			lines.Add(value);
 		}
-		
+
 		public void init(string text)
 		{
 			lines = new List<string>(text.Split(new[] { '\r', '\n' }));

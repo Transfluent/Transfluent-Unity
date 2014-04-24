@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEditor;
+
 #if UNITY_EDITOR
+
 using UnityEngine;
+
 #endif
 
 namespace transfluent
@@ -24,7 +27,7 @@ namespace transfluent
 			return _instance;
 		}
 
-		public static void changeStaticInstanceConfigBasedOnTranslationConfigurationGroup(string group="")
+		public static void changeStaticInstanceConfigBasedOnTranslationConfigurationGroup(string group = "")
 		{
 			var config = ResourceLoadFacade.LoadConfigGroup(group);
 			if(config == null) Debug.LogWarning("No default translation configuration found");
@@ -32,7 +35,6 @@ namespace transfluent
 			changeStaticInstanceConfig(config.sourceLanguage.code, group);
 		}
 
-		
 		//convert into a factory?
 		public static bool changeStaticInstanceConfig(string destinationLanguageCode = "", string translationGroup = "")
 		{
@@ -47,7 +49,7 @@ namespace transfluent
 
 				return true;
 			}
-			
+
 			return false;
 		}
 
@@ -63,21 +65,20 @@ namespace transfluent
 			changeStaticInstanceConfig("fr-fr");
 		}
 
-		
 		//[MenuItem("Transfluent/Helpers/Test OnLocalize")]
 		public static void OnLanguageChanged()
 		{
-			
 			GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-			for (int i=0;i<allObjects.Length;i++)
+			for(int i = 0; i < allObjects.Length; i++)
 			{
 				GameObject go = allObjects[i];
-				if (go.transform.parent != null) continue; //skip any non-root messages
-				go.BroadcastMessage("OnLocalize",options:SendMessageOptions.DontRequireReceiver);
+				if(go.transform.parent != null) continue; //skip any non-root messages
+				go.BroadcastMessage("OnLocalize", options: SendMessageOptions.DontRequireReceiver);
 			}
 		}
+
 		//public static event Action OnLanguageChanged;
-		
+
 		public static ITranslationUtilityInstance createNewInstance(string destinationLanguageCode = "", string group = "")
 		{
 			if(_LanguageList == null)
@@ -92,14 +93,14 @@ namespace transfluent
 			}
 			bool enableCapture = false;
 #if UNITY_EDITOR
-			if (Application.isEditor)
+			if(Application.isEditor)
 			{
 				enableCapture = getCaptureMode();
 			}
 #endif //UNTIY_EDITOR
 
 			TransfluentLanguage dest = _LanguageList.getLangaugeByCode(destinationLanguageCode);
-			if (dest == null)
+			if(dest == null)
 			{
 				TranslationConfigurationSO defaultConfigInfo = ResourceLoadFacade.LoadConfigGroup(group);
 				string newDestinationLanguageCode = defaultConfigInfo.sourceLanguage.code;
@@ -112,7 +113,7 @@ namespace transfluent
 					Debug.Log("Could not load destination language code:" + destinationLanguageCode + " so falling back to source game language code:" + destinationLanguageCode);
 				 */
 				destinationLanguageCode = newDestinationLanguageCode;
-				
+
 				dest = _LanguageList.getLangaugeByCode(destinationLanguageCode);
 				//dest = _LanguageList.getLangaugeByCode
 			}
@@ -123,14 +124,14 @@ namespace transfluent
 #if UNITY_EDITOR
 			EditorUtility.SetDirty(destLangDB);
 #endif
-			
+
 			var newTranslfuentUtilityInstance = new TranslationUtilityInstance
 			{
 				allKnownTranslations = keysInLanguageForGroupSpecified,
 				destinationLanguage = dest,
 				groupBeingShown = group,
 			};
-			if (enableCapture)
+			if(enableCapture)
 			{
 				newTranslfuentUtilityInstance = new AutoCaptureTranslationUtiliityInstance()
 				{
@@ -154,7 +155,7 @@ namespace transfluent
 		{
 			if(sourceTexts == null) return null;
 			string[] destTexts = new string[sourceTexts.Length];
-			for (int i = 0; i < sourceTexts.Length; i++)
+			for(int i = 0; i < sourceTexts.Length; i++)
 			{
 				destTexts[i] = get(sourceTexts[i]);
 			}
@@ -167,25 +168,27 @@ namespace transfluent
 		{
 			return _instance.getFormattedTranslation(sourceText, formatStrings);
 		}
+
 		[MenuItem("Translation/Helpers/Enable Capture Mode")]
-		static void EnableCaptureMode()
+		private static void EnableCaptureMode()
 		{
 			setCaptureMode(true);
 			_instance = createNewInstance();
 		}
 
 		[MenuItem("Translation/Helpers/Disable Capture Mode")]
-		static void DisableCaptureMode()
+		private static void DisableCaptureMode()
 		{
 			setCaptureMode(false);
 			_instance = createNewInstance();
 		}
 
-		static bool getCaptureMode()
+		private static bool getCaptureMode()
 		{
 			return EditorPrefs.GetBool("CAPTURE_MODE");
 		}
-		static void setCaptureMode(bool toCapture)
+
+		private static void setCaptureMode(bool toCapture)
 		{
 			EditorPrefs.SetBool("CAPTURE_MODE", toCapture);
 		}
@@ -195,8 +198,11 @@ namespace transfluent
 	public interface ITranslationUtilityInstance
 	{
 		void setNewDestinationLanguage(Dictionary<string, string> transaltionsInSet);
+
 		string getFormattedTranslation(string sourceText, params object[] formatStrings);
+
 		string getTranslation(string sourceText);
+
 		Dictionary<string, string> allKnownTranslations { get; set; }
 	}
 
@@ -224,9 +230,9 @@ namespace transfluent
 
 		public string getTranslation(string sourceText)
 		{
-			if (allKnownTranslations != null)
+			if(allKnownTranslations != null)
 			{
-				if (allKnownTranslations.ContainsKey(sourceText))
+				if(allKnownTranslations.ContainsKey(sourceText))
 				{
 					return allKnownTranslations[sourceText];
 				}
@@ -235,7 +241,7 @@ namespace transfluent
 			{
 				//Debug.LogError("KNOWN TRANSLATIONS NOT SET");
 			}
-			
+
 			return sourceText;
 		}
 	}
@@ -243,9 +249,10 @@ namespace transfluent
 	public class AutoCaptureTranslationUtiliityInstance : TranslationUtilityInstance, ITranslationUtilityInstance
 	{
 		public bool doCapture { get; set; }
+
 		public GameTranslationSet coreTransltionSet { get; set; }
 
-		List<string> formattedTextToIgnore = new List<string>(); 
+		private List<string> formattedTextToIgnore = new List<string>();
 
 		public new void setNewDestinationLanguage(Dictionary<string, string> transaltionsInSet)
 		{
@@ -256,7 +263,7 @@ namespace transfluent
 		public new string getFormattedTranslation(string sourceText, params object[] formatStrings)
 		{
 			string formattedString = string.Format(getTranslation(sourceText), formatStrings);
-			if (!formattedTextToIgnore.Contains(formattedString))
+			if(!formattedTextToIgnore.Contains(formattedString))
 			{
 				formattedTextToIgnore.Add(formattedString);
 			}
@@ -266,15 +273,15 @@ namespace transfluent
 		public new string getTranslation(string sourceText)
 		{
 			var translation = base.getTranslation(sourceText);
-			
+
 			if(allKnownTranslations != null)
 			{
 				if(doCapture && !allKnownTranslations.ContainsKey(sourceText) && !formattedTextToIgnore.Contains(sourceText))
 				{
 					allKnownTranslations.Add(sourceText, sourceText);
-					coreTransltionSet.mergeInSet(groupBeingShown,allKnownTranslations);
+					coreTransltionSet.mergeInSet(groupBeingShown, allKnownTranslations);
 				}
-				if (formattedTextToIgnore.Contains(sourceText))
+				if(formattedTextToIgnore.Contains(sourceText))
 				{
 					//Debug.LogError("blacklisted formatted translation:" + sourceText);
 				}

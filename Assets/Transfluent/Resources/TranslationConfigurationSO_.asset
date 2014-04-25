@@ -21,6 +21,66 @@ MonoBehaviour:
   - name: Pseudo language
     code: xx-xx
     id: 500
+  - name: Spanish (Latin America)
+    code: es-la
+    id: 144
+  - name: Portuguese (Portugal)
+    code: pt-pt
+    id: 129
+  - name: Portuguese (Brazil)
+    code: pt-br
+    id: 10
+  - name: Italian
+    code: it-it
+    id: 12
+  - name: Chinese (Mandarin, Simplified) (People's Republic of China)
+    code: zh-cn
+    id: 4
+  - name: Chinese (Traditional) (Taiwan)
+    code: zh-tw
+    id: 56
+  - name: Dutch
+    code: nl-nl
+    id: 13
+  - name: Japanese
+    code: ja-jp
+    id: 7
+  - name: Korean
+    code: ko-kr
+    id: 8
+  - name: Vietnamese
+    code: vi-vn
+    id: 23
+  - name: Russian
+    code: ru-ru
+    id: 15
+  - name: Swedish
+    code: sv-se
+    id: 14
+  - name: Danish
+    code: da-dk
+    id: 22
+  - name: Finnish
+    code: fi-fi
+    id: 11
+  - name: Norwegian
+    code: no-no
+    id: 27
+  - name: Turkish
+    code: tr-tr
+    id: 25
+  - name: Greek
+    code: el-gr
+    id: 30
+  - name: Indonesian
+    code: id-id
+    id: 128
+  - name: Malay
+    code: ms-my
+    id: 18
+  - name: Thai
+    code: th-th
+    id: 26
   sourceLanguage:
     name: English (United States)
     code: en-us

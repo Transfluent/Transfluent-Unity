@@ -108,9 +108,13 @@ public class SetupTranslationConfiguration : EditorWindow
 			throw new Exception("Auth token is null");
 		var estimator = new TranslationEstimate(authToken);
 
-		uploadAllLocalDestinationLanguageTranslations(selectedConfig, authToken);
+		if(GUILayout.Button("Translate"))
+		{
+			uploadAllLocalDestinationLanguageTranslations(selectedConfig, authToken);
 
-		estimator.presentEstimateAndMakeOrder(selectedConfig);
+			estimator.presentEstimateAndMakeOrder(selectedConfig);
+		}
+		
 	}
 
 	//uploads source config, and all destination configs (in case I have done some translations locally)
@@ -156,12 +160,15 @@ public class SetupTranslationConfiguration : EditorWindow
 
 	private void DisplaySelectedTranslationConfiguration(TranslationConfigurationSO so)
 	{
-		List<string> knownLanguageDisplayNames = showAllLanguages ? _languages.getListOfIdentifiersFromLanguageList() : _languages.getSimplifiedListOfIdentifiersFromLanguageList();
+		List<string> knownLanguageDisplayNames = showAllLanguages ? 
+			_languages.getListOfIdentifiersFromLanguageList() : 
+			_languages.getSimplifiedListOfIdentifiersFromLanguageList();
+
 		int sourceLanguageIndex = knownLanguageDisplayNames.IndexOf(so.sourceLanguage.name);
 
 		if(sourceLanguageIndex < 0) sourceLanguageIndex = 0;
-		EditorGUILayout.LabelField("group identifier:" + so.translation_set_group);
-		EditorGUILayout.LabelField("source language:" + so.sourceLanguage.name);
+		EditorGUILayout.LabelField(string.Format("group identifier:{0}", so.translation_set_group));
+		EditorGUILayout.LabelField(string.Format("source language:{0}", so.sourceLanguage.name));
 
 		sourceLanguageIndex = EditorGUILayout.Popup(sourceLanguageIndex, knownLanguageDisplayNames.ToArray());
 		if(GUILayout.Button("SET Source to this language" + knownLanguageDisplayNames[sourceLanguageIndex]))
@@ -193,7 +200,7 @@ public class SetupTranslationConfiguration : EditorWindow
 
 		if(GUILayout.Button("Create a new Destination Language"))
 		{
-			TransfluentLanguage lang = _languages.languages[newDestinationLanguageIndex];
+			TransfluentLanguage lang = _languages.getLangaugeByName(knownLanguageDisplayNames[newDestinationLanguageIndex]);
 			if(so.sourceLanguage.id == lang.id)
 			{
 				EditorUtility.DisplayDialog("Error", "Cannot have the source language be the destination language", "OK", "");
@@ -202,7 +209,7 @@ public class SetupTranslationConfiguration : EditorWindow
 			foreach(TransfluentLanguage exists in so.destinationLanguages)
 			{
 				if(exists.id != lang.id) continue;
-				EditorUtility.DisplayDialog("Error", "You already have added this language", "OK", "");
+				EditorUtility.DisplayDialog("Error", "You already have added this language: " + lang.name, "OK", "");
 				return;
 			}
 

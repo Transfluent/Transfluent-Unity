@@ -2,7 +2,7 @@
 using UnityEngine;
 using GUILayout = transfluent.guiwrapper.GUILayout;
 
-public class Example_NegativeOne_OnGUI : MonoBehaviour
+public class Sample1_OnGUIWrapped : MonoBehaviour
 {
 	private bool languageSelectToggle = true;
 

@@ -167,42 +167,42 @@ namespace transfluent.guiwrapper
 
 		public static System.String TextField(UnityEngine.Rect position, System.String text)
 		{
-			return UnityEditor.EditorGUI.TextField(position, TranslationUtility.get(text));
+			return UnityEditor.EditorGUI.TextField(position, text);
 		}
 
 		public static System.String TextField(UnityEngine.Rect position, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.TextField(position, TranslationUtility.get(text), style);
+			return UnityEditor.EditorGUI.TextField(position, text, style);
 		}
 
 		public static System.String TextField(UnityEngine.Rect position, System.String label, System.String text)
 		{
-			return UnityEditor.EditorGUI.TextField(position, TranslationUtility.get(label), TranslationUtility.get(text));
+			return UnityEditor.EditorGUI.TextField(position, text, TranslationUtility.get(text));
 		}
 
 		public static System.String TextField(UnityEngine.Rect position, System.String label, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.TextField(position, TranslationUtility.get(label), TranslationUtility.get(text), style);
+			return UnityEditor.EditorGUI.TextField(position, text, TranslationUtility.get(text), style);
 		}
 
 		public static System.String TextField(UnityEngine.Rect position, UnityEngine.GUIContent label, System.String text)
 		{
-			return UnityEditor.EditorGUI.TextField(position, label, TranslationUtility.get(text));
+			return UnityEditor.EditorGUI.TextField(position, label, text);
 		}
 
 		public static System.String TextField(UnityEngine.Rect position, UnityEngine.GUIContent label, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.TextField(position, label, TranslationUtility.get(text), style);
+			return UnityEditor.EditorGUI.TextField(position, label, text, style);
 		}
 
 		public static System.String TextArea(UnityEngine.Rect position, System.String text)
 		{
-			return UnityEditor.EditorGUI.TextArea(position, TranslationUtility.get(text));
+			return UnityEditor.EditorGUI.TextArea(position, text);
 		}
 
 		public static System.String TextArea(UnityEngine.Rect position, System.String text, UnityEngine.GUIStyle style)
 		{
-			return UnityEditor.EditorGUI.TextArea(position, TranslationUtility.get(text), style);
+			return UnityEditor.EditorGUI.TextArea(position, text, style);
 		}
 
 		public static void SelectableLabel(UnityEngine.Rect position, System.String text)

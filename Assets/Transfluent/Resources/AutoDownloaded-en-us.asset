@@ -208,6 +208,14 @@ MonoBehaviour:
       value: Versus
     - key: Backwards (test language)
       value: Backwards (test language)
+    - key: going to play soon {0}
+      value: going to play soon {0}
+    - key: 'Username:'
+      value: 'Username:'
+    - key: 'Hello, {0} how are you doing today: {1}'
+      value: 'Hello, {0} how are you doing today: {1}'
+    - key: 'Translate to language: {0}'
+      value: 'Translate to language: {0}'
   language:
     name: English (United States)
     code: en-us

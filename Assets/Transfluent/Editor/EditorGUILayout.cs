@@ -100,42 +100,42 @@ namespace transfluent.guiwrapper
 
 		public static System.String TextField(System.String text, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEditor.EditorGUILayout.TextField(TranslationUtility.get(text), options);
+			return UnityEditor.EditorGUILayout.TextField(text, options);
 		}
 
 		public static System.String TextField(System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEditor.EditorGUILayout.TextField(TranslationUtility.get(text), style, options);
+			return UnityEditor.EditorGUILayout.TextField(text, style, options);
 		}
 
 		public static System.String TextField(System.String label, System.String text, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEditor.EditorGUILayout.TextField(TranslationUtility.get(label), TranslationUtility.get(text), options);
+			return UnityEditor.EditorGUILayout.TextField(text, TranslationUtility.get(text), options);
 		}
 
 		public static System.String TextField(System.String label, System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEditor.EditorGUILayout.TextField(TranslationUtility.get(label), TranslationUtility.get(label), style, options);
+			return UnityEditor.EditorGUILayout.TextField(text, TranslationUtility.get(label), style, options);
 		}
 
 		public static System.String TextField(UnityEngine.GUIContent label, System.String text, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEditor.EditorGUILayout.TextField(label, TranslationUtility.get(text), options);
+			return UnityEditor.EditorGUILayout.TextField(label, text, options);
 		}
 
 		public static System.String TextField(UnityEngine.GUIContent label, System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEditor.EditorGUILayout.TextField(label, TranslationUtility.get(text), style, options);
+			return UnityEditor.EditorGUILayout.TextField(label, text, style, options);
 		}
 
 		public static System.String TextArea(System.String text, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEditor.EditorGUILayout.TextArea(TranslationUtility.get(text), options);
+			return UnityEditor.EditorGUILayout.TextArea(text, options);
 		}
 
 		public static System.String TextArea(System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEditor.EditorGUILayout.TextArea(TranslationUtility.get(text), style, options);
+			return UnityEditor.EditorGUILayout.TextArea(text, style, options);
 		}
 
 		public static void SelectableLabel(System.String text, params UnityEngine.GUILayoutOption[] options)

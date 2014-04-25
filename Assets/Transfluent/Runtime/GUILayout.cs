@@ -126,22 +126,22 @@ namespace transfluent.guiwrapper
 
 		public static System.String TextField(System.String text, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.TextField(TranslationUtility.get(text), options);
+			return UnityEngine.GUILayout.TextField(text, options);
 		}
 
 		public static System.String TextField(System.String text, int maxLength, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.TextField(TranslationUtility.get(text), maxLength, options);
+			return UnityEngine.GUILayout.TextField(text, maxLength, options);
 		}
 
 		public static System.String TextField(System.String text, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.TextField(TranslationUtility.get(text), style, options);
+			return UnityEngine.GUILayout.TextField(text, style, options);
 		}
 
 		public static System.String TextField(System.String text, int maxLength, UnityEngine.GUIStyle style, params UnityEngine.GUILayoutOption[] options)
 		{
-			return UnityEngine.GUILayout.TextField(TranslationUtility.get(text), maxLength, style, options);
+			return UnityEngine.GUILayout.TextField(text, maxLength, style, options);
 		}
 
 		public static System.String PasswordField(System.String password, char maskChar, params UnityEngine.GUILayoutOption[] options)

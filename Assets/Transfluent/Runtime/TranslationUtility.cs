@@ -263,29 +263,32 @@ namespace transfluent
 		public new string getFormattedTranslation(string sourceText, params object[] formatStrings)
 		{
 			string formattedString = string.Format(getTranslation(sourceText), formatStrings);
+			
 			if(!formattedTextToIgnore.Contains(formattedString))
 			{
 				formattedTextToIgnore.Add(formattedString);
 			}
+			addTranslationIfNotKnown(sourceText);
+
 			return formattedString;
+		}
+
+		void addTranslationIfNotKnown(string translationText)
+		{
+			if(allKnownTranslations == null) return;
+			if(doCapture && !allKnownTranslations.ContainsKey(translationText) && !formattedTextToIgnore.Contains(translationText))
+			{
+				allKnownTranslations.Add(translationText, translationText);
+				coreTransltionSet.mergeInSet(groupBeingShown, allKnownTranslations);
+			}
 		}
 
 		public new string getTranslation(string sourceText)
 		{
 			var translation = base.getTranslation(sourceText);
 
-			if(allKnownTranslations != null)
-			{
-				if(doCapture && !allKnownTranslations.ContainsKey(sourceText) && !formattedTextToIgnore.Contains(sourceText))
-				{
-					allKnownTranslations.Add(sourceText, sourceText);
-					coreTransltionSet.mergeInSet(groupBeingShown, allKnownTranslations);
-				}
-				if(formattedTextToIgnore.Contains(sourceText))
-				{
-					//Debug.LogError("blacklisted formatted translation:" + sourceText);
-				}
-			}
+			addTranslationIfNotKnown(sourceText);
+			
 			return translation;
 		}
 	}

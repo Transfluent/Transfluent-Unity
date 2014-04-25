@@ -102,8 +102,6 @@ public class SetupTranslationConfiguration : EditorWindow
 		ShowUploadDownload();
 
 		DoTranslation();
-
-
 	}
 
 	private void DoTranslation()
@@ -111,11 +109,8 @@ public class SetupTranslationConfiguration : EditorWindow
 		//TODO: review estimation algorithm
 		GUILayout.Space(30);
 		GUILayout.Label("Translate all known language from source to destination languages:");
-		_mediator.doAuth();
-		string authToken = _mediator.getCurrentAuthToken();
-		if(string.IsNullOrEmpty(authToken))
-			throw new Exception("Auth token is null");
-		var estimator = new TranslationEstimate(authToken);
+		
+		var estimator = new TranslationEstimate(_mediator);
 
 		estimator.presentEstimateAndMakeOrder(selectedConfig);
 	}

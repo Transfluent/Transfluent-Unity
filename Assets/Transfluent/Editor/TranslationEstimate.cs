@@ -8,18 +8,33 @@ using transfluent.editor;
 
 public class TranslationEstimate
 {
-	public string token;
+	public string _token;
+	private readonly TransfluentEditorWindowMediator _mediator;
 
-	public TranslationEstimate(string tokenIn)
+	public TranslationEstimate(TransfluentEditorWindowMediator mediator)
 	{
-		token = tokenIn;
+		_mediator = mediator;
 	}
 
+	void doAuth()
+	{
+		_mediator.doAuth();
+		string authToken = _mediator.getCurrentAuthToken();
+		if(string.IsNullOrEmpty(authToken))
+		{
+			//TODO: xx-xx only?
+			EditorUtility.DisplayDialog("Log in", " Please provide your transfluent credentials to order a translation","OK");
+			throw new Exception("Auth token is null");
+		}
+		_token = authToken;
+	}
 	public void presentEstimateAndMakeOrder(TranslationConfigurationSO selectedConfig)
 	{
 		var languageEstimates = new Dictionary<TransfluentLanguage, EstimateTranslationCostVO.Price>();
 		if(GUILayout.Button("Translate"))
 		{
+			doAuth();
+
 			List<string> allLanguageCodes = new List<string>();
 			allLanguageCodes.Add(selectedConfig.sourceLanguage.code);
 			selectedConfig.destinationLanguages.ForEach((TransfluentLanguage lang)=>{allLanguageCodes.Add(lang.code);});
@@ -109,7 +124,7 @@ public class TranslationEstimate
 		var req = new SyncronousEditorWebRequest();
 		try
 		{
-			call.getParameters.Add("token", token);
+			call.getParameters.Add("token", _token);
 
 			WebServiceReturnStatus result = req.request(call);
 			return result;

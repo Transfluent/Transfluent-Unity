@@ -94,7 +94,7 @@ namespace transfluent.editor
 			{
 				EditorGUILayout.BeginHorizontal();
 				currentUsername = EditorGUILayout.TextField("username", currentUsername);
-				currentPassword = EditorGUILayout.TextField("password", currentPassword);
+				currentPassword = EditorGUILayout.PasswordField("password", currentPassword);
 				EditorGUILayout.EndHorizontal();
 				EditorGUILayout.BeginHorizontal();
 

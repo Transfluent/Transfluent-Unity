@@ -40,6 +40,8 @@ public class SetupTranslationConfiguration : EditorWindow
 		initialized = true;
 	}
 
+	private Vector2 scrollwindowPos = Vector2.zero;
+
 	public void OnGUI()
 	{
 		//NOTE: potential fix for errors while trying to load or create resources while it reloads/compiles the unity editor
@@ -48,7 +50,12 @@ public class SetupTranslationConfiguration : EditorWindow
 			Initialize();
 			return;
 		}
-
+		scrollwindowPos = GUILayout.BeginScrollView(scrollwindowPos);
+		DrawContent();
+		GUILayout.EndScrollView();
+	}
+	public void DrawContent()
+	{
 		if(!GetLanguagesGUI())
 		{
 			return;
@@ -95,6 +102,8 @@ public class SetupTranslationConfiguration : EditorWindow
 		ShowUploadDownload();
 
 		DoTranslation();
+
+
 	}
 
 	private void DoTranslation()

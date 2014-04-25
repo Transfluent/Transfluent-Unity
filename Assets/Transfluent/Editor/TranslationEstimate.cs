@@ -4,6 +4,7 @@ using System.Text;
 using transfluent;
 using UnityEditor;
 using UnityEngine;
+using transfluent.editor;
 
 public class TranslationEstimate
 {
@@ -19,6 +20,11 @@ public class TranslationEstimate
 		var languageEstimates = new Dictionary<TransfluentLanguage, EstimateTranslationCostVO.Price>();
 		if(GUILayout.Button("Translate"))
 		{
+			List<string> allLanguageCodes = new List<string>();
+			allLanguageCodes.Add(selectedConfig.sourceLanguage.code);
+			selectedConfig.destinationLanguages.ForEach((TransfluentLanguage lang)=>{allLanguageCodes.Add(lang.code);});
+			DownloadAllGameTranslations.uploadTranslationSet(allLanguageCodes, selectedConfig.translation_set_group);
+
 			string group = selectedConfig.translation_set_group;
 			var sourceSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(selectedConfig.sourceLanguage.code);
 			if(sourceSet == null || sourceSet.getGroup(group) == null)
@@ -55,26 +61,33 @@ public class TranslationEstimate
 			}
 
 			var toTranslate = sourceSet.getGroup(group).getDictionaryCopy();
+			long sourceSetWordCount = 0;
+			
 			//var knownKeys = sourceSet.getPretranslatedKeys(sourceSet.getAllKeys(), selectedConfig.translation_set_group);
 			//var sourceDictionary = sourceSet.getGroup().getDictionaryCopy();
-			var langToWordsToTranslateCount = new Dictionary<TransfluentLanguage, long>();
 			foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
 			{
 				var set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(lang.code);
-				var destKeys = set.getGroup(group).getDictionaryCopy();
-				long wordCount = 0;
-				foreach(KeyValuePair<string, string> kvp in toTranslate)
+				long alreadyTranslatedWordCount = 0;
+
+				if(set != null)
 				{
-					if(!destKeys.ContainsKey(kvp.Key))
-						wordCount += kvp.Value.Split(' ').Length;
+					var destKeys = set.getGroup(group).getDictionaryCopy();
+					foreach(KeyValuePair<string, string> kvp in toTranslate)
+					{
+						if(!destKeys.ContainsKey(kvp.Key))
+							alreadyTranslatedWordCount += kvp.Value.Split(' ').Length;
+					}
 				}
-				langToWordsToTranslateCount.Add(lang, wordCount);
 
 				var oneWordPrice = languageEstimates[lang];
 				float costPerWord = float.Parse(oneWordPrice.amount);
-				float totalCost = costPerWord * wordCount;
-				simpleEstimateString.AppendFormat("language name: {0} total cost: {1} {2} \n\tCost per word:{3} total words:{4} ",
-					lang.name, totalCost, oneWordPrice.currency, costPerWord, wordCount);
+				long toTranslateWordcount = sourceSetWordCount - alreadyTranslatedWordCount;
+				if(toTranslateWordcount < 0) toTranslateWordcount *= -1;
+
+				float totalCost = costPerWord * toTranslateWordcount;
+				simpleEstimateString.AppendFormat("language name: {0} total cost: {1} {2} \n\tCost per word:{3} total words to translate:{4} ",
+					lang.name, totalCost, oneWordPrice.currency, costPerWord, toTranslateWordcount);
 			}
 
 			Debug.Log("Estimated prices");

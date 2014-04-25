@@ -1,7 +1,7 @@
 ﻿using transfluent;
 using UnityEngine;
 
-public class ProgramaticOnGUIExample : MonoBehaviour
+public class Sample0_ProgramaticOnGUIExample : MonoBehaviour
 {
 	private bool languageSelectToggle = true;
 	public LocalizeUtil managedText;

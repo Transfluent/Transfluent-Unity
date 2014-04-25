@@ -2,7 +2,7 @@
 using transfluent;
 using UnityEngine;
 
-public class InternationalTextDisplay : MonoBehaviour
+public class Sample3_InternationalTextDisplayProgrammatic : MonoBehaviour
 {
 	private readonly List<TransfluentLanguage> supportedLanguages = new List<TransfluentLanguage>();
 

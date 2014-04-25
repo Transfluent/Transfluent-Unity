@@ -8,4 +8,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Transfluent/Examples/Sample2_FormattedText.unity
   - enabled: 1
-    path: Assets/Transfluent/Examples/Sample3_InternationalOnGuiText_FullProgramatic.unity
+    path: Assets/Transfluent/Examples/Sample3_InternationalOnGuiText_FullProgramaticAndAutomaticSideBySide.unity

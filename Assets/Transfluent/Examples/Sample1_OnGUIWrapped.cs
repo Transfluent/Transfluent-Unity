@@ -9,6 +9,8 @@ public class Sample1_OnGUIWrapped : MonoBehaviour
 	public void OnGUI()
 	{
 		GUILayout.Label("options");
+
+		//This is just to show that you can switch langauges too!
 		languageSelectToggle = GUILayout.Toggle(languageSelectToggle, "Language Select");
 		if(languageSelectToggle)
 		{

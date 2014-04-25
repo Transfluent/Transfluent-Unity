@@ -62,6 +62,10 @@ public class TranslationEstimate
 
 			var toTranslate = sourceSet.getGroup(group).getDictionaryCopy();
 			long sourceSetWordCount = 0;
+			foreach (KeyValuePair<string, string> kvp in toTranslate)
+			{
+				sourceSetWordCount += kvp.Value.Split(' ').Length;
+			}
 			
 			//var knownKeys = sourceSet.getPretranslatedKeys(sourceSet.getAllKeys(), selectedConfig.translation_set_group);
 			//var sourceDictionary = sourceSet.getGroup().getDictionaryCopy();
@@ -86,8 +90,10 @@ public class TranslationEstimate
 				if(toTranslateWordcount < 0) toTranslateWordcount *= -1;
 
 				float totalCost = costPerWord * toTranslateWordcount;
-				simpleEstimateString.AppendFormat("language name: {0} total cost: {1} {2} \n\tCost per word:{3} total words to translate:{4} ",
-					lang.name, totalCost, oneWordPrice.currency, costPerWord, toTranslateWordcount);
+				simpleEstimateString.AppendFormat("language: {0} est cost: {1}\n", lang.name, totalCost);
+				//	lang.name, totalCost, oneWordPrice.currency, costPerWord, toTranslateWordcount);
+				//simpleEstimateString.AppendFormat("language name: {0} total cost: {1} {2} \n\tCost per word:{3} total words to translate:{4} ",
+				//	lang.name, totalCost, oneWordPrice.currency, costPerWord, toTranslateWordcount);
 			}
 
 			Debug.Log("Estimated prices");

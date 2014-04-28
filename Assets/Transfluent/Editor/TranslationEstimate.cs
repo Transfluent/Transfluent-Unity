@@ -90,6 +90,11 @@ public class TranslationEstimate
 			//var sourceDictionary = sourceSet.getGroup().getDictionaryCopy();
 			foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
 			{
+				if(lang.code == "xx-xx")
+				{
+					simpleEstimateString.AppendFormat("language: {0} est cost: {1}\n", lang.name, "FREE!");
+					continue;
+				}
 				var set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(lang.code);
 				long alreadyTranslatedWordCount = 0;
 
@@ -109,6 +114,7 @@ public class TranslationEstimate
 				if(toTranslateWordcount < 0) toTranslateWordcount *= -1;
 
 				float totalCost = costPerWord * toTranslateWordcount;
+				
 				simpleEstimateString.AppendFormat("language: {0} est cost: {1}\n", lang.name, totalCost);
 				//	lang.name, totalCost, oneWordPrice.currency, costPerWord, toTranslateWordcount);
 				//simpleEstimateString.AppendFormat("language name: {0} total cost: {1} {2} \n\tCost per word:{3} total words to translate:{4} ",

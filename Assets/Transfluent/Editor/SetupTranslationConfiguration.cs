@@ -91,7 +91,7 @@ public class SetupTranslationConfiguration : EditorWindow
 		{
 			GUILayout.Label("Log in to translate your text as well as upload and download your local translations");
 			ShowLoginFields();
-			return;
+			//return;
 		} else
 		{
 			if(GUILayout.Button("LOG OUT OF ACCOUNT"))

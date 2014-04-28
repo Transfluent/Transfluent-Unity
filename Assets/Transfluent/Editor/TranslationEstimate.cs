@@ -34,6 +34,10 @@ public class TranslationEstimate
 		if(GUILayout.Button("Translate"))
 		{
 			doAuth();
+			if(string.IsNullOrEmpty(_token))
+			{
+				return;
+			}
 
 			List<string> allLanguageCodes = new List<string>();
 			allLanguageCodes.Add(selectedConfig.sourceLanguage.code);

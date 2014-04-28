@@ -66,7 +66,7 @@ namespace transfluent
 		public WebServiceReturnStatus getStatusFromFinishedWWW(WWW www, Stopwatch sw,
 			ITransfluentParameters originalCallParams)
 		{
-			Debug.Log("WWW:" + www.url);
+			//Debug.Log("WWW:" + www.url);
 
 			var status = new WebServiceReturnStatus
 			{

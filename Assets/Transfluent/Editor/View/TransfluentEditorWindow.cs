@@ -52,15 +52,21 @@ namespace transfluent.editor
 			textGui.doGUI();
 		}
 
+		private bool showAllLanugages;
 		public bool showCurrentLanguage()
 		{
 			var languageList = _mediator.getLanguageList();
-			var languageNames = languageList.allLanguageNames();
+
+			showAllLanugages = EditorGUILayout.Toggle("Show all langauges, not just simplified list", showAllLanugages);
+			var languageNames = showAllLanugages ?
+						languageList.getListOfIdentifiersFromLanguageList() :
+						languageList.getSimplifiedListOfIdentifiersFromLanguageList();
 
 			TransfluentLanguage currentLanguage = _mediator.GetCurrentLanguage();
 			int currentLanguageIndex = -1;
 			if(currentLanguage != null)
 				currentLanguageIndex = languageNames.IndexOf(currentLanguage.name);
+			
 			int newLanguageIndex = EditorGUILayout.Popup("Current language", currentLanguageIndex, languageNames.ToArray());
 			if(currentLanguageIndex != newLanguageIndex)
 			{

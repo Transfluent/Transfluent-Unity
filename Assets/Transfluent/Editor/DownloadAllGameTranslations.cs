@@ -29,7 +29,7 @@ namespace transfluent.editor
 			{
 				EditorUtility.DisplayDialog("Login please",
 					"Please login using editor window before trying to use this functionality", "ok");
-				TransfluentEditorWindow.Init();
+				//TransfluentEditorWindow.Init();
 				return null;
 			}
 			mediator.doAuth(usernamePassword.Key, usernamePassword.Value);

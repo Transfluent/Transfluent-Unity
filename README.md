@@ -10,7 +10,11 @@
 2. Configure your game for translation in the game configuration menu -- ie it's currently in English and I want to translate to German and French
 3. Get text into the Translation database (a scriptable object) -- You can use the tools described later in this document to help you get your text automatically migrated, or you can manually enter text through the inspector by looking at the asset Transfluent/Resources/Autodownloaded-en-us (or whatever your source language code may be)
 4. Get your text translated!  Go to the menu item Translation/Game Configuration and select Translate my game.  You can view your order status online at https://www.transfluent.com/en/my-account/ , but you should be able to select the "Download all translations"
+5. If you have any questions, feel free to ask the maintainer -- alex@transfluent.com
 
+### Walkthrough
+This is a document to configure your game for translation and getting familiar with the GUI tools
+[Walkthrough](https://github.com/Transfluent/Transfluent-Unity/wiki/walkthrough)
 
 ### Quick links for technical users
 1. [Download](https://raw.githubusercontent.com/Transfluent/Transfluent-Unity/master/Release/2.0/TransfluentEditor-2.0.3.unitypackage) (examples are included)

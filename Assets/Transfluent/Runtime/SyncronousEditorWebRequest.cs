@@ -36,7 +36,7 @@ public class SyncronousEditorWebRequest : IWebService
 				break;
 			if(www.error != null)
 				break;
-			if(sw.Elapsed.TotalSeconds >= 30f)
+			if(sw.Elapsed.TotalSeconds >= 1000f)
 				break;
 
 			//EditorApplication.Step();

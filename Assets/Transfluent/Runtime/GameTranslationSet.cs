@@ -68,7 +68,15 @@ public class GameTranslationSet : ScriptableObject
 			var dic = new Dictionary<string, string>();
 			foreach(Translation translation in translations)
 			{
-				dic.Add(translation.key, translation.value);
+				if(dic.ContainsKey(translation.key))
+				{
+					Debug.LogWarning(string.Format("Two keys of the same value present:{0} overwriting existing value:{1} with new value{2}", translation.key, dic[translation.key], translation.value));
+					dic[translation.key] = translation.value;
+				} else
+				{
+					dic.Add(translation.key, translation.value);
+				}
+				
 			}
 			return dic;
 		}

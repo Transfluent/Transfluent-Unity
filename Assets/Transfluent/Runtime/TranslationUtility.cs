@@ -183,12 +183,19 @@ namespace transfluent
 
 		private static bool getCaptureMode()
 		{
+#if UNITY_EDITOR
 			return EditorPrefs.GetBool("CAPTURE_MODE");
+#else
+			return false;
+#endif
+
 		}
 
 		private static void setCaptureMode(bool toCapture)
 		{
+#if UNITY_EDITOR
 			EditorPrefs.SetBool("CAPTURE_MODE", toCapture);
+#endif //UNITY_EDITOR
 		}
 	}
 

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityTest.IntegrationTestRunner;
@@ -235,7 +234,12 @@ namespace UnityTest
 				if(Application.loadedLevel < Application.levelCount - 1)
 					Application.LoadLevel(Application.loadedLevel + 1);
 				else
-					EditorApplication.Exit(0);
+				{
+#if UNITY_EDITOR
+					UnityEditor.EditorApplication.Exit(0);
+#endif
+				}
+					
 			}
 #else
 			if(Application.loadedLevel < Application.levelCount - 1)

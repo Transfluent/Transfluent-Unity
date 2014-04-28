@@ -86,7 +86,7 @@ TranslationUtility.changeStaticInstanceConfig("zh-cn");
 
 ### Configure the game - source and destination languages
 Select the menu "Transfluent/Game Configuration".  Set your source language, and add/remove any destination languages.
-![Game Configuration]<img src="https://raw.githubusercontent.com/Transfluent/Transfluent-Unity/master/Screenshots/GameConfiguration.png" height="500px" width="500px"/>
+<img src="https://raw.githubusercontent.com/Transfluent/Transfluent-Unity/master/Screenshots/GameConfiguration.png" height="500px" width="500px"/>
 
 ##Example translated project: https://github.com/hardcoded2/strangerocks
 This is a tech demo project that has text embedded in OnGUI scripts, prefabs, and in scene files.  

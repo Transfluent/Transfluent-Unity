@@ -166,21 +166,21 @@ namespace transfluent
 		{
 			return _instance.getFormattedTranslation(sourceText, formatStrings);
 		}
-
+#if UNITY_EDITOR
 		[MenuItem("Translation/Helpers/Enable Capture Mode")]
 		private static void EnableCaptureMode()
 		{
 			setCaptureMode(true);
 			_instance = createNewInstance();
 		}
-
+		
 		[MenuItem("Translation/Helpers/Disable Capture Mode")]
 		private static void DisableCaptureMode()
 		{
 			setCaptureMode(false);
 			_instance = createNewInstance();
 		}
-
+#endif
 		private static bool getCaptureMode()
 		{
 #if UNITY_EDITOR

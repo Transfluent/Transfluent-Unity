@@ -1,0 +1,152 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-ms-my
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: 'ini ialah contoh text0.1136321
+
+'
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: ini ialah teks ujian
+    - key: 1
+      value: Satu
+    - key: 2
+      value: __2__
+    - key: 4
+      value: 4
+    - key: potions aquired
+      value: bahagian diperolehi
+    - key: options
+      value: pilihan
+    - key: Start Game
+      value: Mulakan Permainan
+    - key: Begin!
+      value: Mulakan!
+    - key: Play Again?
+      value: Main Semula?
+    - key: Game Over!
+      value: Permainan Tamat!
+    - key: German
+      value: Jerman
+    - key: Return to game
+      value: Kembali ke permainan
+    - key: Language Select
+      value: Pilihan Bahasa
+    - key: Start Level {0}
+      value: Mula Tahap {0}
+    - key: 'Score: {0}'
+      value: 'Skor: {0}'
+    - key: 'Lives remaining: {0}'
+      value: 'Baki Hayat: {0}'
+    - key: Play Again
+      value: Main Semula
+    - key: 'Final Score: {0}'
+      value: 'Skor Akhir: {0}'
+    - key: Press Start to continue
+      value: Tekan Mula untuk meneruskan
+    - key: Continue?
+      value: Teruskan?
+    - key: Loading...
+      value: Memuatkan...
+    - key: Hard
+      value: Sukar
+    - key: Prepare for level
+      value: Bersedia untuk tahap
+    - key: Nope
+      value: Tidak
+    - key: Press any key to continue
+      value: Tekan sebarang kekunci untuk meneruskan
+    - key: New Game
+      value: Permainan Baharu
+    - key: Please wait...
+      value: Sila tunggu...
+    - key: Save
+      value: Simpan
+    - key: Exit
+      value: Keluar
+    - key: Are you sure you want to quit?
+      value: Adakah anda pasti ingin berhenti?
+    - key: 'Last Score: {0}'
+      value: 'Skor Terakhir: {0}'
+    - key: Press Start
+      value: Tekan Mula
+    - key: Press any key
+      value: Tekan sebarang kekunci
+    - key: Quit
+      value: Berhenti
+    - key: Video Options
+      value: Pilihan Video
+    - key: 'Level:'
+      value: 'Tahap:'
+    - key: French
+      value: Perancis
+    - key: Yes
+      value: YA
+    - key: Return to Main Menu?
+      value: Kembali ke Menu Utama?
+    - key: Network Options
+      value: Pilihan Rangkaian
+    - key: Thank you!
+      value: Terima Kasih!
+    - key: 3
+      value: Tiga
+    - key: configuration
+      value: konfigurasi
+    - key: STRANGE
+      value: PELIK
+    - key: 'Score:'
+      value: 'Skor:'
+    - key: English
+      value: Inggeris
+    - key: No
+      value: TIDAK
+    - key: Yeah
+      value: Ya
+    - key: Continue
+      value: Teruskan
+    - key: Save Game
+      value: Simpan Permainan
+    - key: Exit?
+      value: Keluar?
+    - key: Exit to Desktop
+      value: Keluar ke Desktop
+    - key: Exit to Desktop?
+      value: Keluar ke Desktop?
+    - key: Quit?
+      value: Berhenti?
+    - key: Return
+      value: Kembali
+    - key: Main Menu
+      value: Menu Utama
+    - key: Return to Main Menu
+      value: Kembali ke Menu Utama
+    - key: Sound Options
+      value: Pilihan Bunyi
+    - key: Graphics Options
+      value: Pilihan Grafik
+    - key: Quality
+      value: Kualiti
+    - key: Difficulty Options
+      value: Pilihan Kesukaran
+    - key: Very Easy
+      value: Sangat Mudah
+    - key: Medium
+      value: Sederhana
+    - key: Are you sure?
+      value: Adakah anda pasti?
+  language:
+    name: Malay
+    code: ms-my
+    id: 18

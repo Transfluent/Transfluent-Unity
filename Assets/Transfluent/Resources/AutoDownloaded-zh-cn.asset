@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-zh-cn
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: "\u8FD9\u662F\u793A\u8303\u6587\u672C0.1136321"
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: "\u8FD9\u662F\u793A\u8303\u6587\u672C"
+    - key: 1
+      value: "\u4E00\u4E2A"
+    - key: 2
+      value: __2__
+    - key: 3
+      value: "\u4E09"
+    - key: 4
+      value: 4
+    - key: cows
+      value: "\u5976\u725B"
+    - key: goat simulator
+      value: "\u5C71\u7F8A\u6A21\u62DF\u5668"
+    - key: potions aquired
+      value: "\u6240\u9700\u5206\u91CF"
+    - key: options
+      value: "\u9009\u9879"
+    - key: configuration
+      value: "\u914D\u7F6E"
+    - key: power up
+      value: "\u7535\u529B\u5F00\u542F"
+    - key: Start Game
+      value: "\u5F00\u59CB\u6E38\u620F"
+    - key: Begin!
+      value: "\u5F00\u59CB\uFF01"
+    - key: Play Again?
+      value: "\u518D\u73A9\u4E00\u6B21\uFF1F"
+    - key: Hi there!
+      value: "\u60A8\u597D\uFF01"
+    - key: Rocks
+      value: "\u6447\u6EDA"
+    - key: STRANGE
+      value: "\u5947\u602A"
+    - key: Prepare for level
+      value: "\u51C6\u5907\u597D\u8FDB\u5165\u7B49\u7EA7"
+    - key: 'Score:'
+      value: "\u5206\u6570\uFF1A"
+    - key: 'Level:'
+      value: "\u6C34\u5E73"
+    - key: Game Over!
+      value: "\u6E38\u620F\u7ED3\u675F\uFF01"
+    - key: German
+      value: "\u5FB7\u8BED"
+    - key: French
+      value: "\u6CD5\u8BED"
+    - key: English
+      value: "\u82F1\u8BED"
+    - key: Backwards
+      value: "\u540E\u9000"
+    - key: Return to game
+      value: "\u56DE\u5230\u6E38\u620F"
+    - key: Language Select
+      value: "\u9009\u62E9\u8BED\u8A00"
+    - key: 'Last Score: {0}'
+      value: "\u6700\u8FD1\u5206\u6570\uFF1A{0}"
+    - key: Start Level {0}
+      value: "\u5F00\u59CB\u7B49\u7EA7 {0}"
+    - key: 'Score: {0}'
+      value: "\u5206\u6570\uFF1A {0}"
+    - key: 'Lives remaining: {0}'
+      value: "\u5269\u4F59\u547D\u6570\uFF1A{0}"
+    - key: Play Again
+      value: "\u91CD\u73A9"
+    - key: 'Final Score: {0}'
+      value: "\u6700\u7EC8\u5F97\u5206\uFF1A {0}"
+    - key: 'Escape: [[[{0}]]]'
+      value: "\u9003\u8DD1\uFF1A [[[{0}]]]"
+    - key: Yes
+      value: "\u662F"
+    - key: No
+      value: "\u5426"
+    - key: Yeah
+      value: "\u5BF9"
+    - key: Nope
+      value: "\u4E0D\u662F"
+    - key: Press Start
+      value: "\u6309\u4E0B\u201C\u5F00\u59CB\u201D"
+    - key: Press Start to continue
+      value: "\u6309\u4E0B\u201C\u5F00\u59CB\u201D\u4EE5\u7EE7\u7EED"
+    - key: Press any key
+      value: "\u6309\u4E0B\u4EFB\u610F\u6309\u952E"
+    - key: Press any key to continue
+      value: "\u6309\u4E0B\u4EFB\u610F\u6309\u952E\u4EE5\u7EE7\u7EED"
+    - key: New Game
+      value: "\u65B0\u6E38\u620F"
+    - key: Continue
+      value: "\u7EE7\u7EED"
+    - key: Continue?
+      value: "\u7EE7\u7EED\uFF1F"
+    - key: Load
+      value: "\u52A0\u8F7D"
+    - key: Load Game
+      value: "\u52A0\u8F7D\u6E38\u620F"
+    - key: Loading...
+      value: "\u52A0\u8F7D\u4E2D..."
+    - key: Please wait...
+      value: "\u8BF7\u7B49\u5F85..."
+    - key: Save
+      value: "\u4FDD\u5B58"
+    - key: Save Game
+      value: "\u4FDD\u5B58\u6E38\u620F"
+    - key: Saving...
+      value: "\u4FDD\u5B58\u4E2D\u2026"
+    - key: Exit
+      value: "\u9000\u51FA"
+    - key: Exit?
+      value: "\u9000\u51FA\uFF1F"
+    - key: Exit to Desktop
+      value: "\u9000\u51FA\u5230\u684C\u9762"
+    - key: Exit to Desktop?
+      value: "\u9000\u51FA\u5230\u684C\u9762\uFF1F"
+    - key: Quit
+      value: "\u653E\u5F03"
+    - key: Quit?
+      value: "\u653E\u5F03?"
+    - key: Pause
+      value: "\u6682\u505C"
+    - key: Are you sure you want to quit?
+      value: "\u786E\u5B9A\u8981\u9000\u51FA\u5417\uFF1F"
+    - key: Return
+      value: "\u9000\u56DE"
+    - key: Main Menu
+      value: "\u4E3B\u83DC\u5355"
+    - key: Return to Main Menu
+      value: "\u9000\u56DE\u5230\u4E3B\u83DC\u5355"
+    - key: Return to Main Menu?
+      value: "\u9000\u56DE\u5230\u4E3B\u83DC\u5355\uFF1F"
+    - key: Sound Options
+      value: "\u58F0\u97F3\u9009\u9879"
+    - key: Sound
+      value: "\u58F0\u97F3"
+    - key: Volume
+      value: "\u97F3\u91CF"
+    - key: Graphics Options
+      value: "\u56FE\u50CF\u9009\u9879"
+    - key: Video Options
+      value: "\u89C6\u9891\u9009\u9879"
+    - key: Quality
+      value: "\u8D28\u91CF"
+    - key: Gameplay Options
+      value: "\u6E38\u620F\u9009\u9879"
+    - key: Network Options
+      value: "\u7F51\u7EDC\u9009\u9879"
+    - key: Difficulty Options
+      value: "\u96BE\u5EA6\u9009\u9879"
+    - key: Difficulty
+      value: "\u96BE\u5EA6"
+    - key: Very Easy
+      value: "\u975E\u5E38\u5BB9\u6613"
+    - key: Easy
+      value: "\u5BB9\u6613"
+    - key: Medium
+      value: "\u4E2D\u7B49"
+    - key: Hard
+      value: "\u56F0\u96BE"
+    - key: Very Hard
+      value: "\u975E\u5E38\u56F0\u96BE"
+    - key: Insane
+      value: "\u6781\u5EA6\u56F0\u96BE"
+    - key: Impossible
+      value: "\u9AA8\u7070\u7EA7"
+    - key: Thank you!
+      value: "\u8C22\u8C22\uFF01"
+    - key: Goodbye!
+      value: "\u518D\u89C1\uFF01"
+    - key: Are you sure?
+      value: "\u786E\u5B9A\u5417\uFF1F"
+    - key: Single player
+      value: "\u5355\u4EBA\u6E38\u620F"
+    - key: Multiplayer
+      value: "\u591A\u4EBA\u6E38\u620F"
+    - key: Online Multiplayer
+      value: "\u5728\u7EBF\u591A\u4EBA\u6E38\u620F"
+    - key: Local Multiplayer
+      value: "\u672C\u5730\u591A\u4EBA\u6E38\u620F"
+    - key: Splitscreen
+      value: "\u5206\u5C4F"
+    - key: Co-op
+      value: "\u5408\u4F5C"
+    - key: Cooperative
+      value: "\u5408\u4F5C\u7684"
+    - key: Versus
+      value: "\u5BF9"
+  language:
+    name: Chinese (Mandarin, Simplified) (People's Republic of China)
+    code: zh-cn
+    id: 4

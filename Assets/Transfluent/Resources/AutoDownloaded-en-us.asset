@@ -91,9 +91,9 @@ MonoBehaviour:
     - key: this is a new key
       value: this is a new key
     - key: Yes
-      value: Yes
+      value: YES
     - key: No
-      value: No
+      value: NO
     - key: Yeah
       value: Yeah
     - key: Nope

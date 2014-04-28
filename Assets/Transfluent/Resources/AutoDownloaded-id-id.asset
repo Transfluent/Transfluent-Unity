@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-id-id
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: ini adalah teks sampel0.1136321
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: ini adalah teks tes
+    - key: 1
+      value: Satu
+    - key: 2
+      value: '__2__ '
+    - key: 3
+      value: Tiga
+    - key: 4
+      value: 4
+    - key: cows
+      value: sapi
+    - key: goat simulator
+      value: simulator kambing
+    - key: potions aquired
+      value: ramuan diperoleh
+    - key: options
+      value: opsi
+    - key: configuration
+      value: konfigurasi
+    - key: power up
+      value: daya naik
+    - key: Start Game
+      value: Mulai Permainan
+    - key: Begin!
+      value: Mulai!
+    - key: Play Again?
+      value: Bermain Lagi?
+    - key: Hi there!
+      value: Halo!
+    - key: Rocks
+      value: Bebatuan
+    - key: STRANGE
+      value: ASING
+    - key: Prepare for level
+      value: Bersiap untuk level
+    - key: 'Score:'
+      value: 'Skor:'
+    - key: 'Level:'
+      value: 'Level:'
+    - key: Game Over!
+      value: Permainan Berakhir!
+    - key: German
+      value: Jerman
+    - key: French
+      value: Perancis
+    - key: English
+      value: Inggris
+    - key: Backwards
+      value: Terbalik
+    - key: Return to game
+      value: Kembali ke permainan
+    - key: Language Select
+      value: Pilihan Bahasa
+    - key: 'Last Score: {0}'
+      value: 'Skor Terakhir: {0}'
+    - key: Start Level {0}
+      value: Mulai Level {0}
+    - key: 'Score: {0}'
+      value: 'Skor: {0}'
+    - key: 'Lives remaining: {0}'
+      value: 'Sisa Nyawa: {0}'
+    - key: Play Again
+      value: Bermain Lagi
+    - key: 'Final Score: {0}'
+      value: 'Skor Final: {0}'
+    - key: 'Escape: [[[{0}]]]'
+      value: 'Luput: [[[{0}]]] '
+    - key: Yes
+      value: YA
+    - key: No
+      value: TIDAK
+    - key: Yeah
+      value: Yap
+    - key: Nope
+      value: Enggak
+    - key: Press Start
+      value: Tekan Mulai
+    - key: Press Start to continue
+      value: Tekan Mulai untuk melanjutkan
+    - key: Press any key
+      value: Tekan tombol apa pun
+    - key: Press any key to continue
+      value: Tekan sembarang tombol untuk melanjutkan
+    - key: New Game
+      value: Permainan Baru
+    - key: Continue
+      value: Lanjutkan
+    - key: Continue?
+      value: Lanjutkan?
+    - key: Load
+      value: Muat
+    - key: Load Game
+      value: Muat Permainan
+    - key: Loading...
+      value: Memuat...
+    - key: Please wait...
+      value: Mohon tunggu...
+    - key: Save
+      value: Simpan
+    - key: Save Game
+      value: Simpan Permainan
+    - key: Saving...
+      value: Menyimpan...
+    - key: Exit
+      value: Keluar
+    - key: Exit?
+      value: Keluar?
+    - key: Exit to Desktop
+      value: Keluar ke Desktop
+    - key: Exit to Desktop?
+      value: Keluar ke Desktop?
+    - key: Quit
+      value: Keluar
+    - key: Quit?
+      value: Keluar?
+    - key: Pause
+      value: Jeda
+    - key: Are you sure you want to quit?
+      value: Anda yakin ingin keluar?
+    - key: Return
+      value: Kembali
+    - key: Main Menu
+      value: Menu Utama
+    - key: Return to Main Menu
+      value: Kembali ke Menu Utama
+    - key: Return to Main Menu?
+      value: Kembali ke Menu Utama?
+    - key: Sound Options
+      value: Opsi Suara
+    - key: Sound
+      value: Suara
+    - key: Volume
+      value: Volume
+    - key: Graphics Options
+      value: Opsi Grafis
+    - key: Video Options
+      value: Opsi Video
+    - key: Quality
+      value: Mutu
+    - key: Gameplay Options
+      value: Opsi Alur Permainan
+    - key: Network Options
+      value: Opsi Jaringan
+    - key: Difficulty Options
+      value: Opsi Kesulitan
+    - key: Difficulty
+      value: Kesulitan
+    - key: Very Easy
+      value: Sangat Mudah
+    - key: Easy
+      value: Mudah
+    - key: Medium
+      value: Sedang
+    - key: Hard
+      value: Sulit
+    - key: Very Hard
+      value: Sangat Sulit
+    - key: Insane
+      value: Sinting
+    - key: Impossible
+      value: Mustahil
+    - key: Thank you!
+      value: Terima kasih!
+    - key: Goodbye!
+      value: Sampai jumpa!
+    - key: Are you sure?
+      value: Anda yakin?
+    - key: Single player
+      value: Satu pemain
+    - key: Multiplayer
+      value: Banyak pemain
+    - key: Online Multiplayer
+      value: Banyak Pemain Daring
+    - key: Local Multiplayer
+      value: Banyak Pemain Lokal
+    - key: Splitscreen
+      value: Layar Terbelah
+    - key: Co-op
+      value: Kerja Sama
+    - key: Cooperative
+      value: Kerja Sama
+    - key: Versus
+      value: Kontra
+  language:
+    name: Indonesian
+    code: id-id
+    id: 128

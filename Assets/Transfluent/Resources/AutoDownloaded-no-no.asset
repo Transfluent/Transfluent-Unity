@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-no-no
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: "dette er pr\xF8vetekst0.1136321"
+    - key: 4
+      value: 4
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: dette er test tekst
+    - key: 3
+      value: Tre
+    - key: options
+      value: valg
+    - key: Start Game
+      value: Start spill
+    - key: Begin!
+      value: Start!
+    - key: Play Again?
+      value: Spille igjen?
+    - key: 'Score:'
+      value: 'Poeng:'
+    - key: 'Level:'
+      value: "Niv\xE5:"
+    - key: German
+      value: Tysk
+    - key: French
+      value: Fransk
+    - key: English
+      value: Engelsk
+    - key: Return to game
+      value: Returner til spill
+    - key: 'Lives remaining: {0}'
+      value: "Gjenv\xE6rende liv: {0} "
+    - key: Play Again
+      value: Spill igjen
+    - key: Yes
+      value: JA
+    - key: Press Start
+      value: Trykk start
+    - key: Press any key
+      value: Trykk valgfri tast
+    - key: Press any key to continue
+      value: "Trykk en tast for \xE5 fortsette"
+    - key: New Game
+      value: Nytt spill
+    - key: Continue
+      value: Fortsett
+    - key: Continue?
+      value: Fortsett?
+    - key: Load Game
+      value: Last spill
+    - key: Loading...
+      value: Laster...
+    - key: Please wait...
+      value: Vennligst vent...
+    - key: Save
+      value: Lagre
+    - key: Save Game
+      value: Lagre spill
+    - key: Saving...
+      value: Lagrer...
+    - key: Quit?
+      value: Slutte?
+    - key: Are you sure you want to quit?
+      value: "Er du sikker p\xE5 at du vil slutte?"
+    - key: Sound
+      value: Lyd
+    - key: Volume
+      value: Volum
+    - key: Difficulty Options
+      value: Vanskelighetsgrad
+  language:
+    name: Norwegian
+    code: no-no
+    id: 27

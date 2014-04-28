@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-es-la
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: este es el texto de muestra 0.1136321
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: este es el texto de prueba
+    - key: 1
+      value: Uno
+    - key: 2
+      value: __2__
+    - key: 3
+      value: Tres
+    - key: 4
+      value: 4
+    - key: cows
+      value: vacas
+    - key: goat simulator
+      value: simulador de cabra
+    - key: potions aquired
+      value: pociones adquiridas
+    - key: options
+      value: opciones
+    - key: configuration
+      value: "configuraci\xF3n"
+    - key: power up
+      value: energizar
+    - key: Start Game
+      value: Iniciar Juego
+    - key: Begin!
+      value: "\xA1Comience!"
+    - key: Play Again?
+      value: "\xBFJugar de Nuevo?"
+    - key: Hi there!
+      value: "\xA1Hola!"
+    - key: Rocks
+      value: Rocas
+    - key: STRANGE
+      value: "EXTRA\xD1O"
+    - key: Prepare for level
+      value: Prepare para el nivel
+    - key: 'Score:'
+      value: "Puntuaci\xF3n:"
+    - key: 'Level:'
+      value: 'Nivel:'
+    - key: Game Over!
+      value: "\xA1Fin del Juego!"
+    - key: German
+      value: "Alem\xE1n"
+    - key: French
+      value: "Franc\xE9s"
+    - key: English
+      value: "Ingl\xE9s"
+    - key: Backwards
+      value: "Hacia atr\xE1s"
+    - key: Return to game
+      value: Volver al juego
+    - key: Language Select
+      value: Seleccionar Idioma
+    - key: 'Last Score: {0}'
+      value: "\xDAltima Puntuaci\xF3n: {0}"
+    - key: Start Level {0}
+      value: Iniciar el Nivel {0}
+    - key: 'Score: {0}'
+      value: "Puntuaci\xF3n: {0}"
+    - key: 'Lives remaining: {0}'
+      value: 'Vidas Restantes: {0}'
+    - key: Play Again
+      value: Jugar de Nuevo
+    - key: 'Final Score: {0}'
+      value: "Puntuaci\xF3n Final: {0}"
+    - key: 'Escape: [[[{0}]]]'
+      value: 'Escape: [[[{0}]]]'
+    - key: Yes
+      value: "S\xCD"
+    - key: No
+      value: NO
+    - key: Yeah
+      value: "S\xED"
+    - key: Nope
+      value: No
+    - key: Press Start
+      value: Presione Start
+    - key: Press Start to continue
+      value: Presione Start para continuar
+    - key: Press any key
+      value: Presione cualquier tecla
+    - key: Press any key to continue
+      value: Presione cualquier tecla para continuar
+    - key: New Game
+      value: Juego Nuevo
+    - key: Continue
+      value: Continuar
+    - key: Continue?
+      value: "\xBFContinuar?"
+    - key: Load
+      value: Cargar
+    - key: Load Game
+      value: Cargar Juego
+    - key: Loading...
+      value: Cargando...
+    - key: Please wait...
+      value: Por favor espere...
+    - key: Save
+      value: Guardar
+    - key: Save Game
+      value: Guardar Juego
+    - key: Saving...
+      value: Guardando...
+    - key: Exit
+      value: Salida
+    - key: Exit?
+      value: "\xBFSalir?"
+    - key: Exit to Desktop
+      value: Salir a Escritorio
+    - key: Exit to Desktop?
+      value: "\xBFSalir a Escritorio?"
+    - key: Quit
+      value: Abandonar
+    - key: Quit?
+      value: "\xBFAbandonar?"
+    - key: Pause
+      value: Pausa
+    - key: Are you sure you want to quit?
+      value: "\xBFEst\xE1 seguro de querer abandonar?"
+    - key: Return
+      value: Volver
+    - key: Main Menu
+      value: "Men\xFA Principal"
+    - key: Return to Main Menu
+      value: "Volver al Men\xFA Principal"
+    - key: Return to Main Menu?
+      value: "\xBFVolver al Men\xFA Principal?"
+    - key: Sound Options
+      value: Opciones de Sonido
+    - key: Sound
+      value: sonido
+    - key: Volume
+      value: Volumen
+    - key: Graphics Options
+      value: "Opciones Gr\xE1ficas"
+    - key: Video Options
+      value: "Opciones de V\xEDdeo"
+    - key: Quality
+      value: Calidad
+    - key: Gameplay Options
+      value: Opciones de Juego
+    - key: Network Options
+      value: Opciones de Red
+    - key: Difficulty Options
+      value: Opciones de Dificultad
+    - key: Difficulty
+      value: Dificultad
+    - key: Very Easy
+      value: "Muy F\xE1cil"
+    - key: Easy
+      value: "F\xE1cil"
+    - key: Medium
+      value: Media
+    - key: Hard
+      value: "Dif\xEDcil"
+    - key: Very Hard
+      value: "Muy Dif\xEDcil"
+    - key: Insane
+      value: Descabellada
+    - key: Impossible
+      value: Imposible
+    - key: Thank you!
+      value: "\xA1Gracias!"
+    - key: Goodbye!
+      value: "\xA1Adi\xF3s!"
+    - key: Are you sure?
+      value: "\xBFEst\xE1 seguro?"
+    - key: Single player
+      value: Un jugador
+    - key: Multiplayer
+      value: "Jugadores M\xFAltiples"
+    - key: Online Multiplayer
+      value: "Jugadores M\xFAltiples En L\xEDnea"
+    - key: Local Multiplayer
+      value: "Jugadores M\xFAltiples Locales"
+    - key: Splitscreen
+      value: Pantalla Dividida
+    - key: Co-op
+      value: Cooperativo
+    - key: Cooperative
+      value: Cooperativo
+    - key: Versus
+      value: Versus
+  language:
+    name: Spanish (Latin America)
+    code: es-la
+    id: 144

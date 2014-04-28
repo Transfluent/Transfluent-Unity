@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-sv-se
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: "det h\xE4r \xE4r exempeltext0.1136321 "
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: "det h\xE4r \xE4r testtext"
+    - key: 1
+      value: Ett
+    - key: 2
+      value: __2__
+    - key: 3
+      value: Tre
+    - key: 4
+      value: 4
+    - key: cows
+      value: kor
+    - key: goat simulator
+      value: get-simulator
+    - key: options
+      value: "inst\xE4llningar"
+    - key: configuration
+      value: konfiguration
+    - key: Start Game
+      value: Starta spel
+    - key: Begin!
+      value: "B\xF6rja!"
+    - key: Play Again?
+      value: Spela igen?
+    - key: Hi there!
+      value: "Hall\xE5 d\xE4r!"
+    - key: Rocks
+      value: Stenar
+    - key: 'Score:'
+      value: "Po\xE4ng:"
+    - key: 'Level:'
+      value: "Niv\xE5:"
+    - key: German
+      value: Tyska
+    - key: French
+      value: Franska
+    - key: English
+      value: Engelska
+    - key: Backwards
+      value: "Bakl\xE4nges"
+    - key: Return to game
+      value: "\xC5terg\xE5 till spelet"
+    - key: Language Select
+      value: "Val av spr\xE5k"
+    - key: 'Last Score: {0}'
+      value: "Senaste po\xE4ng: {0}"
+    - key: 'Score: {0}'
+      value: "Po\xE4ng: {0}"
+    - key: 'Lives remaining: {0}'
+      value: 'Antal liv kvar: {0}'
+    - key: Play Again
+      value: Spela igen
+    - key: Yes
+      value: JA
+    - key: No
+      value: NEJ
+    - key: Yeah
+      value: Ja
+    - key: Nope
+      value: Nej
+    - key: Press Start
+      value: Tryck Start
+    - key: Press Start to continue
+      value: "Tryck Start f\xF6r att forts\xE4tta"
+    - key: Press any key
+      value: Tryck valfri tangent
+    - key: Press any key to continue
+      value: "Tryck valfri tangent f\xF6r att forts\xE4tta"
+    - key: New Game
+      value: Nytt spel
+    - key: Continue
+      value: "Forts\xE4tt"
+    - key: Continue?
+      value: "Forts\xE4tt?"
+    - key: Load
+      value: Ladda
+    - key: Load Game
+      value: Ladda spel
+    - key: Loading...
+      value: Laddar...
+    - key: Please wait...
+      value: "V\xE4nligen v\xE4nta..."
+    - key: Save
+      value: Spara
+    - key: Save Game
+      value: Spara spel
+    - key: Saving...
+      value: Sparar...
+    - key: Quit
+      value: Avsluta
+    - key: Quit?
+      value: Avsluta?
+    - key: Pause
+      value: Pausa
+    - key: Are you sure you want to quit?
+      value: "\xC4r du s\xE4ker p\xE5 att du vill avsluta?"
+    - key: Main Menu
+      value: Huvudmeny
+    - key: Volume
+      value: Volym
+    - key: Graphics Options
+      value: Grafikalternativ
+    - key: Video Options
+      value: Videoalternativ
+    - key: Quality
+      value: Kvalitet
+    - key: Network Options
+      value: "N\xE4tverksalternativ"
+    - key: Very Easy
+      value: "V\xE4ldigt l\xE4tt"
+    - key: Easy
+      value: "L\xE4tt"
+    - key: Medium
+      value: Medel
+    - key: Hard
+      value: "Sv\xE5rt"
+    - key: Very Hard
+      value: "V\xE4ldigt sv\xE5rt"
+    - key: Insane
+      value: Vansinnigt
+    - key: Impossible
+      value: "Om\xF6jligt"
+    - key: Thank you!
+      value: Tack!
+    - key: Goodbye!
+      value: "Hejd\xE5!"
+    - key: Are you sure?
+      value: "\xC4r du s\xE4ker?"
+    - key: Single player
+      value: Singelspelare
+    - key: Multiplayer
+      value: Multispelare
+    - key: Online Multiplayer
+      value: Online multispelare
+    - key: Local Multiplayer
+      value: Lokal multispelare
+    - key: Splitscreen
+      value: "Delad sk\xE4rm"
+    - key: potions aquired
+      value: "f\xF6rv\xE4rvade drycker"
+    - key: power up
+      value: extra styrka
+    - key: STRANGE
+      value: KONSTIGT
+    - key: Prepare for level
+      value: "F\xF6rbered dig f\xF6r niv\xE5"
+    - key: Game Over!
+      value: "Spelet \xE4r slut!"
+    - key: Start Level {0}
+      value: "Starta niv\xE5 {0}"
+    - key: 'Final Score: {0}'
+      value: "Slutlig po\xE4ng: {0}"
+    - key: 'Escape: [[[{0}]]]'
+      value: 'Fly: [[[{0}]]] '
+    - key: Exit
+      value: "G\xE5 ut"
+    - key: Exit?
+      value: "G\xE5 ut?"
+    - key: Exit to Desktop
+      value: "G\xE5 till skrivbord"
+    - key: Exit to Desktop?
+      value: "G\xE5 till skrivbord?"
+    - key: Return
+      value: Tillbaka
+    - key: Return to Main Menu
+      value: Tillbaka till huvudmenyn
+    - key: Return to Main Menu?
+      value: "G\xE5 tillbaka till huvudmenyn?"
+    - key: Sound Options
+      value: Ljudalternativ
+    - key: Sound
+      value: Ljud
+    - key: Gameplay Options
+      value: "Alternativ f\xF6r gameplay"
+    - key: Difficulty Options
+      value: "Alternativ f\xF6r sv\xE5righetsgrad"
+    - key: Difficulty
+      value: "Sv\xE5righetsgrad"
+    - key: Co-op
+      value: Samarbeta
+    - key: Cooperative
+      value: Samverkande
+    - key: Versus
+      value: Versus
+  language:
+    name: Swedish
+    code: sv-se
+    id: 14

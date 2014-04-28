@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-tr-tr
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: "bu \xF6rnek metindir0.1136321"
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: bu test metnidir
+    - key: 1
+      value: Bir
+    - key: 2
+      value: __2__
+    - key: 3
+      value: "\xDC\xE7"
+    - key: 4
+      value: 4
+    - key: cows
+      value: inekler
+    - key: goat simulator
+      value: "ke\xE7i simulat\xF6r\xFC"
+    - key: potions aquired
+      value: "al\u0131nan iksirler"
+    - key: options
+      value: "se\xE7enekler"
+    - key: configuration
+      value: "yap\u0131land\u0131rma"
+    - key: power up
+      value: "g\xFC\xE7 a\xE7\u0131k"
+    - key: Start Game
+      value: "Oyunu Ba\u015Flat"
+    - key: Begin!
+      value: "Ba\u015Fla!"
+    - key: Play Again?
+      value: Yeniden Oyna?
+    - key: Hi there!
+      value: Selam!
+    - key: Rocks
+      value: Kayalar
+    - key: STRANGE
+      value: "GAR\u0130P"
+    - key: Prepare for level
+      value: "Seviye i\xE7in haz\u0131rl\u0131k yap"
+    - key: 'Score:'
+      value: 'Skor:'
+    - key: 'Level:'
+      value: 'Seviye:'
+    - key: Game Over!
+      value: Oyun Bitti!
+    - key: German
+      value: Almanca
+    - key: French
+      value: "Frans\u0131zca"
+    - key: English
+      value: "\u0130ngilizce"
+    - key: Backwards
+      value: Geri
+    - key: Return to game
+      value: "Oyuna d\xF6n"
+    - key: Language Select
+      value: "Dil Se\xE7imi"
+    - key: 'Last Score: {0}'
+      value: 'Son Skor: {0}'
+    - key: Start Level {0}
+      value: "Ba\u015Flang\u0131\xE7 Seviyesi {0}"
+    - key: 'Score: {0}'
+      value: 'Skor: {0}'
+    - key: 'Lives remaining: {0}'
+      value: 'Kalan Canlar: {0}'
+    - key: Play Again
+      value: Yeniden Oyna
+    - key: 'Final Score: {0}'
+      value: 'Nihai Skor: {0}'
+    - key: 'Escape: [[[{0}]]]'
+      value: "\xC7\u0131k\u0131\u015F: [[[{0}]]]"
+    - key: Yes
+      value: EVET
+    - key: No
+      value: HAYIR
+    - key: Yeah
+      value: Tamam
+    - key: Nope
+      value: Yok
+    - key: Press Start
+      value: "Ba\u015Flat'a Bas"
+    - key: Press Start to continue
+      value: "Devam etmek i\xE7in Ba\u015Flat'a bas"
+    - key: Press any key
+      value: "Herhangi bir tu\u015Fa bas\u0131n"
+    - key: Press any key to continue
+      value: "Devam etmek i\xE7in herhangi bir tu\u015Fa bas\u0131n"
+    - key: New Game
+      value: Yeni Oyun
+    - key: Continue
+      value: Devam
+    - key: Continue?
+      value: Devam?
+    - key: Load
+      value: "Y\xFCkle"
+    - key: Load Game
+      value: "Oyunu Y\xFCkle"
+    - key: Loading...
+      value: "Y\xFCkleniyor..."
+    - key: Please wait...
+      value: "L\xFCtfen bekleyin..."
+    - key: Save
+      value: Kaydet
+    - key: Save Game
+      value: Oyunu Kaydet
+    - key: Saving...
+      value: Kaydediliyor...
+    - key: Exit
+      value: "\xC7\u0131k\u0131\u015F"
+    - key: Exit?
+      value: "\xC7\u0131k\u0131\u015F?"
+    - key: Exit to Desktop
+      value: "Masa\xFCst\xFCne \xC7\u0131k"
+    - key: Exit to Desktop?
+      value: "Masa\xFCst\xFCne \xC7\u0131k?"
+    - key: Quit
+      value: "\xC7\u0131k\u0131\u015F"
+    - key: Quit?
+      value: "\xC7\u0131k\u0131\u015F?"
+    - key: Pause
+      value: Duraklat
+    - key: Are you sure you want to quit?
+      value: "\xC7\u0131k\u0131\u015F yapmak istedi\u011Finizden emin misiniz?"
+    - key: Return
+      value: "Geri D\xF6n"
+    - key: Main Menu
+      value: "Ana Men\xFC"
+    - key: Return to Main Menu
+      value: "Ana Men\xFCye geri d\xF6n"
+    - key: Return to Main Menu?
+      value: "Ana Men\xFCye geri d\xF6n?"
+    - key: Sound Options
+      value: "Ses Se\xE7enekleri"
+    - key: Sound
+      value: Ses
+    - key: Volume
+      value: Ses seviyesi
+    - key: Graphics Options
+      value: "Grafik Se\xE7enekleri"
+    - key: Video Options
+      value: "Video Se\xE7enekleri"
+    - key: Quality
+      value: Kalite
+    - key: Gameplay Options
+      value: "Oynanabilirlik Se\xE7enekleri"
+    - key: Network Options
+      value: "A\u011F Se\xE7enekleri"
+    - key: Difficulty Options
+      value: "Zorluk Se\xE7enekleri"
+    - key: Difficulty
+      value: Zorluk
+    - key: Very Easy
+      value: "\xC7ok Kolay"
+    - key: Easy
+      value: Kolay
+    - key: Medium
+      value: Orta
+    - key: Hard
+      value: Zor
+    - key: Very Hard
+      value: "\xC7ok Zor"
+    - key: Insane
+      value: "\xC7\u0131lg\u0131n"
+    - key: Impossible
+      value: "\u0130mkans\u0131z"
+    - key: Thank you!
+      value: "Te\u015Fekk\xFCrler!"
+    - key: Goodbye!
+      value: "G\xFCle g\xFCle!"
+    - key: Are you sure?
+      value: Emin misiniz?
+    - key: Single player
+      value: Tek oyunculu
+    - key: Multiplayer
+      value: "\xC7ok oyunculu"
+    - key: Online Multiplayer
+      value: "\xC7evrimi\xE7i \xC7ok Oyunculu"
+    - key: Local Multiplayer
+      value: "Yerel \xC7ok Oyunculu"
+    - key: Splitscreen
+      value: "B\xF6l\xFCnm\xFC\u015F ekran"
+    - key: Co-op
+      value: "\u0130\u015Fbirli\u011Fi"
+    - key: Cooperative
+      value: "\u0130\u015Fbirli\u011Fi"
+    - key: Versus
+      value: "Kar\u015F\u0131"
+  language:
+    name: Turkish
+    code: tr-tr
+    id: 25

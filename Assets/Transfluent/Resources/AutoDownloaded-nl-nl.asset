@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-nl-nl
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: 'dit is voorbeeldtekst0.1136321 '
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: dit is testtekst
+    - key: 1
+      value: "E\xE9n"
+    - key: 2
+      value: '__2__ '
+    - key: 3
+      value: Drie
+    - key: 4
+      value: 4
+    - key: cows
+      value: koeien
+    - key: goat simulator
+      value: geitensimulator
+    - key: potions aquired
+      value: drankjes verworven
+    - key: options
+      value: opties
+    - key: configuration
+      value: configuratie
+    - key: power up
+      value: opstarten
+    - key: Start Game
+      value: Spel beginnen
+    - key: Begin!
+      value: Begin!
+    - key: Play Again?
+      value: Opnieuw spelen?
+    - key: Hi there!
+      value: Hallo daar!
+    - key: Rocks
+      value: Rotsen
+    - key: STRANGE
+      value: VREEMD
+    - key: Prepare for level
+      value: Voorbereiden voor niveau
+    - key: 'Score:'
+      value: 'Score:'
+    - key: 'Level:'
+      value: 'Niveau:'
+    - key: Game Over!
+      value: Game over!
+    - key: German
+      value: Duits
+    - key: French
+      value: Frans
+    - key: English
+      value: Engels
+    - key: Backwards
+      value: Terug
+    - key: Return to game
+      value: Terug naar spel
+    - key: Language Select
+      value: Taal selecteren
+    - key: 'Last Score: {0}'
+      value: 'Laatste score: {0}'
+    - key: Start Level {0}
+      value: Start niveau {0}
+    - key: 'Score: {0}'
+      value: 'Score: {0}'
+    - key: 'Lives remaining: {0}'
+      value: 'Overblijvende levens: {0}'
+    - key: Play Again
+      value: Opnieuw spelen
+    - key: 'Final Score: {0}'
+      value: 'Eindscore: {0}'
+    - key: 'Escape: [[[{0}]]]'
+      value: 'Ontsnappen: [[[{0}]]] '
+    - key: Yes
+      value: JA
+    - key: No
+      value: NEE
+    - key: Yeah
+      value: Ja
+    - key: Nope
+      value: Nee
+    - key: Press Start
+      value: Druk op start
+    - key: Press Start to continue
+      value: Druk op start om verder te gaan
+    - key: Press any key
+      value: Druk op eender welke knop
+    - key: Press any key to continue
+      value: Druk op eender welke knop om verder te gaan
+    - key: New Game
+      value: Nieuw spel
+    - key: Continue
+      value: Verder gaan
+    - key: Continue?
+      value: Verder gaan?
+    - key: Load
+      value: Laden
+    - key: Load Game
+      value: Spel laden
+    - key: Loading...
+      value: Aan het laden...
+    - key: Please wait...
+      value: Gelieve te wachten...
+    - key: Save
+      value: Opslaan
+    - key: Save Game
+      value: Spel opslaan
+    - key: Saving...
+      value: Aan het opslaan...
+    - key: Exit
+      value: Verlaten
+    - key: Exit?
+      value: Verlaten?
+    - key: Exit to Desktop
+      value: Verlaten naar desktop
+    - key: Exit to Desktop?
+      value: Verlaten naar desktop?
+    - key: Quit
+      value: Ophouden
+    - key: Quit?
+      value: Ophouden?
+    - key: Pause
+      value: Pauze
+    - key: Are you sure you want to quit?
+      value: Bent u zeker dat u wilt ophouden?
+    - key: Return
+      value: Terugkeren
+    - key: Main Menu
+      value: Hoofdmenu
+    - key: Return to Main Menu
+      value: Terugkeren naar hoofdmenu
+    - key: Return to Main Menu?
+      value: Terugkeren naar hoofdmenu?
+    - key: Sound Options
+      value: Geluidsopties
+    - key: Sound
+      value: Geluid
+    - key: Volume
+      value: Volume
+    - key: Graphics Options
+      value: Grafische opties
+    - key: Video Options
+      value: Video-opties
+    - key: Quality
+      value: Kwaliteit
+    - key: Gameplay Options
+      value: Spel-opties
+    - key: Network Options
+      value: Netwerkopties
+    - key: Difficulty Options
+      value: Moeilijkheidsopties
+    - key: Difficulty
+      value: Moeilijkheid
+    - key: Very Easy
+      value: Zeer makkelijk
+    - key: Easy
+      value: makkelijk
+    - key: Medium
+      value: Medium
+    - key: Hard
+      value: Hard
+    - key: Very Hard
+      value: Zeer hard
+    - key: Insane
+      value: Gek
+    - key: Impossible
+      value: Onmogelijk
+    - key: Thank you!
+      value: Dank u!
+    - key: Goodbye!
+      value: Tot ziens!
+    - key: Are you sure?
+      value: Bent u zeker?
+    - key: Single player
+      value: "E\xE9n speler"
+    - key: Multiplayer
+      value: Multi-speler
+    - key: Online Multiplayer
+      value: Online multi-speler
+    - key: Local Multiplayer
+      value: lokale multi-speler
+    - key: Splitscreen
+      value: Splitscreen
+    - key: Co-op
+      value: "Co\xF6peratie"
+    - key: Cooperative
+      value: "Co\xF6peratiev"
+    - key: Versus
+      value: Tegen
+  language:
+    name: Dutch
+    code: nl-nl
+    id: 13

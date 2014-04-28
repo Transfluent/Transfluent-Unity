@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-it-it
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: Press Start
+      value: Premi Start
+    - key: Press Start to continue
+      value: Premi Start per continuare
+    - key: Press any key
+      value: Premi un tasto qualsiasi
+    - key: Press any key to continue
+      value: Premi un tasto qualsiasi per continuare
+    - key: New Game
+      value: Nuovo gioco
+    - key: Continue
+      value: Continua
+    - key: Continue?
+      value: Vuoi continuare?
+    - key: Load
+      value: Carica
+    - key: Load Game
+      value: Carica gioco
+    - key: Loading...
+      value: Caricamento in corso...
+    - key: Please wait...
+      value: Attendere...
+    - key: Save
+      value: Salva
+    - key: Save Game
+      value: Salva gioco
+    - key: Saving...
+      value: 'Salvataggio in corso... '
+    - key: Exit
+      value: Esci
+    - key: Exit?
+      value: Vuoi uscire?
+    - key: Exit to Desktop
+      value: Esci sul Desktop
+    - key: Exit to Desktop?
+      value: Vuoi uscire sul Desktop?
+    - key: Quit
+      value: Esci
+    - key: Quit?
+      value: Vuoi uscire?
+    - key: Pause
+      value: Pausa
+    - key: Are you sure you want to quit?
+      value: Sei sicuro di voler uscire?
+    - key: Return
+      value: Ritorna
+    - key: Main Menu
+      value: Menu principale
+    - key: Return to Main Menu
+      value: Ritorna al Menu principale
+    - key: Return to Main Menu?
+      value: Vuoi ritornare al Menu principale?
+    - key: Sound Options
+      value: Opzioni audio
+    - key: Sound
+      value: Audio
+    - key: Volume
+      value: Volume
+    - key: Graphics Options
+      value: Opzioni grafica
+    - key: Video Options
+      value: Opzioni video
+    - key: Quality
+      value: "Qualit\xE0"
+    - key: Gameplay Options
+      value: Opzioni gioco
+    - key: Network Options
+      value: Opzioni di rete
+    - key: Difficulty Options
+      value: "Livelli di difficolt\xE0"
+    - key: Difficulty
+      value: "Difficolt\xE0"
+    - key: Very Easy
+      value: Molto facile
+    - key: Easy
+      value: Facile
+    - key: Medium
+      value: Medio
+    - key: Hard
+      value: Difficile
+    - key: Very Hard
+      value: Molto difficile
+    - key: Insane
+      value: Folle
+    - key: HELLO_WORLD_TEXT_KEY
+      value: "questo \xE8 testo0.1136321 di esempio"
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: "questo \xE8 verifica testo"
+    - key: 1
+      value: Uno
+    - key: 2
+      value: __2__
+    - key: 3
+      value: Tre
+    - key: 4
+      value: 4
+    - key: cows
+      value: mucche
+    - key: goat simulator
+      value: simulatore capra
+    - key: potions aquired
+      value: pozioni acquisite
+    - key: options
+      value: opzioni
+    - key: configuration
+      value: configurazione
+    - key: power up
+      value: power up
+    - key: Start Game
+      value: Avvia gioco
+    - key: Begin!
+      value: Inizia!
+    - key: Play Again?
+      value: Gioca di nuovo?
+    - key: Hi there!
+      value: Ciao!
+    - key: Rocks
+      value: Rocce
+    - key: STRANGE
+      value: STRANO
+    - key: Prepare for level
+      value: Preparati per il livello
+    - key: 'Score:'
+      value: 'Punteggio:'
+    - key: 'Level:'
+      value: 'Livello:'
+    - key: Game Over!
+      value: Game Over!
+    - key: German
+      value: Tedesco
+    - key: French
+      value: Francese
+    - key: English
+      value: Inglese
+    - key: Backwards
+      value: Indietro
+    - key: Return to game
+      value: Ritorna al gioco
+    - key: Language Select
+      value: Seleziona lingua
+    - key: 'Last Score: {0}'
+      value: 'Ultimo punteggio: {0}'
+    - key: Start Level {0}
+      value: Inizia livello {0}
+    - key: 'Score: {0}'
+      value: 'Punteggio: {0}'
+    - key: 'Lives remaining: {0}'
+      value: 'Vite rimanenti: {0}'
+    - key: Play Again
+      value: Gioca ancora
+    - key: 'Final Score: {0}'
+      value: 'Punteggio finale: {0}'
+    - key: 'Escape: [[[{0}]]]'
+      value: 'Uscita: [[[{0}]]]'
+    - key: Multiplayer
+      value: Multiplayer
+    - key: Online Multiplayer
+      value: Multiplayer online
+    - key: Local Multiplayer
+      value: Multiplayer locale
+    - key: Co-op
+      value: Co-op
+    - key: Yes
+      value: SI'
+    - key: No
+      value: NO
+    - key: Yeah
+      value: "S\xEC"
+    - key: Nope
+      value: No
+    - key: Impossible
+      value: Impossibile
+    - key: Thank you!
+      value: Grazie!
+    - key: Goodbye!
+      value: Arrivederci!
+    - key: Are you sure?
+      value: Sei sicuro?
+    - key: Single player
+      value: Un solo giocatore
+    - key: Splitscreen
+      value: Dividi schermo
+    - key: Cooperative
+      value: Cooperativo
+    - key: Versus
+      value: Contro
+  language:
+    name: Italian
+    code: it-it
+    id: 12

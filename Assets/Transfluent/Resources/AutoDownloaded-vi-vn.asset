@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-vi-vn
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: "\u0111\xE2y l\xE0 v\u0103n b\u1EA3n m\u1EABu"
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: "\u0111\xE2y l\xE0 v\u0103n b\u1EA3n th\u1EED nghi\u1EC7m"
+    - key: 1
+      value: "M\u1ED9t"
+    - key: 2
+      value: '__2__ '
+    - key: 3
+      value: Ba
+    - key: 4
+      value: 4
+    - key: cows
+      value: "nh\u1EEFng con b\xF2"
+    - key: goat simulator
+      value: "gi\u1EA3 l\u1EADp con d\xEA"
+    - key: potions aquired
+      value: "\u0111\xE3 l\u1EA5y \u0111\u01B0\u1EE3c b\xECnh thu\u1ED1c"
+    - key: options
+      value: "c\xE1c tu\u1EF3 ch\u1ECDn"
+    - key: configuration
+      value: "c\u1EA5u h\xECnh"
+    - key: power up
+      value: "b\u1EADt ngu\u1ED3n l\xEAn"
+    - key: Start Game
+      value: "B\u1EAFt \u0111\u1EA7u Tr\xF2 ch\u01A1i"
+    - key: Begin!
+      value: "B\u1EAFt \u0111\u1EA7u!"
+    - key: Play Again?
+      value: "Ch\u01A1i L\u1EA1i L\u1EA7n N\u1EEFa?"
+    - key: Hi there!
+      value: "Xin ch\xE0o!"
+    - key: Rocks
+      value: "Nh\u1EEFng h\xF2n \u0111\xE1"
+    - key: STRANGE
+      value: "L\u1EA0 L\xD9NG"
+    - key: Prepare for level
+      value: "Chu\u1EA9n b\u1ECB l\xEAn c\u1EA5p"
+    - key: 'Score:'
+      value: "\u0110i\u1EC3m s\u1ED1:"
+    - key: 'Level:'
+      value: "C\u1EA5p \u0111\u1ED9"
+    - key: Game Over!
+      value: "Tr\xF2 Ch\u01A1i K\u1EBFt Th\xFAc!"
+    - key: German
+      value: "\u0110\u1EE9c"
+    - key: French
+      value: "Ph\xE1p"
+    - key: English
+      value: Anh
+    - key: Backwards
+      value: "Ph\xEDa sau"
+    - key: Return to game
+      value: "Quay v\u1EC1 tr\xF2 ch\u01A1i"
+    - key: Language Select
+      value: "L\u1EF1a Ch\u1ECDn Ng\xF4n Ng\u1EEF"
+    - key: 'Last Score: {0}'
+      value: "\u0110i\u1EC3m S\u1ED1 Cu\u1ED1i C\xF9ng: {0}"
+    - key: Start Level {0}
+      value: "B\u1EAFt \u0110\u1EA7u C\u1EA5p \u0110\u1ED9: {0}"
+    - key: 'Score: {0}'
+      value: "\u0110i\u1EC3m S\u1ED1: {0}"
+    - key: 'Lives remaining: {0}'
+      value: "S\u1ED1 M\u1EA1ng C\xF2n L\u1EA1i: {0}"
+    - key: Play Again
+      value: "Ch\u01A1i L\u1EA1i"
+    - key: 'Final Score: {0}'
+      value: "\u0110i\u1EC3m S\u1ED1 Cu\u1ED1i C\xF9ng: {0}"
+    - key: 'Escape: [[[{0}]]]'
+      value: "Tho\xE1t ra: [[[{0}]]] "
+    - key: Yes
+      value: "C\xD3"
+    - key: No
+      value: "KH\xD4NG"
+    - key: Yeah
+      value: "Tuy\u1EC7t"
+    - key: Nope
+      value: "Kh\xF4ng"
+    - key: Press Start
+      value: "Nh\u1EA5n B\u1EAFt \u0110\u1EA7u"
+    - key: Press Start to continue
+      value: "Nh\u1EA5n B\u1EAFt \u0110\u1EA7u \u0111\u1EC3 ti\u1EBFp t\u1EE5c"
+    - key: Press any key
+      value: "Nh\u1EA5n ph\xEDm b\u1EA5t k\u1EF3"
+    - key: Press any key to continue
+      value: "Nh\u1EA5n ph\xEDm b\u1EA5t k\u1EF3 \u0111\u1EC3 ti\u1EBFp t\u1EE5c"
+    - key: New Game
+      value: "Tr\xF2 Ch\u01A1i M\u1EDBi"
+    - key: Continue
+      value: "Ti\u1EBFp t\u1EE5c"
+    - key: Continue?
+      value: "C\xF3 ti\u1EBFp t\u1EE5c kh\xF4ng?"
+    - key: Load
+      value: "T\u1EA3i "
+    - key: Load Game
+      value: "T\u1EA3i Tr\xF2 Ch\u01A1i"
+    - key: Loading...
+      value: "\u0110ang t\u1EA3i..."
+    - key: Please wait...
+      value: "Vui l\xF2ng \u0111\u1EE3i..."
+    - key: Save
+      value: "L\u01B0u l\u1EA1i"
+    - key: Save Game
+      value: "L\u01B0u Tr\xF2 Ch\u01A1i"
+    - key: Saving...
+      value: "\u0110ang l\u01B0u..."
+    - key: Exit
+      value: "Tho\xE1t"
+    - key: Exit?
+      value: "C\xF3 tho\xE1t kh\xF4ng?"
+    - key: Exit to Desktop
+      value: "Tho\xE1t ra M\xE0n H\xECnh"
+    - key: Exit to Desktop?
+      value: "C\xF3 Tho\xE1t ra M\xE0n H\xECnh Kh\xF4ng?"
+    - key: Quit
+      value: "K\u1EBFt th\xFAc"
+    - key: Quit?
+      value: "C\xF3 K\u1EBFt Th\xFAc Kh\xF4ng?"
+    - key: Pause
+      value: "T\u1EA1m d\u1EEBng"
+    - key: Are you sure you want to quit?
+      value: "C\xF3 ch\u1EAFc l\xE0 b\u1EA1n mu\u1ED1n ng\u1EEBng ch\u01A1i kh\xF4ng?"
+    - key: Return
+      value: "Quay l\u1EA1i"
+    - key: Main Menu
+      value: "Menu Ch\xEDnh"
+    - key: Return to Main Menu
+      value: "Quay L\u1EA1i Menu Ch\xEDnh"
+    - key: Return to Main Menu?
+      value: "C\xF3 Quay L\u1EA1i Menu Ch\xEDnh Kh\xF4ng?"
+    - key: Sound Options
+      value: "C\xE1c T\xF9y Ch\u1ECDn Ch\u1EC9nh \xC2m Thanh"
+    - key: Sound
+      value: "\xC2m thanh"
+    - key: Volume
+      value: "\xC2m l\u01B0\u1EE3ng"
+    - key: Graphics Options
+      value: "C\xE1c T\xF9y Ch\u1ECDn \u0110\u1ED3 H\u1ECDa"
+    - key: Video Options
+      value: "C\xE1c T\xF9y Ch\u1ECDn Video"
+    - key: Quality
+      value: "Ch\u1EA5t l\u01B0\u1EE3ng"
+    - key: Gameplay Options
+      value: "C\xE1c T\xF9y Ch\u1ECDn L\u1ED1i Ch\u01A1i"
+    - key: Network Options
+      value: "C\xE1c T\xF9y Ch\u1ECDn M\u1EA1ng"
+    - key: Difficulty Options
+      value: "C\xE1c T\xF9y Ch\u1ECDn \u0110\u1ED9 Kh\xF3"
+    - key: Difficulty
+      value: "\u0110\u1ED9 Kh\xF3"
+    - key: Very Easy
+      value: "R\u1EA5t D\u1EC5"
+    - key: Easy
+      value: "D\u1EC5"
+    - key: Medium
+      value: "Trung B\xECnh"
+    - key: Hard
+      value: "Kh\xF3"
+    - key: Very Hard
+      value: "R\u1EA5t Kh\xF3"
+    - key: Insane
+      value: "\u0110i\xEAn Cu\u1ED3ng"
+    - key: Impossible
+      value: "Kh\xF4ng Th\u1EC3 Qua "
+    - key: Thank you!
+      value: "C\xE1m \u01A1n b\u1EA1n!"
+    - key: Goodbye!
+      value: "T\u1EA1m bi\u1EC7t!"
+    - key: Are you sure?
+      value: "B\u1EA1n ch\u1EAFc ch\u1EAFn ch\u1EE9?"
+    - key: Single player
+      value: "Ng\u01B0\u1EDDi ch\u01A1i \u0111\u01A1n"
+    - key: Multiplayer
+      value: "Nhi\u1EC1u ng\u01B0\u1EDDi ch\u01A1i"
+    - key: Online Multiplayer
+      value: "Nhi\u1EC1u Ng\u01B0\u1EDDi Ch\u01A1i Tr\u1EF1c Tuy\u1EBFn"
+    - key: Local Multiplayer
+      value: "Nhi\u1EC1u Ng\u01B0\u1EDDi Ch\u01A1i M\u1EA1ng N\u1ED9i B\u1ED9"
+    - key: Splitscreen
+      value: "Ph\xE2n chia m\xE0n h\xECnh"
+    - key: Co-op
+      value: "H\u1EE3p t\xE1c nh\xF3m"
+    - key: Cooperative
+      value: "H\u1EE3p t\xE1c"
+    - key: Versus
+      value: "\u0110\u1ED1i \u0111\u1EA7u"
+  language:
+    name: Vietnamese
+    code: vi-vn
+    id: 23

@@ -95,123 +95,123 @@ MonoBehaviour:
     - key: 'Final Score: {0}'
       value: '{0} : lanif erocS'
     - key: 'Escape: [[[{0}]]]'
-      value: '{0} :thculF'
+      value: ']]]{0}[[[ :thculF'
     - key: Yes
-      value: SEY
+      value: "\u662F"
     - key: No
-      value: ON
+      value: "\u5426"
     - key: Yeah
-      value: haeY
+      value: "\u5BF9"
     - key: Nope
-      value: epoN
+      value: "\u662F\u4E0D"
     - key: Press Start
-      value: tratS sserP
+      value: "\u201D\u59CB\u5F00\u201C\u4E0B\u6309"
     - key: Press Start to continue
-      value: eunitnoc ot tratS sserP
+      value: "\u7EED\u7EE7\u4EE5\u201D\u59CB\u5F00\u201C\u4E0B\u6309"
     - key: Press any key
-      value: yek yna sserP
+      value: "\u952E\u6309\u610F\u4EFB\u4E0B\u6309"
     - key: Press any key to continue
-      value: eunitnoc ot yek yna sserP
+      value: "\u7EED\u7EE7\u4EE5\u952E\u6309\u610F\u4EFB\u4E0B\u6309"
     - key: New Game
-      value: emaG weN
+      value: "\u620F\u6E38\u65B0"
     - key: Continue
-      value: eunitnoC
+      value: "\u7EED\u7EE7"
     - key: Continue?
-      value: ?eunitnoC
+      value: "\uFF1F\u7EED\u7EE7"
     - key: Load
-      value: daoL
+      value: "\u8F7D\u52A0"
     - key: Load Game
-      value: emaG daoL
+      value: "\u620F\u6E38\u8F7D\u52A0"
     - key: Loading...
-      value: '...gnidaoL'
+      value: "...\u4E2D\u8F7D\u52A0"
     - key: Please wait...
-      value: '...tiaw esaelP'
+      value: "...\u5F85\u7B49\u8BF7"
     - key: Save
-      value: evaS
+      value: "\u5B58\u4FDD"
     - key: Save Game
-      value: emaG evaS
+      value: "\u620F\u6E38\u5B58\u4FDD"
     - key: Saving...
-      value: '...gnivaS'
+      value: "\u2026\u4E2D\u5B58\u4FDD"
     - key: Exit
-      value: tixE
+      value: "\u51FA\u9000"
     - key: Exit?
-      value: ?tixE
+      value: "\uFF1F\u51FA\u9000"
     - key: Exit to Desktop
-      value: potkseD ot tixE
+      value: "\u9762\u684C\u5230\u51FA\u9000"
     - key: Exit to Desktop?
-      value: ?potkseD ot tixE
+      value: "\uFF1F\u9762\u684C\u5230\u51FA\u9000"
     - key: Quit
-      value: tiuQ
+      value: "\u5F03\u653E"
     - key: Quit?
-      value: ?tiuQ
+      value: "?\u5F03\u653E"
     - key: Pause
-      value: esuaP
+      value: "\u505C\u6682"
     - key: Are you sure you want to quit?
-      value: ?tiuq ot tnaw uoy erus uoy erA
+      value: "\uFF1F\u5417\u51FA\u9000\u8981\u5B9A\u786E"
     - key: Return
-      value: nruteR
+      value: "\u56DE\u9000"
     - key: Main Menu
-      value: uneM niaM
+      value: "\u5355\u83DC\u4E3B"
     - key: Return to Main Menu
-      value: uneM niaM ot nruteR
+      value: "\u5355\u83DC\u4E3B\u5230\u56DE\u9000"
     - key: Return to Main Menu?
-      value: ?uneM niaM ot nruteR
+      value: "\uFF1F\u5355\u83DC\u4E3B\u5230\u56DE\u9000"
     - key: Sound Options
-      value: snoitpO dnuoS
+      value: "\u9879\u9009\u97F3\u58F0"
     - key: Sound
-      value: dnuoS
+      value: "\u97F3\u58F0"
     - key: Volume
-      value: emuloV
+      value: "\u91CF\u97F3"
     - key: Graphics Options
-      value: snoitpO scihparG
+      value: "\u9879\u9009\u50CF\u56FE"
     - key: Video Options
-      value: snoitpO oediV
+      value: "\u9879\u9009\u9891\u89C6"
     - key: Quality
-      value: ytilauQ
+      value: "\u91CF\u8D28"
     - key: Gameplay Options
-      value: snoitpO yalpemaG
+      value: "\u9879\u9009\u620F\u6E38"
     - key: Network Options
-      value: snoitpO krowteN
+      value: "\u9879\u9009\u7EDC\u7F51"
     - key: Difficulty Options
-      value: snoitpO ytluciffiD
+      value: "\u9879\u9009\u5EA6\u96BE"
     - key: Difficulty
-      value: ytluciffiD
+      value: "\u5EA6\u96BE"
     - key: Very Easy
-      value: ysaE yreV
+      value: "\u6613\u5BB9\u5E38\u975E"
     - key: Easy
-      value: ysaE
+      value: "\u6613\u5BB9"
     - key: Medium
-      value: muideM
+      value: "\u7B49\u4E2D"
     - key: Hard
-      value: draH
+      value: "\u96BE\u56F0"
     - key: Very Hard
-      value: draH yreV
+      value: "\u96BE\u56F0\u5E38\u975E"
     - key: Insane
-      value: enasnI
+      value: "\u96BE\u56F0\u5EA6\u6781"
     - key: Impossible
-      value: elbissopmI
+      value: "\u7EA7\u7070\u9AA8"
     - key: Thank you!
-      value: '!uoy knahT'
+      value: "\uFF01\u8C22\u8C22"
     - key: Goodbye!
-      value: '!eybdooG'
+      value: "\uFF01\u89C1\u518D"
     - key: Are you sure?
-      value: ?erus uoy erA
+      value: "\uFF1F\u5417\u5B9A\u786E"
     - key: Single player
-      value: reyalp elgniS
+      value: "\u620F\u6E38\u4EBA\u5355"
     - key: Multiplayer
-      value: reyalpitluM
+      value: "\u620F\u6E38\u4EBA\u591A"
     - key: Online Multiplayer
-      value: reyalpitluM enilnO
+      value: "\u620F\u6E38\u4EBA\u591A\u7EBF\u5728"
     - key: Local Multiplayer
-      value: reyalpitluM lacoL
+      value: "\u620F\u6E38\u4EBA\u591A\u5730\u672C"
     - key: Splitscreen
-      value: neercstilpS
+      value: "\u5C4F\u5206"
     - key: Co-op
-      value: po-oC
+      value: "\u4F5C\u5408"
     - key: Cooperative
-      value: evitarepooC
+      value: "\u7684\u4F5C\u5408"
     - key: Versus
-      value: susreV
+      value: "\u5BF9"
   - groupid: TEST
     translations:
     - key: sprechen sie deutsch

@@ -1,0 +1,182 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-fi-fi
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: "t\xE4m\xE4 on n\xE4yteteksti0.1136321"
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: "t\xE4m\xE4 on testiteksti"
+    - key: 1
+      value: Yksi
+    - key: 2
+      value: __2__
+    - key: 3
+      value: Kolme
+    - key: 4
+      value: 4
+    - key: cows
+      value: "lehm\xE4\xE4"
+    - key: goat simulator
+      value: vuohisimulaattori
+    - key: potions aquired
+      value: "vaadittava annosm\xE4\xE4r\xE4"
+    - key: options
+      value: vaihtoehdot
+    - key: configuration
+      value: konfiguraatio
+    - key: power up
+      value: "K\xE4ynnist\xE4"
+    - key: Start Game
+      value: Aloita peli
+    - key: Begin!
+      value: Aloita!
+    - key: Play Again?
+      value: Pelaa uudestaan?
+    - key: Hi there!
+      value: Terve!
+    - key: Rocks
+      value: "Kive\xE4"
+    - key: STRANGE
+      value: OUTO
+    - key: Prepare for level
+      value: Valmistaudu tasoon
+    - key: 'Score:'
+      value: "Pistem\xE4\xE4r\xE4:"
+    - key: 'Level:'
+      value: 'Taso: '
+    - key: Game Over!
+      value: "Peli p\xE4\xE4ttyi!"
+    - key: German
+      value: Saksa
+    - key: French
+      value: Ranska
+    - key: English
+      value: Englanti
+    - key: Backwards
+      value: "Taaksep\xE4in"
+    - key: Return to game
+      value: Palaa peliin
+    - key: Language Select
+      value: Valitse kieli
+    - key: 'Last Score: {0}'
+      value: "Viimeinen pistem\xE4\xE4r\xE4: {0}"
+    - key: Start Level {0}
+      value: Aloita taso{0}
+    - key: 'Score: {0}'
+      value: "Pistem\xE4\xE4r\xE4: {0}"
+    - key: 'Lives remaining: {0}'
+      value: "El\xE4mi\xE4 j\xE4ljell\xE4: {0}"
+    - key: Play Again
+      value: Pelaa uudestaan
+    - key: 'Final Score: {0}'
+      value: 'Loppupisteet: {0}'
+    - key: 'Escape: [[[{0}]]]'
+      value: 'Pakene: [[[{0}]]]'
+    - key: Yes
+      value: "KYLL\xC4"
+    - key: No
+      value: EI
+    - key: Yeah
+      value: Joo
+    - key: Nope
+      value: Ei
+    - key: Press Start
+      value: Paina Aloita
+    - key: Press Start to continue
+      value: Paina Aloita jatkaaksesi
+    - key: Press any key
+      value: "Paina mit\xE4 tahansa n\xE4pp\xE4int\xE4"
+    - key: Press any key to continue
+      value: "Paina mit\xE4 tahansa n\xE4pp\xE4int\xE4 jaksaaksesi"
+    - key: New Game
+      value: Uusi peli
+    - key: Continue
+      value: Jatka
+    - key: Continue?
+      value: Jatkatko?
+    - key: Load
+      value: Lataa
+    - key: Load Game
+      value: Lataa peli
+    - key: Loading...
+      value: Lataa...
+    - key: Please wait...
+      value: Odota...
+    - key: Save
+      value: Tallenna
+    - key: Save Game
+      value: Talenna peli
+    - key: Saving...
+      value: Tallentaa...
+    - key: Exit
+      value: Poistu
+    - key: Exit?
+      value: Poistutko?
+    - key: Exit to Desktop
+      value: "Poistu ty\xF6pyd\xE4lle"
+    - key: Exit to Desktop?
+      value: "Poistutko ty\xF6p\xF6yd\xE4lle?"
+    - key: Quit
+      value: Poistu
+    - key: Quit?
+      value: Poistutko?
+    - key: Pause
+      value: "Pys\xE4hdy"
+    - key: Are you sure you want to quit?
+      value: Haluatko varmasti poistua?
+    - key: Return
+      value: Palaa
+    - key: Main Menu
+      value: "P\xE4\xE4valikko"
+    - key: Return to Main Menu
+      value: "Palaa p\xE4\xE4valikkoon"
+    - key: Return to Main Menu?
+      value: "Haluatko palata p\xE4\xE4valikkoon?"
+    - key: Sound Options
+      value: "\xC4\xE4niasetukset"
+    - key: Sound
+      value: "\xC4\xE4ni"
+    - key: Volume
+      value: "\xC4\xE4nenvoimakkuus"
+    - key: Graphics Options
+      value: Grafiikka-asetukset
+    - key: Video Options
+      value: Videoasetukset
+    - key: Quality
+      value: Laatu
+    - key: Gameplay Options
+      value: Peliasetukset
+    - key: Network Options
+      value: Verkkoasetukset
+    - key: Difficulty Options
+      value: Vaikeustasoasetukset
+    - key: Difficulty
+      value: Vaikeustaso
+    - key: Very Easy
+      value: "Eritt\xE4in helppo"
+    - key: Easy
+      value: Helppo
+    - key: Medium
+      value: Keskivaikea
+    - key: Hard
+      value: Vaikea
+    - key: Very Hard
+      value: "Eritt\xE4in vaikea"
+    - key: Impossible
+      value: Mahdoton
+  language:
+    name: Finnish
+    code: fi-fi
+    id: 11

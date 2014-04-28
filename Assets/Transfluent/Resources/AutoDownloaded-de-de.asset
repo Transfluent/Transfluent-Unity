@@ -85,7 +85,7 @@ MonoBehaviour:
     - key: 'Final Score: {0}'
       value: 'Endpunktzahl: {0}'
     - key: 'Escape: [[[{0}]]]'
-      value: 'Flucht: {0}'
+      value: 'Flucht: [[[{0}]]]'
   - groupid: TEST
     translations:
     - key: sprechen sie deutsch

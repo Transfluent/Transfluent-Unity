@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-ko-kr
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: "\uC774\uAC83\uC740 \uC608\uC81C \uD14D\uC2A4\uD2B8\uC785\uB2C8\uB2E40.1136321"
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: "\uC774\uAC83\uC740 \uD14C\uC2A4\uD2B8 \uD14D\uC2A4\uD2B8\uC785\uB2C8\uB2E4"
+    - key: 1
+      value: 1
+    - key: 2
+      value: _2_
+    - key: 3
+      value: 3
+    - key: 4
+      value: 4
+    - key: cows
+      value: "\uC18C"
+    - key: goat simulator
+      value: "\uC5FC\uC18C \uC2DC\uBBAC\uB808\uC774\uD130"
+    - key: potions aquired
+      value: "\uD3EC\uC158 \uD68D\uB4DD"
+    - key: options
+      value: "\uC635\uC158"
+    - key: configuration
+      value: "\uAD6C\uC131"
+    - key: power up
+      value: "\uD30C\uC6CC \uC5C5"
+    - key: Start Game
+      value: "\uAC8C\uC784 \uC2DC\uC791"
+    - key: Begin!
+      value: "\uC2DC\uC791!"
+    - key: Play Again?
+      value: "\uB2E4\uC2DC \uD50C\uB808\uC774\uD558\uACA0\uC2B5\uB2C8\uAE4C?"
+    - key: Hi there!
+      value: "\uC548\uB155\uD558\uC138\uC694!"
+    - key: Rocks
+      value: "\uBA4B\uC838"
+    - key: STRANGE
+      value: "\uC774\uC0C1\uD574"
+    - key: Prepare for level
+      value: "\uB808\uBCA8 \uC900\uBE44"
+    - key: 'Score:'
+      value: "\uC810\uC218:"
+    - key: 'Level:'
+      value: "\uB808\uBCA8:"
+    - key: Game Over!
+      value: "\uAC8C\uC784 \uC624\uBC84!"
+    - key: German
+      value: "\uB3C5\uC77C\uC5B4"
+    - key: French
+      value: "\uD504\uB791\uC2A4\uC5B4"
+    - key: English
+      value: "\uC601\uC5B4"
+    - key: Backwards
+      value: "\uB4A4\uB85C"
+    - key: Return to game
+      value: "\uAC8C\uC784\uC73C\uB85C \uB3CC\uC544\uAC00\uAE30"
+    - key: Language Select
+      value: "\uC5B8\uC5B4 \uC120\uD0DD"
+    - key: 'Last Score: {0}'
+      value: "\uB9C8\uC9C0\uB9C9 \uC810\uC218: {0}"
+    - key: Start Level {0}
+      value: "\uB808\uBCA8 {0} \uC2DC\uC791"
+    - key: 'Score: {0}'
+      value: "\uC810\uC218: {0}"
+    - key: 'Lives remaining: {0}'
+      value: "\uB0A8\uC740 \uC0DD\uBA85: {0}"
+    - key: Play Again
+      value: "\uB2E4\uC2DC \uD50C\uB808\uC774\uD558\uAE30"
+    - key: 'Final Score: {0}'
+      value: "\uCD5C\uC885 \uC810\uC218: {0}"
+    - key: 'Escape: [[[{0}]]]'
+      value: "\uD0C8\uCD9C: [[[{0}]]]"
+    - key: Yes
+      value: "\uB124"
+    - key: No
+      value: "\uC544\uB2C8\uC624"
+    - key: Yeah
+      value: "\uB124"
+    - key: Nope
+      value: "\uC544\uB2C8\uC624"
+    - key: Press Start
+      value: "\uC2DC\uC791\uC744 \uB204\uB974\uC2ED\uC2DC\uC624"
+    - key: Press Start to continue
+      value: "\uACC4\uC18D\uD558\uB824\uBA74 \uC2DC\uC791\uC744 \uB204\uB974\uC2ED\uC2DC\uC624"
+    - key: Press any key
+      value: "\uC544\uBB34 \uD0A4\uB098 \uB204\uB974\uC2ED\uC2DC\uC624"
+    - key: Press any key to continue
+      value: "\uACC4\uC18D\uD558\uB824\uBA74 \uC544\uBB34 \uD0A4\uB098 \uB204\uB974\uC2ED\uC2DC\uC624"
+    - key: New Game
+      value: "\uC0C8 \uAC8C\uC784"
+    - key: Continue
+      value: "\uACC4\uC18D"
+    - key: Continue?
+      value: "\uACC4\uC18D\uD558\uACA0\uC2B5\uB2C8\uAE4C?"
+    - key: Load
+      value: "\uBD88\uB7EC\uC624\uAE30"
+    - key: Load Game
+      value: "\uAC8C\uC784 \uBD88\uB7EC\uC624\uAE30"
+    - key: Loading...
+      value: "\uBD88\uB7EC\uC624\uB294 \uC911..."
+    - key: Please wait...
+      value: "\uAE30\uB2E4\uB824 \uC8FC\uC2ED\uC2DC\uC624..."
+    - key: Save
+      value: "\uC800\uC7A5"
+    - key: Save Game
+      value: "\uAC8C\uC784 \uC800\uC7A5"
+    - key: Saving...
+      value: "\uC800\uC7A5\uC911..."
+    - key: Exit
+      value: "\uB098\uAC00\uAE30"
+    - key: Exit?
+      value: "\uB098\uAC00\uACA0\uC2B5\uB2C8\uAE4C?"
+    - key: Exit to Desktop
+      value: "\uBC14\uD0D5\uD654\uBA74\uC73C\uB85C \uB098\uAC00\uAE30"
+    - key: Exit to Desktop?
+      value: "\uBC14\uD0D5\uD654\uBA74\uC73C\uB85C \uB098\uAC00\uACA0\uC2B5\uB2C8\uAE4C?"
+    - key: Quit
+      value: "\uC885\uB8CC"
+    - key: Quit?
+      value: "\uC885\uB8CC\uD558\uACA0\uC2B5\uB2C8\uAE4C?"
+    - key: Pause
+      value: "\uC911\uC9C0"
+    - key: Are you sure you want to quit?
+      value: "\uC815\uB9D0 \uC885\uB8CC\uD558\uACA0\uC2B5\uB2C8\uAE4C?"
+    - key: Return
+      value: "\uB3CC\uC544\uAC00\uAE30"
+    - key: Main Menu
+      value: "\uBA54\uC778 \uBA54\uB274"
+    - key: Return to Main Menu
+      value: "\uBA54\uC778 \uBA54\uB274\uB85C \uB3CC\uC544\uAC00\uAE30"
+    - key: Return to Main Menu?
+      value: "\uBA54\uC778 \uBA54\uB274\uB85C \uB3CC\uC544\uAC00\uACA0\uC2B5\uB2C8\uAE4C?"
+    - key: Sound Options
+      value: "\uC0AC\uC6B4\uB4DC \uC635\uC158"
+    - key: Sound
+      value: "\uC0AC\uC6B4\uB4DC"
+    - key: Volume
+      value: "\uBCFC\uB968"
+    - key: Graphics Options
+      value: "\uADF8\uB798\uD53D \uC635\uC158"
+    - key: Video Options
+      value: "\uBE44\uB514\uC624 \uC635\uC158"
+    - key: Quality
+      value: "\uD654\uC9C8"
+    - key: Gameplay Options
+      value: "\uAC8C\uC784 \uD50C\uB808\uC774 \uC635\uC158"
+    - key: Network Options
+      value: "\uB124\uD2B8\uC6CC\uD06C \uC635\uC158"
+    - key: Difficulty Options
+      value: "\uB09C\uC774\uB3C4 \uC635\uC158"
+    - key: Difficulty
+      value: "\uB09C\uC774\uB3C4"
+    - key: Very Easy
+      value: "\uC544\uC8FC \uC26C\uC6C0"
+    - key: Easy
+      value: "\uC26C\uC6C0"
+    - key: Medium
+      value: "\uBCF4\uD1B5"
+    - key: Hard
+      value: "\uC5B4\uB824\uC6C0"
+    - key: Very Hard
+      value: "\uB9E4\uC6B0 \uC5B4\uB824\uC6C0"
+    - key: Insane
+      value: "\uBBF8\uCE68"
+    - key: Impossible
+      value: "\uBD88\uAC00\uB2A5\uD568"
+    - key: Thank you!
+      value: "\uAC10\uC0AC\uD569\uB2C8\uB2E4!"
+    - key: Goodbye!
+      value: "\uC548\uB155\uD788 \uAC00\uC138\uC694!"
+    - key: Are you sure?
+      value: "\uC815\uB9D0\uC785\uB2C8\uAE4C?"
+    - key: Single player
+      value: "\uC2F1\uAE00 \uD50C\uB808\uC774\uC5B4"
+    - key: Multiplayer
+      value: "\uBA40\uD2F0 \uD50C\uB808\uC774\uC5B4"
+    - key: Online Multiplayer
+      value: "\uC628\uB77C\uC778 \uBA40\uD2F0 \uD50C\uB808\uC774\uC5B4"
+    - key: Local Multiplayer
+      value: "\uB85C\uCEEC \uBA40\uD2F0 \uD50C\uB808\uC774\uC5B4"
+    - key: Splitscreen
+      value: "\uBD84\uD560 \uD654\uBA74"
+    - key: Co-op
+      value: "\uD611\uB3D9"
+    - key: Cooperative
+      value: "\uD611\uB3D9\uC801"
+    - key: Versus
+      value: "\uB300"
+  language:
+    name: Korean
+    code: ko-kr
+    id: 8

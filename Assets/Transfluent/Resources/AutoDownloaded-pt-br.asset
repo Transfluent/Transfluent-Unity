@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-pt-br
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: "este \xE9 um texto de exemplo0.1136321"
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: "este \xE9 um texto de teste"
+    - key: 1
+      value: Um
+    - key: 2
+      value: __2__
+    - key: 3
+      value: "Tr\xEAs"
+    - key: 4
+      value: 4
+    - key: cows
+      value: vacas
+    - key: goat simulator
+      value: simulador de cabra
+    - key: potions aquired
+      value: "po\xE7\xF5es adquiridas"
+    - key: options
+      value: "op\xE7\xF5es"
+    - key: configuration
+      value: "configura\xE7\xE3o"
+    - key: power up
+      value: power up
+    - key: Start Game
+      value: Iniciar Jogo
+    - key: Begin!
+      value: "Come\xE7ar!"
+    - key: Play Again?
+      value: Jogar Novamente?
+    - key: Hi there!
+      value: "Ol\xE1!"
+    - key: Rocks
+      value: Pedras
+    - key: STRANGE
+      value: ESTRANHO
+    - key: Prepare for level
+      value: "Prepare-se para o n\xEDvel"
+    - key: 'Score:'
+      value: "Pontua\xE7\xE3o:"
+    - key: 'Level:'
+      value: "N\xEDvel:"
+    - key: Game Over!
+      value: Game Over!
+    - key: German
+      value: "Alem\xE3o"
+    - key: French
+      value: "Franc\xEAs"
+    - key: English
+      value: "Ingl\xEAs"
+    - key: Backwards
+      value: Retornar
+    - key: Return to game
+      value: Voltar ao jogo
+    - key: Language Select
+      value: Selecionar Idioma
+    - key: 'Last Score: {0}'
+      value: "\xDAltima Pontua\xE7\xE3o: {0}"
+    - key: Start Level {0}
+      value: "Iniciar N\xEDvel {0}"
+    - key: 'Score: {0}'
+      value: "Pontua\xE7\xE3o: {0}"
+    - key: 'Lives remaining: {0}'
+      value: 'Vidas Restantes: {0}'
+    - key: Play Again
+      value: Jogar Novamente
+    - key: 'Final Score: {0}'
+      value: "Pontua\xE7\xE3o Final: {0}"
+    - key: 'Escape: [[[{0}]]]'
+      value: 'Escapar: [[[{0}]]]'
+    - key: Yes
+      value: SIM
+    - key: No
+      value: "N\xC3O"
+    - key: Yeah
+      value: Yeah
+    - key: Nope
+      value: Nope
+    - key: Press Start
+      value: Aperte Start
+    - key: Press Start to continue
+      value: Aperte Start para continuar
+    - key: Press any key
+      value: "Aperte qualquer bot\xE3o"
+    - key: Press any key to continue
+      value: "Aperte qualquer bot\xE3o para continuar"
+    - key: New Game
+      value: Novo Jogo
+    - key: Continue
+      value: Continuar
+    - key: Continue?
+      value: Continuar?
+    - key: Load
+      value: Carregar
+    - key: Load Game
+      value: Carregar Jogo
+    - key: Loading...
+      value: Carregando...
+    - key: Please wait...
+      value: Por favor, aguarde...
+    - key: Save
+      value: Salvar
+    - key: Save Game
+      value: 'Salvar Jogo '
+    - key: Saving...
+      value: Salvando...
+    - key: Exit
+      value: Sair
+    - key: Exit?
+      value: Sair?
+    - key: Exit to Desktop
+      value: "Sair para \xC1rea de Trabalho"
+    - key: Exit to Desktop?
+      value: "Sair para \xC1rea de Trabalho?"
+    - key: Quit
+      value: Encerrar
+    - key: Quit?
+      value: Encerrar?
+    - key: Pause
+      value: Pausar
+    - key: Are you sure you want to quit?
+      value: "Voc\xEA tem certeza de que quer encerrar o jogo?"
+    - key: Return
+      value: Voltar
+    - key: Main Menu
+      value: Menu Principal
+    - key: Return to Main Menu
+      value: Voltar ao Menu Principal
+    - key: Return to Main Menu?
+      value: Voltar ao Menu Principal?
+    - key: Sound Options
+      value: "Op\xE7\xF5es de Som"
+    - key: Sound
+      value: Som
+    - key: Volume
+      value: Volume
+    - key: Graphics Options
+      value: "Op\xE7\xF5es Gr\xE1ficas"
+    - key: Video Options
+      value: "Op\xE7\xF5es de V\xEDdeo"
+    - key: Quality
+      value: Qualidade
+    - key: Gameplay Options
+      value: "Op\xE7\xF5es de Jogabilidade"
+    - key: Network Options
+      value: "Op\xE7\xF5es de Rede"
+    - key: Difficulty Options
+      value: "Op\xE7\xF5es de Dificuldade"
+    - key: Difficulty
+      value: Dificuldade
+    - key: Very Easy
+      value: "Muito F\xE1cil"
+    - key: Easy
+      value: "F\xE1cil"
+    - key: Medium
+      value: "M\xE9dio"
+    - key: Hard
+      value: "Dif\xEDcil"
+    - key: Very Hard
+      value: "Muito Dif\xEDcil"
+    - key: Insane
+      value: Insano
+    - key: Impossible
+      value: "Imposs\xEDvel"
+    - key: Thank you!
+      value: Muito Obrigado!
+    - key: Goodbye!
+      value: Adeus!
+    - key: Are you sure?
+      value: "Voc\xEA tem certeza?"
+    - key: Single player
+      value: Single player
+    - key: Multiplayer
+      value: Multiplayer
+    - key: Online Multiplayer
+      value: Multiplayer Online
+    - key: Local Multiplayer
+      value: Multiplayer Local
+    - key: Splitscreen
+      value: Tela Dividida
+    - key: Co-op
+      value: Co-op
+    - key: Cooperative
+      value: Cooperativo
+    - key: Versus
+      value: Versus
+  language:
+    name: Portuguese (Brazil)
+    code: pt-br
+    id: 10

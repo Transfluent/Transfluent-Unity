@@ -1,0 +1,224 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-el-gr
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: "\u0391\u03C5\u03C4\u03CC \u03B5\u03AF\u03BD\u03B1\u03B9 \u03B4\u03B5\u03AF\u03B3\u03BC\u03B1
+        \u03BA\u03B5\u03B9\u03BC\u03AD\u03BD\u03BF\u03C50.1136321"
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: "\u0391\u03C5\u03C4\u03CC \u03B5\u03AF\u03BD\u03B1\u03B9 \u03BA\u03B5\u03AF\u03BC\u03B5\u03BD\u03BF
+        \u03B4\u03BF\u03BA\u03B9\u03BC\u03AE\u03C2"
+    - key: 1
+      value: "\u0388\u03BD\u03B1"
+    - key: 2
+      value: "\u0394\u03C5\u03BF"
+    - key: 3
+      value: "\u03A4\u03C1\u03AF\u03B1"
+    - key: 4
+      value: "\u03A4\u03AD\u03C3\u03C3\u03B5\u03C1\u03B1"
+    - key: cows
+      value: "\u03B1\u03B3\u03B5\u03BB\u03AC\u03B4\u03B5\u03C2"
+    - key: goat simulator
+      value: "\u03C0\u03C1\u03BF\u03C3\u03BF\u03BC\u03BF\u03B9\u03C9\u03C4\u03AE\u03C2
+        \u03BA\u03B1\u03C4\u03C3\u03AF\u03BA\u03B1\u03C2"
+    - key: potions aquired
+      value: "\u03C6\u03AF\u03BB\u03C4\u03C1\u03B1 \u03C0\u03BF\u03C5 \u03B1\u03C0\u03BF\u03BA\u03C4\u03AE\u03B8\u03B7\u03BA\u03B1\u03BD"
+    - key: options
+      value: "\u03B5\u03C0\u03B9\u03BB\u03BF\u03B3\u03AD\u03C2"
+    - key: configuration
+      value: "\u03B4\u03B9\u03B1\u03BC\u03CC\u03C1\u03C6\u03C9\u03C3\u03B7"
+    - key: power up
+      value: "\u03B4\u03CD\u03BD\u03B1\u03BC\u03B7 "
+    - key: Start Game
+      value: "\u039E\u03B5\u03BA\u03B9\u03BD\u03AE\u03C3\u03C4\u03B5 \u03C4\u03BF
+        \u03C0\u03B1\u03B9\u03C7\u03BD\u03AF\u03B4\u03B9"
+    - key: Begin!
+      value: "\u039E\u03B5\u03BA\u03B9\u03BD\u03AE\u03C3\u03C4\u03B5!"
+    - key: Play Again?
+      value: "\u03A0\u03B1\u03AF\u03BE\u03C4\u03B5 \u03C0\u03AC\u03BB\u03B9;"
+    - key: Hi there!
+      value: "\u0393\u03B5\u03B9\u03B1 \u03C7\u03B1\u03C1\u03AC!"
+    - key: Rocks
+      value: "\u0392\u03C1\u03AC\u03C7\u03BF\u03B9"
+    - key: STRANGE
+      value: "\u03A0\u0391\u03A1\u0386\u039E\u0395\u039D\u039F\u03A3"
+    - key: Prepare for level
+      value: "\u03A0\u03C1\u03BF\u03B5\u03C4\u03BF\u03B9\u03BC\u03B1\u03C3\u03C4\u03B5\u03AF\u03C4\u03B5
+        \u03B3\u03B9\u03B1 \u03C4\u03B7\u03BD \u03C0\u03AF\u03C3\u03C4\u03B1"
+    - key: 'Score:'
+      value: "\u03A3\u03BA\u03BF\u03C1:"
+    - key: 'Level:'
+      value: "\u03A0\u03AF\u03C3\u03C4\u03B1:"
+    - key: Game Over!
+      value: "\u03A4\u03AD\u03BB\u03BF\u03C2 \u03C0\u03B1\u03B9\u03C7\u03BD\u03B9\u03B4\u03B9\u03BF\u03CD!"
+    - key: German
+      value: "\u0393\u03B5\u03C1\u03BC\u03B1\u03BD\u03B9\u03BA\u03AC"
+    - key: French
+      value: "\u0393\u03B1\u03BB\u03BB\u03B9\u03BA\u03AC"
+    - key: English
+      value: "\u0391\u03B3\u03B3\u03BB\u03B9\u03BA\u03AC"
+    - key: Backwards
+      value: "\u03A0\u03AF\u03C3\u03C9"
+    - key: Return to game
+      value: "\u0395\u03C0\u03B9\u03C3\u03C4\u03C1\u03BF\u03C6\u03AE \u03C3\u03C4\u03BF
+        \u03C0\u03B1\u03B9\u03C7\u03BD\u03AF\u03B4\u03B9"
+    - key: Language Select
+      value: "\u0395\u03C0\u03B9\u03BB\u03BF\u03B3\u03AE \u03B3\u03BB\u03CE\u03C3\u03C3\u03B1\u03C2"
+    - key: 'Last Score: {0}'
+      value: "\u03A4\u03B5\u03BB\u03B5\u03C5\u03C4\u03B1\u03AF\u03BF \u03A3\u03BA\u03BF\u03C1:
+        {0}"
+    - key: Start Level {0}
+      value: "\u0395\u03BA\u03BA\u03AF\u03BD\u03B7\u03C3\u03B7 \u03A0\u03AF\u03C3\u03C4\u03B1\u03C2{0}"
+    - key: 'Score: {0}'
+      value: "\u03A3\u03BA\u03BF\u03C1: {0}"
+    - key: 'Lives remaining: {0}'
+      value: "\u0396\u03C9\u03AD\u03C2 \u03C0\u03BF\u03C5 \u03B1\u03C0\u03BF\u03BC\u03AD\u03BD\u03BF\u03C5\u03BD:
+        {0}"
+    - key: Play Again
+      value: "\u03A0\u03B1\u03AF\u03BE\u03C4\u03B5 \u03BE\u03B1\u03BD\u03AC"
+    - key: 'Final Score: {0}'
+      value: "\u03A4\u03B5\u03BB\u03B9\u03BA\u03CC \u03A3\u03BA\u03BF\u03C1: {0}"
+    - key: 'Escape: [[[{0}]]]'
+      value: "\u0388\u03BE\u03BF\u03B4\u03BF\u03C2: [[[{0}]]]"
+    - key: Yes
+      value: "\u039D\u0391\u0399"
+    - key: No
+      value: "\u038C\u03A7\u0399"
+    - key: Yeah
+      value: "\u039D\u03B1\u03AF"
+    - key: Nope
+      value: "\u038C\u03C7\u03B9"
+    - key: Press Start
+      value: "\u03A0\u03B1\u03C4\u03AE\u03C3\u03C4\u03B5 \u0388\u03BD\u03B1\u03C1\u03BE\u03B7"
+    - key: Press Start to continue
+      value: "\u03A0\u03B1\u03C4\u03AE\u03C3\u03C4\u03B5 \u0388\u03BD\u03B1\u03C1\u03BE\u03B7
+        \u03B3\u03B9\u03B1 \u03C3\u03C5\u03BD\u03AD\u03C7\u03B5\u03B9\u03B1"
+    - key: Press any key
+      value: "\u03A0\u03B1\u03C4\u03AE\u03C3\u03C4\u03B5 \u03BF\u03C0\u03BF\u03B9\u03BF\u03B4\u03AE\u03C0\u03BF\u03C4\u03B5
+        \u03C0\u03BB\u03AE\u03BA\u03C4\u03C1\u03BF"
+    - key: Press any key to continue
+      value: "\u03A0\u03B1\u03C4\u03AE\u03C3\u03C4\u03B5 \u03BF\u03C0\u03BF\u03B9\u03BF\u03B4\u03AE\u03C0\u03BF\u03C4\u03B5
+        \u03C0\u03BB\u03AE\u03BA\u03C4\u03C1\u03BF \u03B3\u03B9\u03B1 \u03C3\u03C5\u03BD\u03AD\u03C7\u03B5\u03B9\u03B1"
+    - key: New Game
+      value: "\u039D\u03AD\u03BF \u03C0\u03B1\u03B9\u03C7\u03BD\u03AF\u03B4\u03B9"
+    - key: Continue
+      value: "\u03A3\u03C5\u03BD\u03AD\u03C7\u03B5\u03B9\u03B1"
+    - key: Continue?
+      value: "\u03A3\u03C5\u03BD\u03AD\u03C7\u03B5\u03B9\u03B1;"
+    - key: Load
+      value: "\u03A6\u03CC\u03C1\u03C4\u03C9\u03C3\u03B7"
+    - key: Load Game
+      value: "\u03A6\u03BF\u03C1\u03C4\u03CE\u03C3\u03C4\u03B5 \u03C4\u03BF \u03C0\u03B1\u03B9\u03C7\u03BD\u03AF\u03B4\u03B9"
+    - key: Loading...
+      value: "\u03A6\u03BF\u03C1\u03C4\u03CE\u03BD\u03B5\u03B9"
+    - key: Please wait...
+      value: "\u03A0\u03B1\u03C1\u03B1\u03BA\u03B1\u03BB\u03CE \u03C0\u03B5\u03C1\u03B9\u03BC\u03AD\u03BD\u03B5\u03C4\u03B5"
+    - key: Save
+      value: "\u0391\u03C0\u03BF\u03B8\u03AE\u03BA\u03B5\u03C5\u03C3\u03B7"
+    - key: Save Game
+      value: "\u0391\u03C0\u03BF\u03B8\u03AE\u03BA\u03B5\u03C5\u03C3\u03B7 \u03C0\u03B1\u03B9\u03C7\u03BD\u03B9\u03B4\u03B9\u03BF\u03CD"
+    - key: Saving...
+      value: "\u0391\u03C0\u03BF\u03B8\u03B7\u03BA\u03B5\u03CD\u03B5\u03B9..."
+    - key: Exit
+      value: "\u0388\u03BE\u03BF\u03B4\u03BF\u03C2"
+    - key: Exit?
+      value: "\u0388\u03BE\u03BF\u03B4\u03BF\u03C2;"
+    - key: Exit to Desktop
+      value: "\u0388\u03BE\u03BF\u03B4\u03BF\u03C2 \u03C3\u03C4\u03B7\u03BD \u0395\u03C0\u03B9\u03C6\u03AC\u03BD\u03B5\u03B9\u03B1
+        \u0395\u03C1\u03B3\u03B1\u03C3\u03AF\u03B1\u03C2"
+    - key: Exit to Desktop?
+      value: "\u0388\u03BE\u03BF\u03B4\u03BF\u03C2 \u03C3\u03C4\u03B7\u03BD \u0395\u03C0\u03B9\u03C6\u03AC\u03BD\u03B5\u03B9\u03B1
+        \u0395\u03C1\u03B3\u03B1\u03C3\u03AF\u03B1\u03C2;"
+    - key: Quit
+      value: "\u039A\u03BB\u03B5\u03AF\u03C3\u03C4\u03B5 \u03C4\u03BF"
+    - key: Quit?
+      value: "\u039A\u03BB\u03B5\u03AF\u03C3\u03C4\u03B5 \u03C4\u03BF;"
+    - key: Pause
+      value: "\u03A0\u03B1\u03CD\u03C3\u03B7"
+    - key: Are you sure you want to quit?
+      value: "\u0395\u03AF\u03C3\u03C4\u03B5 \u03C3\u03AF\u03B3\u03BF\u03C5\u03C1\u03BF\u03B9
+        \u03CC\u03C4\u03B9 \u03B8\u03AD\u03BB\u03B5\u03C4\u03B5 \u03BD\u03B1 \u03BA\u03BB\u03B5\u03AF\u03C3\u03B5\u03C4\u03B5;"
+    - key: Return
+      value: "\u0395\u03C0\u03B9\u03C3\u03C4\u03C1\u03BF\u03C6\u03AE"
+    - key: Main Menu
+      value: "\u039A\u03B5\u03BD\u03C4\u03C1\u03B9\u03BA\u03CC \u039C\u03B5\u03BD\u03BF\u03CD"
+    - key: Return to Main Menu
+      value: "\u0395\u03C0\u03B9\u03C3\u03C4\u03C1\u03BF\u03C6\u03AE \u03C3\u03C4\u03BF
+        \u039A\u03B5\u03BD\u03C4\u03C1\u03B9\u03BA\u03CC \u039C\u03B5\u03BD\u03BF\u03CD"
+    - key: Return to Main Menu?
+      value: "\u0395\u03C0\u03B9\u03C3\u03C4\u03C1\u03BF\u03C6\u03AE \u03C3\u03C4\u03BF
+        \u039A\u03B5\u03BD\u03C4\u03C1\u03B9\u03BA\u03CC \u039C\u03B5\u03BD\u03BF\u03CD;"
+    - key: Sound Options
+      value: "\u0395\u03C0\u03B9\u03BB\u03BF\u03B3\u03AD\u03C2 \u0389\u03C7\u03BF\u03C5"
+    - key: Sound
+      value: "\u0389\u03C7\u03BF\u03C2"
+    - key: Volume
+      value: "\u0388\u03BD\u03C4\u03B1\u03C3\u03B7"
+    - key: Graphics Options
+      value: "\u0395\u03C0\u03B9\u03BB\u03BF\u03B3\u03AD\u03C2 \u0393\u03C1\u03B1\u03C6\u03B9\u03BA\u03CE\u03BD"
+    - key: Video Options
+      value: "\u0395\u03C0\u03B9\u03BB\u03BF\u03B3\u03AD\u03C2 \u0392\u03AF\u03BD\u03C4\u03B5\u03BF"
+    - key: Quality
+      value: "\u03A0\u03BF\u03B9\u03CC\u03C4\u03B7\u03C4\u03B1"
+    - key: Gameplay Options
+      value: "\u0395\u03C0\u03B9\u03BB\u03BF\u03B3\u03AD\u03C2 \u03A0\u03B1\u03B9\u03C7\u03BD\u03B9\u03B4\u03B9\u03BF\u03CD"
+    - key: Network Options
+      value: "\u0395\u03C0\u03B9\u03BB\u03BF\u03B3\u03AD\u03C2 \u0394\u03B9\u03BA\u03C4\u03CD\u03BF\u03C5"
+    - key: Difficulty Options
+      value: "\u0395\u03C0\u03B9\u03BB\u03BF\u03B3\u03AD\u03C2 \u0394\u03C5\u03C3\u03BA\u03BF\u03BB\u03AF\u03B1\u03C2"
+    - key: Difficulty
+      value: "\u0394\u03C5\u03C3\u03BA\u03BF\u03BB\u03AF\u03B1"
+    - key: Very Easy
+      value: "\u03A0\u03BF\u03BB\u03CD \u0395\u03CD\u03BA\u03BF\u03BB\u03BF"
+    - key: Easy
+      value: "\u0395\u03CD\u03BA\u03BF\u03BB\u03BF"
+    - key: Medium
+      value: "\u039C\u03AD\u03C4\u03C1\u03B9\u03BF"
+    - key: Hard
+      value: "\u0394\u03CD\u03C3\u03BA\u03BF\u03BB\u03BF"
+    - key: Very Hard
+      value: "\u03A0\u03BF\u03BB\u03CD \u0394\u03CD\u03C3\u03BA\u03BF\u03BB\u03BF"
+    - key: Insane
+      value: "\u03A4\u03C1\u03B5\u03BB\u03CC"
+    - key: Impossible
+      value: "\u0391\u03BA\u03B1\u03C4\u03CC\u03C1\u03B8\u03C9\u03C4\u03BF"
+    - key: Thank you!
+      value: "\u0395\u03C5\u03C7\u03B1\u03C1\u03B9\u03C3\u03C4\u03BF\u03CD\u03BC\u03B5!"
+    - key: Goodbye!
+      value: "\u0391\u03BD\u03C4\u03AF\u03BF!"
+    - key: Are you sure?
+      value: "\u0395\u03AF\u03C3\u03C4\u03B5 \u03C3\u03AF\u03B3\u03BF\u03C5\u03C1\u03BF\u03B9;"
+    - key: Single player
+      value: "\u0388\u03BD\u03B1\u03C2 \u03C0\u03B1\u03AF\u03BA\u03C4\u03B7\u03C2"
+    - key: Multiplayer
+      value: "\u03A0\u03BF\u03BB\u03BB\u03BF\u03AF \u03C0\u03B1\u03AF\u03BA\u03C4\u03B5\u03C2"
+    - key: Online Multiplayer
+      value: "\u03A0\u03BF\u03BB\u03BB\u03BF\u03AF \u03C0\u03B1\u03AF\u03BA\u03C4\u03B5\u03C2
+        \u0394\u03B9\u03B1\u03B4\u03B9\u03BA\u03C4\u03C5\u03B1\u03BA\u03AC"
+    - key: Local Multiplayer
+      value: "\u03A0\u03BF\u03BB\u03BB\u03BF\u03AF \u03C0\u03B1\u03AF\u03BA\u03C4\u03B5\u03C2
+        \u03A4\u03BF\u03C0\u03B9\u03BA\u03AC"
+    - key: Splitscreen
+      value: "\u039C\u03BF\u03AF\u03C1\u03B1\u03C3\u03BC\u03B1 \u03BF\u03B8\u03CC\u03BD\u03B7\u03C2"
+    - key: Co-op
+      value: "\u03C3\u03C5\u03BD\u03B5\u03C1\u03B3\u03B1\u03C3\u03AF\u03B1\u03C2"
+    - key: Cooperative
+      value: "\u03C3\u03C5\u03BD\u03B5\u03C1\u03B3\u03B1\u03C3\u03AF\u03B1\u03C2"
+    - key: Versus
+      value: "\u03B5\u03BD\u03B1\u03BD\u03C4\u03AF\u03BF\u03BD"
+  language:
+    name: Greek
+    code: el-gr
+    id: 30

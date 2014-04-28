@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7775ae55018724856ba88658385affd3, type: 3}
+  m_Name: AutoDownloaded-da-dk
+  m_EditorClassIdentifier: 
+  allTranslations:
+  - groupid: 
+    translations:
+    - key: HELLO_WORLD_TEXT_KEY
+      value: "dette er pr\xF8vetekst0.1136321"
+    - key: UNITY_TEST_TRANSLATION_KEY
+      value: dette er testtekst
+    - key: 1
+      value: En
+    - key: 2
+      value: _2_
+    - key: 3
+      value: Tre
+    - key: 4
+      value: 4
+    - key: cows
+      value: "k\xF8er"
+    - key: goat simulator
+      value: gedsimulator
+    - key: potions aquired
+      value: "k\xF8bte potions"
+    - key: options
+      value: indstillinger
+    - key: configuration
+      value: konfiguration
+    - key: power up
+      value: power-up
+    - key: Start Game
+      value: Start spil
+    - key: Begin!
+      value: Begynd!
+    - key: Play Again?
+      value: Spil igen?
+    - key: Hi there!
+      value: Hej!
+    - key: Rocks
+      value: Sten
+    - key: STRANGE
+      value: "M\xC6RKELIG"
+    - key: Prepare for level
+      value: "G\xF8r dig klar til levellet"
+    - key: 'Score:'
+      value: 'Score:'
+    - key: 'Level:'
+      value: 'Level:'
+    - key: Game Over!
+      value: Spillet slut!
+    - key: German
+      value: Tysk
+    - key: French
+      value: Fransk
+    - key: English
+      value: Engelsk
+    - key: Backwards
+      value: "Bagl\xE6ns"
+    - key: Return to game
+      value: "G\xE5 tilbage til spillet"
+    - key: Language Select
+      value: "V\xE6lg sprog"
+    - key: 'Last Score: {0}'
+      value: 'Sidste score: {0}'
+    - key: Start Level {0}
+      value: Start level {0}
+    - key: 'Score: {0}'
+      value: 'Score: {0}'
+    - key: 'Lives remaining: {0}'
+      value: 'Liv tilbage: {0}'
+    - key: Play Again
+      value: Spil igen
+    - key: 'Final Score: {0}'
+      value: 'Score resultat: {0}'
+    - key: 'Escape: [[[{0}]]]'
+      value: 'Escape: [[[{0}]]]'
+    - key: Yes
+      value: JA
+    - key: No
+      value: NEJ
+    - key: Yeah
+      value: Jah
+    - key: Nope
+      value: "N\xE6h"
+    - key: Press Start
+      value: Tryk start
+    - key: Press Start to continue
+      value: "Tryk start for at forts\xE6tte"
+    - key: Press any key
+      value: "Tryk p\xE5 en vilk\xE5rlig tast"
+    - key: Press any key to continue
+      value: "Tryk p\xE5 en vilk\xE5rlig tast for at forts\xE6tte"
+    - key: New Game
+      value: Nyt spil
+    - key: Continue
+      value: "Forts\xE6t"
+    - key: Continue?
+      value: "Forts\xE6t?"
+    - key: Load
+      value: Load
+    - key: Load Game
+      value: Load spil
+    - key: Loading...
+      value: Loader...
+    - key: Please wait...
+      value: Vent venligst...
+    - key: Save
+      value: Gem
+    - key: Save Game
+      value: Gem spil
+    - key: Saving...
+      value: Gemmer...
+    - key: Exit
+      value: Afslut
+    - key: Exit?
+      value: Afslut?
+    - key: Exit to Desktop
+      value: Afslut til skrivebord
+    - key: Exit to Desktop?
+      value: Afslut til skrivebord?
+    - key: Quit
+      value: Afslut
+    - key: Quit?
+      value: Afslut?
+    - key: Pause
+      value: Pause
+    - key: Are you sure you want to quit?
+      value: "Er du sikker p\xE5, at du vil afslutte"
+    - key: Return
+      value: Tilbage
+    - key: Main Menu
+      value: Hovedmenu
+    - key: Return to Main Menu
+      value: Tilbage til hovedmenu
+    - key: Return to Main Menu?
+      value: Tilbage til hovedmenu?
+    - key: Sound Options
+      value: Lydindstillinger
+    - key: Sound
+      value: Lyd
+    - key: Volume
+      value: Lydstyrke
+    - key: Graphics Options
+      value: Grafikindstillinger
+    - key: Video Options
+      value: Videoindstillinger
+    - key: Quality
+      value: Kvalitet
+    - key: Gameplay Options
+      value: Gameplayindstillinger
+    - key: Network Options
+      value: "Netv\xE6rksindstillinger"
+    - key: Difficulty Options
+      value: "Sv\xE6rhedsgradindstillinger"
+    - key: Difficulty
+      value: "Sv\xE6rhedsgrad"
+    - key: Very Easy
+      value: Meget nemt
+    - key: Easy
+      value: Nemt
+    - key: Medium
+      value: Mellem
+    - key: Hard
+      value: "Sv\xE6rt"
+    - key: Very Hard
+      value: "Meget sv\xE6rt"
+    - key: Insane
+      value: Sindssygt
+    - key: Impossible
+      value: Umuligt
+    - key: Thank you!
+      value: Tak!
+    - key: Goodbye!
+      value: Farvel!
+    - key: Are you sure?
+      value: Er du sikker?
+    - key: Single player
+      value: Singleplayer
+    - key: Multiplayer
+      value: Multiplayer
+    - key: Online Multiplayer
+      value: Online multiplayer
+    - key: Local Multiplayer
+      value: Lokal multiplayer
+    - key: Splitscreen
+      value: "Dobbelt sk\xE6rm"
+    - key: Co-op
+      value: Co-op
+    - key: Cooperative
+      value: Kooperativ
+    - key: Versus
+      value: Mod
+  language:
+    name: Danish
+    code: da-dk
+    id: 22

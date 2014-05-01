@@ -12,6 +12,11 @@
 4. Get your text translated!  Go to the menu item Translation/Game Configuration and select Translate my game.  You can view your order status online at https://www.transfluent.com/en/my-account/ , but you should be able to select the "Download all translations"
 5. If you have any questions, feel free to ask the maintainer -- alex@transfluent.com
 
+### Resources
+1. Github https://github.com/Transfluent/Transfluent-Unity
+2. Unity Forum: http://forum.unity3d.com/threads/243758-Localization-and-Translation-in-editor-(open-source!)
+3. Youtube https://www.youtube.com/watch?v=lb_RjAx50XE
+
 ### Walkthrough
 This is a document to configure your game for translation and getting familiar with the GUI tools
 [Walkthrough](https://github.com/Transfluent/Transfluent-Unity/wiki/walkthrough)

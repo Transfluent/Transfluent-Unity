@@ -33,7 +33,7 @@ MonoBehaviour:
     - key: potions aquired
       value: potions aquired
     - key: options
-      value: options
+      value: Options
     - key: configuration
       value: configuration
     - key: power up
@@ -57,7 +57,7 @@ MonoBehaviour:
     - key: 'Level:'
       value: 'Level: '
     - key: Game Over!
-      value: Game Over!
+      value: GAME OVER!
     - key: German
       value: German
     - key: French

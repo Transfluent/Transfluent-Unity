@@ -15,7 +15,7 @@ MonoBehaviour:
   - groupid: 
     translations:
     - key: HELLO_WORLD_TEXT_KEY
-      value: voici le texte d'exemple0,1122621
+      value: voici un exemple de texte0.1136321
     - key: UNITY_TEST_TRANSLATION_KEY
       value: ceci est un texte de test
     - key: TEST_CREATION_OF_A_KEY
@@ -92,6 +92,122 @@ MonoBehaviour:
       value: "Score\_:"
     - key: Game Over!
       value: "Partie termin\xE9e\_!"
+    - key: 'Escape: [[[{0}]]]'
+      value: 'Echappez-vous: [[[{0}]]]'
+    - key: Yes
+      value: OUI
+    - key: No
+      value: NON
+    - key: Yeah
+      value: Ouais
+    - key: Nope
+      value: Nan
+    - key: Press Start
+      value: Appuyez sur Start
+    - key: Press Start to continue
+      value: Appuyez sur Start pour continuer
+    - key: Press any key
+      value: Appuyez sur n'importe quelle touche
+    - key: Press any key to continue
+      value: Appuyez sur n'importe quelle touche pour continuer
+    - key: New Game
+      value: Commencer une nouvelle partie
+    - key: Continue
+      value: Continuer
+    - key: Continue?
+      value: Voulez-vous continuer?
+    - key: Load
+      value: Charger
+    - key: Load Game
+      value: Charger la partie
+    - key: Loading...
+      value: Chargement
+    - key: Please wait...
+      value: "Patientez s'il vous pla\xEEt.."
+    - key: Save
+      value: Sauvegarder
+    - key: Save Game
+      value: Sauvegarder la partie
+    - key: Saving...
+      value: Sauvegarde en cours...
+    - key: Exit
+      value: Quitter
+    - key: Exit?
+      value: Voulez-vous vraiment quitter?
+    - key: Exit to Desktop
+      value: Quitter le bureau
+    - key: Exit to Desktop?
+      value: Voulez-vous vraiment quitter le bureau?
+    - key: Quit
+      value: Abandonner
+    - key: Quit?
+      value: Voulez-vous vraiment abandonner?
+    - key: Pause
+      value: Pause
+    - key: Are you sure you want to quit?
+      value: "Etes-vous s\xFBr de vouloir abandonner?"
+    - key: Return
+      value: Retour
+    - key: Main Menu
+      value: Menu principal
+    - key: Return to Main Menu
+      value: Retour au menu principal
+    - key: Return to Main Menu?
+      value: Voulez-vous retourner au menu principal?
+    - key: Sound Options
+      value: Options sonores
+    - key: Sound
+      value: Son
+    - key: Volume
+      value: Volume
+    - key: Graphics Options
+      value: Options graphiques
+    - key: Video Options
+      value: "Options vid\xE9os"
+    - key: Quality
+      value: "Qualit\xE9"
+    - key: Gameplay Options
+      value: Options de l'interface
+    - key: Network Options
+      value: Options Internet
+    - key: Difficulty Options
+      value: "Options de difficult\xE9s"
+    - key: Difficulty
+      value: "Difficult\xE9"
+    - key: Very Easy
+      value: "Tr\xE8s facile"
+    - key: Easy
+      value: Facile
+    - key: Hard
+      value: Difficile
+    - key: Very Hard
+      value: "Tr\xE8s difficile"
+    - key: Insane
+      value: Mortel
+    - key: Impossible
+      value: Impossible
+    - key: Thank you!
+      value: Merci !
+    - key: Goodbye!
+      value: Au revoir!
+    - key: Are you sure?
+      value: "Etes-vous s\xFBr?"
+    - key: Single player
+      value: Un joueur
+    - key: Multiplayer
+      value: Mode multijoueur
+    - key: Online Multiplayer
+      value: Multijoueur en ligne
+    - key: Local Multiplayer
+      value: Multijoueur en local
+    - key: Splitscreen
+      value: "Ecran divis\xE9"
+    - key: Co-op
+      value: "Coop\xE9ration"
+    - key: Cooperative
+      value: "Coop\xE9ration"
+    - key: Versus
+      value: Versus
   language:
     name: French (France)
     code: fr-fr

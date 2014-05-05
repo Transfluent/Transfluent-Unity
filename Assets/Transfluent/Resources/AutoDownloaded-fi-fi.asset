@@ -176,6 +176,30 @@ MonoBehaviour:
       value: "Eritt\xE4in vaikea"
     - key: Impossible
       value: Mahdoton
+    - key: Insane
+      value: "J\xE4rjest\xF6n"
+    - key: Thank you!
+      value: Kiitos!
+    - key: Goodbye!
+      value: "N\xE4kemiin!"
+    - key: Are you sure?
+      value: Oletko varma?
+    - key: Single player
+      value: Yksinpeli
+    - key: Multiplayer
+      value: Moninpeli
+    - key: Online Multiplayer
+      value: Online-moninpeli
+    - key: Local Multiplayer
+      value: Paikallinen moninpeli
+    - key: Splitscreen
+      value: Jaettu ruutu
+    - key: Co-op
+      value: Yhteistoiminta
+    - key: Cooperative
+      value: "Yhteisty\xF6haluinen"
+    - key: Versus
+      value: Versus
   language:
     name: Finnish
     code: fi-fi

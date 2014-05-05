@@ -15,7 +15,7 @@ MonoBehaviour:
   - groupid: 
     translations:
     - key: HELLO_WORLD_TEXT_KEY
-      value: 1262211,0elpmexe'd etxet el iciov
+      value: 1236311.0etxet ed elpmexe nu iciov
     - key: UNITY_TEST_TRANSLATION_KEY
       value: tset ed etxet nu tse icec
     - key: TEST_CREATION_OF_A_KEY
@@ -95,123 +95,123 @@ MonoBehaviour:
     - key: 'Final Score: {0}'
       value: '{0} : lanif erocS'
     - key: 'Escape: [[[{0}]]]'
-      value: ']]]{0}[[[ :thculF'
+      value: ']]]{0}[[[ :suov-zeppahcE'
     - key: Yes
-      value: "\u662F"
+      value: IUO
     - key: No
-      value: "\u5426"
+      value: NON
     - key: Yeah
-      value: "\u5BF9"
+      value: siauO
     - key: Nope
-      value: "\u662F\u4E0D"
+      value: naN
     - key: Press Start
-      value: "\u201D\u59CB\u5F00\u201C\u4E0B\u6309"
+      value: tratS rus zeyuppA
     - key: Press Start to continue
-      value: "\u7EED\u7EE7\u4EE5\u201D\u59CB\u5F00\u201C\u4E0B\u6309"
+      value: reunitnoc ruop tratS rus zeyuppA
     - key: Press any key
-      value: "\u952E\u6309\u610F\u4EFB\u4E0B\u6309"
+      value: ehcuot elleuq etropmi'n rus zeyuppA
     - key: Press any key to continue
-      value: "\u7EED\u7EE7\u4EE5\u952E\u6309\u610F\u4EFB\u4E0B\u6309"
+      value: reunitnoc ruop ehcuot elleuq etropmi'n rus zeyuppA
     - key: New Game
-      value: "\u620F\u6E38\u65B0"
+      value: eitrap ellevuon enu recnemmoC
     - key: Continue
-      value: "\u7EED\u7EE7"
+      value: reunitnoC
     - key: Continue?
-      value: "\uFF1F\u7EED\u7EE7"
+      value: ?reunitnoc suov-zeluoV
     - key: Load
-      value: "\u8F7D\u52A0"
+      value: regrahC
     - key: Load Game
-      value: "\u620F\u6E38\u8F7D\u52A0"
+      value: eitrap al regrahC
     - key: Loading...
-      value: "...\u4E2D\u8F7D\u52A0"
+      value: tnemegrahC
     - key: Please wait...
-      value: "...\u5F85\u7B49\u8BF7"
+      value: "..t\xEEalp suov li's zetneitaP"
     - key: Save
-      value: "\u5B58\u4FDD"
+      value: redragevuaS
     - key: Save Game
-      value: "\u620F\u6E38\u5B58\u4FDD"
+      value: eitrap al redragevuaS
     - key: Saving...
-      value: "\u2026\u4E2D\u5B58\u4FDD"
+      value: '...sruoc ne edragevuaS'
     - key: Exit
-      value: "\u51FA\u9000"
+      value: rettiuQ
     - key: Exit?
-      value: "\uFF1F\u51FA\u9000"
+      value: ?rettiuq tnemiarv suov-zeluoV
     - key: Exit to Desktop
-      value: "\u9762\u684C\u5230\u51FA\u9000"
+      value: uaerub el rettiuQ
     - key: Exit to Desktop?
-      value: "\uFF1F\u9762\u684C\u5230\u51FA\u9000"
+      value: ?uaerub el rettiuq tnemiarv suov-zeluoV
     - key: Quit
-      value: "\u5F03\u653E"
+      value: rennodnabA
     - key: Quit?
-      value: "?\u5F03\u653E"
+      value: ?rennodnaba tnemiarv suov-zeluoV
     - key: Pause
-      value: "\u505C\u6682"
+      value: esuaP
     - key: Are you sure you want to quit?
-      value: "\uFF1F\u5417\u51FA\u9000\u8981\u5B9A\u786E"
+      value: "?rennodnaba rioluov ed r\xFBs suov-setE"
     - key: Return
-      value: "\u56DE\u9000"
+      value: ruoteR
     - key: Main Menu
-      value: "\u5355\u83DC\u4E3B"
+      value: lapicnirp uneM
     - key: Return to Main Menu
-      value: "\u5355\u83DC\u4E3B\u5230\u56DE\u9000"
+      value: lapicnirp unem ua ruoteR
     - key: Return to Main Menu?
-      value: "\uFF1F\u5355\u83DC\u4E3B\u5230\u56DE\u9000"
+      value: ?lapicnirp unem ua renruoter suov-zeluoV
     - key: Sound Options
-      value: "\u9879\u9009\u97F3\u58F0"
+      value: seronos snoitpO
     - key: Sound
-      value: "\u97F3\u58F0"
+      value: noS
     - key: Volume
-      value: "\u91CF\u97F3"
+      value: emuloV
     - key: Graphics Options
-      value: "\u9879\u9009\u50CF\u56FE"
+      value: seuqihparg snoitpO
     - key: Video Options
-      value: "\u9879\u9009\u9891\u89C6"
+      value: "so\xE9div snoitpO"
     - key: Quality
-      value: "\u91CF\u8D28"
+      value: "\xE9tilauQ"
     - key: Gameplay Options
-      value: "\u9879\u9009\u620F\u6E38"
+      value: ecafretni'l ed snoitpO
     - key: Network Options
-      value: "\u9879\u9009\u7EDC\u7F51"
+      value: tenretnI snoitpO
     - key: Difficulty Options
-      value: "\u9879\u9009\u5EA6\u96BE"
+      value: "s\xE9tluciffid ed snoitpO"
     - key: Difficulty
-      value: "\u5EA6\u96BE"
+      value: "\xE9tluciffiD"
     - key: Very Easy
-      value: "\u6613\u5BB9\u5E38\u975E"
+      value: "elicaf s\xE8rT"
     - key: Easy
-      value: "\u6613\u5BB9"
+      value: elicaF
     - key: Medium
-      value: "\u7B49\u4E2D"
+      value: lettiM
     - key: Hard
-      value: "\u96BE\u56F0"
+      value: eliciffiD
     - key: Very Hard
-      value: "\u96BE\u56F0\u5E38\u975E"
+      value: "eliciffid s\xE8rT"
     - key: Insane
-      value: "\u96BE\u56F0\u5EA6\u6781"
+      value: letroM
     - key: Impossible
-      value: "\u7EA7\u7070\u9AA8"
+      value: elbissopmI
     - key: Thank you!
-      value: "\uFF01\u8C22\u8C22"
+      value: '! icreM'
     - key: Goodbye!
-      value: "\uFF01\u89C1\u518D"
+      value: '!riover uA'
     - key: Are you sure?
-      value: "\uFF1F\u5417\u5B9A\u786E"
+      value: "?r\xFBs suov-setE"
     - key: Single player
-      value: "\u620F\u6E38\u4EBA\u5355"
+      value: rueuoj nU
     - key: Multiplayer
-      value: "\u620F\u6E38\u4EBA\u591A"
+      value: rueuojitlum edoM
     - key: Online Multiplayer
-      value: "\u620F\u6E38\u4EBA\u591A\u7EBF\u5728"
+      value: engil ne rueuojitluM
     - key: Local Multiplayer
-      value: "\u620F\u6E38\u4EBA\u591A\u5730\u672C"
+      value: lacol ne rueuojitluM
     - key: Splitscreen
-      value: "\u5C4F\u5206"
+      value: "\xE9sivid narcE"
     - key: Co-op
-      value: "\u4F5C\u5408"
+      value: "noitar\xE9pooC"
     - key: Cooperative
-      value: "\u7684\u4F5C\u5408"
+      value: "noitar\xE9pooC"
     - key: Versus
-      value: "\u5BF9"
+      value: susreV
   - groupid: TEST
     translations:
     - key: sprechen sie deutsch

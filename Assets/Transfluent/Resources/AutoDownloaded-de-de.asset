@@ -86,6 +86,122 @@ MonoBehaviour:
       value: 'Endpunktzahl: {0}'
     - key: 'Escape: [[[{0}]]]'
       value: 'Flucht: [[[{0}]]]'
+    - key: Yes
+      value: JA
+    - key: No
+      value: NEIN
+    - key: Yeah
+      value: Jawoll
+    - key: Nope
+      value: Nee
+    - key: Press Start
+      value: "Start dr\xFCcken"
+    - key: Press Start to continue
+      value: "Start dr\xFCcken zum Fortfahren"
+    - key: Press any key
+      value: "Eine Taste dr\xFCcken"
+    - key: Press any key to continue
+      value: "Zum Fortsetzen eine Taste dr\xFCcken"
+    - key: New Game
+      value: Neues Spiel
+    - key: Continue
+      value: Fortsetzen
+    - key: Continue?
+      value: Fortsetzen?
+    - key: Load
+      value: Laden
+    - key: Load Game
+      value: Spiel laden
+    - key: Loading...
+      value: Lade...
+    - key: Please wait...
+      value: Bitte warten...
+    - key: Save
+      value: Speichern
+    - key: Save Game
+      value: Spiel speichern
+    - key: Saving...
+      value: Speichere...
+    - key: Exit
+      value: Beenden
+    - key: Exit?
+      value: Beenden?
+    - key: Exit to Desktop
+      value: "Zur\xFCck zum Desktop"
+    - key: Exit to Desktop?
+      value: "Zur\xFCck zum Desktop?"
+    - key: Quit
+      value: Beenden
+    - key: Quit?
+      value: Beenden?
+    - key: Pause
+      value: Pause
+    - key: Are you sure you want to quit?
+      value: "Bist du sicher, das du beenden m\xF6chtest?"
+    - key: Return
+      value: "Zur\xFCck"
+    - key: Main Menu
+      value: "Hauptmen\xFC"
+    - key: Return to Main Menu
+      value: "Zur\xFCck zum Hauptmen\xFC"
+    - key: Return to Main Menu?
+      value: "Zur\xFCck zum Hauptmen\xFC?"
+    - key: Sound Options
+      value: Tonoptionen
+    - key: Sound
+      value: Ton
+    - key: Volume
+      value: "Lautst\xE4rke"
+    - key: Graphics Options
+      value: Grafikoptionen
+    - key: Video Options
+      value: Video-Optionen
+    - key: Quality
+      value: "Qualit\xE4t"
+    - key: Gameplay Options
+      value: Spieloptionen
+    - key: Network Options
+      value: Netzwerkoptionen
+    - key: Difficulty Options
+      value: Schwierigkeitsstufen
+    - key: Difficulty
+      value: Schwierigkeit
+    - key: Very Easy
+      value: Sehr leicht
+    - key: Easy
+      value: Leicht
+    - key: Medium
+      value: Mittel
+    - key: Hard
+      value: Schwer
+    - key: Very Hard
+      value: Sehr schwer
+    - key: Insane
+      value: Wahnsinnig
+    - key: Impossible
+      value: "Unm\xF6glich"
+    - key: Thank you!
+      value: Danke!
+    - key: Goodbye!
+      value: Auf Wiedersehen!
+    - key: Are you sure?
+      value: Bist du sicher?
+    - key: Single player
+      value: Einzelspieler
+    - key: Multiplayer
+      value: Mehrspieler
+    - key: Online Multiplayer
+      value: Online-Mehrspieler
+    - key: Local Multiplayer
+      value: Lokale Mehrspieler
+    - key: Splitscreen
+      value: Splitscreen
+    - key: Co-op
+      value: Kooperativ
+    - key: Cooperative
+      value: Kooperativ
+    - key: Versus
+      value: Gegen
   - groupid: TEST
     translations:
     - key: sprechen sie deutsch

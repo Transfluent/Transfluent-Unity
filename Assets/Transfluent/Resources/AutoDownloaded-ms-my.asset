@@ -146,6 +146,64 @@ MonoBehaviour:
       value: Sederhana
     - key: Are you sure?
       value: Adakah anda pasti?
+    - key: cows
+      value: lembu
+    - key: goat simulator
+      value: goat simulator
+    - key: power up
+      value: tambah kuasa
+    - key: Hi there!
+      value: Hai apa khabar!
+    - key: Rocks
+      value: Hebat
+    - key: Backwards
+      value: Undur
+    - key: 'Escape: [[[{0}]]]'
+      value: 'Lepaskan Diri: [[[{0}]]]
+
+'
+    - key: Load
+      value: Muatkan
+    - key: Load Game
+      value: Muatkan Permainan
+    - key: Saving...
+      value: Simpan...
+    - key: Pause
+      value: Berhenti sekejap
+    - key: Sound
+      value: Bunyi
+    - key: Volume
+      value: Nada
+    - key: Gameplay Options
+      value: Pilihan Cara Main
+    - key: Difficulty
+      value: Tahap kesukaran
+    - key: Easy
+      value: Mudah
+    - key: Very Hard
+      value: Sangat Sukar
+    - key: Insane
+      value: Gila
+    - key: Impossible
+      value: Mustahil
+    - key: Goodbye!
+      value: Selamat tinggal!
+    - key: Single player
+      value: Pemain perseorangan
+    - key: Multiplayer
+      value: Multipemain
+    - key: Online Multiplayer
+      value: Multipemain Dalam Talian
+    - key: Local Multiplayer
+      value: Multipemain tempatan
+    - key: Splitscreen
+      value: Skrin pisah
+    - key: Co-op
+      value: Ko-op
+    - key: Cooperative
+      value: Kerjasama
+    - key: Versus
+      value: Lawan
   language:
     name: Malay
     code: ms-my

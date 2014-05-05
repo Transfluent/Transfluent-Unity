@@ -43,7 +43,7 @@ MonoBehaviour:
     - key: Return to game
       value: Returner til spill
     - key: 'Lives remaining: {0}'
-      value: "Gjenv\xE6rende liv: {0} "
+      value: "Gjenst\xE5ende liv: {0}"
     - key: Play Again
       value: Spill igjen
     - key: Yes
@@ -82,6 +82,124 @@ MonoBehaviour:
       value: Volum
     - key: Difficulty Options
       value: Vanskelighetsgrad
+    - key: 1
+      value: "\xC9n"
+    - key: 2
+      value: __2__
+    - key: cows
+      value: kyr
+    - key: goat simulator
+      value: 'geitesimulator '
+    - key: potions aquired
+      value: anskaffede eliksirer
+    - key: configuration
+      value: 'konfigurering '
+    - key: power up
+      value: start opp
+    - key: Hi there!
+      value: Hei der!
+    - key: Rocks
+      value: Steiner
+    - key: STRANGE
+      value: MERKELIG
+    - key: Prepare for level
+      value: "Forbered deg til niv\xE5"
+    - key: Game Over!
+      value: Spillet er slutt!
+    - key: Backwards
+      value: Bakover
+    - key: Language Select
+      value: "Spr\xE5kvalg"
+    - key: 'Last Score: {0}'
+      value: 'Siste poengsum: {0}'
+    - key: Start Level {0}
+      value: "Begynn niv\xE5 {0} "
+    - key: 'Score: {0}'
+      value: 'Resultat: {0}'
+    - key: 'Final Score: {0}'
+      value: 'Sluttresultat: {0}'
+    - key: 'Escape: [[[{0}]]]'
+      value: 'Flukt: [[[{0}]]] '
+    - key: No
+      value: NEI
+    - key: Yeah
+      value: Ja
+    - key: Nope
+      value: Niks
+    - key: Press Start to continue
+      value: "Trykk start for \xE5 fortsette"
+    - key: Load
+      value: Laster
+    - key: Exit
+      value: Avslutte
+    - key: Exit?
+      value: Avslutte?
+    - key: Exit to Desktop
+      value: Avslutt til skrivebord
+    - key: Exit to Desktop?
+      value: Avslutt til skrivebord?
+    - key: Quit
+      value: Avslutt
+    - key: Pause
+      value: Pause
+    - key: Return
+      value: Tilbake
+    - key: Main Menu
+      value: Hovedmeny
+    - key: Return to Main Menu
+      value: Tilbake til hovedmeny
+    - key: Return to Main Menu?
+      value: Tilbake til hovedmeny?
+    - key: Sound Options
+      value: Alternativer for lyd
+    - key: Graphics Options
+      value: Alternativer for grafikk
+    - key: Video Options
+      value: Alternativer for bilde
+    - key: Quality
+      value: Kvalitet
+    - key: Gameplay Options
+      value: Alternativer for spillopplevelse
+    - key: Network Options
+      value: Alternativer for nettverk
+    - key: Difficulty
+      value: Vanskelighetsgrad
+    - key: Very Easy
+      value: Veldig lett
+    - key: Easy
+      value: Lett
+    - key: Medium
+      value: Medium
+    - key: Hard
+      value: Vanskelig
+    - key: Very Hard
+      value: Veldig Vanskelig
+    - key: Insane
+      value: Sinnsyk
+    - key: Impossible
+      value: Umulig
+    - key: Thank you!
+      value: Takk!
+    - key: Goodbye!
+      value: Farvel!
+    - key: Are you sure?
+      value: Er du sikker?
+    - key: Single player
+      value: Enkeltspiller
+    - key: Multiplayer
+      value: Flerspiller
+    - key: Online Multiplayer
+      value: "Flerspiller p\xE5 nett"
+    - key: Local Multiplayer
+      value: Lokal flerspiller
+    - key: Splitscreen
+      value: Delt skjerm
+    - key: Co-op
+      value: Samarbeidsspill
+    - key: Cooperative
+      value: Samarbeidende
+    - key: Versus
+      value: mot
   language:
     name: Norwegian
     code: no-no

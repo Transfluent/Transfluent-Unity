@@ -52,7 +52,6 @@ public class SetupTranslationConfiguration : EditorWindow
 			Initialize();
 			return;
 		}
-
 		scrollwindowPos = GUILayout.BeginScrollView(scrollwindowPos);
 		DrawContent();
 		GUILayout.EndScrollView();

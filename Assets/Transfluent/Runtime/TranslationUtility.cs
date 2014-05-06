@@ -208,6 +208,8 @@ namespace transfluent
 
 		string getTranslation(string sourceText);
 
+		string groupBeingShown { get; set; }
+
 		Dictionary<string, string> allKnownTranslations { get; set; }
 	}
 

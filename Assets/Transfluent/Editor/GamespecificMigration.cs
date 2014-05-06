@@ -1,4 +1,5 @@
-﻿//#define TRANSFLUENT_EXAMPLE
+﻿#define TRANSFLUENT_EXAMPLE
+using System;
 #if TRANSFLUENT_EXAMPLE
 using strange.examples.strangerocks;
 #endif //!TRANSFLUENT_EXAMPLE
@@ -12,43 +13,112 @@ namespace transfluent
 {
 	public class GameSpecificMigration : MonoBehaviour
 	{
-		public static readonly List<string> blacklistStringsContaining = new List<string>
+		
+		public interface IGameProcessor
 		{
-			"XXXX",
-		};
-
-		//ignore all textmeshes referenced by all ButtonView components
-		public static void toExplicitlyIgnore(List<TextMesh> toIgnore, GameObject inPrefab = null)
+			void process(GameObject go, CustomScriptProcessorState processorState);
+		}
+		public class CustomScriptProcessorState
 		{
-#if TRANSFLUENT_EXAMPLE
-			//or maybe just find this class with reflection?
-			//custom references -- replace with a reflection based solution maybe?
-			//   find gameobjects with [SerializeField] private or public vars and also define an OnLocalize
+			private List<GameObject> _blackList;
+			private ITranslationUtilityInstance _translationDB;
+			private List<string> _stringsToIgnore;  
 
-			var allButtons = new List<ButtonView>();
-			if (inPrefab == null)
+			public CustomScriptProcessorState(List<GameObject> blackList, ITranslationUtilityInstance translationDb,List<string> stringsToIgnore )
 			{
-				allButtons.AddRange(FindObjectsOfType<ButtonView>());
+				_blackList = blackList;
+				_translationDB = translationDb;
+				_stringsToIgnore = stringsToIgnore;
 			}
-			else
+
+			public void addToBlacklist(GameObject go)
 			{
-				allButtons.AddRange(inPrefab.GetComponentsInChildren<ButtonView>(true));
-			}
-			allButtons.ForEach((ButtonView button) =>
-			{
-				if (button != null && button.labelMesh != null)
+				if(go != null && _blackList.Contains(go) == false)
 				{
-					toIgnore.Add(button.labelMesh);
+					_blackList.Add(go);
+				}
+			}
+
+			public bool shouldIgnoreString(string input)
+			{
+				return _stringsToIgnore.Contains(input);
+			}
+
+			public void addToDB(string key, string value)
+			{
+				string currentGroup = _translationDB.groupBeingShown;
+				TranslationConfigurationSO config = ResourceLoadFacade.LoadConfigGroup(_translationDB.groupBeingShown);
+				var translationDictionary = _translationDB.allKnownTranslations;
+				GameTranslationSet gameTranslationSet =
+					GameTranslationGetter.GetTranslaitonSetFromLanguageCode(config.sourceLanguage.code);
+
+				bool exists = translationDictionary.ContainsKey(key);
+				if(!exists)
+				{
+					translationDictionary.Add(key, key);
+				}
+
+				gameTranslationSet.mergeInSet(currentGroup, translationDictionary);
+				//_translationDB.allKnownTranslations.Add(key,value);
+			}
+		}
+
+		public class ButtonViewProcessor : IGameProcessor
+		{
+			public void process(GameObject go,CustomScriptProcessorState processorState)
+			{
+				var button = go.GetComponent<ButtonView>();
+				if(button == null) return;
+				if(button.labelMesh != null)
+				{
+					if(processorState.shouldIgnoreString(button.label))
+					{
+						processorState.addToBlacklist(go);
+						return;
+					}
 					string newKey = button.label;
 					button.labelData.globalizationKey = newKey;
 
-					FindTextMeshReferences.setKeyInDefaultLanguageDB(newKey, newKey);
+					processorState.addToDB(newKey, newKey);
+					processorState.addToBlacklist(go);
 
-					//TODO: ensure that this is set to the source language of the game config before adding
+					//make sure the button gets saved properly when the scene is closed
+					//custom script objects have to manually declare themselves as "dirty"
 					EditorUtility.SetDirty(button);
 				}
-			});
-#endif //!TRANSFLUENT_EXAMPLE
+			}
+
 		}
+		public class TextMeshProcessor : IGameProcessor
+		{
+			public void process(GameObject go, CustomScriptProcessorState processorState)
+			{
+				var textMesh = go.GetComponent<TextMesh>();
+				if(textMesh == null) return;
+
+				string newKey = textMesh.text;
+				processorState.addToDB(newKey, newKey);
+				processorState.addToBlacklist(go);
+				
+				var translatable = textMesh.GetComponent<LocalizedTextMesh>();
+				if(processorState.shouldIgnoreString(textMesh.text))
+				{
+					processorState.addToBlacklist(go);
+					return;
+				}
+
+				if(translatable == null)
+				{
+					translatable = textMesh.gameObject.AddComponent<LocalizedTextMesh>();
+					translatable.textmesh = textMesh; //just use whatever the source text is upfront, and allow the user to
+				}
+				
+				translatable.localizableText.globalizationKey = textMesh.text;
+				//For textmesh specificially, this setDirty is not needed according to http://docs.unity3d.com/Documentation/ScriptReference/EditorUtility.SetDirty.html
+				//EditorUtility.SetDirty(textMesh);
+			}
+
+		}
+		
 	}
 }

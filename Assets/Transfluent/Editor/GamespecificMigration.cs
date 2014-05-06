@@ -1,9 +1,10 @@
-﻿#define TRANSFLUENT_EXAMPLE
-using System;
+﻿//#define TRANSFLUENT_EXAMPLE
+
 #if TRANSFLUENT_EXAMPLE
 using strange.examples.strangerocks;
 #endif //!TRANSFLUENT_EXAMPLE
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -11,62 +12,13 @@ using UnityEditor;
 
 namespace transfluent
 {
-	public class GameSpecificMigration : MonoBehaviour
+	public class GameSpecificMigration
 	{
-		
-		public interface IGameProcessor
-		{
-			void process(GameObject go, CustomScriptProcessorState processorState);
-		}
-		public class CustomScriptProcessorState
-		{
-			private List<GameObject> _blackList;
-			private ITranslationUtilityInstance _translationDB;
-			private List<string> _stringsToIgnore;  
-
-			public CustomScriptProcessorState(List<GameObject> blackList, ITranslationUtilityInstance translationDb,List<string> stringsToIgnore )
-			{
-				_blackList = blackList;
-				_translationDB = translationDb;
-				_stringsToIgnore = stringsToIgnore;
-			}
-
-			public void addToBlacklist(GameObject go)
-			{
-				if(go != null && _blackList.Contains(go) == false)
-				{
-					_blackList.Add(go);
-				}
-			}
-
-			public bool shouldIgnoreString(string input)
-			{
-				return _stringsToIgnore.Contains(input);
-			}
-
-			public void addToDB(string key, string value)
-			{
-				string currentGroup = _translationDB.groupBeingShown;
-				TranslationConfigurationSO config = ResourceLoadFacade.LoadConfigGroup(_translationDB.groupBeingShown);
-				var translationDictionary = _translationDB.allKnownTranslations;
-				GameTranslationSet gameTranslationSet =
-					GameTranslationGetter.GetTranslaitonSetFromLanguageCode(config.sourceLanguage.code);
-
-				bool exists = translationDictionary.ContainsKey(key);
-				if(!exists)
-				{
-					translationDictionary.Add(key, key);
-				}
-
-				gameTranslationSet.mergeInSet(currentGroup, translationDictionary);
-				//_translationDB.allKnownTranslations.Add(key,value);
-			}
-		}
-
 		public class ButtonViewProcessor : IGameProcessor
 		{
-			public void process(GameObject go,CustomScriptProcessorState processorState)
+			public void process(GameObject go, CustomScriptProcessorState processorState)
 			{
+#if TRANSFLUENT_EXAMPLE
 				var button = go.GetComponent<ButtonView>();
 				if(button == null) return;
 				if(button.labelMesh != null)
@@ -87,38 +39,136 @@ namespace transfluent
 					EditorUtility.SetDirty(button);
 				}
 			}
-
-		}
-		public class TextMeshProcessor : IGameProcessor
-		{
-			public void process(GameObject go, CustomScriptProcessorState processorState)
-			{
-				var textMesh = go.GetComponent<TextMesh>();
-				if(textMesh == null) return;
-
-				string newKey = textMesh.text;
-				processorState.addToDB(newKey, newKey);
-				processorState.addToBlacklist(go);
-				
-				var translatable = textMesh.GetComponent<LocalizedTextMesh>();
-				if(processorState.shouldIgnoreString(textMesh.text))
-				{
-					processorState.addToBlacklist(go);
-					return;
-				}
-
-				if(translatable == null)
-				{
-					translatable = textMesh.gameObject.AddComponent<LocalizedTextMesh>();
-					translatable.textmesh = textMesh; //just use whatever the source text is upfront, and allow the user to
-				}
-				
-				translatable.localizableText.globalizationKey = textMesh.text;
-				//For textmesh specificially, this setDirty is not needed according to http://docs.unity3d.com/Documentation/ScriptReference/EditorUtility.SetDirty.html
-				//EditorUtility.SetDirty(textMesh);
+#endif
 			}
 
+
+			public static void setKeyInDefaultLanguageDB(string key, string value, string groupid = "")
+			{
+				//Debug.LogWarning("Make sure to set language to game source language before saving a new translation key");
+				Dictionary<string, string> translationDictionary =
+					TranslationUtility.getUtilityInstanceForDebugging().allKnownTranslations;
+				TranslationConfigurationSO config = ResourceLoadFacade.LoadConfigGroup(groupid);
+
+				GameTranslationSet gameTranslationSet =
+					GameTranslationGetter.GetTranslaitonSetFromLanguageCode(config.sourceLanguage.code);
+
+				bool exists = translationDictionary.ContainsKey(key);
+				if(!exists)
+					translationDictionary.Add(key, key);
+				translationDictionary[key] = value; //find a way to make sure the the SO gets set dirty?
+
+				gameTranslationSet.mergeInSet(groupid, translationDictionary);
+				//EditorUtility.SetnDirty(TransfluentUtility.getUtilityInstanceForDebugging());
+			}
+
+			//[MenuItem("Transfluent/Helpers/Test known key")]
+			public static void TestKnownKey()
+			{
+				Debug.Log(TranslationUtility.get("Start Game"));
+			}
+
+
+			[MenuItem("Translation/Helpers/Full migration")]
+			public static void UpdateReferences()
+			{
+				var scanner = new AssetScanner();
+				scanner.searchScenes();
+
+				scanner.searchPrefabs();
+			}
+
+
+			public static List<GameObject> getAllPrefabReferences()
+			{
+				var retList = new List<GameObject>();
+				string[] aMaterialFiles = Directory.GetFiles(Application.dataPath, "*.prefab", SearchOption.AllDirectories);
+				foreach (string matFile in aMaterialFiles)
+				{
+					string assetPath = "Assets" + matFile.Replace(Application.dataPath, "").Replace('\\', '/');
+					var go = (GameObject) AssetDatabase.LoadAssetAtPath(assetPath, typeof (GameObject));
+
+					retList.Add(go);
+				}
+				return retList;
+			}
 		}
-		
+	}
+
+	public class CustomScriptProcessorState
+	{
+		private readonly List<GameObject> _blackList;
+		private readonly List<string> _stringsToIgnore;
+		private readonly ITranslationUtilityInstance _translationDB;
+
+		public CustomScriptProcessorState(List<GameObject> blackList, ITranslationUtilityInstance translationDb,
+			List<string> stringsToIgnore)
+		{
+			_blackList = blackList;
+			_translationDB = translationDb;
+			_stringsToIgnore = stringsToIgnore;
+		}
+
+		public void addToBlacklist(GameObject go)
+		{
+			if(go != null && _blackList.Contains(go) == false)
+				_blackList.Add(go);
+		}
+
+		public bool shouldIgnoreString(string input)
+		{
+			return _stringsToIgnore.Contains(input);
+		}
+
+		public void addToDB(string key, string value)
+		{
+			string currentGroup = _translationDB.groupBeingShown;
+			TranslationConfigurationSO config = ResourceLoadFacade.LoadConfigGroup(_translationDB.groupBeingShown);
+			Dictionary<string, string> translationDictionary = _translationDB.allKnownTranslations;
+			GameTranslationSet gameTranslationSet =
+				GameTranslationGetter.GetTranslaitonSetFromLanguageCode(config.sourceLanguage.code);
+
+			bool exists = translationDictionary.ContainsKey(key);
+			if(!exists)
+				translationDictionary.Add(key, key);
+
+			gameTranslationSet.mergeInSet(currentGroup, translationDictionary);
+			//_translationDB.allKnownTranslations.Add(key,value);
+		}
+	}
+
+	public interface IGameProcessor
+	{
+		void process(GameObject go, CustomScriptProcessorState processorState);
+	}
+
+	public class TextMeshProcessor : IGameProcessor
+	{
+		public void process(GameObject go, CustomScriptProcessorState processorState)
+		{
+			var textMesh = go.GetComponent<TextMesh>();
+			if(textMesh == null) return;
+
+			string newKey = textMesh.text;
+			processorState.addToDB(newKey, newKey);
+			processorState.addToBlacklist(go);
+
+			var translatable = textMesh.GetComponent<LocalizedTextMesh>();
+			if(processorState.shouldIgnoreString(textMesh.text))
+			{
+				processorState.addToBlacklist(go);
+				return;
+			}
+
+			if(translatable == null)
+			{
+				translatable = textMesh.gameObject.AddComponent<LocalizedTextMesh>();
+				translatable.textmesh = textMesh; //just use whatever the source text is upfront, and allow the user to
+			}
+
+			translatable.localizableText.globalizationKey = textMesh.text;
+			//For textmesh specificially, this setDirty is not needed according to http://docs.unity3d.com/Documentation/ScriptReference/EditorUtility.SetDirty.html
+			//EditorUtility.SetDirty(textMesh);
+		}
 	}
 }

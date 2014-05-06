@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -10,17 +9,19 @@ namespace transfluent
 {
 	public class AssetScanner
 	{
-		private readonly List<GameSpecificMigration.IGameProcessor> _gameProcessors =
-			new List<GameSpecificMigration.IGameProcessor>();
+		private readonly List<IGameProcessor> _gameProcessors =
+			new List<IGameProcessor>();
 		List<GameObject> toIgnore = new List<GameObject>();
-		private readonly GameSpecificMigration.CustomScriptProcessorState _customProcessorState;
-		public AssetScanner()
+		private readonly CustomScriptProcessorState _customProcessorState;
+		public AssetScanner(List<IGameProcessor> customProcessors=null)
 		{
 			var stringFormatToIgnore = new List<string>() {"XXXX"};
 
-			_customProcessorState = new GameSpecificMigration.CustomScriptProcessorState(toIgnore, TranslationUtility.getUtilityInstanceForDebugging(), stringFormatToIgnore);
-			_gameProcessors.Add(new GameSpecificMigration.ButtonViewProcessor());
-			_gameProcessors.Add(new GameSpecificMigration.TextMeshProcessor());
+			_customProcessorState = new CustomScriptProcessorState(toIgnore, TranslationUtility.getUtilityInstanceForDebugging(), stringFormatToIgnore);
+			//_gameProcessors.Add(new GameSpecificMigration.ButtonViewProcessor());
+			if(customProcessors != null)
+				_gameProcessors.AddRange(customProcessors);
+			_gameProcessors.Add(new TextMeshProcessor());
 		}
 
 		//[MenuItem("Translation/testScan")]
@@ -39,7 +40,6 @@ namespace transfluent
 			//Debug.Log("Active selection path:" + activeSelectionPath);
 			//scanner.searchPrefab(activeSelectionPath);
 			//scanner.searchGameObjects();
-
 			scanner.searchScenes();
 
 			scanner.searchPrefabs();
@@ -51,7 +51,6 @@ namespace transfluent
 			foreach(string matFile in aMaterialFiles)
 			{
 				string assetPath = "Assets" + matFile.Replace(Application.dataPath, "").Replace('\\', '/');
-				var go = (GameObject)AssetDatabase.LoadAssetAtPath(assetPath, typeof(GameObject));
 
 				searchPrefab(assetPath);
 			}
@@ -119,7 +118,7 @@ namespace transfluent
 		public void searchGameObjects(List<GameObject> allGameObjectsInScene)
 		{
 			//loop through the processors in order (so that gameobjects not directly linked can get blacklisted)
-			foreach(GameSpecificMigration.IGameProcessor processor in _gameProcessors)
+			foreach(IGameProcessor processor in _gameProcessors)
 			{
 				foreach(GameObject go in allGameObjectsInScene)
 				{

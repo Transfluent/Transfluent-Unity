@@ -105,7 +105,7 @@ namespace transfluent
 
 			searchGameObjects(listOfGameobjectsInPrefab);
 
-			PrefabUtility.ReplacePrefab(instanceOfPrefab, prefab);
+			PrefabUtility.ReconnectToLastPrefab(instanceOfPrefab);
 			
 			EditorUtility.SetDirty(instanceOfPrefab);
 			AssetDatabase.SaveAssets();

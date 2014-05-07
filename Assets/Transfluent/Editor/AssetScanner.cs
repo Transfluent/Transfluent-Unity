@@ -18,13 +18,17 @@ namespace transfluent
 			var stringFormatToIgnore = new List<string>() {"XXXX"};
 
 			_customProcessorState = new CustomScriptProcessorState(toIgnore, TranslationUtility.getUtilityInstanceForDebugging(), stringFormatToIgnore);
-			//_gameProcessors.Add(new GameSpecificMigration.ButtonViewProcessor());
+
 			if(customProcessors != null)
 				_gameProcessors.AddRange(customProcessors);
+
+			//_gameProcessors.Add(new ButtonViewProcessor());
+			
 			_gameProcessors.Add(new TextMeshProcessor());
+			_gameProcessors.Add(new GUITextProcessor());
 		}
 
-		//[MenuItem("Translation/testScan")]
+		[MenuItem("Translation/testScan")]
 		public static void fullMigration()
 		{
 			AssetScanner scanner = new AssetScanner();

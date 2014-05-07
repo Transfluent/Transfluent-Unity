@@ -197,7 +197,8 @@ namespace transfluent
 
 			translatable.localizableText.globalizationKey = guiText.text;
 			//For guitext and other unity managed objects, this setDirty is not needed according to http://docs.unity3d.com/Documentation/ScriptReference/EditorUtility.SetDirty.html
-			//EditorUtility.SetDirty(textMesh);
+			EditorUtility.SetDirty(guiText.gameObject);
+			EditorUtility.SetDirty(guiText);
 		}
 	}
 }

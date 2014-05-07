@@ -44,9 +44,9 @@ namespace transfluent
 			//Debug.Log("Active selection path:" + activeSelectionPath);
 			//scanner.searchPrefab(activeSelectionPath);
 			//scanner.searchGameObjects();
-			scanner.searchScenes();
-
-			scanner.searchPrefabs();
+			//scanner.searchScenes();
+			scanner.searchPrefab("Assets/TransfluentTests/manualMigrationTests/GUI Text.prefab");
+			//scanner.searchPrefabs();
 		}
 
 		public void searchPrefabs()
@@ -55,7 +55,7 @@ namespace transfluent
 			foreach(string matFile in aMaterialFiles)
 			{
 				string assetPath = "Assets" + matFile.Replace(Application.dataPath, "").Replace('\\', '/');
-
+				
 				searchPrefab(assetPath);
 			}
 		}
@@ -109,11 +109,20 @@ namespace transfluent
 
 			searchGameObjects(listOfGameobjectsInPrefab);
 
-			PrefabUtility.ReconnectToLastPrefab(instanceOfPrefab);
+			//PrefabUtility.SetPropertyModifications(prefab,new PropertyModification[]{PropertyModification. });
 			
-			EditorUtility.SetDirty(instanceOfPrefab);
+			bool connected = PrefabUtility.ReconnectToLastPrefab(instanceOfPrefab);
+			if(!connected)
+			{
+				//ReplacePrefabOptions.namebasedone
+				PrefabUtility.ReplacePrefab(instanceOfPrefab, prefab, ReplacePrefabOptions.ConnectToPrefab);
+			} else
+			{
+				EditorUtility.SetDirty(prefab);
+			}
+			
 			AssetDatabase.SaveAssets();
-
+			
 			GameObject.DestroyImmediate(instanceOfPrefab);
 			string scene = originalScene.Replace("Assets/", "");
 			EditorApplication.OpenScene(scene); //go back to the scene we started with

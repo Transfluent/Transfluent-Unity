@@ -21,7 +21,11 @@ namespace transfluent
 
 		public static ITranslationUtilityInstance getUtilityInstanceForDebugging()
 		{
-			changeStaticInstanceConfigBasedOnTranslationConfigurationGroup();
+			if(_instance == null)
+			{
+				changeStaticInstanceConfigBasedOnTranslationConfigurationGroup();
+			}
+			
 			return _instance;
 		}
 

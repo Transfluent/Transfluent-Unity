@@ -16,6 +16,33 @@ public class TranslationEstimate
 		_mediator = mediator;
 	}
 
+	public int numberOfMissingTranslationsBetweenLanguages(TransfluentLanguage sourceLang, TransfluentLanguage destLang,string groupid)
+	{
+		var sourceSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(sourceLang.code);
+		var destSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destLang.code);
+
+		var sourceGroup = sourceSet.getGroup(groupid);
+		var sourceKeys = new List<string>(sourceGroup.getDictionaryCopy().Keys);
+		var destKeys = new List<string>();
+		if(destSet != null)
+		{
+			destKeys.AddRange(destSet.getGroup(groupid).getDictionaryCopy().Keys);
+		}
+		return numberOfMissingKeysFromLists(sourceKeys, destKeys);
+	}
+
+	public int numberOfMissingKeysFromLists(List<string> sourceList, List<string> listWithPotentiallyMissingKeys)
+	{
+		int numberOfMissingKeys = 0;
+		foreach (string sourceKey in sourceList)
+		{
+			if(!listWithPotentiallyMissingKeys.Contains(sourceKey))
+			{
+				numberOfMissingKeys++;
+			}
+		}
+		return numberOfMissingKeys;
+	}
 	void doAuth()
 	{
 		_mediator.doAuth();

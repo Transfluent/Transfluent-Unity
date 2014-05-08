@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using transfluent;
 using transfluent.editor;
 using UnityEditor;
@@ -85,6 +86,24 @@ public class SetupTranslationConfiguration : EditorWindow
 			return;
 		}
 		DisplaySelectedTranslationConfiguration(selectedConfig);
+
+		GUILayout.Space(30);
+
+		if(GUILayout.Button("SHOW MISSING TRANSLATION COUNTS"))
+		{
+			TranslationEstimate estimate = new TranslationEstimate(_mediator);
+			StringBuilder sb = new StringBuilder();
+			foreach (var dest in selectedConfig.destinationLanguages)
+			{
+				int missing = estimate.numberOfMissingTranslationsBetweenLanguages(selectedConfig.sourceLanguage,
+					dest, selectedConfig.translation_set_group);
+				if(missing > 0)
+				{
+					sb.AppendFormat("Language {0} is missing {1} translations\n", dest.name, missing);
+				}
+			}
+			EditorUtility.DisplayDialog("MISSING", "Missing this many translations:\n" + sb.ToString(), "OK");
+		}
 
 		GUILayout.Space(30);
 		GUILayout.Label("Account options:");

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using transfluent;
 using UnityEditor;
 using UnityEngine;
 using transfluent.editor;
+using Debug = UnityEngine.Debug;
 
 public class TranslationEstimate
 {
@@ -57,7 +59,8 @@ public class TranslationEstimate
 	}
 	public void presentEstimateAndMakeOrder(TranslationConfigurationSO selectedConfig)
 	{
-		var languageEstimates = new Dictionary<TransfluentLanguage, EstimateTranslationCostVO.Price>();
+		EstimateTranslationCostVO.Price costPerWordFromSourceLanguage = null;
+		//var languageEstimates = new Dictionary<TransfluentLanguage, EstimateTranslationCostVO.Price>();
 		if(GUILayout.Button("Translate"))
 		{
 			doAuth();
@@ -91,17 +94,13 @@ public class TranslationEstimate
 					var callResult = doCall(call);
 					EstimateTranslationCostVO estimate = call.Parse(callResult.text);
 					//string printedEstimate = string.Format("Language:{0} cost per word: {1} {2}\n", lang.name, estimate.price.amount, estimate.price.currency);
-					languageEstimates.Add(lang, estimate.price);
+					costPerWordFromSourceLanguage = estimate.price;
 					//simpleEstimateString.Append(printedEstimate);
 					//Debug.Log("Estimate:" + JsonWriter.Serialize(estimate));
+					break;
 				}
 				catch(Exception e)
 				{
-					languageEstimates.Add(lang, new EstimateTranslationCostVO.Price()
-					{
-						amount = "ERR",
-						currency = e.Message
-					});
 					Debug.LogError("Error estimating prices");
 				}
 			}
@@ -135,7 +134,7 @@ public class TranslationEstimate
 					}
 				}
 
-				var oneWordPrice = languageEstimates[lang];
+				var oneWordPrice = costPerWordFromSourceLanguage;
 				float costPerWord = float.Parse(oneWordPrice.amount);
 				long toTranslateWordcount = sourceSetWordCount - alreadyTranslatedWordCount;
 				if(toTranslateWordcount < 0) toTranslateWordcount *= -1;

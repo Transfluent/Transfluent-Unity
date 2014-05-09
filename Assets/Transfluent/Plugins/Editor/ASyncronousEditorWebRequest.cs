@@ -138,7 +138,7 @@ namespace transfluent.editor
 			throw new NotImplementedException();
 		}
 
-		[MenuItem("asink/testme")]
+		//[MenuItem("asink/testme")]
 		public static void testMe()
 		{
 			new AsyncTester();
@@ -271,7 +271,7 @@ namespace transfluent.editor
 		}
 
 
-		[MenuItem("asink/test waituntil")]
+		//[MenuItem("asink/test waituntil")]
 		public static void testMe()
 		{
 			Stopwatch sw = new Stopwatch();

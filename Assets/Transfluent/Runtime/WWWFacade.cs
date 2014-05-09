@@ -66,7 +66,7 @@ namespace transfluent
 		public WebServiceReturnStatus getStatusFromFinishedWWW(WWW www, Stopwatch sw,
 			ITransfluentParameters originalCallParams)
 		{
-			Debug.Log("WWW:" + www.url);
+			//Debug.Log("WWW:" + www.url);
 
 			var status = new WebServiceReturnStatus
 			{
@@ -109,7 +109,6 @@ namespace transfluent
 						throw new ApplicatonLevelException("HTTP Error code, application level:" + status.httpErrorCode,
 							status.httpErrorCode);
 					}
-					Debug.LogError("unhandled error code:" + status.httpErrorCode);
 					throw new HttpErrorCode(status.httpErrorCode);
 				}
 				throw new Exception("Unknown error:" + error); //can't parse error status

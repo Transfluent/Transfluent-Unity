@@ -47,7 +47,8 @@ namespace transfluent
 			}
 			return numberOfMissingKeys;
 		}
-		void doAuth()
+
+		private void doAuth()
 		{
 			_mediator.doAuth();
 			string authToken = _mediator.getCurrentAuthToken();
@@ -59,115 +60,26 @@ namespace transfluent
 			}
 			_token = authToken;
 		}
-		public void presentEstimateAndMakeOrder_orig(TranslationConfigurationSO selectedConfig)
-		{
-			EstimateTranslationCostVO.Price costPerWordFromSourceLanguage = null;
-			//var languageEstimates = new Dictionary<TransfluentLanguage, EstimateTranslationCostVO.Price>();
-			if(GUILayout.Button("Translate"))
-			{
-				doAuth();
-				if(string.IsNullOrEmpty(_token))
-				{
-					return;
-				}
-
-				List<string> allLanguageCodes = new List<string>();
-				allLanguageCodes.Add(selectedConfig.sourceLanguage.code);
-				selectedConfig.destinationLanguages.ForEach((TransfluentLanguage lang) => { allLanguageCodes.Add(lang.code); });
-				DownloadAllGameTranslations.uploadTranslationSet(allLanguageCodes, selectedConfig.translation_set_group);
-
-				string group = selectedConfig.translation_set_group;
-				var sourceSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(selectedConfig.sourceLanguage.code);
-				if(sourceSet == null || sourceSet.getGroup(group) == null)
-				{
-					EditorUtility.DisplayDialog("ERROR", "No messages in group", "OK");
-					return;
-				}
-
-				StringBuilder simpleEstimateString = new StringBuilder();
-
-				//find the first language that returns a result for "hello" and use that for the cost
-				foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
-				{
-					try
-					{
-						//TODO: other currencies
-						var call = new EstimateTranslationCost("hello", selectedConfig.sourceLanguage.id,
-															lang.id, quality: selectedConfig.QualityToRequest);
-						var callResult = doCall(call);
-						EstimateTranslationCostVO estimate = call.Parse(callResult.text);
-						//string printedEstimate = string.Format("Language:{0} cost per word: {1} {2}\n", lang.name, estimate.price.amount, estimate.price.currency);
-						costPerWordFromSourceLanguage = estimate.price;
-						//simpleEstimateString.Append(printedEstimate);
-						//Debug.Log("Estimate:" + JsonWriter.Serialize(estimate));
-						break;
-					}
-					catch(Exception e)
-					{
-						Debug.LogError("Error estimating prices");
-					}
-				}
-
-				var toTranslate = sourceSet.getGroup(group).getDictionaryCopy();
-				long sourceSetWordCount = 0;
-				foreach(KeyValuePair<string, string> kvp in toTranslate)
-				{
-					sourceSetWordCount += kvp.Value.Split(' ').Length;
-				}
-
-				//var knownKeys = sourceSet.getPretranslatedKeys(sourceSet.getAllKeys(), selectedConfig.translation_set_group);
-				//var sourceDictionary = sourceSet.getGroup().getDictionaryCopy();
-				foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
-				{
-					if(lang.code == "xx-xx")
-					{
-						simpleEstimateString.AppendFormat("language: {0} est cost: {1}\n", lang.name, "FREE!");
-						continue;
-					}
-					var set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(lang.code);
-					long alreadyTranslatedWordCount = 0;
-
-					if(set != null)
-					{
-						var destKeys = set.getGroup(group).getDictionaryCopy();
-						foreach(KeyValuePair<string, string> kvp in toTranslate)
-						{
-							if(!destKeys.ContainsKey(kvp.Key))
-								alreadyTranslatedWordCount += kvp.Value.Split(' ').Length;
-						}
-					}
-
-					var oneWordPrice = costPerWordFromSourceLanguage;
-					float costPerWord = float.Parse(oneWordPrice.amount);
-					long toTranslateWordcount = sourceSetWordCount - alreadyTranslatedWordCount;
-					if(toTranslateWordcount < 0) toTranslateWordcount *= -1;
-
-					float totalCost = costPerWord * toTranslateWordcount;
-
-					simpleEstimateString.AppendFormat("language: {0} est cost: {1}\n", lang.name, totalCost);
-					//	lang.name, totalCost, oneWordPrice.currency, costPerWord, toTranslateWordcount);
-					//simpleEstimateString.AppendFormat("language name: {0} total cost: {1} {2} \n\tCost per word:{3} total words to translate:{4} ",
-					//	lang.name, totalCost, oneWordPrice.currency, costPerWord, toTranslateWordcount);
-				}
-
-				Debug.Log("Estimated prices");
-				if(EditorUtility.DisplayDialog("Estimates", "Estimated cost(only additions counted in estimate):\n" + simpleEstimateString, "OK", "Cancel"))
-				{
-					doTranslation(selectedConfig);
-				}
-			}
-		}
 
 		private OrderFlowAsync _asyncFlow = null;
+
 		public void presentEstimateAndMakeOrder(TranslationConfigurationSO selectedConfig)
 		{
-			EstimateTranslationCostVO.Price costPerWordFromSourceLanguage = null;
+			
 			//var languageEstimates = new Dictionary<TransfluentLanguage, EstimateTranslationCostVO.Price>();
-			if(_asyncFlow != null && !_asyncFlow.orderIsDone())
+			if(_asyncFlow != null)
 			{
-				GUILayout.Button("ORDERING...");
-				return;
-			}
+				if(!_asyncFlow.orderIsDone())
+				{
+					if(GUILayout.Button("ORDERING..."))
+					{
+					};
+					return;
+				}
+			} 
+			
+			EstimateTranslationCostVO.Price costPerWordFromSourceLanguage = null;
+			//Debug.Log("ASYNC FLOW:"+(_asyncFlow != null).ToString() + " isdone:"+(_asyncFlow != null && _asyncFlow.orderIsDone()));
 			if(GUILayout.Button("Translate"))
 			{
 				doAuth();
@@ -175,7 +87,6 @@ namespace transfluent
 				{
 					return;
 				}
-				
 				
 				string group = selectedConfig.translation_set_group;
 				var sourceSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(selectedConfig.sourceLanguage.code);
@@ -262,13 +173,9 @@ namespace transfluent
 				}
 			}
 		}
-		private WebServiceReturnStatus doCall(WebServiceParameters call, bool fireAndForget = false)
+		private WebServiceReturnStatus doCall(WebServiceParameters call)
 		{
 			IWebService req = new SyncronousEditorWebRequest();
-			if(fireAndForget)
-			{
-				req = new SyncronousEditorWebRequest.FireAndForgetWWWCall();
-			}
 			try
 			{
 				call.getParameters.Add("token", _token);
@@ -380,7 +287,6 @@ namespace transfluent
 					);
 				requestsToSaveLocalStrings.Add(uploadAll);
 			}
-			//				doCall(uploadAll, () =>{ ordermytranslation(); });
 			doCalls(requestsToSaveLocalStrings, ordermytranslation);
 		}
 
@@ -437,6 +343,7 @@ namespace transfluent
 					);
 			doCall(translate, () =>
 			{
+				Debug.Log("ORDER DONE");
 				_orderDone = true; EditorUtility.DisplayDialog("Success","Transltion order complete!","OK"); });
 			
 		}

@@ -91,11 +91,14 @@ public class SetupTranslationConfiguration : EditorWindow
 
 		if(GUILayout.Button("SHOW MISSING TRANSLATION COUNTS"))
 		{
-			TranslationEstimate estimate = new TranslationEstimate(_mediator);
+			if(_estimate == null)
+			{
+				_estimate = new TranslationEstimate(_mediator);
+			}
 			StringBuilder sb = new StringBuilder();
 			foreach (var dest in selectedConfig.destinationLanguages)
 			{
-				int missing = estimate.numberOfMissingTranslationsBetweenLanguages(selectedConfig.sourceLanguage,
+				int missing = _estimate.numberOfMissingTranslationsBetweenLanguages(selectedConfig.sourceLanguage,
 					dest, selectedConfig.translation_set_group);
 				if(missing > 0)
 				{
@@ -124,16 +127,20 @@ public class SetupTranslationConfiguration : EditorWindow
 
 		DoTranslation();
 	}
+	TranslationEstimate _estimate;
 
 	private void DoTranslation()
 	{
 		//TODO: review estimation algorithm
 		GUILayout.Space(30);
 		GUILayout.Label("Translate all known language from source to destination languages:");
-		
-		var estimator = new TranslationEstimate(_mediator);
 
-		estimator.presentEstimateAndMakeOrder(selectedConfig);
+		if(_estimate == null)
+		{
+			_estimate = new TranslationEstimate(_mediator); 
+		}
+
+		_estimate.presentEstimateAndMakeOrder(selectedConfig);
 	}
 
 

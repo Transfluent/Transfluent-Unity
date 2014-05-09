@@ -38,7 +38,7 @@ namespace transfluent
 		{
 			var build = new BuilderInstance();
 			build.autoBuildNumber = GetBuildNumberFromCommandLine();
-			build.RunTests();
+			//build.RunTests();
 			build.Build();
 			string basePath = Path.GetFullPath(Application.dataPath + ".." + Path.DirectorySeparatorChar);
 			string docsPath = basePath + Path.DirectorySeparatorChar + "docs";

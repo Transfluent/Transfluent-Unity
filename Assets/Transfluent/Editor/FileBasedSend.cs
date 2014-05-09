@@ -16,7 +16,7 @@ namespace transfluent
 		//TODO: how to encode content so that group ids are handled
 		public string SendFileContents(Dictionary<string,string> keys,TransfluentLanguage sourceLanguage, string groupid,string comment )
 		{//<?xml version=""1.0"" encoding=""UTF-8"" ?>
-			string headerFormat = @"
+			string headerFormat = @"<?xml version=""1.0"" encoding=""UTF-8"" ?>
 <locale>
 	<id>{0}</id>
 	<code>{1}</code>
@@ -76,7 +76,7 @@ namespace transfluent
 			sender.RecieveFile(contents);
 		}
 
-		[MenuItem("Transfluent/test save english content")]
+		[MenuItem("Transfluent/test full loop english content")]
 		public static void getTestSaveEnglishContent()
 		{
 			var list = ResourceLoadFacade.getLanguageList();
@@ -87,12 +87,28 @@ namespace transfluent
 
 			TransfluentEditorWindowMediator mediator = new TransfluentEditorWindowMediator();
 			mediator.doAuth();
-			var saveCall = new FileBasedSaveCall("_test", list.getLangaugeByCode("en-us").id, mediator.getCurrentAuthToken(),contents);
+			string authToken = mediator.getCurrentAuthToken();
+			string fileIdentifier = "testfile";
+			var sourceLang = list.getLangaugeByCode("en-us");
+			
+			var saveCall = new FileBasedSaveCall(fileIdentifier, sourceLang.id,authToken ,contents);
 			var caller = new SyncronousEditorWebRequest();
 			var returnStatus = caller.request(saveCall);
 
 			Debug.Log("saved file:");
 			Debug.Log(JsonWriter.Serialize(returnStatus));
+			Debug.Log("auth token:" + authToken);
+			var translateRequest = new FileTranslate("Do not modify strings like {0} as they are dynamic text", new int[] {3,4},
+				OrderTranslation.TranslationQuality.NATIVE_SPEAKER,fileIdentifier,sourceLang.id,authToken );
+			var translateReturn = caller.request(translateRequest);
+
+			Debug.Log("translate request file:");
+			Debug.Log(JsonWriter.Serialize(translateReturn));
+
+			var translateResultRequest = new FileBasedRead(fileIdentifier, sourceLang.id, authToken);
+			var translateResultReturn = caller.request(translateResultRequest);
+			Debug.Log("translate resulting file:");
+			Debug.Log(JsonWriter.Serialize(translateResultReturn));
 		}
 		public void RecieveFile(string text)
 		{
@@ -131,7 +147,14 @@ namespace transfluent
 			getParameters.Add("language",sourceLanguage.ToString());
 			getParameters.Add("token",token);
 
-			postParameters.Add("content",content);
+			postParameters.Add("content", getbase64(content));
+		}
+
+		string getbase64(string content)
+		{
+			var bytes = Encoding.UTF8.GetBytes(content);
+			var base64 = Convert.ToBase64String(bytes);
+			return base64;
 		}
 	}
 
@@ -142,13 +165,15 @@ namespace transfluent
 		public FileTranslate(string comment, int[] target_languages,OrderTranslation.TranslationQuality quality,
 			string file_identifier_should_be_group_id,int sourceLanguage, string token)
 		{
-			getParameters.Add("callback_url", "http://doesnotexistreallydontcallmeillcallyou.com");
+			postParameters.Add("ignore_me","ignoreme");
+			getParameters.Add("callback_url", "http://www.yahoo.com");
 			getParameters.Add("comment",comment);
 			getParameters.Add("level",((int)quality).ToString());
 			getParameters.Add("identifier", file_identifier_should_be_group_id);
 			getParameters.Add("language",sourceLanguage.ToString());
 			getParameters.Add("token",token);
 			getParameters.Add("target_languages", JsonWriter.Serialize(target_languages));
+
 		}
 	}
 	[Route("file/status", RestRequestType.POST, "http://transfluent.com/backend-api/#FileStatus")]
@@ -157,7 +182,7 @@ namespace transfluent
 		public FileStatus(string comment, int[] target_languages, OrderTranslation.TranslationQuality quality,
 			string file_identifier_should_be_group_id, int sourceLanguage, string token)
 		{
-			getParameters.Add("callback_url", "http://doesnotexistreallydontcallmeillcallyou.com");
+			getParameters.Add("callback_url", "http://www.yahoo.com");
 			getParameters.Add("comment", comment);
 			getParameters.Add("level", ((int)quality).ToString());
 			getParameters.Add("identifier", file_identifier_should_be_group_id);

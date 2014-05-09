@@ -16,6 +16,7 @@ public class RoutineRunner : IRoutineRunner
 		if(runner == null)
 		{
 			var go = new GameObject("serviceRunner");
+			go.hideFlags = HideFlags.HideAndDontSave;
 			runner = go.AddComponent<RunnerMonobehaviour>();
 		}
 	}

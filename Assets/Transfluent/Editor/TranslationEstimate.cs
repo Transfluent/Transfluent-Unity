@@ -84,6 +84,7 @@ public class TranslationEstimate
 
 			StringBuilder simpleEstimateString = new StringBuilder();
 
+			//find the first language that returns a result for "hello" and use that for the cost
 			foreach(TransfluentLanguage lang in selectedConfig.destinationLanguages)
 			{
 				try
@@ -155,9 +156,27 @@ public class TranslationEstimate
 		}
 	}
 
-	private WebServiceReturnStatus doCall(WebServiceParameters call)
+	void fireAndForgetCall(WebServiceParameters call)
 	{
-		var req = new SyncronousEditorWebRequest();
+		var req = new SyncronousEditorWebRequest.FireAndForgetWWWCall();
+		try
+		{
+			call.getParameters.Add("token", _token);
+
+			req.request(call);
+		}
+		catch (Exception e)
+		{
+			Debug.LogException(e);
+		}
+	}
+	private WebServiceReturnStatus doCall(WebServiceParameters call,bool fireAndForget=false)
+	{
+		IWebService req = new SyncronousEditorWebRequest();
+		if(fireAndForget)
+		{
+			req = new SyncronousEditorWebRequest.FireAndForgetWWWCall();
+		}
 		try
 		{
 			call.getParameters.Add("token", _token);
@@ -187,6 +206,8 @@ public class TranslationEstimate
 		doCall(uploadAll);
 
 		selectedConfig.destinationLanguages.ForEach((TransfluentLanguage lang) => { destLanguageIDs.Add(lang.id); });
+		Stopwatch sw = new Stopwatch();
+		sw.Start();
 		var translate = new OrderTranslation(selectedConfig.sourceLanguage.id,
 				target_languages: destLanguageIDs.ToArray(),
 				texts: textsToTranslate.ToArray(),
@@ -195,5 +216,21 @@ public class TranslationEstimate
 				comment: "Do not replace any strings that look like {0} or {1} as they are a part of formatted text -- ie Hello {0} will turn into Hello Alex or some other string "
 				);
 		doCall(translate);
+		Debug.Log("full request time:"+sw.Elapsed);
+
+		foreach (var targetLanguageID in destLanguageIDs)
+		{
+			sw.Reset();
+			sw.Start();
+			var translateIndividualLanguage = new OrderTranslation(selectedConfig.sourceLanguage.id,
+				target_languages: destLanguageIDs.ToArray(),
+				texts: textsToTranslate.ToArray(),
+				level: selectedConfig.QualityToRequest,
+				group_id: selectedConfig.translation_set_group,
+				comment: "Do not replace any strings that look like {0} or {1} as they are a part of formatted text -- ie Hello {0} will turn into Hello Alex or some other string "
+				);
+			doCall(translateIndividualLanguage);
+			Debug.Log(string.Format("language request for id {0} in time:{1}", targetLanguageID, sw.Elapsed));
+		}
 	}
 }

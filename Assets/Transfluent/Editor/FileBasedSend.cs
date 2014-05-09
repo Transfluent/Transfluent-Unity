@@ -16,7 +16,8 @@ namespace transfluent
 		//TODO: how to encode content so that group ids are handled
 		public string SendFileContents(Dictionary<string,string> keys,TransfluentLanguage sourceLanguage, string groupid,string comment )
 		{//<?xml version=""1.0"" encoding=""UTF-8"" ?>
-			string headerFormat = @"<?xml version=""1.0"" encoding=""UTF-8"" ?>
+			//<?xml version=""1.0"" encoding=""UTF-8"" ?>
+			string headerFormat = @"
 <locale>
 	<id>{0}</id>
 	<code>{1}</code>
@@ -95,10 +96,10 @@ namespace transfluent
 			var caller = new SyncronousEditorWebRequest();
 			var returnStatus = caller.request(saveCall);
 
-			Debug.Log("saved file:");
+			Debug.Log("saved file return status:");
 			Debug.Log(JsonWriter.Serialize(returnStatus));
 			Debug.Log("auth token:" + authToken);
-			var translateRequest = new FileTranslate("Do not modify strings like {0} as they are dynamic text", new int[] {3,4},
+			var translateRequest = new FileTranslate("", new int[] {3,4},
 				OrderTranslation.TranslationQuality.NATIVE_SPEAKER,fileIdentifier,sourceLang.id,authToken );
 			var translateReturn = caller.request(translateRequest);
 
@@ -110,6 +111,7 @@ namespace transfluent
 			Debug.Log("translate resulting file:");
 			Debug.Log(JsonWriter.Serialize(translateResultReturn));
 		}
+
 		public void RecieveFile(string text)
 		{
 			/*

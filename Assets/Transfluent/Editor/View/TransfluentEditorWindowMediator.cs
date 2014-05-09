@@ -168,6 +168,20 @@ namespace transfluent.editor
 			return getText.Parse(makeCall(getText));
 		}
 
+		void fireAndForgetCall(WebServiceParameters call)
+		{
+			var req = new SyncronousEditorWebRequest.FireAndForgetWWWCall();
+			try
+			{
+				call.getParameters.Add("token", getCurrentAuthToken());
+
+				req.request(call);
+			}
+			catch(Exception e)
+			{
+				Debug.LogException(e);
+			}
+		}
 		private string makeCall(ITransfluentParameters call)
 		{
 			if(!string.IsNullOrEmpty(getCurrentAuthToken()))
@@ -192,6 +206,12 @@ namespace transfluent.editor
 			{
 				Debug.LogError("error making setText call:" + exception.Message);
 			}
+		}
+		public void SaveGroupToServerAsync(GameTranslationSet.GroupOfTranslations groupOfTranslations, TransfluentLanguage language)
+		{
+			var saveText = new SaveSetOfKeys(language.id, groupOfTranslations.getDictionaryCopy(), groupOfTranslations.groupid);
+
+			fireAndForgetCall(saveText);
 		}
 
 		public void SetText(string textKey, string textValue, string groupKey = null)

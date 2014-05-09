@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using transfluent;
+using UnityEditor;
 using UnityEngine;
 
 public class SyncronousEditorWebRequest : IWebService
@@ -26,7 +27,7 @@ public class SyncronousEditorWebRequest : IWebService
 		return doWWWCall(www, parameters);
 	}
 
-	private WebServiceReturnStatus doWWWCall(WWW www, ITransfluentParameters wsParams = null)
+	protected virtual WebServiceReturnStatus doWWWCall(WWW www, ITransfluentParameters wsParams = null)
 	{
 		var sw = new Stopwatch();
 		sw.Start();
@@ -39,7 +40,7 @@ public class SyncronousEditorWebRequest : IWebService
 			if(sw.Elapsed.TotalSeconds >= 1000f)
 				break;
 
-			//EditorApplication.Step();
+			EditorApplication.Step();
 			Thread.Sleep(100);
 		}
 
@@ -56,4 +57,20 @@ public class SyncronousEditorWebRequest : IWebService
 	}
 
 	//Could not resolve host: transfluent.com (Could not contact DNS servers)
+	public class FireAndForgetWWWCall : SyncronousEditorWebRequest 
+	{
+		protected override WebServiceReturnStatus doWWWCall(WWW www, ITransfluentParameters wsParams = null)
+		{
+			return new WebServiceReturnStatus() {text = "fire and forget call"};
+		}
+
+	}
+
+	public class BatchedSynchronousCalls
+	{
+		public void DoRequests(List<ITransfluentParameters> callsToMake)
+		{
+			
+		}
+	}
 }

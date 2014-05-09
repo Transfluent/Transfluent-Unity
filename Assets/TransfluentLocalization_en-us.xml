@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<locale>
+	<id>148</id>
+	<code>en-us</code>
+	<name>English US</name>
+	<texts>
+		<text>
+			<textId>button_translate</textId>
+			<textString>en-us Translate</textString>
+		</text>
+		<text>
+			<textId>button_login</textId>
+			<textString>en-us Authenticate</textString>
+		</text>
+		<text>
+			<textId>button_file_open</textId>
+			<textString>Open</textString>
+		</text>
+		<text>
+			<textId>button_file_save</textId>
+			<textString>Save</textString>
+		</text>
+		<text>
+			<textId>button_file_close</textId>
+			<textString>Close</textString>
+		</text>
+		<text>
+			<textId>label_file_opened</textId>
+			<textString>Opened</textString>
+		</text>
+		<text>
+			<textId>button_mode_selection</textId>
+			<textString>Selection</textString>
+		</text>
+		<text>
+			<textId>button_mode_jobs</textId>
+			<textString>Job Status</textString>
+		</text>
+		<text>
+			<textId>button_mode_settings</textId>
+			<textString>Settings</textString>
+		</text>
+		<text>
+			<textId>button_mode_log</textId>
+			<textString>Log</textString>
+		</text>
+		<text>
+			<textId>button_mode_unknown</textId>
+			<textString>Unknown mode</textString>
+		</text>
+		<text>
+			<textId>label_user_logged</textId>
+			<textString>Logged in as</textString>
+		</text>
+		<text>
+			<textId>button_user_log_out</textId>
+			<textString>Log out</textString>
+		</text>
+		<text>
+			<textId>label_translation_cost_estimate_per_word</textId>
+			<textString>Transfluent translation cost estimates</textString>
+		</text>
+		<text>
+			<textId>field_currency_symbol</textId>
+			<textString>Currency symbol</textString>
+		</text>
+		<text>
+			<textId>field_translation_cost_per_word</textId>
+			<textString>Cost per word</textString>
+		</text>
+		<text>
+			<textId>label_languages_all</textId>
+			<textString>All Transfluent languages</textString>
+		</text>
+		<text>
+			<textId>button_language_remove</textId>
+			<textString>Remove</textString>
+		</text>
+		<text>
+			<textId>button_language_add</textId>
+			<textString>Add</textString>
+		</text>
+		<text>
+			<textId>button_languages_get_from_backend</textId>
+			<textString>Get Languages from Transfluent Backend</textString>
+		</text>
+    <text>
+      <textId>button_languages_updating</textId>
+      <textString>Updating...</textString>
+    </text>
+		<text>
+			<textId>label_translation_group_id</textId>
+			<textString>Group Id</textString>
+		</text>
+		<text>
+			<textId>label_translation_text_id</textId>
+			<textString>Text Id</textString>
+		</text>
+		<text>
+			<textId>label_translation_languages</textId>
+			<textString>Languages</textString>
+		</text>
+		<text>
+			<textId>button_translations_check_all</textId>
+			<textString>Check all</textString>
+		</text>
+		<text>
+			<textId>language_code_unknown</textId>
+			<textString>Unknown</textString>
+		</text>
+		<text>
+			<textId>button_translation_details</textId>
+			<textString>Details</textString>
+		</text>
+		<text>
+			<textId>label_translation_ordered_on</textId>
+			<textString>Translation ordered on</textString>
+		</text>
+		<text>
+			<textId>label_last_checked_on</textId>
+			<textString>Last checked on</textString>
+		</text>
+		<text>
+			<textId>label_translation_time_taken</textId>
+			<textString>Time taken</textString>
+		</text>
+		<text>
+			<textId>label_translation_target_language</textId>
+			<textString>Target Language</textString>
+		</text>
+		<text>
+			<textId>label_translation_language_not_found</textId>
+			<textString>Couldn't find language by id</textString>
+		</text>
+		<text>
+			<textId>label_translation_source_language</textId>
+			<textString>Source language</textString>
+		</text>
+		<text>
+			<textId>label_translation_source_text</textId>
+			<textString>Source Text</textString>
+		</text>
+		<text>
+			<textId>label_translation_text_entry_not_found_in_language</textId>
+			<textString>Couldn't find text item by text id [TEXT_ID] in group [GROUP_ID] in language [LANGUAGE_ID]</textString>
+		</text>
+		<text>
+			<textId>label_translation_text_entry_not_found_in_group</textId>
+			<textString>Couldn't find text item by text id [TEXT_ID] in group [GROUP_ID]</textString>
+		</text>
+		<text>
+			<textId>label_translation_group_entry_not_found</textId>
+			<textString>"Couldn't find group by id [GROUP_ID]</textString>
+		</text>
+		<text>
+			<textId>button_translation_check_updates</textId>
+			<textString>Check for updates</textString>
+		</text>
+		<text>
+			<textId>label_translation_focused_text_id_not_found</textId>
+			<textString>No translation entry found with id [ID]</textString>
+		</text>
+		<text>
+			<textId>label_login_invalid_credentials</textId>
+			<textString>We couldn't find you in our system, can you confirm your email/password?
+			If you're a new customer, just click "register".</textString>
+		</text>
+		<text>
+			<textId>label_login_welcome</textId>
+			<textString>Welcome to Tranfsluent localization plugin.
+			If you already have an account, please use your existing email.
+			If not, we will create you an account.</textString>
+		</text>
+		<text>
+			<textId>button_login_register</textId>
+			<textString>Register</textString>
+		</text>
+		<text>
+			<textId>dialog_confirm_EULA_title</textId>
+			<textString>Confirm registering an account</textString>
+		</text>
+		<text>
+			<textId>dialog_confirm_EULA_message</textId>
+			<textString>A browser page stating our Terms of Service was opened.
+			Please read, understand and agree with the terms.</textString>
+		</text>
+		<text>
+			<textId>dialog_confirm_EULA_button_agree</textId>
+			<textString>I agree</textString>
+		</text>
+		<text>
+			<textId>dialog_confirm_EULA_button_cancel</textId>
+			<textString>Cancel</textString>
+		</text>
+		<text>
+			<textId>field_login_email</textId>
+			<textString>Email address</textString>
+		</text>
+		<text>
+			<textId>field_login_password</textId>
+			<textString>Password</textString>
+		</text>
+		<text>
+			<textId>button_login_retry</textId>
+			<textString>Try Again</textString>
+		</text>
+		<text>
+			<textId>button_login_next</textId>
+			<textString>Next</textString>
+		</text>
+		<text>
+			<textId>button_login_forgot_password</textId>
+			<textString>Forgot Password</textString>
+		</text>
+		<text>
+			<textId>label_text_details_id</textId>
+			<textString>String ID</textString>
+		</text>
+		<text>
+			<textId>label_text_details_entry_count</textId>
+			<textString>[ENTRY_COUNT] localized entries in this text</textString>
+		</text>
+		<text>
+			<textId>label_text_details_id_not_found</textId>
+			<textString>Couldn't find id [TEXT_ID] in text entries</textString>
+		</text>
+		<text>
+			<textId>label_text_details_no_selection</textId>
+			<textString>Click a text entry to view details</textString>
+		</text>
+    <text>
+      <textId>popup_source_language</textId>
+      <textString>Source Language</textString>
+    </text>
+    <text>
+      <textId>label_languages_none_found</textId>
+      <textString>No languages found</textString>
+    </text>
+    <text>
+      <textId>label_language_id_not_found</textId>
+      <textString>Language id [LANG_ID] not found</textString>
+    </text>
+    <text>
+			<textId>label_languages_in_use</textId>
+			<textString>Project languages</textString>
+		</text>
+		<text>
+			<textId>button_languages_add</textId>
+			<textString>Add Languages</textString>
+		</text>
+		<text>
+			<textId>label_translate_not_authenticated</textId>
+			<textString>Not authenticated with Transfluent Backend
+			Please refresh token from settings</textString>
+		</text>
+		<text>
+			<textId>label_translate_selection</textId>
+			<textString>[TEXT_COUNT] texts and [LANGUAGE_COUNT] languages selected</textString>
+		</text>
+		<text>
+			<textId>label_translate_translator_level</textId>
+			<textString>Translator level</textString>
+		</text>
+    <text>
+      <textId>popup_translate_translator_level_1</textId>
+      <textString>Native Speaker</textString>
+    </text>
+    <text>
+      <textId>popup_translate_translator_level_2</textId>
+      <textString>Professional Translator</textString>
+    </text>
+    <text>
+      <textId>popup_translate_translator_level_3</textId>
+      <textString>Pair of Translators</textString>
+    </text>
+		<text>
+			<textId>label_translate_comment</textId>
+			<textString>Comment</textString>
+		</text>
+		<text>
+			<textId>label_texts_search</textId>
+			<textString>Search</textString>
+		</text>
+		<text>
+			<textId>label_texts_search_no_hits</textId>
+			<textString>No hits found in search</textString>
+		</text>
+		<text>
+			<textId>button_texts_add</textId>
+			<textString>Add Text</textString>
+		</text>
+	</texts>
+</locale>

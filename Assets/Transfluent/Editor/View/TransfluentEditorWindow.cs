@@ -100,6 +100,13 @@ namespace transfluent.editor
 			public void doGUI()
 			{
 				EditorGUILayout.BeginHorizontal();
+				if(GUILayout.Button("<color=blue>Don't have an account? In-editor translations done by professional translators!</color>", new GUIStyle() { richText = true }))
+				{
+					Application.OpenURL("https://www.transfluent.com/register/");
+				}
+				EditorGUILayout.EndHorizontal();
+
+				EditorGUILayout.BeginHorizontal();
 				currentUsername = EditorGUILayout.TextField("username", currentUsername);
 				currentPassword = EditorGUILayout.PasswordField("password", currentPassword);
 				EditorGUILayout.EndHorizontal();

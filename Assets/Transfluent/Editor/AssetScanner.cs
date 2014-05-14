@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace transfluent
 {
@@ -11,11 +10,13 @@ namespace transfluent
 	{
 		private readonly List<IGameProcessor> _gameProcessors =
 			new List<IGameProcessor>();
-		List<GameObject> toIgnore = new List<GameObject>();
+
+		private List<GameObject> toIgnore = new List<GameObject>();
 		private readonly CustomScriptProcessorState _customProcessorState;
-		public AssetScanner(List<IGameProcessor> customProcessors=null)
+
+		public AssetScanner(List<IGameProcessor> customProcessors = null)
 		{
-			var stringFormatToIgnore = new List<string>() {"XXXX"};
+			var stringFormatToIgnore = new List<string>() { "XXXX" };
 
 			_customProcessorState = new CustomScriptProcessorState(toIgnore, TranslationUtility.getUtilityInstanceForDebugging(), stringFormatToIgnore);
 
@@ -23,7 +24,7 @@ namespace transfluent
 				_gameProcessors.AddRange(customProcessors);
 
 			//_gameProcessors.Add(new ButtonViewProcessor());
-			
+
 			_gameProcessors.Add(new TextMeshProcessor());
 			_gameProcessors.Add(new GUITextProcessor());
 		}
@@ -55,7 +56,7 @@ namespace transfluent
 			foreach(string matFile in aMaterialFiles)
 			{
 				string assetPath = "Assets" + matFile.Replace(Application.dataPath, "").Replace('\\', '/');
-				
+
 				searchPrefab(assetPath);
 			}
 		}
@@ -63,7 +64,7 @@ namespace transfluent
 		public void searchScenes()
 		{
 			string[] sceneFiles = Directory.GetFiles(Application.dataPath, "*.unity", SearchOption.AllDirectories);
-			foreach (string scene in sceneFiles)
+			foreach(string scene in sceneFiles)
 			{
 				//Debug.Log("Looking at scene file:" + scene);
 				EditorApplication.OpenScene(scene);
@@ -87,7 +88,7 @@ namespace transfluent
 
 			if(prefab == null)
 			{
-				Debug.LogError("could not load prefab at path: "+assetPath + " input:"+prefabLocation);
+				Debug.LogError("could not load prefab at path: " + assetPath + " input:" + prefabLocation);
 			}
 
 			//getAllGameObjectsInPrefab()
@@ -110,19 +111,20 @@ namespace transfluent
 			searchGameObjects(listOfGameobjectsInPrefab);
 
 			//PrefabUtility.SetPropertyModifications(prefab,new PropertyModification[]{PropertyModification. });
-			
+
 			bool connected = PrefabUtility.ReconnectToLastPrefab(instanceOfPrefab);
 			if(!connected)
 			{
 				//ReplacePrefabOptions.namebasedone
 				PrefabUtility.ReplacePrefab(instanceOfPrefab, prefab, ReplacePrefabOptions.ConnectToPrefab);
-			} else
+			}
+			else
 			{
 				EditorUtility.SetDirty(prefab);
 			}
-			
+
 			AssetDatabase.SaveAssets();
-			
+
 			GameObject.DestroyImmediate(instanceOfPrefab);
 			string scene = originalScene.Replace("Assets/", "");
 			EditorApplication.OpenScene(scene); //go back to the scene we started with
@@ -145,21 +147,20 @@ namespace transfluent
 				}
 			}
 		}
-		
+
 		//finding disabled objects
 		//http://docs.unity3d.com/Documentation/ScriptReference/Resources.FindObjectsOfTypeAll.html
 		public List<GameObject> getAllGameObjectsInScene()
 		{
 			var objectsInScene = new List<GameObject>();
 
-			foreach (GameObject go in Resources.FindObjectsOfTypeAll(typeof (GameObject)) as GameObject[])
+			foreach(GameObject go in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[])
 			{
 				//this filter seems to miss a few important things.  a bunch of primitives show up
-				if(go.hideFlags == HideFlags.NotEditable || go.hideFlags == HideFlags.HideAndDontSave || 
+				if(go.hideFlags == HideFlags.NotEditable || go.hideFlags == HideFlags.HideAndDontSave ||
 					go.hideFlags == HideFlags.HideInHierarchy || go.hideFlags == HideFlags.HideInInspector)
 					continue;
-				
-				
+
 				string assetPath = AssetDatabase.GetAssetPath(go.transform.root.gameObject);
 				if(!String.IsNullOrEmpty(assetPath))
 					continue;

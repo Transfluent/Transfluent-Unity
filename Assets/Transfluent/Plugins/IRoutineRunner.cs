@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
+
 [ExecuteInEditMode]
 public interface IRoutineRunner
 {
 	void runRoutine(IEnumerator routineToRun);
 }
+
 [ExecuteInEditMode]
 public class RoutineRunner : IRoutineRunner
 {

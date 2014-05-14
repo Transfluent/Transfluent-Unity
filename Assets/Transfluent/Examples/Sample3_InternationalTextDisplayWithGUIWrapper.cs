@@ -5,8 +5,9 @@ using transfluent;
 using UnityEngine;
 
 #if transfluent
-using GUI = transfluent.guiwrapper.GUI;
+
 using GUILayout = transfluent.guiwrapper.GUILayout;
+
 #else
 using GUI = UnityEngine.GUI;
 using GUILayout = UnityEngine.GUILayout;

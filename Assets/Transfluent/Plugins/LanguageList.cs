@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using transfluent;
 
 [Serializable]
@@ -50,12 +49,13 @@ public class LanguageList
 	public List<string> getSimplifiedListOfIdentifiersFromLanguageList()
 	{
 		var list = new List<string>();
-		foreach (string code in simplifiedLanguageCodeList)
+		foreach(string code in simplifiedLanguageCodeList)
 		{
 			list.Add(getLangaugeByCode(code).name);
 		}
 		return list;
 	}
+
 	//show the most commonly used languages that game developers will display
 	public List<string> simplifiedLanguageCodeList = new List<string>()
 	{

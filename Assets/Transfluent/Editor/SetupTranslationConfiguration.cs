@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using transfluent;
 using transfluent.editor;
@@ -25,7 +24,7 @@ public class SetupTranslationConfiguration : EditorWindow
 		_mediator = new TransfluentEditorWindowMediator();
 	}
 
-	[MenuItem("Translation/Game Configuration",false,100)]
+	[MenuItem("Translation/Game Configuration", false, 100)]
 	public static void Init()
 	{
 		var window = GetWindow<SetupTranslationConfiguration>();
@@ -57,6 +56,7 @@ public class SetupTranslationConfiguration : EditorWindow
 		DrawContent();
 		GUILayout.EndScrollView();
 	}
+
 	public void DrawContent()
 	{
 		if(!GetLanguagesGUI())
@@ -96,7 +96,7 @@ public class SetupTranslationConfiguration : EditorWindow
 				_estimate = new TranslationEstimate(_mediator);
 			}
 			StringBuilder sb = new StringBuilder();
-			foreach (var dest in selectedConfig.destinationLanguages)
+			foreach(var dest in selectedConfig.destinationLanguages)
 			{
 				int missing = _estimate.numberOfMissingTranslationsBetweenLanguages(selectedConfig.sourceLanguage,
 					dest, selectedConfig.translation_set_group);
@@ -116,7 +116,8 @@ public class SetupTranslationConfiguration : EditorWindow
 			GUILayout.Label("Log in to translate your text as well as upload and download your local translations");
 			ShowLoginFields();
 			//return;
-		} else
+		}
+		else
 		{
 			if(GUILayout.Button("LOG OUT OF ACCOUNT"))
 			{
@@ -127,7 +128,8 @@ public class SetupTranslationConfiguration : EditorWindow
 
 		DoTranslation();
 	}
-	TranslationEstimate _estimate;
+
+	private TranslationEstimate _estimate;
 
 	private void DoTranslation()
 	{
@@ -137,12 +139,11 @@ public class SetupTranslationConfiguration : EditorWindow
 
 		if(_estimate == null)
 		{
-			_estimate = new TranslationEstimate(_mediator); 
+			_estimate = new TranslationEstimate(_mediator);
 		}
 
 		_estimate.presentEstimateAndMakeOrder(selectedConfig);
 	}
-
 
 	private void createANewConfig()
 	{
@@ -174,8 +175,8 @@ public class SetupTranslationConfiguration : EditorWindow
 
 	private void DisplaySelectedTranslationConfiguration(TranslationConfigurationSO so)
 	{
-		List<string> knownLanguageDisplayNames = showAllLanguages ? 
-			_languages.getListOfIdentifiersFromLanguageList() : 
+		List<string> knownLanguageDisplayNames = showAllLanguages ?
+			_languages.getListOfIdentifiersFromLanguageList() :
 			_languages.getSimplifiedListOfIdentifiersFromLanguageList();
 
 		int sourceLanguageIndex = knownLanguageDisplayNames.IndexOf(so.sourceLanguage.name);
@@ -248,7 +249,7 @@ public class SetupTranslationConfiguration : EditorWindow
 		}
 	}
 
-	bool userHasSetCredentials()
+	private bool userHasSetCredentials()
 	{
 		KeyValuePair<string, string> usernamePassword = _mediator.getUserNamePassword();
 
@@ -256,7 +257,8 @@ public class SetupTranslationConfiguration : EditorWindow
 	}
 
 	private TransfluentEditorWindow.LoginGUI _loginGui;
-	void ShowLoginFields()
+
+	private void ShowLoginFields()
 	{
 		if(!userHasSetCredentials())
 		{

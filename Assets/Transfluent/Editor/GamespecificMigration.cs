@@ -3,11 +3,15 @@
 #if TRANSFLUENT_EXAMPLE
 using strange.examples.strangerocks;
 #endif //!TRANSFLUENT_EXAMPLE
+
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+
 #if UNITY_EDITOR
+
 using UnityEditor;
+
 #endif
 
 namespace transfluent
@@ -42,7 +46,6 @@ namespace transfluent
 #endif
 			}
 
-
 			public static void setKeyInDefaultLanguageDB(string key, string value, string groupid = "")
 			{
 				//Debug.LogWarning("Make sure to set language to game source language before saving a new translation key");
@@ -68,7 +71,6 @@ namespace transfluent
 				Debug.Log(TranslationUtility.get("Start Game"));
 			}
 
-
 			[MenuItem("Translation/Helpers/Full migration")]
 			public static void UpdateReferences()
 			{
@@ -78,15 +80,14 @@ namespace transfluent
 				scanner.searchPrefabs();
 			}
 
-
 			public static List<GameObject> getAllPrefabReferences()
 			{
 				var retList = new List<GameObject>();
 				string[] aMaterialFiles = Directory.GetFiles(Application.dataPath, "*.prefab", SearchOption.AllDirectories);
-				foreach (string matFile in aMaterialFiles)
+				foreach(string matFile in aMaterialFiles)
 				{
 					string assetPath = "Assets" + matFile.Replace(Application.dataPath, "").Replace('\\', '/');
-					var go = (GameObject) AssetDatabase.LoadAssetAtPath(assetPath, typeof (GameObject));
+					var go = (GameObject)AssetDatabase.LoadAssetAtPath(assetPath, typeof(GameObject));
 
 					retList.Add(go);
 				}
@@ -171,6 +172,7 @@ namespace transfluent
 			//EditorUtility.SetDirty(textMesh);
 		}
 	}
+
 	public class GUITextProcessor : IGameProcessor
 	{
 		public void process(GameObject go, CustomScriptProcessorState processorState)

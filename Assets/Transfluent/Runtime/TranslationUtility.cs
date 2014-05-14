@@ -2,7 +2,9 @@
 using UnityEngine;
 
 #if UNITY_EDITOR
+
 using UnityEditor;
+
 #endif
 
 namespace transfluent
@@ -25,7 +27,7 @@ namespace transfluent
 			{
 				changeStaticInstanceConfigBasedOnTranslationConfigurationGroup();
 			}
-			
+
 			return _instance;
 		}
 
@@ -170,21 +172,25 @@ namespace transfluent
 		{
 			return _instance.getFormattedTranslation(sourceText, formatStrings);
 		}
+
 #if UNITY_EDITOR
+
 		[MenuItem("Translation/Helpers/Enable Capture Mode")]
 		private static void EnableCaptureMode()
 		{
 			setCaptureMode(true);
 			_instance = createNewInstance();
 		}
-		
+
 		[MenuItem("Translation/Helpers/Disable Capture Mode")]
 		private static void DisableCaptureMode()
 		{
 			setCaptureMode(false);
 			_instance = createNewInstance();
 		}
+
 #endif
+
 		private static bool getCaptureMode()
 		{
 #if UNITY_EDITOR
@@ -192,7 +198,6 @@ namespace transfluent
 #else
 			return false;
 #endif
-
 		}
 
 		private static void setCaptureMode(bool toCapture)
@@ -274,7 +279,7 @@ namespace transfluent
 		public new string getFormattedTranslation(string sourceText, params object[] formatStrings)
 		{
 			string formattedString = string.Format(getTranslation(sourceText), formatStrings);
-			
+
 			if(!formattedTextToIgnore.Contains(formattedString))
 			{
 				formattedTextToIgnore.Add(formattedString);
@@ -284,7 +289,7 @@ namespace transfluent
 			return formattedString;
 		}
 
-		void addTranslationIfNotKnown(string translationText)
+		private void addTranslationIfNotKnown(string translationText)
 		{
 			if(allKnownTranslations == null) return;
 			if(doCapture && !allKnownTranslations.ContainsKey(translationText) && !formattedTextToIgnore.Contains(translationText))
@@ -299,7 +304,7 @@ namespace transfluent
 			var translation = base.getTranslation(sourceText);
 
 			addTranslationIfNotKnown(sourceText);
-			
+
 			return translation;
 		}
 	}

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
-using NSubstitute.Core;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -110,7 +108,6 @@ namespace transfluent.editor
 				EditorApplication.update = doCoroutine;
 			}
 		}
-
 	}
 
 	[ExecuteInEditMode]
@@ -149,11 +146,11 @@ namespace transfluent.editor
 			int maxticks = 100;
 			Debug.Log(counter + "MAXticks:" + maxticks);
 			//while(maxticks >0)
-			
+
 			yield return new WaitForSeconds(5f);
 			while(sw.Elapsed < maxTime)
 			{
-				maxticks--; 
+				maxticks--;
 				UnityEngine.Debug.Log("MAXticks:" + maxticks + " time:" + sw.Elapsed);
 				yield return null;
 			}
@@ -170,7 +167,6 @@ namespace transfluent.editor
 				//if routineHandl e.Current == waitforseconds... wait for that many seconds before checking or moving forward again
 				if(routineHandle != null)
 				{
-
 					//kill the reference if we no longer move forward
 					if(!routineHandle.MoveNext())
 					{
@@ -191,9 +187,10 @@ namespace transfluent.editor
 	{
 		private WWW _www;
 		private Action<WebServiceReturnStatus> _callback;
-		WWWFacade _getMyWwwFacade = new WWWFacade();
-		Stopwatch _sw = new Stopwatch();
+		private WWWFacade _getMyWwwFacade = new WWWFacade();
+		private Stopwatch _sw = new Stopwatch();
 		private ITransfluentParameters _callParams;
+
 		public EditorWWWWaitUntil2(ITransfluentParameters callParams, Action<WebServiceReturnStatus> callback)
 		{
 			_sw.Start();
@@ -202,36 +199,36 @@ namespace transfluent.editor
 			_getMyWwwFacade = new WWWFacade();
 			//string url = _getMyWwwFacade.encodeGETParams(callParams.getParameters);
 			_www = _getMyWwwFacade.request(callParams);
-			
+
 			_callback = callback;
 			EditorWaitUntil wait = new EditorWaitUntil(() =>
 			{ return _www.error != null || _www.isDone; },
 				internalCallback
 			);
-
 		}
 
-		void internalCallback()
+		private void internalCallback()
 		{
 			if(_callback != null)
 			{
-				_callback(_getMyWwwFacade.getStatusFromFinishedWWW(_www, _sw,_callParams));
+				_callback(_getMyWwwFacade.getStatusFromFinishedWWW(_www, _sw, _callParams));
 			}
-
 		}
-		WWW getStatus()
+
+		private WWW getStatus()
 		{
 			return _www;
 		}
 	}
+
 	[ExecuteInEditMode]
 	public class EditorWWWWaitUntil
 	{
 		private WWW _www;
 		private Action<WWW> _callback;
-		WWWFacade _getMyWwwFacade = new WWWFacade();
+		private WWWFacade _getMyWwwFacade = new WWWFacade();
 
-		public EditorWWWWaitUntil(WWW www,Action<WWW> callback)
+		public EditorWWWWaitUntil(WWW www, Action<WWW> callback)
 		{
 			_www = www;
 			_callback = callback;
@@ -239,37 +236,36 @@ namespace transfluent.editor
 			{ return _www.error != null || _www.isDone; },
 				internalCallback
 			);
-
 		}
 
-		void internalCallback()
+		private void internalCallback()
 		{
 			if(_callback != null)
 			{
 				_callback(_www);
 			}
-			
 		}
-		WWW getStatus()
+
+		private WWW getStatus()
 		{
 			return _www;
 		}
 	}
 
 	[ExecuteInEditMode]
-	public class EditorWaitUntil 
+	public class EditorWaitUntil
 	{
 		private IEnumerator routineHandle;
 		private Func<bool> _isDone;
 		private Action _onFinished;
-		public EditorWaitUntil(Func<bool> isDone,Action onFinished)
+
+		public EditorWaitUntil(Func<bool> isDone, Action onFinished)
 		{
 			_isDone = isDone;
 			_onFinished = onFinished;
 
 			EditorApplication.update += doCoroutine;
 		}
-
 
 		//[MenuItem("asink/test waituntil")]
 		public static void testMe()
@@ -278,15 +274,16 @@ namespace transfluent.editor
 			sw.Start();
 
 			var wait = new EditorWaitUntil(() => { return sw.Elapsed.Seconds > 15; }, () => { Debug.Log("Editor thing finished"); });
+		}
 
-		} 
 		//TODO: can I run multiple of these
 		private void doCoroutine()
 		{
 			if(_isDone() == false)
 			{
 				EditorApplication.update = doCoroutine;
-			} else
+			}
+			else
 			{
 				EditorApplication.update = null;
 				if(_onFinished != null)
@@ -294,7 +291,6 @@ namespace transfluent.editor
 					_onFinished();
 				}
 			}
-
 		}
 	}
 }

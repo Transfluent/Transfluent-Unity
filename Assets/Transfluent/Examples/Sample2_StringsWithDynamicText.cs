@@ -35,7 +35,7 @@ public class Sample2_StringsWithDynamicText : MonoBehaviour
 		GUILayout.Label(textToDisplay);
 		textMesh.text = textToDisplay;
 
-		//get the username from the 
+		//get the username from the
 		GUILayout.BeginHorizontal();
 		GUILayout.Label("Username:");
 		userName = GUILayout.TextField(userName);
@@ -46,10 +46,10 @@ public class Sample2_StringsWithDynamicText : MonoBehaviour
 
 		foreach(string languageCode in languagesToShow)
 		{
-			if(GUILayout.Button(TranslationUtility.getFormatted("Translate to language: {0}", languageCode) ))
+			if(GUILayout.Button(TranslationUtility.getFormatted("Translate to language: {0}", languageCode)))
 			{
 				TranslationUtility.changeStaticInstanceConfig(languageCode);
-			}	
+			}
 		}
 	}
 }

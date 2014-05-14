@@ -53,6 +53,7 @@ namespace transfluent.editor
 		}
 
 		private bool showAllLanugages;
+
 		public bool showCurrentLanguage()
 		{
 			var languageList = _mediator.getLanguageList();
@@ -66,7 +67,7 @@ namespace transfluent.editor
 			int currentLanguageIndex = -1;
 			if(currentLanguage != null)
 				currentLanguageIndex = languageNames.IndexOf(currentLanguage.name);
-			
+
 			int newLanguageIndex = EditorGUILayout.Popup("Current language", currentLanguageIndex, languageNames.ToArray());
 			if(currentLanguageIndex != newLanguageIndex)
 			{

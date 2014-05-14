@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using transfluent;
+using transfluent.editor;
 using UnityEditor;
 using UnityEngine;
-using transfluent.editor;
 using Debug = UnityEngine.Debug;
 
 namespace transfluent
@@ -65,7 +64,6 @@ namespace transfluent
 
 		public void presentEstimateAndMakeOrder(TranslationConfigurationSO selectedConfig)
 		{
-			
 			//var languageEstimates = new Dictionary<TransfluentLanguage, EstimateTranslationCostVO.Price>();
 			if(_asyncFlow != null)
 			{
@@ -76,8 +74,8 @@ namespace transfluent
 					};
 					return;
 				}
-			} 
-			
+			}
+
 			EstimateTranslationCostVO.Price costPerWordFromSourceLanguage = null;
 			//Debug.Log("ASYNC FLOW:"+(_asyncFlow != null).ToString() + " isdone:"+(_asyncFlow != null && _asyncFlow.orderIsDone()));
 			if(GUILayout.Button("Translate"))
@@ -87,7 +85,7 @@ namespace transfluent
 				{
 					return;
 				}
-				
+
 				string group = selectedConfig.translation_set_group;
 				var sourceSet = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(selectedConfig.sourceLanguage.code);
 				if(sourceSet == null || sourceSet.getGroup(group) == null)
@@ -164,7 +162,6 @@ namespace transfluent
 
 				Debug.Log("Estimated prices");
 
-				
 				if(EditorUtility.DisplayDialog("Estimates", "Estimated cost(only additions counted in estimate):\n" + simpleEstimateString, "OK", "Cancel"))
 				{
 					_asyncFlow = new OrderFlowAsync(selectedConfig, _token);
@@ -193,9 +190,10 @@ namespace transfluent
 
 		public void doTranslation2(TranslationConfigurationSO selectedConfig)
 		{
-			OrderFlowAsync orderFlow = new OrderFlowAsync(selectedConfig,_token);
+			OrderFlowAsync orderFlow = new OrderFlowAsync(selectedConfig, _token);
 			orderFlow.startFlow();
 		}
+
 		public void doTranslation(TranslationConfigurationSO selectedConfig)
 		{
 			List<int> destLanguageIDs = new List<int>();
@@ -235,13 +233,16 @@ namespace transfluent
 			var wait = new EditorWWWWaitUntil(new WWW("http://www.yahoo.com"), (WWW val)=> { Debug.Log(val.text); });
 		}
 		*/
+
 		public bool orderIsDone()
 		{
 			return _orderDone;
 		}
+
 		private TranslationConfigurationSO _selectedConfig;
 		private string _token;
-		public OrderFlowAsync(TranslationConfigurationSO selectedConfig,string token)
+
+		public OrderFlowAsync(TranslationConfigurationSO selectedConfig, string token)
 		{
 			_selectedConfig = selectedConfig;
 			_token = token;
@@ -252,8 +253,7 @@ namespace transfluent
 			saveMySourceText();
 		}
 
-
-		void saveMySourceText()
+		private void saveMySourceText()
 		{
 			List<int> destLanguageIDs = new List<int>();
 			GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(_selectedConfig.sourceLanguage.code);
@@ -269,12 +269,12 @@ namespace transfluent
 			doCall(uploadAll, saveMyDestinationLanguageText);
 		}
 
-		void saveMyDestinationLanguageText()
+		private void saveMyDestinationLanguageText()
 		{
 			List<WebServiceParameters> requestsToSaveLocalStrings = new List<WebServiceParameters>();
 
 			List<int> destLanguageIDs = new List<int>();
-			foreach (TransfluentLanguage lang in _selectedConfig.destinationLanguages)
+			foreach(TransfluentLanguage lang in _selectedConfig.destinationLanguages)
 			{
 				GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(lang.code);
 				if(set == null)
@@ -304,9 +304,9 @@ namespace transfluent
 			}
 			var nextCall = calls[0];
 			calls.RemoveAt(0);
-			doCall(nextCall, () => doCalls(calls,callback));
-		
+			doCall(nextCall, () => doCalls(calls, callback));
 		}
+
 		private void doCall(WebServiceParameters call, Action callback)
 		{
 			call.getParameters.Add("token", _token);
@@ -320,10 +320,10 @@ namespace transfluent
 					{
 						callback();
 					}
-					
 				}
 			);
 		}
+
 		public void ordermytranslation()
 		{
 			//just queue up all the calls until first real stopping point
@@ -331,7 +331,6 @@ namespace transfluent
 			GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(_selectedConfig.sourceLanguage.code);
 			var keysToTranslate = set.getGroup(_selectedConfig.translation_set_group).getDictionaryCopy();
 			List<string> textsToTranslate = new List<string>(keysToTranslate.Keys);
-
 
 			_selectedConfig.destinationLanguages.ForEach((TransfluentLanguage lang) => { destLanguageIDs.Add(lang.id); });
 			Stopwatch sw = new Stopwatch();
@@ -346,8 +345,8 @@ namespace transfluent
 			doCall(translate, () =>
 			{
 				Debug.Log("ORDER DONE");
-				_orderDone = true; EditorUtility.DisplayDialog("Success","Transltion order complete!","OK"); });
-			
+				_orderDone = true; EditorUtility.DisplayDialog("Success", "Transltion order complete!", "OK");
+			});
 		}
 	}
 }

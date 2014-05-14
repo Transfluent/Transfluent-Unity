@@ -183,7 +183,7 @@ namespace transfluent.editor
 	}
 
 	[ExecuteInEditMode]
-	public class EditorWWWWaitUntil2
+	public class EditorWWWWaitUntil
 	{
 		private WWW _www;
 		private Action<WebServiceReturnStatus> _callback;
@@ -191,7 +191,7 @@ namespace transfluent.editor
 		private Stopwatch _sw = new Stopwatch();
 		private ITransfluentParameters _callParams;
 
-		public EditorWWWWaitUntil2(ITransfluentParameters callParams, Action<WebServiceReturnStatus> callback)
+		public EditorWWWWaitUntil(ITransfluentParameters callParams, Action<WebServiceReturnStatus> callback)
 		{
 			_sw.Start();
 			_callParams = callParams;
@@ -201,7 +201,7 @@ namespace transfluent.editor
 			_www = _getMyWwwFacade.request(callParams);
 
 			_callback = callback;
-			EditorWaitUntil wait = new EditorWaitUntil(() =>
+			new EditorWaitUntil(() =>
 			{ return _www.error != null || _www.isDone; },
 				internalCallback
 			);
@@ -221,36 +221,6 @@ namespace transfluent.editor
 		}
 	}
 
-	[ExecuteInEditMode]
-	public class EditorWWWWaitUntil
-	{
-		private WWW _www;
-		private Action<WWW> _callback;
-		private WWWFacade _getMyWwwFacade = new WWWFacade();
-
-		public EditorWWWWaitUntil(WWW www, Action<WWW> callback)
-		{
-			_www = www;
-			_callback = callback;
-			EditorWaitUntil wait = new EditorWaitUntil(() =>
-			{ return _www.error != null || _www.isDone; },
-				internalCallback
-			);
-		}
-
-		private void internalCallback()
-		{
-			if(_callback != null)
-			{
-				_callback(_www);
-			}
-		}
-
-		private WWW getStatus()
-		{
-			return _www;
-		}
-	}
 
 	[ExecuteInEditMode]
 	public class EditorWaitUntil
@@ -273,7 +243,7 @@ namespace transfluent.editor
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
 
-			var wait = new EditorWaitUntil(() => { return sw.Elapsed.Seconds > 15; }, () => { Debug.Log("Editor thing finished"); });
+			new EditorWaitUntil(() => { return sw.Elapsed.Seconds > 15; }, () => { Debug.Log("Editor thing finished"); });
 		}
 
 		//TODO: can I run multiple of these

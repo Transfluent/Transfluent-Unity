@@ -114,7 +114,7 @@ namespace transfluent
 					}
 					catch(Exception e)
 					{
-						Debug.LogError("Error estimating prices");
+						Debug.LogError("Error estimating prices: "+e);
 					}
 				}
 
@@ -255,10 +255,8 @@ namespace transfluent
 
 		private void saveMySourceText()
 		{
-			List<int> destLanguageIDs = new List<int>();
 			GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(_selectedConfig.sourceLanguage.code);
 			var keysToTranslate = set.getGroup(_selectedConfig.translation_set_group).getDictionaryCopy();
-			List<string> textsToTranslate = new List<string>(keysToTranslate.Keys);
 
 			//save all of our keys before requesting to transalate them, otherwise we can get errors
 			var uploadAll = new SaveSetOfKeys(_selectedConfig.sourceLanguage.id,
@@ -273,7 +271,6 @@ namespace transfluent
 		{
 			List<WebServiceParameters> requestsToSaveLocalStrings = new List<WebServiceParameters>();
 
-			List<int> destLanguageIDs = new List<int>();
 			foreach(TransfluentLanguage lang in _selectedConfig.destinationLanguages)
 			{
 				GameTranslationSet set = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(lang.code);
@@ -310,7 +307,7 @@ namespace transfluent
 		private void doCall(WebServiceParameters call, Action callback)
 		{
 			call.getParameters.Add("token", _token);
-			EditorWWWWaitUntil2 waitUntil2 = new EditorWWWWaitUntil2(call, (WebServiceReturnStatus status) =>
+			new EditorWWWWaitUntil(call, (WebServiceReturnStatus status) =>
 				{
 					if(status.httpErrorCode > 0 && status.httpErrorCode != 200)
 					{

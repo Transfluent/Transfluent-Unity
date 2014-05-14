@@ -17,7 +17,7 @@ namespace transfluent
 		//group_id, source_language, target_languages, texts, comment, callback_url, max_words [=1000], level [=2], token
 
 		public OrderTranslation(int source_language, int[] target_languages, string[] texts, string comment = null,
-			int max_words = 1000, TranslationQuality level = TranslationQuality.PROFESSIONAL_TRANSLATOR, string group_id = null)
+			int max_words = 1000, TranslationQuality level = TranslationQuality.PROFESSIONAL_TRANSLATOR, string group_id = null,bool fork = false)
 		{
 			var containerOfTextIDsToUse = new List<TextIDToTranslateContainer>();
 			foreach(string toTranslate in texts)
@@ -26,6 +26,12 @@ namespace transfluent
 				{
 					id = toTranslate
 				});
+			}
+
+
+			if(fork)
+			{
+				getParameters.Add("__fork", "1");
 			}
 
 			getParameters.Add("source_language", source_language.ToString());

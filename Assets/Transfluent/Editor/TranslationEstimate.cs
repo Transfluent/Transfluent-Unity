@@ -250,7 +250,8 @@ namespace transfluent
 
 		public void startFlow()
 		{
-			saveMySourceText();
+			//saveMyDestinationLanguageText();  //editor async and server forked saving of current destinaition text
+			saveMySourceText(); //editor async source text saved, blocking server call
 		}
 
 		private void saveMySourceText()
@@ -282,7 +283,8 @@ namespace transfluent
 				//save all of our keys before requesting to transalate them, otherwise we can get errors
 				var uploadAll = new SaveSetOfKeys(lang.id,
 					keysToTranslate,
-					_selectedConfig.translation_set_group
+					_selectedConfig.translation_set_group,
+					fork:true
 					);
 				requestsToSaveLocalStrings.Add(uploadAll);
 			}
@@ -337,7 +339,8 @@ namespace transfluent
 					texts: textsToTranslate.ToArray(),
 					level: _selectedConfig.QualityToRequest,
 					group_id: _selectedConfig.translation_set_group,
-					comment: "Do not replace any strings that look like {0} or {1} as they are a part of formatted text -- ie Hello {0} will turn into Hello Alex or some other string "
+					comment: "Do not replace any strings that look like {0} or {1} as they are a part of formatted text -- ie Hello {0} will turn into Hello Alex or some other string ",
+					fork: true
 					);
 			doCall(translate, () =>
 			{

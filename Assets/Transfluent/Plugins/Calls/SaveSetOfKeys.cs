@@ -7,11 +7,16 @@ namespace transfluent
 	[Route("texts", RestRequestType.POST, "http://transfluent.com/backend-api/#Texts")] //expected return type?
 	public class SaveSetOfKeys : WebServiceParameters
 	{
-		public SaveSetOfKeys(int language, Dictionary<string, string> dictionaryToSave, string group_id = null)
+		public SaveSetOfKeys(int language, Dictionary<string, string> dictionaryToSave, string group_id = null,bool fork=false)
 		{
 			if(language <= 0) throw new Exception("INVALID Language in getAllExistingKeys");
 
 			getParameters.Add("language", language.ToString());
+
+			if(fork)
+			{
+				getParameters.Add("__fork", "1");
+			}
 
 			if(!string.IsNullOrEmpty(group_id))
 			{

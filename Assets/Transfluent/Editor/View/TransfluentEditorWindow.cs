@@ -121,7 +121,7 @@ namespace transfluent.editor
 					if(_mediator.doAuth(currentUsername, currentPassword))
 					{
 						_mediator.setUsernamePassword(currentUsername, currentPassword);
-					}
+					}	
 				}
 				EditorGUILayout.EndHorizontal();
 			}

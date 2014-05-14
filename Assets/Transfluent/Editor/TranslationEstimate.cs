@@ -173,6 +173,7 @@ namespace transfluent
 				}
 			}
 		}
+
 		private WebServiceReturnStatus doCall(WebServiceParameters call)
 		{
 			IWebService req = new SyncronousEditorWebRequest();
@@ -227,12 +228,13 @@ namespace transfluent
 	public class OrderFlowAsync
 	{
 		private bool _orderDone = false;
+		/*
 		[MenuItem("asink/wwwtest")]
 		public static void wwwtest()
 		{
 			var wait = new EditorWWWWaitUntil(new WWW("http://www.yahoo.com"), (WWW val)=> { Debug.Log(val.text); });
 		}
-
+		*/
 		public bool orderIsDone()
 		{
 			return _orderDone;

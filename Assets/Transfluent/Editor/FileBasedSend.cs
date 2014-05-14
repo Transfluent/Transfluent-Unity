@@ -47,7 +47,7 @@ namespace transfluent
 			return contentToSend;
 		}
 
-		[MenuItem("Transfluent/test full loop")]
+		//[MenuItem("Transfluent/test full loop")]
 		public static void testLoop()
 		{
 			var list = ResourceLoadFacade.getLanguageList();
@@ -58,7 +58,7 @@ namespace transfluent
 			sender.RecieveFile(contents);
 		}
 
-		[MenuItem("Transfluent/test get content")]
+		//[MenuItem("Transfluent/test get content")]
 		public static void getTestContent()
 		{
 			var list = ResourceLoadFacade.getLanguageList();
@@ -68,7 +68,7 @@ namespace transfluent
 			Debug.Log("Contents :" + contents);
 		}
 
-		[MenuItem("Transfluent/testInput")]
+		//[MenuItem("Transfluent/testInput")]
 		public static void DoTestInput()
 		{
 			string filePath = Application.dataPath + Path.DirectorySeparatorChar + "TransfluentLocalization_en-us.xml";
@@ -77,7 +77,7 @@ namespace transfluent
 			sender.RecieveFile(contents);
 		}
 
-		[MenuItem("Transfluent/test full loop english content")]
+		//[MenuItem("Transfluent/test full loop english content")]
 		public static void getTestSaveEnglishContent()
 		{
 			var list = ResourceLoadFacade.getLanguageList();

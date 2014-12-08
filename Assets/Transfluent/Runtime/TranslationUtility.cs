@@ -11,13 +11,17 @@ namespace transfluent
 {
 	//a simple static class wrapper to provide basic functionality for global access
 	public class TranslationUtility
-	{
-		private static ITranslationUtilityInstance _instance = createNewInstance();
+	{  
+		private static ITranslationUtilityInstance _instance;
 
 		private static LanguageList _LanguageList;
 
 		private TranslationUtility()
 		{
+			if(_instance == null)
+			{
+				_instance = createNewInstance();
+			}
 			changeStaticInstanceConfigBasedOnTranslationConfigurationGroup(); //load default translation group info
 		}
 
@@ -151,6 +155,9 @@ namespace transfluent
 
 		public static string get(string sourceText)
 		{
+			if(_instance == null){
+				_instance = createNewInstance(); //the semantics of this used to work in the initializer.  it seems to no longer work that way
+			}
 			return _instance.getTranslation(sourceText);
 		}
 

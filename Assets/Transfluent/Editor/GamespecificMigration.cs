@@ -1,17 +1,13 @@
 ﻿//#define TRANSFLUENT_EXAMPLE
-
 #if TRANSFLUENT_EXAMPLE
 using strange.examples.strangerocks;
 #endif //!TRANSFLUENT_EXAMPLE
-
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 #if UNITY_EDITOR
-
 using UnityEditor;
-
 #endif
 
 namespace transfluent
@@ -143,64 +139,7 @@ namespace transfluent
 		void process(GameObject go, CustomScriptProcessorState processorState);
 	}
 
-	public class TextMeshProcessor : IGameProcessor
-	{
-		public void process(GameObject go, CustomScriptProcessorState processorState)
-		{
-			var textMesh = go.GetComponent<TextMesh>();
-			if(textMesh == null) return;
+	
 
-			string newKey = textMesh.text;
-			processorState.addToDB(newKey, newKey);
-			processorState.addToBlacklist(go);
-
-			var translatable = textMesh.GetComponent<LocalizedTextMesh>();
-			if(processorState.shouldIgnoreString(textMesh.text))
-			{
-				processorState.addToBlacklist(go);
-				return;
-			}
-
-			if(translatable == null)
-			{
-				translatable = textMesh.gameObject.AddComponent<LocalizedTextMesh>();
-				translatable.textmesh = textMesh; //just use whatever the source text is upfront, and allow the user to
-			}
-
-			translatable.localizableText.globalizationKey = textMesh.text;
-			//For textmesh specificially, this setDirty is not needed according to http://docs.unity3d.com/Documentation/ScriptReference/EditorUtility.SetDirty.html
-			//EditorUtility.SetDirty(textMesh);
-		}
-	}
-
-	public class GUITextProcessor : IGameProcessor
-	{
-		public void process(GameObject go, CustomScriptProcessorState processorState)
-		{
-			var guiText = go.GetComponent<GUIText>();
-			if(guiText == null) return;
-
-			string newKey = guiText.text;
-			processorState.addToDB(newKey, newKey);
-			processorState.addToBlacklist(go);
-
-			var translatable = guiText.GetComponent<LocalizedGUIText>();
-			if(processorState.shouldIgnoreString(guiText.text))
-			{
-				processorState.addToBlacklist(go);
-				return;
-			}
-
-			if(translatable == null)
-			{
-				translatable = guiText.gameObject.AddComponent<LocalizedGUIText>();
-				translatable.guiTextToModify = guiText; //just use whatever the source text is upfront, and allow the user to
-			}
-
-			translatable.localizableText.globalizationKey = guiText.text;
-			//For guitext and other unity managed objects, this setDirty is not needed according to http://docs.unity3d.com/Documentation/ScriptReference/EditorUtility.SetDirty.html
-			EditorUtility.SetDirty(guiText.gameObject);
-			EditorUtility.SetDirty(guiText);
-		}
-	}
+	
 }

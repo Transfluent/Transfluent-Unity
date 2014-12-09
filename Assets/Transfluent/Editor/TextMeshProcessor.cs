@@ -25,7 +25,7 @@ namespace transfluent
 			if(translatable == null)
 			{
 				translatable = textMesh.gameObject.AddComponent<LocalizedTextMesh>();
-				translatable.textmesh = textMesh; //just use whatever the source text is upfront, and allow the user to
+				translatable.managedTextMonobhaviour = textMesh; //just use whatever the source text is upfront, and allow the user to
 			}
 
 			translatable.localizableText.globalizationKey = textMesh.text;

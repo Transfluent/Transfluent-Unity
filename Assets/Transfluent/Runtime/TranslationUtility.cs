@@ -11,17 +11,17 @@ namespace transfluent
 {
 	//a simple static class wrapper to provide basic functionality for global access
 	public class TranslationUtility
-	{  
-		private static ITranslationUtilityInstance _instance;
+	{
+		private static ITranslationUtilityInstance _realInstance;  //*headdesk* initalization order and whatnot... I'm not sure what to do about this
+		private static ITranslationUtilityInstance _instance
+		{
+			get { return _realInstance ?? (_realInstance = new TranslationUtilityInstance()); }
+		}
 
 		private static LanguageList _LanguageList;
 
 		private TranslationUtility()
 		{
-			if(_instance == null)
-			{
-				_instance = createNewInstance();
-			}
 			changeStaticInstanceConfigBasedOnTranslationConfigurationGroup(); //load default translation group info
 		}
 
@@ -49,16 +49,12 @@ namespace transfluent
 			//Debug.LogError("LOADING STATIC CONFIG: "+ destinationLanguageCode + " translation group:"+translationGroup);
 
 			ITranslationUtilityInstance tmpInstance = createNewInstance(destinationLanguageCode, translationGroup);
-			if(tmpInstance != null)
-			{
-				_instance.setNewDestinationLanguage(tmpInstance.allKnownTranslations);
-				if(Application.isPlaying)
-					OnLanguageChanged();
+			if(tmpInstance == null) return false;
+			_instance.setNewDestinationLanguage(tmpInstance.allKnownTranslations);
+			if(Application.isPlaying)
+				OnLanguageChanged();
 
-				return true;
-			}
-
-			return false;
+			return true;
 		}
 
 		//[MenuItem("Transfluent/Helpers/Test Change to EN-US")]
@@ -155,9 +151,6 @@ namespace transfluent
 
 		public static string get(string sourceText)
 		{
-			if(_instance == null){
-				_instance = createNewInstance(); //the semantics of this used to work in the initializer.  it seems to no longer work that way
-			}
 			return _instance.getTranslation(sourceText);
 		}
 
@@ -186,14 +179,14 @@ namespace transfluent
 		private static void EnableCaptureMode()
 		{
 			setCaptureMode(true);
-			_instance = createNewInstance();
+			_realInstance = createNewInstance();
 		}
 
 		[MenuItem("Translation/Helpers/Disable Capture Mode")]
 		private static void DisableCaptureMode()
 		{
 			setCaptureMode(false);
-			_instance = createNewInstance();
+			_realInstance = createNewInstance();
 		}
 
 #endif

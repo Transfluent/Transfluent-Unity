@@ -24,7 +24,7 @@ namespace transfluent
 			if(translatable == null)
 			{
 				translatable = guiText.gameObject.AddComponent<LocalizedGUIText>();
-				translatable.guiTextToModify = guiText; //just use whatever the source text is upfront, and allow the user to
+				translatable.managedTextMonobhaviour = guiText;
 			}
 
 			translatable.localizableText.globalizationKey = guiText.text;

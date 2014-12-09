@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,13 +24,18 @@ namespace transfluent
 			if(customProcessors != null)
 				_gameProcessors.AddRange(customProcessors);
 
-			//_gameProcessors.Add(new ButtonViewProcessor());
-
-			_gameProcessors.Add(new TextMeshProcessor());
-			_gameProcessors.Add(new GUITextProcessor());
+			var interfaceToLookFor = typeof(IGameProcessor);
+			var types = AppDomain.CurrentDomain.GetAssemblies()
+				.SelectMany(s => s.GetTypes())
+				.Where(p => interfaceToLookFor.IsAssignableFrom(p));
+			foreach(var type1 in types)
+			{
+				//TODO: priority of running, way to visualize this
+				_gameProcessors.Add( (IGameProcessor) type1 );
+			}
 		}
 
-		[MenuItem("Translation/testScan")]
+		//[MenuItem("Translation/testScan")]
 		public static void fullMigration()
 		{
 			AssetScanner scanner = new AssetScanner();
@@ -45,9 +51,16 @@ namespace transfluent
 			//Debug.Log("Active selection path:" + activeSelectionPath);
 			//scanner.searchPrefab(activeSelectionPath);
 			//scanner.searchGameObjects();
-			//scanner.searchScenes();
-			scanner.searchPrefab("Assets/TransfluentTests/manualMigrationTests/GUI Text.prefab");
+			scanner.searchScenes();
+			//scanner.searchPrefab("Assets/TransfluentTests/manualMigrationTests/GUI Text.prefab");
 			//scanner.searchPrefabs();
+		}
+
+		[MenuItem("Translation/Scan Current Scene")]
+		public static void migrateCurrentScene()
+		{
+			AssetScanner scanner = new AssetScanner();
+			scanner.searchGameObjects(scanner.getAllGameObjectsInScene());
 		}
 
 		public void searchPrefabs()

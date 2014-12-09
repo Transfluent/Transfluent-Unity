@@ -15,23 +15,24 @@ namespace transfluent
 		private List<GameObject> toIgnore = new List<GameObject>();
 		private readonly CustomScriptProcessorState _customProcessorState;
 
-		public AssetScanner(List<IGameProcessor> customProcessors = null)
+		public AssetScanner()
 		{
 			var stringFormatToIgnore = new List<string>() { "XXXX" };
-
-			_customProcessorState = new CustomScriptProcessorState(toIgnore, TranslationUtility.getUtilityInstanceForDebugging(), stringFormatToIgnore);
-
-			if(customProcessors != null)
-				_gameProcessors.AddRange(customProcessors);
-
+			var translationUtility = TranslationUtility.getUtilityInstanceForDebugging();
+			
+			_customProcessorState = new CustomScriptProcessorState(toIgnore, translationUtility, stringFormatToIgnore);
+			
 			var interfaceToLookFor = typeof(IGameProcessor);
 			var types = AppDomain.CurrentDomain.GetAssemblies()
 				.SelectMany(s => s.GetTypes())
 				.Where(p => interfaceToLookFor.IsAssignableFrom(p));
+			
 			foreach(var type1 in types)
 			{
+				if(type1.IsInterface || type1.IsAbstract)
+					continue;
 				//TODO: priority of running, way to visualize this
-				_gameProcessors.Add( (IGameProcessor) type1 );
+				_gameProcessors.Add((IGameProcessor) Activator.CreateInstance(type1));
 			}
 		}
 

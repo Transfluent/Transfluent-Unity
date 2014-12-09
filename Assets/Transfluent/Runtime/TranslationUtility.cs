@@ -15,7 +15,15 @@ namespace transfluent
 		private static ITranslationUtilityInstance _realInstance;  //*headdesk* initalization order and whatnot... I'm not sure what to do about this
 		private static ITranslationUtilityInstance _instance
 		{
-			get { return _realInstance ?? (_realInstance = new TranslationUtilityInstance()); }
+			get
+			{
+				if(_realInstance == null)
+				{
+					_realInstance = createNewInstance();
+					//changeStaticInstanceConfigBasedOnTranslationConfigurationGroup();
+				}
+				return _realInstance;
+			}
 		}
 
 		private static LanguageList _LanguageList;
@@ -27,11 +35,6 @@ namespace transfluent
 
 		public static ITranslationUtilityInstance getUtilityInstanceForDebugging()
 		{
-			if(_instance == null)
-			{
-				changeStaticInstanceConfigBasedOnTranslationConfigurationGroup();
-			}
-
 			return _instance;
 		}
 
@@ -102,7 +105,6 @@ namespace transfluent
 				enableCapture = getCaptureMode();
 			}
 #endif //UNTIY_EDITOR
-
 			TransfluentLanguage dest = _LanguageList.getLangaugeByCode(destinationLanguageCode);
 			if(dest == null)
 			{
@@ -128,7 +130,6 @@ namespace transfluent
 #if UNITY_EDITOR
 			EditorUtility.SetDirty(destLangDB);
 #endif
-
 			var newTranslfuentUtilityInstance = new TranslationUtilityInstance
 			{
 				allKnownTranslations = keysInLanguageForGroupSpecified,

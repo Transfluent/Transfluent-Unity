@@ -23,8 +23,9 @@ namespace transfluent
 					form.AddField(param.Key, param.Value);
 				}
 			}
-
-			return new WWW(url, form);
+			var www = new WWW(url, form);
+			www.responseHeaders.Add("Transfluent-Integration","Unity/"+Application.unityVersion);  //verison...
+			return www;
 		}
 
 		public WWW request(ITransfluentParameters call)
@@ -42,7 +43,9 @@ namespace transfluent
 
 		public WWW request(string url)
 		{
-			return new WWW(url);
+			var www = new WWW(url);
+			www.responseHeaders.Add("Transfluent-Integration", "Unity/" + Application.unityVersion);  //verison...
+			return www;
 		}
 
 		public string encodeGETParams(Dictionary<string, string> getParams)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_4_6 || UNITY_5
+using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 
@@ -35,3 +36,4 @@ namespace transfluent
 		}
 	}
 }
+#endif // UNITY_4_6 || UNITY_5

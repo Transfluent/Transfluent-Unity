@@ -3,6 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using Debug = UnityEngine.Debug;
 
 namespace transfluent.editor
@@ -66,8 +69,12 @@ namespace transfluent.editor
 				}
 				catch(CallException e)
 				{
+#if UNITY_EDITOR
+					EditorUtility.DisplayDialog("Error",
+						"Could not login, please re-enter credentials that you got on transfluent.com website", "OK");
+#endif
 					Debug.LogError("error getting login auth token:" + e.Message);
-					return false;
+					throw; //previously tried to gracefully handle this, but I want to make sure that login errors are well-understood in any circumstance
 				}
 
 				context.addNamedMapping<string>(NamedInjections.API_TOKEN, authToken);

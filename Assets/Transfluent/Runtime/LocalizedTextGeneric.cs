@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System;
-using UnityEngine.UI;
 
 //A generic abstract type that monobehviours can extend to easily add more specific functionality to be scanned.
 //you can implement your own fully, but this should cover 99% of cases
@@ -17,33 +15,8 @@ public abstract class LocalizedTextGeneric<T> : MonoBehaviour
 
 	protected abstract void SetText(string text); //hrm... something really wrong here
 
-	//TODO: rethink/review before merge
-	Action<String> getSetTextFunction()
-	{
-		if(managedTextMonobhaviour == null)
-			return (string ignored)=>{};
-		//there probably is a dictionary or switch type thing I can use here...
-		//at least something with generics and the type at initalization
-		//TODO: rethink/review before merge
-		if(managedTextMonobhaviour is GUIText)
-		{
-			return (string text) => { (managedTextMonobhaviour as GUIText).text = text; };
-		}
-		if(managedTextMonobhaviour is Text)
-		{
-			return (string text) => { (managedTextMonobhaviour as Text).text = text; };
-		}
-		if(managedTextMonobhaviour is TextMesh)
-		{
-			return (string text) => { (managedTextMonobhaviour as TextMesh).text = text; };
-		}
-		return (string ignored) => { };
-	}
-
-	private Action<string> _setTextFunction; 
 	void _setText(string text)
 	{
-		if(_setTextFunction == null) _setTextFunction = getSetTextFunction();
 		SetText(text);
 	}
 

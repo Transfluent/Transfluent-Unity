@@ -49,39 +49,96 @@ public class LanguageList
 	public List<string> getSimplifiedListOfIdentifiersFromLanguageList()
 	{
 		var list = new List<string>();
-		foreach(string code in simplifiedLanguageCodeList)
+		foreach(string code in getSimplifiedLanguageCodeList())
 		{
 			list.Add(getLangaugeByCode(code).name);
 		}
 		return list;
 	}
 
-	//show the most commonly used languages that game developers will display
-	public List<string> simplifiedLanguageCodeList = new List<string>()
+	private List<string> _simplifiedLanguageCodeList;
+
+	private List<string> getSimplifiedLanguageCodeList()
 	{
-		"en-us",//English. US version
-		"fr-fr", //French
-		"es-la", //Spanish, latin american version
-		"pt-pt", //Portuguese (Portugal)
-		"pt-br",//Portuguese (Brazil)
-		"it-it",//Italian
-		"de-de",//German
-		"zh-cn",//Chinese (Mandarin, Simplified) (People's Republic of China)
-		"zh-tw",//Chinese (Traditional) (Taiwan)
-		"nl-nl",//Dutch
-		"ja-jp",//Japanese
-		"ko-kr",//Korean
-		"vi-vn",//Vietnamese
-		"ru-ru",//Russian
-		"sv-se",//Swedish
-		"da-dk",//Danish
-		"fi-fi",//Finnish
-		"no-no",//Norwegian (Bokmal)
-		"tr-tr",//Turkish
-		"el-gr",//Greek
-		"id-id",//Indonesian
-		"ms-my",//Malay
-		"th-th",//Thai
-		"xx-xx", //backwards language, used for testing.  *HIGHLY* reccommended, instant, and free
-	};
+		if(_simplifiedLanguageCodeList == null)
+		{
+			_simplifiedLanguageCodeList = new List<string>();
+			var type = typeof (LanguageName);
+			foreach(var languageName in Enum.GetNames(type))
+			{
+				var meminfo = type.GetMember(languageName);
+				var targetAttribute = (LanguageNameAttribute)meminfo[0].GetCustomAttributes(typeof(LanguageNameAttribute), false)[0];
+				_simplifiedLanguageCodeList.Add(targetAttribute.CommonName);
+			}
+		}
+		return _simplifiedLanguageCodeList;
+	}
+
+	//TODO: find out if there's a reasonable way to create enum list from language list file... this mirrors much of the same data
+	public enum LanguageName
+	{
+		[LanguageNameAttribute("English","en-us",true)]
+		ENGLISH,
+		[LanguageNameAttribute("French", "fr-fr", true)]
+		FRENCH,
+		[LanguageNameAttribute("Spanish", "es-la", true)]
+		SPANISH,
+		[LanguageNameAttribute("Portuguese (Portugal)", "pt-pt", true)]
+		PORTUGUESE_PORTUGAL,
+		[LanguageNameAttribute("Portuguese (Brazil)", "pt-br", true)]
+		PORTUGUESE_BRAZIL,
+		[LanguageNameAttribute("Italian", "it-it", true)]
+		ITALIAN,
+		[LanguageNameAttribute("German", "de-de", true)]
+		GERMAN,
+		[LanguageNameAttribute("Chinese (Mandarin, Simplified)", "zh-cn", true)]
+		CHINESE_SIMPLIFIED,
+		[LanguageNameAttribute("Chinese (Traditional)", "zh-tw", true)]
+		CHINESE_TRADITIONAL,
+		[LanguageNameAttribute("Dutch", "nl-nl", true)]
+		DUTCH,
+		[LanguageNameAttribute("Japanese", "ja-jp", true)]
+		JAPANESE,
+		[LanguageNameAttribute("Korean", "ko-kr", true)]
+		KOREAN,
+		[LanguageNameAttribute("Vietnamese", "vi-vn", true)]
+		VIETNAMESE,
+		[LanguageNameAttribute("Russian", "ru-ru", true)]
+		RUSSIAN,
+		[LanguageNameAttribute("Swedish", "sv-se", true)]
+		SWEDISH,
+		[LanguageNameAttribute("Danish", "da-dk", true)]
+		DANISH,
+		[LanguageNameAttribute("Norwegian", "no-no", true)]
+		NORWEGIAN,
+		[LanguageNameAttribute("Turkish", "tr-tr", true)]
+		TURKISH,
+		[LanguageNameAttribute("Greek", "el-gr", true)]
+		GREEK,
+		[LanguageNameAttribute("Indoesian", "id-id", true)]
+		INDONESIAN,
+		[LanguageNameAttribute("Malay", "ms-my", true)]
+		MALAY,
+		[LanguageNameAttribute("Thai", "th-th", true)]
+		THAI,
+		[LanguageNameAttribute("Backwards Testing Language", "xx-xx", true)]
+		BACKWARDS_TEST_LANGUAGE,
+	}
+
+	//TODO: find out if there's a reasonable way to create enum list from language list file... this mirrors much of the same data
+	public class LanguageNameAttribute : Attribute
+	{
+		public string CommonName;
+		public string LanguageCode;
+		public bool IsInAppStoreLanguageList;
+		//NOTE: should I create alternate name list to be able to iterate through?  Hand-input will likley have variations on the core name
+		//ie name in it's own language, English (<name native>), <name native> (English), formal, slang, etc
+
+		public LanguageNameAttribute(string commonName, string languageCode,bool isAnAppstoreLanguage=false)
+		{
+			CommonName = commonName;
+			LanguageCode = languageCode;
+			IsInAppStoreLanguageList = isAnAppstoreLanguage;
+		}
+	}
 }

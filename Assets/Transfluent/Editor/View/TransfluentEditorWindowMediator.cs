@@ -1,4 +1,5 @@
-﻿//handles interaction with core code, allowing hte editor window to focus on presentation.  Also has the nice side effect of avoiding issues in editor files (massive bugginess with optional arguments, etc)
+﻿#define STORE_API_TOKEN_LOCALLY
+//handles interaction with core code, allowing hte editor window to focus on presentation.  Also has the nice side effect of avoiding issues in editor files (massive bugginess with optional arguments, etc)
 //seperatoion of logic, and
 
 using System;
@@ -13,6 +14,7 @@ namespace transfluent.editor
 {
 	public class TransfluentEditorWindowMediator
 	{
+		const string apiTokenEditorKey = "EDITOR_API_TOKEN";
 		private LanguageList allLanguagesSupported;
 		private TransfluentLanguage currentLanguage; //put this in a view state?
 		private readonly IKeyStore _keyStore = new EditorKeyStore();
@@ -40,7 +42,10 @@ namespace transfluent.editor
 		public bool authIsDone()
 		{
 			var authToken = getCurrentAuthToken();
-
+			if(allLanguagesSupported == null)
+			{
+				getLanguageList();
+			}
 			return !string.IsNullOrEmpty(authToken) && allLanguagesSupported != null;
 		}
 
@@ -53,7 +58,19 @@ namespace transfluent.editor
 			}
 			catch (KeyNotFoundException)
 			{
+
 			} //this is ok... I don't want to rewrite manualGetMapping
+#if STORE_API_TOKEN_LOCALLY && UNITY_EDITOR
+			if(!string.IsNullOrEmpty(retVal))
+			{
+				EditorPrefs.SetString(apiTokenEditorKey, retVal);
+				return retVal;
+			}
+			var savedToken = EditorPrefs.GetString(apiTokenEditorKey);
+			if(string.IsNullOrEmpty(savedToken)) return retVal;
+			context.addNamedMapping<string>(NamedInjections.API_TOKEN, savedToken);
+			retVal = savedToken;
+#endif
 			return retVal;
 		}
 
@@ -69,6 +86,10 @@ namespace transfluent.editor
 				}
 				catch (CallException e)
 				{
+#if STORE_API_TOKEN_LOCALLY && UNITY_EDITOR
+					//if we got a call error, just clear the key in case it has to do with that
+					EditorPrefs.SetString(apiTokenEditorKey,"");
+#endif
 #if UNITY_EDITOR
 					EditorUtility.DisplayDialog("Error",
 						"Could not login, please re-enter credentials that you got on transfluent.com website", "OK");
@@ -77,7 +98,7 @@ namespace transfluent.editor
 					throw;
 					//previously tried to gracefully handle this, but I want to make sure that login errors are well-understood in any circumstance
 				}
-
+				
 				context.addNamedMapping<string>(NamedInjections.API_TOKEN, authToken);
 			}
 			if(allLanguagesSupported == null)

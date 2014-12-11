@@ -1,4 +1,7 @@
 ﻿using System;
+#if !UNITY_4_5 && !UNITY_5
+using System.Collections;
+#endif
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -42,7 +45,11 @@ namespace transfluent
 			return request(urlWithGetParams, call.postParameters);
 		}
 		static readonly KeyValuePair<string, string> _transfluentIntegrationKey = new KeyValuePair<string, string>("Transfluent-Integration", "Unity/" + Application.unityVersion);
+#if UNITY_4_5 || UNITY_5
 		static readonly Dictionary<string, string> _headers = new Dictionary<string, string>() { { _transfluentIntegrationKey.Key, _transfluentIntegrationKey.Value} };	
+#else
+		static readonly Hashtable _headers = new Hashtable() { { _transfluentIntegrationKey.Key, _transfluentIntegrationKey.Value } };	
+#endif
 		public WWW request(string url)
 		{
 			var www = new WWW(url, null, _headers);

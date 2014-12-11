@@ -122,11 +122,7 @@ namespace transfluent
 
 		public bool knownTransportError(string input)
 		{
-			if(input.Contains("Could not resolve host"))
-			{
-				return true;
-			}
-			return false;
+			return input.Contains("Could not resolve host");
 		}
 	}
 }

@@ -61,12 +61,13 @@ namespace transfluent.editor
 
 			var currentLanguage = _mediator.GetCurrentLanguage();
 			var currentLanguageIndex = -1;
-			if(currentLanguage != null)
-				currentLanguageIndex = languageNames.IndexOf(currentLanguage.name);
+			bool isFirstRunThrough = currentLanguage == null;
+			currentLanguageIndex = languageNames.IndexOf(!isFirstRunThrough ? currentLanguage.name : "English (United States)");
 			var newLanguageIndex = EditorGUILayout.Popup("Current language", currentLanguageIndex, languageNames.ToArray());
 			//Debug.Log(string.Format("Current language index:{0} new language index:{1} current language name:{2}",
 			//	currentLanguageIndex, newLanguageIndex,currentLanguage == null ? "NULL": currentLanguage.name));
-			if(currentLanguageIndex == newLanguageIndex) return false;
+
+			if(!isFirstRunThrough && currentLanguageIndex == newLanguageIndex) return false;
 			currentLanguage = languageList.getLangaugeByName(languageNames[newLanguageIndex]);
 			_mediator.setCurrentLanguage(currentLanguage);
 			return true;

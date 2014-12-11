@@ -47,6 +47,11 @@ namespace transfluent
 		}
 
 		//convert into a factory?
+		public static bool changeStaticInstanceConfig(LanguageList.LanguageName languageName, string translationGroup = "")
+		{
+			return changeStaticInstanceConfig(LanguageList.getLanguageCodeFromLanguageName(languageName),translationGroup);
+		}
+
 		public static bool changeStaticInstanceConfig(string destinationLanguageCode = "", string translationGroup = "")
 		{
 			//Debug.LogError("LOADING STATIC CONFIG: "+ destinationLanguageCode + " translation group:"+translationGroup);
@@ -63,7 +68,7 @@ namespace transfluent
 		//[MenuItem("Transfluent/Helpers/Test Change to EN-US")]
 		public static void ChangeStaticConfigToUS()
 		{
-			changeStaticInstanceConfig("en-us");
+			changeStaticInstanceConfig(LanguageList.LanguageName.ENGLISH);
 		}
 
 		//[MenuItem("Transfluent/Helpers/Test Change to FR-FR")]

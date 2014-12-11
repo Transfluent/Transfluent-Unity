@@ -57,21 +57,32 @@ public class LanguageList
 	}
 
 	private List<string> _simplifiedLanguageCodeList;
-
 	private List<string> getSimplifiedLanguageCodeList()
 	{
 		if(_simplifiedLanguageCodeList == null)
 		{
 			_simplifiedLanguageCodeList = new List<string>();
 			var type = typeof (LanguageName);
-			foreach(var languageName in Enum.GetNames(type))
+			foreach(LanguageName languageNameValue in Enum.GetValues(type))
 			{
-				var meminfo = type.GetMember(languageName);
-				var targetAttribute = (LanguageNameAttribute)meminfo[0].GetCustomAttributes(typeof(LanguageNameAttribute), false)[0];
-				_simplifiedLanguageCodeList.Add(targetAttribute.CommonName);
+				_simplifiedLanguageCodeList.Add(getLanguageNameAttributeForValue(languageNameValue).LanguageCode);
 			}
 		}
 		return _simplifiedLanguageCodeList;
+	}
+
+	private static LanguageNameAttribute getLanguageNameAttributeForValue(LanguageName langauageValue)
+	{
+		var type = typeof(LanguageName);
+		var meminfo = type.GetMember(Enum.GetName(type,langauageValue));
+		var targetAttribute = (LanguageNameAttribute)meminfo[0].GetCustomAttributes(typeof(LanguageNameAttribute), false)[0];
+		return targetAttribute;
+	}
+
+	//right nowthis is not often used, so the reflection is probably ok
+	public static string getLanguageCodeFromLanguageName(LanguageName languageName)
+	{
+		return getLanguageNameAttributeForValue(languageName).LanguageCode;
 	}
 
 	//TODO: find out if there's a reasonable way to create enum list from language list file... this mirrors much of the same data

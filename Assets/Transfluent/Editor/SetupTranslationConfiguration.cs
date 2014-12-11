@@ -173,22 +173,25 @@ public class SetupTranslationConfiguration : EditorWindow
 		AssetDatabase.SaveAssets();
 	}
 
+	private int _selectedSourceLanguageIndex = -1;
 	private void DisplaySelectedTranslationConfiguration(TranslationConfigurationSO so)
 	{
 		List<string> knownLanguageDisplayNames = showAllLanguages ?
 			_languages.getListOfIdentifiersFromLanguageList() :
 			_languages.getSimplifiedListOfIdentifiersFromLanguageList();
 
-		int sourceLanguageIndex = knownLanguageDisplayNames.IndexOf(so.sourceLanguage.name);
-
+		int sourceLanguageIndex = _selectedSourceLanguageIndex;
+		if(sourceLanguageIndex == -1) //if we're initialized, use the last known thing
+			sourceLanguageIndex = knownLanguageDisplayNames.IndexOf(so.sourceLanguage.name);
+		
 		if(sourceLanguageIndex < 0) sourceLanguageIndex = 0;
 		EditorGUILayout.LabelField(string.Format("group identifier:{0}", so.translation_set_group));
 		EditorGUILayout.LabelField(string.Format("source language:{0}", so.sourceLanguage.name));
 
-		sourceLanguageIndex = EditorGUILayout.Popup(sourceLanguageIndex, knownLanguageDisplayNames.ToArray());
-		if(GUILayout.Button("SET Source to this language" + knownLanguageDisplayNames[sourceLanguageIndex]))
+		_selectedSourceLanguageIndex = EditorGUILayout.Popup(sourceLanguageIndex, knownLanguageDisplayNames.ToArray());
+		if(GUILayout.Button("SET Source to this language: " + knownLanguageDisplayNames[sourceLanguageIndex]))
 		{
-			so.sourceLanguage = _languages.getLangaugeByName(knownLanguageDisplayNames[sourceLanguageIndex]);
+			so.sourceLanguage = _languages.getLangaugeByName(knownLanguageDisplayNames[_selectedSourceLanguageIndex]);
 		}
 
 		EditorGUILayout.LabelField("destination language(s):");
@@ -213,7 +216,7 @@ public class SetupTranslationConfiguration : EditorWindow
 
 		newDestinationLanguageIndex = EditorGUILayout.Popup(newDestinationLanguageIndex, knownLanguageDisplayNames.ToArray());
 
-		if(GUILayout.Button("Create a new Destination Language"))
+		if(GUILayout.Button("Specify a new Destination Language"))
 		{
 			TransfluentLanguage lang = _languages.getLangaugeByName(knownLanguageDisplayNames[newDestinationLanguageIndex]);
 			if(so.sourceLanguage.id == lang.id)

@@ -189,7 +189,7 @@ public class SetupTranslationConfiguration : EditorWindow
 		EditorGUILayout.LabelField(string.Format("source language:{0}", so.sourceLanguage.name));
 
 		_selectedSourceLanguageIndex = EditorGUILayout.Popup(sourceLanguageIndex, knownLanguageDisplayNames.ToArray());
-		if(GUILayout.Button("SET Source to this language" + knownLanguageDisplayNames[sourceLanguageIndex]))
+		if(GUILayout.Button("SET Source to this language: " + knownLanguageDisplayNames[sourceLanguageIndex]))
 		{
 			so.sourceLanguage = _languages.getLangaugeByName(knownLanguageDisplayNames[_selectedSourceLanguageIndex]);
 		}
@@ -216,7 +216,7 @@ public class SetupTranslationConfiguration : EditorWindow
 
 		newDestinationLanguageIndex = EditorGUILayout.Popup(newDestinationLanguageIndex, knownLanguageDisplayNames.ToArray());
 
-		if(GUILayout.Button("Create a new Destination Language"))
+		if(GUILayout.Button("Specify a new Destination Language"))
 		{
 			TransfluentLanguage lang = _languages.getLangaugeByName(knownLanguageDisplayNames[newDestinationLanguageIndex]);
 			if(so.sourceLanguage.id == lang.id)

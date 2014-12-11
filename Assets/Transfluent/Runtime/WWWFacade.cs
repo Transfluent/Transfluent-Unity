@@ -11,6 +11,8 @@ namespace transfluent
 		public WWW request(string url, Dictionary<string, string> postParams)
 		{
 			var form = new WWWForm();
+
+			form.headers.Add(_transfluentIntegrationKey.Key, _transfluentIntegrationKey.Value);
 			if(postParams != null)
 			{
 				foreach(var param in postParams)
@@ -24,7 +26,6 @@ namespace transfluent
 				}
 			}
 			var www = new WWW(url, form);
-			www.responseHeaders.Add("Transfluent-Integration","Unity/"+Application.unityVersion);  //verison...
 			return www;
 		}
 
@@ -40,11 +41,11 @@ namespace transfluent
 			}
 			return request(urlWithGetParams, call.postParameters);
 		}
-
+		static readonly KeyValuePair<string, string> _transfluentIntegrationKey = new KeyValuePair<string, string>("Transfluent-Integration", "Unity/" + Application.unityVersion);
+		static readonly Dictionary<string, string> _headers = new Dictionary<string, string>() { { _transfluentIntegrationKey.Key, _transfluentIntegrationKey.Value} };	
 		public WWW request(string url)
 		{
-			var www = new WWW(url);
-			www.responseHeaders.Add("Transfluent-Integration", "Unity/" + Application.unityVersion);  //verison...
+			var www = new WWW(url, null, _headers);
 			return www;
 		}
 

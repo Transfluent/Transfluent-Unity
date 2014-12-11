@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
 #if UNITY_EDITOR
-
 using UnityEditor;
-
 #endif
 
 namespace transfluent
@@ -12,25 +9,27 @@ namespace transfluent
 	//a simple static class wrapper to provide basic functionality for global access
 	public class TranslationUtility
 	{
-		private static ITranslationUtilityInstance _realInstance;  //*headdesk* initalization order and whatnot... I'm not sure what to do about this
-		private static ITranslationUtilityInstance _instance
-		{
-			get
-			{
-				if(_realInstance == null)
-				{
-					_realInstance = createNewInstance();
-					//changeStaticInstanceConfigBasedOnTranslationConfigurationGroup();
-				}
-				return _realInstance;
-			}
-		}
+		private static ITranslationUtilityInstance _realInstance;
+			//*headdesk* initalization order and whatnot... I'm not sure what to do about this
 
 		private static LanguageList _LanguageList;
 
 		private TranslationUtility()
 		{
 			changeStaticInstanceConfigBasedOnTranslationConfigurationGroup(); //load default translation group info
+		}
+
+		private static ITranslationUtilityInstance _instance
+		{
+			get
+			{
+				if(_realInstance == null)
+				{
+					_realInstance = createNewInstance(Application.systemLanguage);
+					//changeStaticInstanceConfigBasedOnTranslationConfigurationGroup();
+				}
+				return _realInstance;
+			}
 		}
 
 		public static ITranslationUtilityInstance getUtilityInstanceForDebugging()
@@ -49,14 +48,14 @@ namespace transfluent
 		//convert into a factory?
 		public static bool changeStaticInstanceConfig(LanguageList.LanguageName languageName, string translationGroup = "")
 		{
-			return changeStaticInstanceConfig(LanguageList.getLanguageCodeFromLanguageName(languageName),translationGroup);
+			return changeStaticInstanceConfig(LanguageList.getLanguageCodeFromLanguageName(languageName), translationGroup);
 		}
 
 		public static bool changeStaticInstanceConfig(string destinationLanguageCode = "", string translationGroup = "")
 		{
 			//Debug.LogError("LOADING STATIC CONFIG: "+ destinationLanguageCode + " translation group:"+translationGroup);
 
-			ITranslationUtilityInstance tmpInstance = createNewInstance(destinationLanguageCode, translationGroup);
+			var tmpInstance = createNewInstance(destinationLanguageCode, translationGroup);
 			if(tmpInstance == null) return false;
 			_instance.setNewDestinationLanguage(tmpInstance.allKnownTranslations);
 			if(Application.isPlaying)
@@ -80,41 +79,41 @@ namespace transfluent
 		//[MenuItem("Transfluent/Helpers/Test OnLocalize")]
 		public static void OnLanguageChanged()
 		{
-			GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-			for(int i = 0; i < allObjects.Length; i++)
+			var allObjects = Object.FindObjectsOfType<GameObject>();
+			for (var i = 0; i < allObjects.Length; i++)
 			{
-				GameObject go = allObjects[i];
+				var go = allObjects[i];
 				if(go.transform.parent != null) continue; //skip any non-root messages
-				go.BroadcastMessage("OnLocalize", options: SendMessageOptions.DontRequireReceiver);
+				go.BroadcastMessage("OnLocalize", SendMessageOptions.DontRequireReceiver);
 			}
 		}
 
 		//public static event Action OnLanguageChanged;
+		public static ITranslationUtilityInstance createNewInstance(SystemLanguage systemLanguage, string group = "")
+		{
+			return createNewInstance(LanguageList.getLanguageAttributeFromSystemLanguage(systemLanguage).LanguageCode, group);
+		}
 
 		public static ITranslationUtilityInstance createNewInstance(string destinationLanguageCode = "", string group = "")
 		{
 			if(_LanguageList == null)
-			{
 				_LanguageList = ResourceLoadFacade.getLanguageList();
-			}
 
 			if(_LanguageList == null)
 			{
 				Debug.LogError("Could not load new language list");
 				return null;
 			}
-			bool enableCapture = false;
+			var enableCapture = false;
 #if UNITY_EDITOR
 			if(Application.isEditor)
-			{
 				enableCapture = getCaptureMode();
-			}
 #endif //UNTIY_EDITOR
-			TransfluentLanguage dest = _LanguageList.getLangaugeByCode(destinationLanguageCode);
+			var dest = _LanguageList.getLangaugeByCode(destinationLanguageCode);
 			if(dest == null)
 			{
-				TranslationConfigurationSO defaultConfigInfo = ResourceLoadFacade.LoadConfigGroup(group);
-				string newDestinationLanguageCode = defaultConfigInfo.sourceLanguage.code;
+				var defaultConfigInfo = ResourceLoadFacade.LoadConfigGroup(group);
+				var newDestinationLanguageCode = defaultConfigInfo.sourceLanguage.code;
 				/*
 				if (string.IsNullOrEmpty(destinationLanguageCode))
 				{
@@ -128,8 +127,8 @@ namespace transfluent
 				dest = _LanguageList.getLangaugeByCode(destinationLanguageCode);
 				//dest = _LanguageList.getLangaugeByCode
 			}
-			GameTranslationSet destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destinationLanguageCode);
-			Dictionary<string, string> keysInLanguageForGroupSpecified = destLangDB != null
+			var destLangDB = GameTranslationGetter.GetTranslaitonSetFromLanguageCode(destinationLanguageCode);
+			var keysInLanguageForGroupSpecified = destLangDB != null
 				? destLangDB.getGroup(group).getDictionaryCopy()
 				: new Dictionary<string, string>();
 #if UNITY_EDITOR
@@ -139,17 +138,17 @@ namespace transfluent
 			{
 				allKnownTranslations = keysInLanguageForGroupSpecified,
 				destinationLanguage = dest,
-				groupBeingShown = group,
+				groupBeingShown = group
 			};
 			if(enableCapture)
 			{
-				newTranslfuentUtilityInstance = new AutoCaptureTranslationUtiliityInstance()
+				newTranslfuentUtilityInstance = new AutoCaptureTranslationUtiliityInstance
 				{
 					allKnownTranslations = keysInLanguageForGroupSpecified,
 					destinationLanguage = dest,
 					groupBeingShown = group,
 					doCapture = enableCapture,
-					coreTransltionSet = destLangDB,
+					coreTransltionSet = destLangDB
 				};
 			}
 			return newTranslfuentUtilityInstance;
@@ -164,8 +163,8 @@ namespace transfluent
 		public static string[] get(string[] sourceTexts)
 		{
 			if(sourceTexts == null) return null;
-			string[] destTexts = new string[sourceTexts.Length];
-			for(int i = 0; i < sourceTexts.Length; i++)
+			var destTexts = new string[sourceTexts.Length];
+			for (var i = 0; i < sourceTexts.Length; i++)
 			{
 				destTexts[i] = get(sourceTexts[i]);
 			}
@@ -177,6 +176,22 @@ namespace transfluent
 		public static string getFormatted(string sourceText, params object[] formatStrings)
 		{
 			return _instance.getFormattedTranslation(sourceText, formatStrings);
+		}
+
+		private static bool getCaptureMode()
+		{
+#if UNITY_EDITOR
+			return EditorPrefs.GetBool("CAPTURE_MODE");
+#else
+			return false;
+#endif
+		}
+
+		private static void setCaptureMode(bool toCapture)
+		{
+#if UNITY_EDITOR
+			EditorPrefs.SetBool("CAPTURE_MODE", toCapture);
+#endif //UNITY_EDITOR
 		}
 
 #if UNITY_EDITOR
@@ -196,44 +211,22 @@ namespace transfluent
 		}
 
 #endif
-
-		private static bool getCaptureMode()
-		{
-#if UNITY_EDITOR
-			return EditorPrefs.GetBool("CAPTURE_MODE");
-#else
-			return false;
-#endif
-		}
-
-		private static void setCaptureMode(bool toCapture)
-		{
-#if UNITY_EDITOR
-			EditorPrefs.SetBool("CAPTURE_MODE", toCapture);
-#endif //UNITY_EDITOR
-		}
 	}
 
 	//an interface for handling translaitons
 	public interface ITranslationUtilityInstance
 	{
-		void setNewDestinationLanguage(Dictionary<string, string> transaltionsInSet);
-
-		string getFormattedTranslation(string sourceText, params object[] formatStrings);
-
-		string getTranslation(string sourceText);
-
 		string groupBeingShown { get; set; }
-
 		Dictionary<string, string> allKnownTranslations { get; set; }
+		void setNewDestinationLanguage(Dictionary<string, string> transaltionsInSet);
+		string getFormattedTranslation(string sourceText, params object[] formatStrings);
+		string getTranslation(string sourceText);
 	}
 
 	public class TranslationUtilityInstance : ITranslationUtilityInstance
 	{
-		public Dictionary<string, string> allKnownTranslations { get; set; }
-
 		public TransfluentLanguage destinationLanguage { get; set; }
-
+		public Dictionary<string, string> allKnownTranslations { get; set; }
 		public string groupBeingShown { get; set; }
 
 		public void setNewDestinationLanguage(Dictionary<string, string> transaltionsInSet)
@@ -255,13 +248,7 @@ namespace transfluent
 			if(allKnownTranslations != null)
 			{
 				if(allKnownTranslations.ContainsKey(sourceText))
-				{
 					return allKnownTranslations[sourceText];
-				}
-			}
-			else
-			{
-				//Debug.LogError("KNOWN TRANSLATIONS NOT SET");
 			}
 
 			return sourceText;
@@ -270,11 +257,9 @@ namespace transfluent
 
 	public class AutoCaptureTranslationUtiliityInstance : TranslationUtilityInstance, ITranslationUtilityInstance
 	{
+		private readonly List<string> formattedTextToIgnore = new List<string>();
 		public bool doCapture { get; set; }
-
 		public GameTranslationSet coreTransltionSet { get; set; }
-
-		private List<string> formattedTextToIgnore = new List<string>();
 
 		public new void setNewDestinationLanguage(Dictionary<string, string> transaltionsInSet)
 		{
@@ -284,25 +269,13 @@ namespace transfluent
 
 		public new string getFormattedTranslation(string sourceText, params object[] formatStrings)
 		{
-			string formattedString = string.Format(getTranslation(sourceText), formatStrings);
+			var formattedString = string.Format(getTranslation(sourceText), formatStrings);
 
 			if(!formattedTextToIgnore.Contains(formattedString))
-			{
 				formattedTextToIgnore.Add(formattedString);
-			}
 			addTranslationIfNotKnown(sourceText);
 
 			return formattedString;
-		}
-
-		private void addTranslationIfNotKnown(string translationText)
-		{
-			if(allKnownTranslations == null) return;
-			if(doCapture && !allKnownTranslations.ContainsKey(translationText) && !formattedTextToIgnore.Contains(translationText))
-			{
-				allKnownTranslations.Add(translationText, translationText);
-				coreTransltionSet.mergeInSet(groupBeingShown, allKnownTranslations);
-			}
 		}
 
 		public new string getTranslation(string sourceText)
@@ -312,6 +285,17 @@ namespace transfluent
 			addTranslationIfNotKnown(sourceText);
 
 			return translation;
+		}
+
+		private void addTranslationIfNotKnown(string translationText)
+		{
+			if(allKnownTranslations == null) return;
+			if(doCapture && !allKnownTranslations.ContainsKey(translationText) &&
+				!formattedTextToIgnore.Contains(translationText))
+			{
+				allKnownTranslations.Add(translationText, translationText);
+				coreTransltionSet.mergeInSet(groupBeingShown, allKnownTranslations);
+			}
 		}
 	}
 }

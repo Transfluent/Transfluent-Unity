@@ -1,21 +1,22 @@
 ﻿//handles interaction with core code, allowing hte editor window to focus on presentation.  Also has the nice side effect of avoiding issues in editor files (massive bugginess with optional arguments, etc)
 //seperatoion of logic, and
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Debug = UnityEngine.Debug;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-using Debug = UnityEngine.Debug;
 
 namespace transfluent.editor
 {
 	public class TransfluentEditorWindowMediator
 	{
-		private readonly IKeyStore _keyStore = new EditorKeyStore();
-		private readonly InjectionContext context;
 		private LanguageList allLanguagesSupported;
 		private TransfluentLanguage currentLanguage; //put this in a view state?
+		private readonly IKeyStore _keyStore = new EditorKeyStore();
+		private readonly InjectionContext context;
 
 		public TransfluentEditorWindowMediator()
 		{
@@ -38,10 +39,9 @@ namespace transfluent.editor
 
 		public bool authIsDone()
 		{
-			string authToken = getCurrentAuthToken();
+			var authToken = getCurrentAuthToken();
 
-			return !string.IsNullOrEmpty(authToken) &&
-				   allLanguagesSupported != null;
+			return !string.IsNullOrEmpty(authToken) && allLanguagesSupported != null;
 		}
 
 		public string getCurrentAuthToken()
@@ -51,7 +51,7 @@ namespace transfluent.editor
 			{
 				retVal = context.manualGetMapping<string>(NamedInjections.API_TOKEN);
 			}
-			catch(KeyNotFoundException)
+			catch (KeyNotFoundException)
 			{
 			} //this is ok... I don't want to rewrite manualGetMapping
 			return retVal;
@@ -67,14 +67,15 @@ namespace transfluent.editor
 				{
 					authToken = login.Parse(makeCall(login)).token;
 				}
-				catch(CallException e)
+				catch (CallException e)
 				{
 #if UNITY_EDITOR
 					EditorUtility.DisplayDialog("Error",
 						"Could not login, please re-enter credentials that you got on transfluent.com website", "OK");
 #endif
 					Debug.LogError("error getting login auth token:" + e.Message);
-					throw; //previously tried to gracefully handle this, but I want to make sure that login errors are well-understood in any circumstance
+					throw;
+					//previously tried to gracefully handle this, but I want to make sure that login errors are well-understood in any circumstance
 				}
 
 				context.addNamedMapping<string>(NamedInjections.API_TOKEN, authToken);
@@ -114,7 +115,7 @@ namespace transfluent.editor
 				var languageRequest = new RequestAllLanguages();
 				allLanguagesSupported = languageRequest.Parse(makeCall(languageRequest));
 			}
-			catch(CallException e)
+			catch (CallException e)
 			{
 				Debug.LogError("error getting all languages:" + e.Message);
 			}
@@ -122,16 +123,14 @@ namespace transfluent.editor
 
 		public bool doAuth()
 		{
-			KeyValuePair<string, string> usernamePassword = getUserNamePassword();
+			var usernamePassword = getUserNamePassword();
 			return doAuth(usernamePassword.Key, usernamePassword.Value);
 		}
 
 		public List<string> getAllLanguageNames()
 		{
 			if(getLanguageList() == null)
-			{
 				throw new Exception("Cannot login");
-			}
 			var languageCodes = new List<string>();
 			allLanguagesSupported.languages.ForEach((TransfluentLanguage lang) => { languageCodes.Add(lang.code); });
 			return languageCodes;
@@ -140,9 +139,7 @@ namespace transfluent.editor
 		public List<string> getAllLanguageCodes()
 		{
 			if(getLanguageList() == null)
-			{
 				throw new Exception("Cannot login");
-			}
 			var languageCodes = new List<string>();
 			allLanguagesSupported.languages.ForEach((TransfluentLanguage lang) => { languageCodes.Add(lang.code); });
 			return languageCodes;
@@ -150,7 +147,7 @@ namespace transfluent.editor
 
 		public void setCurrentLanugageCode(string languageCode)
 		{
-			List<string> knownCodes = getAllLanguageCodes();
+			var knownCodes = getAllLanguageCodes();
 			if(!knownCodes.Contains(languageCode)) throw new Exception("Tried to set language to an unknown language code");
 
 			currentLanguage = allLanguagesSupported.getLangaugeByCode(languageCode);
@@ -167,11 +164,7 @@ namespace transfluent.editor
 		public string GetText(string textKey, string groupKey = null)
 		{
 			if(currentLanguage == null) throw new Exception("Must set current language first!");
-			var getText = new GetTextKey
-				(textKey,
-					group_id: groupKey,
-					languageID: currentLanguage.id
-				);
+			var getText = new GetTextKey(textKey, group_id: groupKey, languageID: currentLanguage.id);
 			return getText.Parse(makeCall(getText));
 		}
 
@@ -180,7 +173,8 @@ namespace transfluent.editor
 			if(!string.IsNullOrEmpty(getCurrentAuthToken()))
 			{
 				context.setMappings(call);
-				call.getParameters.Add("token", getCurrentAuthToken());  //TODO: find best way to handle auth token.  construction param,injection or manual setting
+				call.getParameters.Add("token", getCurrentAuthToken());
+					//TODO: find best way to handle auth token.  construction param,injection or manual setting
 			}
 
 			var service = context.manualGetMapping<IWebService>();
@@ -195,7 +189,7 @@ namespace transfluent.editor
 			{
 				makeCall(saveText);
 			}
-			catch(CallException exception)
+			catch (CallException exception)
 			{
 				Debug.LogError("error making setText call:" + exception.Message);
 			}
@@ -204,16 +198,12 @@ namespace transfluent.editor
 		public void SetText(string textKey, string textValue, string groupKey = null)
 		{
 			if(currentLanguage == null) throw new Exception("Must set current language first!");
-			var saveText = new SaveTextKey
-				(textKey,
-					text: textValue,
-					group_id: groupKey,
-					language: currentLanguage.id);
+			var saveText = new SaveTextKey(textKey, text: textValue, group_id: groupKey, language: currentLanguage.id);
 			try
 			{
 				makeCall(saveText);
 			}
-			catch(CallException exception)
+			catch (CallException exception)
 			{
 				Debug.LogError("error making setText call:" + exception.Message);
 			}
@@ -228,19 +218,17 @@ namespace transfluent.editor
 			var list = new List<TransfluentTranslation>();
 			try
 			{
-				Dictionary<string, TransfluentTranslation> dictionaryOfKeys = getAllKeys.Parse(makeCall(getAllKeys));
-				foreach(KeyValuePair<string, TransfluentTranslation> transfluentTranslation in dictionaryOfKeys)
+				var dictionaryOfKeys = getAllKeys.Parse(makeCall(getAllKeys));
+				foreach (var transfluentTranslation in dictionaryOfKeys)
 				{
 					list.Add(transfluentTranslation.Value);
 				}
 			}
-			catch(ApplicatonLevelException errorcode)
+			catch (ApplicatonLevelException errorcode)
 			{
 				//Debug.Log("App error:"+errorcode);
 				if(errorcode.details.type != 400.ToString())
-				{
 					throw;
-				}
 			}
 			return list;
 		}
@@ -264,7 +252,7 @@ namespace transfluent.editor
 
 		public void SetText(List<TransfluentTranslation> translations)
 		{
-			foreach(TransfluentTranslation translation in translations)
+			foreach (var translation in translations)
 			{
 				if(string.IsNullOrEmpty(translation.text_id)) continue;
 				//don't send empty string as a group id

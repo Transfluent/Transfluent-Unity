@@ -38,7 +38,7 @@ TranslationUtility.changeStaticInstanceConfig("zh-cn");
 ### Why Translate
 1. Free advertising on foreign app stores
 2. Extend your reach to find new customers, who may respond to your app differently -- ie a soccer game in Spanish
-3. Potentially lower cost of aquisition and/or higher expected revenue per download [Distimo Publication - How the Most Successful Apps Monetize Globally](http://www.distimo.com/download/publication/Distimo_Publication_-_February_2014/EN/archive/)
+3. Potentially lower cost of acquisition and/or higher expected revenue per download [Distimo Publication - How the Most Successful Apps Monetize Globally](http://www.distimo.com/download/publication/Distimo_Publication_-_February_2014/EN/archive/)
 
 ### Potential issues confronted when localizing
 1. Getting strings out of your current app

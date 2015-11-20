@@ -63,7 +63,7 @@ namespace transfluent
 			//TODO: make sure that package compiles without test directory -- build a dll
 			public void RunTests()
 			{
-				UnitTestView.RunAllTestsBatch();
+				//UnitTestView.RunAllTestsBatch();
 			}
 
 			public void Build()

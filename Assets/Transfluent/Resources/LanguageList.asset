@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   list:
     languages:
-    - name: English (United Kingdom)
+    - name: English (Great Britain)
       code: en-gb
       id: 1
     - name: French (France)
@@ -22,10 +22,10 @@ MonoBehaviour:
     - name: German
       code: de-de
       id: 3
-    - name: Chinese (Mandarin, Simplified) (People's Republic of China)
+    - name: Chinese, Mandarin, Simplified (China)
       code: zh-cn
       id: 4
-    - name: Chinese (Hong Kong S.A.R)
+    - name: Chinese, Hong Kong, Traditional (Hong Kong)
       code: zh-hk
       id: 5
     - name: Spanish (Spain)
@@ -61,7 +61,7 @@ MonoBehaviour:
     - name: Hindi
       code: hi-in
       id: 16
-    - name: Arabic
+    - name: Arabic (Saudi Arabia)
       code: ar-sa
       id: 17
     - name: Malay
@@ -107,7 +107,7 @@ MonoBehaviour:
       code: cs-cz
       id: 31
     - name: Catalan
-      code: ca-ad
+      code: ca-es
       id: 32
     - name: Esperanto
       code: eo-eo
@@ -151,7 +151,7 @@ MonoBehaviour:
     - name: Azerbaijani
       code: az-az
       id: 46
-    - name: Tamil
+    - name: Tamil (India)
       code: ta-in
       id: 47
     - name: Swahili
@@ -163,7 +163,7 @@ MonoBehaviour:
     - name: Tibetan
       code: bo-cn
       id: 50
-    - name: Punjabi
+    - name: Punjabi (India)
       code: pa-in
       id: 51
     - name: Javanese
@@ -178,7 +178,7 @@ MonoBehaviour:
     - name: Kyrgyz
       code: ky-kg
       id: 55
-    - name: Chinese (Traditional) (Taiwan)
+    - name: Chinese, Taiwanese, Traditional (Taiwan)
       code: zh-tw
       id: 56
     - name: Amharic
@@ -238,7 +238,7 @@ MonoBehaviour:
     - name: Icelandic
       code: is-is
       id: 141
-    - name: Taiwan Chinese (Singapore)
+    - name: Chinese, Singapore, Simplified (Singapore)
       code: zh-sg
       id: 142
     - name: Tigrinya
@@ -256,7 +256,7 @@ MonoBehaviour:
     - name: English (Singapore)
       code: en-sg
       id: 147
-    - name: English (United States)
+    - name: English (United States of America)
       code: en-us
       id: 148
     - name: Spanish (Chile)
@@ -271,31 +271,81 @@ MonoBehaviour:
     - name: Spanish (Venezuela)
       code: es-ve
       id: 152
+    - name: "Norwegian Bokm\xE5l"
+      code: nb-no
+      id: 153
+    - name: Norwegian Nynorsk
+      code: nn-no
+      id: 154
+    - name: Arabic (Egypt)
+      code: ar-eg
+      id: 155
+    - name: Haitian Creole
+      code: ht-ht
+      id: 156
+    - name: Telugu (India)
+      code: te-in
+      id: 157
+    - name: Sinhala
+      code: si-lk
+      id: 158
+    - name: Gujarati
+      code: gu-in
+      id: 159
+    - name: Irish Gaelic
+      code: ga-ie
+      id: 160
+    - name: Kurdish
+      code: ku-iq
+      id: 161
+    - name: Marathi (India)
+      code: mr-in
+      id: 162
+    - name: Scottish Gaelic
+      code: gd-gb
+      id: 163
+    - name: Galician
+      code: gl-es
+      id: 164
+    - name: Chinese, Macau, Traditional (Macao)
+      code: zh-mo
+      id: 165
+    - name: Arabic (U.A.E.)
+      code: ar-ae
+      id: 166
+    - name: Arabic (Jordan)
+      code: ar-jo
+      id: 167
+    - name: Arabic (Morocco)
+      code: ar-ma
+      id: 168
+    - name: Belarussian
+      code: be-by
+      id: 169
+    - name: Burmese
+      code: my-mm
+      id: 170
+    - name: Flemish (Belgian)
+      code: fl-be
+      id: 171
+    - name: Kannada (India)
+      code: kn-in
+      id: 172
+    - name: Kurdish
+      code: ku-tr
+      id: 173
+    - name: French (Switzerland)
+      code: fr-ch
+      id: 174
+    - name: German (Switzerland)
+      code: de-ch
+      id: 175
+    - name: Italian (Switzerland)
+      code: it-ch
+      id: 176
+    - name: Zulu (South Africa)
+      code: zu-za
+      id: 177
     - name: Pseudo language
       code: xx-xx
       id: 500
-    simplifiedLanguageCodeList:
-    - en-us
-    - fr-fr
-    - es-la
-    - pt-pt
-    - pt-br
-    - it-it
-    - de-de
-    - zh-cn
-    - zh-tw
-    - nl-nl
-    - ja-jp
-    - ko-kr
-    - vi-vn
-    - ru-ru
-    - sv-se
-    - da-dk
-    - fi-fi
-    - no-no
-    - tr-tr
-    - el-gr
-    - id-id
-    - ms-my
-    - th-th
-    - xx-xx

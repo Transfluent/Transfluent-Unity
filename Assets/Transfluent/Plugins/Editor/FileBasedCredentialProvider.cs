@@ -10,12 +10,13 @@ namespace transfluent.editor
 		private const string LocationOfTestCredentials = "Assets/TransfluentTests/Editor/Data/loginPassword.txt";
 
 		public IKeyStore keyStore = new FileLineBasedKeyStore(LocationOfTestCredentials,
-			new List<string> { "username", "password" });
+			new List<string> {"username", "password"});
 
 		public FileBasedCredentialProvider()
 		{
-			var textAsset = AssetDatabase.LoadAssetAtPath(LocationOfTestCredentials, typeof(TextAsset)) as TextAsset;
-			string[] lines = textAsset.text.Split(new[] { '\r', '\n' });
+			var textAsset = AssetDatabase.LoadAssetAtPath(LocationOfTestCredentials, typeof (TextAsset)) as TextAsset;
+			var text = textAsset.text.Replace("\r", ""); //make newlines only "\n" chars
+			var lines = text.Split('\n');
 			username = lines[0];
 			password = lines[1];
 		}

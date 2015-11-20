@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 using Pathfinding.Serialization.JsonFx;
-using System.Collections.Generic;
 using transfluent.editor;
 
 namespace transfluent.tests
@@ -9,7 +9,6 @@ namespace transfluent.tests
 	public class TestLoginFlow
 	{
 		[SetUp]
-		[TearDown]
 		public void notUsedRightNow()
 		{
 			service = new SyncronousEditorWebRequest();
@@ -20,7 +19,7 @@ namespace transfluent.tests
 		public static string baseServiceUrl = "https://transfluent.com/v2/";
 		public static string requestedService = "authenticate";
 		public string loginUrl = baseServiceUrl + requestedService;
-		private IWebService service;
+		public IWebService service;
 		public FileBasedCredentialProvider Provider;
 
 		[TestFixtureSetUp]
@@ -33,13 +32,9 @@ namespace transfluent.tests
 		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
 		public void correctLoginTest()
 		{
-			WebServiceReturnStatus status = service.request(loginUrl, new Dictionary<string, string>
-			{
-				{"email", Provider.username},
-				{"password", Provider.password}
-			});
-
-			string responseText = status.text;
+			var status = service.request(loginUrl,
+				new Dictionary<string, string> {{"email", Provider.username}, {"password", Provider.password}});
+			var responseText = status.text;
 			Assert.IsNotNull(responseText);
 			Assert.IsTrue(responseText.Length > 0);
 
@@ -55,14 +50,10 @@ namespace transfluent.tests
 
 		[Test]
 		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
-		[ExpectedException(typeof(ApplicatonLevelException))]
+		[ExpectedException(typeof (ApplicatonLevelException))]
 		public void emptyLoginPasswordPost()
 		{
-			service.request(loginUrl, new Dictionary<string, string>
-			{
-				{"email", ""},
-				{"password", ""}
-			});
+			service.request(loginUrl, new Dictionary<string, string> {{"email", ""}, {"password", ""}});
 		}
 
 		[Test]
@@ -77,16 +68,13 @@ namespace transfluent.tests
 		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
 		public void makeSureApplicationLevelExceptionIsACallException()
 		{
-			Assert.Catch<CallException>(() => service.request(loginUrl, new Dictionary<string, string>
-			{
-				{"email", ""},
-				{"password", ""}
-			}));
+			Assert.Catch<CallException>(
+				() => service.request(loginUrl, new Dictionary<string, string> {{"email", ""}, {"password", ""}}));
 		}
 
 		[Test]
 		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
-		[ExpectedException(typeof(ApplicatonLevelException))]
+		[ExpectedException(typeof (ApplicatonLevelException))]
 		public void noPostLogin()
 		{
 			service.request(loginUrl); //no password params!
@@ -94,14 +82,11 @@ namespace transfluent.tests
 
 		[Test]
 		[MaxTime(MAX_MILLISECONDS_TO_WAIT)]
-		[ExpectedException(typeof(ApplicatonLevelException))]
+		[ExpectedException(typeof (ApplicatonLevelException))]
 		public void wrongPasswordLogin()
 		{
-			service.request(loginUrl, new Dictionary<string, string>
-			{
-				{"email", Provider.username},
-				{"password", "thisPasswordIsWrong"}
-			});
+			service.request(loginUrl,
+				new Dictionary<string, string> {{"email", Provider.username}, {"password", "thisPasswordIsWrong"}});
 		}
 	}
 }
